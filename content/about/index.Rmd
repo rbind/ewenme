@@ -1,0 +1,40 @@
+---
+title: "About"
+type: "about"
+---
+
+```{r, echo = FALSE}
+library(knitr)
+"print.magick-image" <- function(x, ...){
+  ext <- ifelse(length(x), tolower(image_info(x[1])$format), "gif")
+  tmp <- tempfile(fileext = paste0(".", ext))
+  image_write(x, path = tmp)
+  knitr::include_graphics(tmp)
+}
+```
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Analyst / R Developer at Transport for London (not the trains bit - the roads, walking, cycling, environment and road safety bit). Trying to understand how cities work, and making them work a bit better for everyone in the process. 
+
+Interested in sharing and supporting opinionated analysis and humane, ethical applications of machine learning.
+
+With the rest of the time, I buy/play dusty records and watch The Breakfast Club (the radio one) and Hot 97 a bit too much.
+
+```{r,  echo = FALSE, message = FALSE, fig.align = "center", out.width = "90%"}
+library(magick)
+library(magrittr)
+
+
+me <- image_read("images/me.jpg") %>% 
+  image_scale("600") %>% 
+  image_scale("x600") %>% 
+  image_border("#f4f4f4", "20x20")
+
+image_write(me, path = "images/me.png",format = "png")
+
+knitr::include_graphics("images/me.png")
+
+```

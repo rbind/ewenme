@@ -1,0 +1,206 @@
+---
+date: "2017-03-01"
+title: "Vinylspotting: A Discogs Fairytale"
+author: ""
+showonlyimage: false
+draft: false
+image: "blog/img/vinylspotting.png"
+weight: 0
+type: "post"
+description: "Developing a Shiny app to explore and visualize record collections."
+---
+
+
+
+<p><br></p>
+<p>At a cursory glance, it’s almost impossible to get much of an understanding of vinyl record collections beyond their size (or perhaps their age, depending on the smell?). If you get up close, you might recognise some artist names or make out some titles on the spines of LPs, but your average collector is gonna have loads of bits that even <em>they</em> don’t recognise on sight. Now, while the unadulterated excitement of finding a <a href="https://en.wikipedia.org/wiki/White_label">white label</a> on the shelve that even <em>you</em> can’t remember is the romance at the very heart of record digging, that thought of forgotten artifacts would send archivists and librarians bonkers.</p>
+<p>Enter <a href="http://www.discogs.com">Discogs</a> - the definitive recorded music database and marketplace, with over 8 million record entries and counting. Aside from catching themselves tumbling through all sorts of audio rabbit-holes, Discogs users are able to forensically catalog their own collection. Once you’re at more than a few hundred records, having a well-kept digital archive of your music to refer to is sometimes the only way of knowing “did I already buy that record?”, without having to leaf through the physical lot.</p>
+<p>A user can browse through the individual pages of each of their records, but when the user wants to look at their overall collection they see something like this:</p>
+<p><br></p>
+<p><img src="../vinylspotting_img/Discogs collection page.png" width="100%" style="display: block; margin: auto;" /></p>
+<p><br></p>
+<p>It’s essentially a tabulated view of your collection with rudimentary info, and some record sleeve thumbnails to boot. The ‘collection value’ is a new (and very addictive) addition that, as far as I can tell, is the <strong>only</strong> summary statistic on show (besides the count), which got me into thinking:</p>
+<div id="if-i-had-put-the-work-in-to-ammassing-a-couple-thousand-records-say-it-would-be-cool-to-know-more-about-my-record-collection-than-just-how-much-its-worth." class="section level3">
+<h3><strong>If I had put the work in to ammassing a couple thousand records, say, it would be cool to know more about my record collection than just how much it’s worth.</strong></h3>
+<p>The obvious next thought was, “R could probably help with that”.</p>
+<p><br></p>
+</div>
+<div id="getting-hot-n-heavy-with-the-discogs-api" class="section level2">
+<h2>Getting hot ‘n’ heavy with the Discogs API</h2>
+<p>Off the bat, I needed to develop a sensible pipeline for accessing and tidying the metadata of a user’s collection. The RESTful Discogs API would now be my good friend. A skim through the documentation <a href="https://www.discogs.com/developers/">here</a> gets us to the <a href="https://www.discogs.com/developers/#page:user-collection,header:user-collection-collection">user collection</a> section, showing you how to request to view a users collection with just their username (of course, there’s an app registration and OAuth key/token business to go through first). User collections are <a href="https://www.discogs.com/developers/#page:home,header:home-pagination">paginated</a>, too, but we can employ a loop to build up a simple request to the API endpoint and get sight of a whole collection:</p>
+<p>Here’s what a simple call to the Discogs user collection API endpoint looks like:</p>
+<pre class="r"><code>library(RCurl)
+library(jsonlite)
+library(httr)
+library(tidyverse)
+
+# create empty list for the collection pages
+pages &lt;- list()
+
+# Loop through each page of the collection, adding release data to the list
+for (i in 1:9) {
+    mydata &lt;- fromJSON(paste0(&quot;https://api.discogs.com//users/ewen_henderson/collection/folders/0/releases&quot;, 
+        &quot;?page=&quot;, i), flatten = TRUE)
+    message(&quot;Retrieving page &quot;, i)
+    pages[[i + 1]] &lt;- mydata$releases
+}
+
+# bind these pages together
+glimpse(as.data.frame(rbind.pages(pages)))</code></pre>
+<pre><code>## Observations: 409
+## Variables: 13
+## $ instance_id                    &lt;int&gt; 124611189, 194803485, 95223076,...
+## $ date_added                     &lt;chr&gt; &quot;2015-03-22T11:49:12-07:00&quot;, &quot;2...
+## $ id                             &lt;int&gt; 5874941, 8720047, 5307000, 1483...
+## $ rating                         &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0...
+## $ basic_information.labels       &lt;list&gt; [&lt;1-800 Dinosaur, 1, 1-800-02,...
+## $ basic_information.formats      &lt;list&gt; [&lt;12&quot;, 33 ⅓ RPM, EP, Vinyl, 1&gt;...
+## $ basic_information.artists      &lt;list&gt; [&lt;, Airhead (5), , , , https:/...
+## $ basic_information.thumb        &lt;chr&gt; &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;,...
+## $ basic_information.title        &lt;chr&gt; &quot;Believe &quot;, &quot;Bye Bye / Nobody (...
+## $ basic_information.cover_image  &lt;chr&gt; &quot;https://api-img.discogs.com/c8...
+## $ basic_information.resource_url &lt;chr&gt; &quot;https://api.discogs.com/releas...
+## $ basic_information.year         &lt;int&gt; 2014, 2016, 2014, 2000, 2015, 1...
+## $ basic_information.id           &lt;int&gt; 5874941, 8720047, 5307000, 1483...</code></pre>
+<p><br></p>
+<p>This gives us our first sight of the users collection, but there’s still a lot of ‘nested’ data to contend with (e.g. labels, artists, formats) before we have a wholesome view of the collection. As mentioned, the desired endgame was a function that would extract and tidy up a user’s collection with as much metadata intact as possible. That went like so:</p>
+<pre class="r"><code>require(data.table)
+
+getCollection &lt;- function(username) {
+    
+    # call API to retrieve raw users collection
+    baseURL &lt;- &quot;https://api.discogs.com//users/&quot;
+    tailURL &lt;- &quot;/collection/folders/0/releases&quot;
+    user_agent &lt;- &quot;DiscogsViz/1.0&quot;
+    
+    pre_run &lt;- getURL(paste0(baseURL, username, tailURL), httpheader = c(`User-Agent` = user_agent))
+    pre_run &lt;- fromJSON(pre_run)
+    
+    # loop through collection pages and bind to dataframe
+    pages &lt;- list()
+    for (i in 1:pre_run$pagination$pages) {
+        mydata &lt;- fromJSON(paste0(baseURL, username, tailURL, &quot;?page=&quot;, i), 
+            flatten = TRUE)
+        message(&quot;Retrieving page &quot;, i)
+        pages[[i + 1]] &lt;- mydata$releases
+    }
+    data &lt;- rbind.pages(pages)
+    data &lt;- as.data.table(data)
+    data &lt;- data[!duplicated(data), ]
+    
+    # flatten and clean label info
+    labels &lt;- unnest(data, basic_information.labels)
+    valid_column_names &lt;- make.names(names = names(labels), unique = TRUE, allow_ = TRUE)
+    names(labels) &lt;- valid_column_names
+    
+    labels &lt;- labels %&gt;% select(instance_id, name, catno, resource_url) %&gt;% 
+        rename(label_name = name, label_url = resource_url) %&gt;% filter(!duplicated(instance_id))
+    
+    # flatten and clean format info
+    formats &lt;- unnest(data, basic_information.formats) %&gt;% select(instance_id, 
+        descriptions:text) %&gt;% rename(format_name = name, format_text = text) %&gt;% 
+        unnest(descriptions)
+    
+    formats &lt;- formats[!duplicated(formats), ]
+    
+    formats &lt;- formats %&gt;% spread(key = descriptions, value = descriptions) %&gt;% 
+        filter(!duplicated(instance_id))
+    
+    # flatten and clean artist info
+    artists &lt;- unnest(data, basic_information.artists)
+    valid_column_names &lt;- make.names(names = names(artists), unique = TRUE, 
+        allow_ = TRUE)
+    names(artists) &lt;- valid_column_names
+    
+    artists &lt;- artists %&gt;% select(instance_id, name, basic_information.title, 
+        resource_url) %&gt;% rename(artist_name = name, artist_url = resource_url) %&gt;% 
+        filter(!duplicated(instance_id))
+    
+    # bind this all together (apart from formats, they need a separate join)
+    data &lt;- select(data, instance_id:rating, basic_information.year)
+    data &lt;- cbind(data, artists, labels, id = &quot;instance_id&quot;)
+    
+    # make col names unique
+    valid_column_names &lt;- make.names(names = names(data), unique = TRUE, allow_ = TRUE)
+    names(data) &lt;- valid_column_names
+    
+    # remove unneeded cols
+    data &lt;- select(data, -rating, -instance_id.1, -instance_id.2)
+    
+    data &lt;- left_join(data, formats, by = c(instance_id = &quot;instance_id&quot;))
+}
+
+test &lt;- getCollection(&quot;ewen_henderson&quot;)
+
+glimpse(test)</code></pre>
+<pre><code>## Observations: 409
+## Variables: 41
+## $ instance_id             &lt;int&gt; 124611189, 194803485, 95223076, 144881...
+## $ date_added              &lt;chr&gt; &quot;2015-03-22T11:49:12-07:00&quot;, &quot;2016-10-...
+## $ id                      &lt;int&gt; 5874941, 8720047, 5307000, 14837, 6707...
+## $ basic_information.year  &lt;int&gt; 2014, 2016, 2014, 2000, 2015, 1999, 20...
+## $ artist_name             &lt;chr&gt; &quot;Airhead (5)&quot;, &quot;Sterling Styles&quot;, &quot;Mar...
+## $ basic_information.title &lt;chr&gt; &quot;Believe &quot;, &quot;Bye Bye / Nobody (Dub)&quot;, ...
+## $ artist_url              &lt;chr&gt; &quot;https://api.discogs.com/artists/16853...
+## $ label_name              &lt;chr&gt; &quot;1-800 Dinosaur&quot;, &quot;22a&quot;, &quot;3024&quot;, &quot;430 ...
+## $ catno                   &lt;chr&gt; &quot;1-800-02&quot;, &quot;22a011&quot;, &quot;3024-KJL1&quot;, &quot;43...
+## $ label_url               &lt;chr&gt; &quot;https://api.discogs.com/labels/542410...
+## $ id.1                    &lt;chr&gt; &quot;instance_id&quot;, &quot;instance_id&quot;, &quot;instanc...
+## $ format_name             &lt;chr&gt; &quot;Vinyl&quot;, &quot;Vinyl&quot;, &quot;Vinyl&quot;, &quot;Vinyl&quot;, &quot;V...
+## $ qty                     &lt;chr&gt; &quot;1&quot;, &quot;1&quot;, &quot;1&quot;, &quot;1&quot;, &quot;1&quot;, &quot;1&quot;, &quot;1&quot;, &quot;1&quot;...
+## $ format_text             &lt;chr&gt; NA, NA, &quot;Stamped&quot;, NA, NA, NA, NA, NA,...
+## $ 10&quot;                     &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA...
+## $ 12&quot;                     &lt;chr&gt; &quot;12\&quot;&quot;, &quot;12\&quot;&quot;, &quot;12\&quot;&quot;, &quot;12\&quot;&quot;, &quot;12\&quot;&quot;...
+## $ 33 ⅓ RPM                &lt;chr&gt; &quot;33 ⅓ RPM&quot;, NA, NA, &quot;33 ⅓ RPM&quot;, &quot;33 ⅓ ...
+## $ 45 RPM                  &lt;chr&gt; NA, &quot;45 RPM&quot;, &quot;45 RPM&quot;, NA, NA, NA, NA...
+## $ 7&quot;                      &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA...
+## $ Album                   &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA...
+## $ Compilation             &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, &quot;Compilati...
+## $ EP                      &lt;chr&gt; &quot;EP&quot;, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ Etched                  &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA...
+## $ Limited Edition         &lt;chr&gt; NA, &quot;Limited Edition&quot;, NA, NA, NA, NA,...
+## $ LP                      &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA...
+## $ Maxi-Single             &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA...
+## $ Mini-Album              &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA...
+## $ Misprint                &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA...
+## $ Mixed                   &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA...
+## $ Numbered                &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA...
+## $ Promo                   &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA...
+## $ Reissue                 &lt;chr&gt; NA, NA, NA, NA, &quot;Reissue&quot;, NA, NA, NA,...
+## $ Remastered              &lt;chr&gt; NA, NA, NA, NA, &quot;Remastered&quot;, NA, NA, ...
+## $ Repress                 &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA...
+## $ Sampler                 &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA...
+## $ Single                  &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA...
+## $ Single Sided            &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA...
+## $ Stereo                  &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA...
+## $ Test Pressing           &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA...
+## $ Unofficial Release      &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA...
+## $ White Label             &lt;chr&gt; NA, NA, &quot;White Label&quot;, NA, NA, NA, NA,...</code></pre>
+<p><br></p>
+<p>Voila. Note that there are variables in here that I haven’t really looked at yet, but keeping them in for now means it would be quite easy to explore them further if there’s a reason to.</p>
+<p>About time for some analysis…</p>
+<p><br></p>
+</div>
+<div id="unpacking-it-would-be-cool-to-know-more-stuff" class="section level2">
+<h2>Unpacking “it would be cool to know more stuff”</h2>
+<p>Once I had eyes on the data at hand, the proper fun/tricky stuff could play out i.e. how do I take someones record collection data and translate it back visually, in a useful and coherent way?</p>
+<p>A few concepts were prominent in my head-space:</p>
+<ul>
+<li>Part of what makes a record collection unique and special is how it <strong>evolves over time</strong>: it’s not static and intakes distinct phases. I had to find a way to make this temporal element a central thread.</li>
+<li>Aside from insight about what’s <em>in</em> their collection, something else that could be interpreted from the date records were added was <strong>user’s buying patterns.</strong></li>
+<li>The <strong>on-rails-exploration experience of a Shiny app</strong> seemed like a suitable environment to aid record collectors’ discovery, essentially as <strong>a natural, digital extension of the digging process.</strong></li>
+<li>The app should mirror the treasured and personal state of the subject matter. In keeping, the <strong>language adopted should be idiosyncratic and approachable.</strong></li>
+</ul>
+<p>The resulting product is available for diggers everywhere (psst…if you ain’t, try it out with my username ‘ewen_henderson’) over <a href="https://ewenme.shinyapps.io/vinylspotting/">here</a>, and a little showcase below.</p>
+<iframe src="https://gfycat.com/ifr/CapitalTallImago" frameborder="0" scrolling="no" width="640" height="347">
+</iframe>
+<p>Shiny’s a hard thing to do justice to in markdown, so head straight over there to get a flavour and refer to the <a href="https://github.com/ewenme/Vinylspotting">github repo</a> if you want to see the Shiny code.</p>
+<p>I hope some data science/Discogs enthusiast hybrids out there have just found their Mecca, but I’ll settle for people from either fraternity finding something useful in this.</p>
+<p><br></p>
+</div>
+<div id="more-work-for-me-dont-panic" class="section level2">
+<h2>More work (for me, don’t panic)</h2>
+<p>There are some things that would be cool to incorporate into future iterations. The most glaring omission is any kind of spend analytics - unfortunately, Discogs don’t offer up their marketplace sales data in the public API offering (though there has been previous for publications to get exclusive access (hint, hint)) so for now, it’s off limits. Something that I chose to exclude was record’s rating data (i.e. what the average rating for a record was), which felt like it could be noise in an app that would explore a single user’s collection and, thus, would mostly contain records that person already rated highly (i.e. they bought it).</p>
+<p>Also, the current measure of buying patterns, assuming that a record was bought at the time it was added to the site, is only as accurate as the users timeliness in pushing their new records to the site when they buy them. It may be that for some users who sit on a backlog of records and upload them to the site all at once, such proxies become highly skewed. Some words of caution to users about this in the UI may be appropriate.</p>
+<p>With time, an interesting exercise could be to fit a time series model to user’s collections to provide a forecast of the size of their collection in the future. The recently open-sourced <a href="https://facebookincubator.github.io/prophet/">Prophet</a> could be a suitably flexible procedure to implement in a Shiny app environment. Hold tight for that blog post…</p>
+</div>
