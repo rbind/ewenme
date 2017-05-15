@@ -17,7 +17,7 @@ library(knitr)
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-Analyst / R Developer at Transport for London (not the trains bit - the roads, walking, cycling, environment and road safety bit). Trying to understand how cities work, and making them work a bit better for everyone in the process. 
+Analyst / R Developer at Transport for London. Trying to understand how cities work, and making them work a bit better for everyone in the process. 
 
 Interested in sharing and supporting opinionated analysis and humane, ethical applications of machine learning.
 
