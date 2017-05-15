@@ -1,4 +1,4 @@
-baseurl = "http://ewenme.rbind.io/"
+baseurl = "https://ewenme.rbind.io/"
 title = "ewenme"
 theme = "hugo-creative-portfolio-theme"
 languageCode = "en-us"
