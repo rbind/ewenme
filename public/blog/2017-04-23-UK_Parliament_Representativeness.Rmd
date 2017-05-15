@@ -1,7 +1,7 @@
 ---
 date: "2017-04-23"
 title: "The Representativeness of UK Parliament"
-author: ""
+author: "Ewen Henderson"
 showonlyimage: false
 draft: false
 image: "blog/img/gov_represent.jpg"
