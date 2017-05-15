@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>ewenme</title>
+    <link>/</link>
+    <description>Recent content on ewenme</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy;2017 Ewen Henderson</copyright>
+    <lastBuildDate>Sun, 23 Apr 2017 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>The Representativeness of UK Parliament</title>
+      <link>/blog/2017-04-23-uk_parliament_representativeness/</link>
+      <pubDate>Sun, 23 Apr 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/2017-04-23-uk_parliament_representativeness/</guid>
+      <description>As a general election looms, a familiar UK media maelstrom has begun. The key difference here is that the public has been taken by surprise, somewhat - Theresa May’s call for a snap election (we weren’t actually due one until 2020) has left folk with little under two months to decide where their vote will go.
+For some, this may be the first election they are able to participate in. For many, the traditional delivery of party politics might not have kept them engaged all that well since the last election.</description>
+    </item>
+    
+    <item>
+      <title>A Sentiment Analysis of Kanye West Album Lyrics</title>
+      <link>/blog/2017-03-20-kanye_sentiment_analysis/</link>
+      <pubDate>Mon, 20 Mar 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/2017-03-20-kanye_sentiment_analysis/</guid>
+      <description>PSA: This blog will cover other stuff besides music, I promise…this post is the fruits of a recent meander into the new ggalt, hrbrthemes and tidytext packages.1
+Intro Kanye West is responsible for some of the realest, funniest (“if you fall on the concrete thats your ass fault”…asphalt…anyone?) and inspiring lyrics in music. The strength of these words has had a profound effect on me and my generation. Can the application of sentiment analysis techniques help us understand more about his art?</description>
+    </item>
+    
+    <item>
+      <title>Vinylspotting: A Discogs Fairytale</title>
+      <link>/blog/2017-03-01-vinylspotting/</link>
+      <pubDate>Wed, 01 Mar 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/2017-03-01-vinylspotting/</guid>
+      <description>At a cursory glance, it’s almost impossible to get much of an understanding of vinyl record collections beyond their size (or perhaps their age, depending on the smell?). If you get up close, you might recognise some artist names or make out some titles on the spines of LPs, but your average collector is gonna have loads of bits that even they don’t recognise on sight. Now, while the unadulterated excitement of finding a white label on the shelve that even you can’t remember is the romance at the very heart of record digging, that thought of forgotten artifacts would send archivists and librarians bonkers.</description>
+    </item>
+    
+    <item>
+      <title>About</title>
+      <link>/about/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/about/</guid>
+      <description>Analyst / R Developer at Transport for London (not the trains bit - the roads, walking, cycling, environment and road safety bit). Trying to understand how cities work, and making them work a bit better for everyone in the process.
+Interested in sharing and supporting opinionated analysis and humane, ethical applications of machine learning.
+With the rest of the time, I buy/play dusty records and watch The Breakfast Club (the radio one) and Hot 97 a bit too much.</description>
+    </item>
+    
+  </channel>
+</rss>

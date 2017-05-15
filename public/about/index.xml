@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>About on ewenme</title>
+    <link>/about/</link>
+    <description>Recent content in About on ewenme</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy;2017 Ewen Henderson</copyright>
+    
+	<atom:link href="/about/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>About</title>
+      <link>/about/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/about/</guid>
+      <description>Analyst / R Developer at Transport for London (not the trains bit - the roads, walking, cycling, environment and road safety bit). Trying to understand how cities work, and making them work a bit better for everyone in the process.
+Interested in sharing and supporting opinionated analysis and humane, ethical applications of machine learning.
+With the rest of the time, I buy/play dusty records and watch The Breakfast Club (the radio one) and Hot 97 a bit too much.</description>
+    </item>
+    
+  </channel>
+</rss>
