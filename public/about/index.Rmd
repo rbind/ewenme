@@ -17,11 +17,9 @@ library(knitr)
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-Analyst / R Developer at Transport for London. Trying to understand how cities work, and making them work a bit better for everyone in the process. 
+Analyst / R Developer and data science hopeful in UK government, currently. I'm interested in sharing and supporting opinionated analysis, adventures in R and humane, ethical applications of machine learning.
 
-Interested in sharing and supporting opinionated analysis and humane, ethical applications of machine learning.
-
-With the rest of the time, I buy/play dusty records and watch The Breakfast Club (the radio one) and Hot 97 a bit too much.
+Otherwise, I'm a collector/selector of dusty records and a player/admirer of The Beautiful Game&trade; (football, Euro-style). Please also hit me up with killer veggie recipes.
 
 ```{r,  echo = FALSE, message = FALSE, fig.align = "center", out.width = "90%"}
 library(magick)
