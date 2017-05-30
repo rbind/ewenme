@@ -15,7 +15,7 @@ googleAnalytics = "UA-98719738-1"
   description = ""
   copyright = "&copy;2017 Ewen Henderson"
   sidebarAbout = [
-    "Opinionated analysis and humane, ethical applications of machine learning"
+    "Opinionated analysis, adventures in R and humane, ethical applications of machine learning"
   ]
 
   # Nav links in the side bar
