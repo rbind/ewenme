@@ -12,7 +12,7 @@ description: "A look at London's pubs and bars with the geofacet package."
 
 ```{r setup, include=FALSE}
 
-knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, out.width = 625)
 
 # devtools::install_github("hafen/geofacet")
 
@@ -46,7 +46,7 @@ A couple of months ago, [a dataset was published](https://data.london.gov.uk/dat
 
 Below is a map of London's boroughs, in case you aren't familiar.
 
-![](http://hidden-london.com/wp-content/uploads/2016/06/New-London-boroughs-map.png)
+![](http://www.resizr.com/resized/779b.png)
 
 <br>
 
