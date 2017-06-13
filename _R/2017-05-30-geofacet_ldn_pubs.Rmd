@@ -12,7 +12,8 @@ description: "A look at London's pubs and bars with the geofacet package."
 
 ```{r setup, include=FALSE}
 
-knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, out.width = 625, dpi = 180)
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, out.width = 625,
+                      cache = TRUE, cache.lazy = FALSE, dpi = 180)
 options(width=120, dplyr.width = 150)
 
 # devtools::install_github("hafen/geofacet")
@@ -104,7 +105,7 @@ Ready to plot. All we need to do is call `facet_geo` in the same way we might ha
 
 Here's my first effort:
 
-```{r geofacet, fig.height=5, fig.width=7}
+```{r geofacet, fig.width = 10, fig.height = 10}
 
 # geofaceted plot of year-on-year pubs % change 
 ggplot(data = pubs, aes(x=year, y=yoy_chg, fill=yoy_chg)) +

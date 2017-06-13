@@ -1,0 +1,16 @@
+base
+geofacet
+tidyverse
+ggplot2
+tibble
+tidyr
+readr
+purrr
+dplyr
+gdata
+stringr
+viridisLite
+viridis
+scales
+hrbrthemes
+bindrcpp
