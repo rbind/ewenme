@@ -17,7 +17,7 @@ For some, this may be the first election they are able to participate in. For ma
 
 ```{r setup, include=FALSE}
 
-knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, fig.width = 8, fig.height = 6)
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, fig.width = 8, fig.height = 6, out.width = 625, dpi = 180)
 
 require(jsonlite)
 require(tidyverse)
@@ -61,11 +61,11 @@ members <- as.data.frame(data$persons) %>%
          term_start=as.Date(fct_recode(legislative_period_id, "2015-05-08"="term/56",
                                        "2010-05-06"="term/55", "2005-05-05"="term/54",
                                        "2001-06-07"="term/53", "1997-05-01"="term/52")),
-         legislative_period_id=fct_recode(legislative_period_id, "Term 56 (2015-)"="term/56",
-                                          "Term 55 (2010-2015)"="term/55", 
-                                          "Term 54 (2005-2010)"="term/54",
-                                          "Term 53 (2001-2005)"="term/53", 
-                                          "Term 52 (1997-2001)"="term/52"),
+         legislative_period_id=fct_recode(legislative_period_id, "Term 56\n(2015-)"="term/56",
+                                          "Term 55\n(2010-2015)"="term/55", 
+                                          "Term 54\n(2005-2010)"="term/54",
+                                          "Term 53\n(2001-2005)"="term/53", 
+                                          "Term 52\n(1997-2001)"="term/52"),
          age_at_term_start=as.numeric(floor(difftime(term_start, birth_date, units="days")/365))) %>%
   select(name, birth_date, gender, on_behalf_of_id_recoded, role, legislative_period_id,
          term_start, age_at_term_start, id)
@@ -112,7 +112,7 @@ Of course, the 30% representation we see in the current term is an aggregate of 
 ```{r echo=FALSE}
 # gender balance by party
 gender_split <- members %>%
-  filter(legislative_period_id == "Term 56 (2015-)" & on_behalf_of_id_recoded %in% c("Conservative",
+  filter(legislative_period_id == "Term 56\n(2015-)" & on_behalf_of_id_recoded %in% c("Conservative",
                                                                              "Labour", "SNP")) %>%
   group_by(on_behalf_of_id_recoded, gender) %>%
   summarise(count=n()) %>%

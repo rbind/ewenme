@@ -13,7 +13,7 @@ description: "Using the Genius API and sentiment analysis techniques to explore 
 
 ```{r setup, include=FALSE}
 
-knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, fig.width = 8, fig.height = 6)
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, fig.width = 8, fig.height = 6, out.width = 625, dpi = 180)
 
 library(RCurl); library(ggplot2); library(hrbrthemes); library(tidytext); library(data.table); library(tidyverse); library(forcats); library(ggalt); library(broom); library(stringr); library(httr); library(jsonlite); library(rvest)
 
@@ -166,7 +166,7 @@ I'm careful to state that this is **not** a sentiment analysis of the music per 
 
 <br>
 
-![](https://i1.wp.com/hypebeast.com/image/2015/08/kanye-west-to-perform-whole-808s-heartbreak-album-1.jpg?quality=95&w=1024)
+![](https://i1.wp.com/hypebeast.com/image/2015/08/kanye-west-to-perform-whole-808s-heartbreak-album-1.jpg?quality=95&w=625)
 
 <br>
 
@@ -401,7 +401,7 @@ So, what did we learn here? It looks like *Graduation's* lyrics have the highest
 
 <br>
 
-![Murakami's design for "Graduation"](https://images.rapgenius.com/612c1aa88e23bc6bfbdc4229a4c315d1.1000x753x1.jpg)
+![Murakami's design for "Graduation"](http://www.resizr.com/resized/f624.jpg)
 
 <br>
 
@@ -409,7 +409,7 @@ So, what did we learn here? It looks like *Graduation's* lyrics have the highest
 
 <br>
 
-![Condo's designs for "My Beautiful Dark Twisted Fantasy"](https://images.rapgenius.com/6c208957e0ae349de7a704139f83ce71.697x481x1.png)
+![Condo's designs for "My Beautiful Dark Twisted Fantasy"](http://www.resizr.com/resized/40c2.jpg)
 
 <br>
 

@@ -11,3 +11,4 @@ readr
 purrr
 dplyr
 data.table
+bindrcpp

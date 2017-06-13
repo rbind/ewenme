@@ -19,7 +19,7 @@ description: "Using the Genius API and sentiment analysis techniques to explore 
 <p>I’m careful to state that this is <strong>not</strong> a sentiment analysis of the music per se - nothing in here about keys, tempo, melody or any other components of music that influence the emotional valence of the piece<a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a> - the analysis is reflective of the lyrical content only, while the sample is limited to Ye’s solo studio albums (album editions taken from Last.fm <a href="https://www.last.fm/music/Kanye+West/+albums">here</a>). Also, the analysis includes lyrics from artists featured on the records, so is representative of the body of work rather than the individual.</p>
 <p><br></p>
 <div class="figure">
-<img src="https://i1.wp.com/hypebeast.com/image/2015/08/kanye-west-to-perform-whole-808s-heartbreak-album-1.jpg?quality=95&amp;w=1024" />
+<img src="https://i1.wp.com/hypebeast.com/image/2015/08/kanye-west-to-perform-whole-808s-heartbreak-album-1.jpg?quality=95&amp;w=625" />
 
 </div>
 <p><br></p>
@@ -41,7 +41,7 @@ description: "Using the Genius API and sentiment analysis techniques to explore 
 <div id="first-look" class="section level2">
 <h2>First look</h2>
 <p>To begin with, a simple look at Ye’s lyric count by album:</p>
-<p><img src="/blog/2017-03-20-Kanye_sentiment_analysis_files/figure-html/unnamed-chunk-3-1.png" width="768" /></p>
+<p><img src="/blog/2017-03-20-Kanye_sentiment_analysis_files/figure-html/unnamed-chunk-3-1.png" width="625" /></p>
 <p><em>The College Dropout</em> is clearly the album with biggest (lyrical) bang for your buck, registering <strong>13,679 words</strong>. <em>808s &amp; Heartbreak</em> and <em>Yeezus</em> lag the farthest behind (below five-thousand a piece, and around one-third of <em>College Dropout</em>), and with good reason - <em>808s</em> is memorably less lyrically dense than the others, while the latter has the smallest number of tracks.</p>
 <p>We can normalise by track length and give a measure of ‘lyrical density’ (words-per-second) across time:</p>
 <pre class="r"><code>album_df &lt;- tidy_df %&gt;%
@@ -62,7 +62,7 @@ ggplot(album_df_b, aes(x=count_per_sec, y=fct_rev(album))) +
        y=NULL,
        subtitle=&quot;Records in chronological order&quot;,
        caption=&quot;Lyric data from Genius (https://genius.com/)&quot;)</code></pre>
-<p><img src="/blog/2017-03-20-Kanye_sentiment_analysis_files/figure-html/unnamed-chunk-4-1.png" width="768" /></p>
+<p><img src="/blog/2017-03-20-Kanye_sentiment_analysis_files/figure-html/unnamed-chunk-4-1.png" width="625" /></p>
 <p>Again, as expected, <em>808s</em> hangs back in the words-per-second stakes. <em>The Life Of Pablo</em> (TLOP) exhibits a lyrical pace more comparable to Kanye’s earlier albums (<em>College Dropout</em> stays top, still). It’s trickier to say for sure if his flow/delivery is a throwback from this metric alone (would be more optimal if tempo was incorporated into this equation, and remember that this figure includes breakdowns, outros, etc.) but maybe someone’s been listening…</p>
 <div class="figure">
 <img src="http://deathofthecritic.com/index_files/kanye.png" />
@@ -70,19 +70,19 @@ ggplot(album_df_b, aes(x=count_per_sec, y=fct_rev(album))) +
 </div>
 <p><br></p>
 <p>It’s worth taking a look at how some of this looks across tracks, too.</p>
-<p><img src="/blog/2017-03-20-Kanye_sentiment_analysis_files/figure-html/unnamed-chunk-5-1.png" width="768" /></p>
+<p><img src="/blog/2017-03-20-Kanye_sentiment_analysis_files/figure-html/unnamed-chunk-5-1.png" width="625" /></p>
 <p>‘Last Call’ stands lone and tall at <strong>2,745</strong> words, with most in and around the 500-mark. However, ‘Last Call’ is also the <em>longest</em> Kanye album track (12:40(!!)). As before, what happens if we normalise by track length?</p>
-<p><img src="/blog/2017-03-20-Kanye_sentiment_analysis_files/figure-html/unnamed-chunk-6-1.png" width="768" /></p>
+<p><img src="/blog/2017-03-20-Kanye_sentiment_analysis_files/figure-html/unnamed-chunk-6-1.png" width="625" /></p>
 <p>Now, ‘Freestyle 4’ off of <em>TLOP</em> is highest - remember, this metric of lyrical density is inclusive of breakdowns and such. If you listen to this track which is just over two-minutes long, you’ll see there is literally no let-up from the big man.</p>
 <p>For good measure, let’s end this section with a quick look at the range of lyric counts by record (hint: excuse for the dumbbell chart):</p>
-<p><img src="/blog/2017-03-20-Kanye_sentiment_analysis_files/figure-html/unnamed-chunk-7-1.png" width="768" /></p>
+<p><img src="/blog/2017-03-20-Kanye_sentiment_analysis_files/figure-html/unnamed-chunk-7-1.png" width="625" /></p>
 <p>How similar are <em>Graduation</em>, <em>808s</em> and <em>Yeezus</em>?</p>
 </div>
 <div id="feelings" class="section level2">
 <h2>Feelings</h2>
 <p>We’ve touched on things like the word count and lyrical density of Kanye’s records. Now, lets start to explore what is actually being said.</p>
 <p><em>Note: from this point on, English ‘stop words’ (e.g. and, or, but) are excluded from the analysis.</em></p>
-<p><img src="/blog/2017-03-20-Kanye_sentiment_analysis_files/figure-html/unnamed-chunk-8-1.png" width="768" /></p>
+<p><img src="/blog/2017-03-20-Kanye_sentiment_analysis_files/figure-html/unnamed-chunk-8-1.png" width="625" /></p>
 <p>Kanye’s confirmed it, everyone - love conquers all (even sh*t). We’ll need to dig further to get into the emotion and the message contained in the tracks that embody these words, though.</p>
 <p><br></p>
 <div class="figure">
@@ -127,18 +127,18 @@ by_album_sentiment %&gt;%
        caption=&quot;Lyric data from Genius (https://genius.com/)&quot;) +
   theme(axis.text.x=element_text(angle=45, hjust = 1)) +
   theme(legend.position=&quot;top&quot;)</code></pre>
-<p><img src="/blog/2017-03-20-Kanye_sentiment_analysis_files/figure-html/unnamed-chunk-9-1.png" width="768" /></p>
+<p><img src="/blog/2017-03-20-Kanye_sentiment_analysis_files/figure-html/unnamed-chunk-9-1.png" width="625" /></p>
 <p>So, what did we learn here? It looks like <em>Graduation’s</em> lyrics have the highest (proportional) rate of anticipation and surprise sentiment, compared to the other records. Interestingly, this is in keeping with the themes captured in Takashi Murukami’s cover art (below), where we see ‘Dropout Bear’ being thrust out into a new world.</p>
 <p><br></p>
 <div class="figure">
-<img src="https://images.rapgenius.com/612c1aa88e23bc6bfbdc4229a4c315d1.1000x753x1.jpg" alt="Murakami’s design for Graduation" />
+<img src="http://www.resizr.com/resized/f624.jpg" alt="Murakami’s design for Graduation" />
 <p class="caption">Murakami’s design for “Graduation”</p>
 </div>
 <p><br></p>
 <p><em>My Beautiful Dark Twisted Fantasy</em> has the highest rate of anger and disgust, comparitively. Again, these are prominent in George Condo’s bastardized, surreal vision for the record.</p>
 <p><br></p>
 <div class="figure">
-<img src="https://images.rapgenius.com/6c208957e0ae349de7a704139f83ce71.697x481x1.png" alt="Condo’s designs for My Beautiful Dark Twisted Fantasy" />
+<img src="http://www.resizr.com/resized/40c2.jpg" alt="Condo’s designs for My Beautiful Dark Twisted Fantasy" />
 <p class="caption">Condo’s designs for “My Beautiful Dark Twisted Fantasy”</p>
 </div>
 <p><br></p>
@@ -176,10 +176,10 @@ by_track_sentiment %&gt;%
        y=NULL,
        subtitle=&quot;Powered by the Bing lexicon&quot;,
        caption=&quot;Lyric data from Genius (https://genius.com/)&quot;)</code></pre>
-<p><img src="/blog/2017-03-20-Kanye_sentiment_analysis_files/figure-html/unnamed-chunk-10-1.png" width="768" /></p>
+<p><img src="/blog/2017-03-20-Kanye_sentiment_analysis_files/figure-html/unnamed-chunk-10-1.png" width="625" /></p>
 <p>The above uses the <a href="https://www.cs.uic.edu/~liub/FBS/sentiment-analysis.html#lexicon">Bing lexicon</a> to examine how positive/negative sentiment manifests by track in <em>My Beautiful Dark Twisted Fantasy</em>. ‘Monster’ is furthest to the left with the highest ratio of negative to positive sentiment in it’s lyrics, followed closely by ‘So Appalled’. In fact, ‘All of the Lights’ would appear to be the only real respite for ‘positive’ lyrical sentiment.</p>
 <p>What if we apply this to the rest of the discography, and see which tracks score highest for positive/negative sentiment across the board?</p>
-<p><img src="/blog/2017-03-20-Kanye_sentiment_analysis_files/figure-html/unnamed-chunk-11-1.png" width="768" /></p>
+<p><img src="/blog/2017-03-20-Kanye_sentiment_analysis_files/figure-html/unnamed-chunk-11-1.png" width="625" /></p>
 <p>It might be surprising to see ‘Amazing’ way out in front (n.b. I explain Love Lockdown’s perhaps false position in the conclusion). Remember, this is based on lyrics <em>only</em> - here’s a reminder of the hook…</p>
 <blockquote>
 <p><em>No matter what, you’ll never take that from me,</em> <em>My reign is as far as your eyes can see;</em> <em>It’s amazing, so amazing, so amazing, so amazing,</em> <em>It’s amazing, so amazing, so amazing, so amazing</em> <em>It’s amazing, so amazing, so amazing, so amazing</em> <em>It’s amazing, so amazing, so amazing, so amazing</em> <em>It’s amazing</em></p>
