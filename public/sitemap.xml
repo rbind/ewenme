@@ -42,15 +42,6 @@
   </url>
   
   <url>
-    <loc>/projects/</loc>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/projects/</loc>
-  </url>
-  
-  <url>
     <loc>/tags/</loc>
     <priority>0</priority>
   </url>

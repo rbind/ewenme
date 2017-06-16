@@ -20,12 +20,18 @@ knitr::opts_chunk$set(echo = TRUE)
 
 Analyst / R Developer and data science hopeful. I'm interested in sharing and supporting opinionated analysis, adventures in R and humane, ethical applications of machine learning.
 
-Otherwise, I'm a collector/selector of dusty records and a player/admirer of The Beautiful Game&trade;. Please hit me up with your fire veggie recipes.
+### Projects
+
+* [fplR](https://ewenme.github.io/fplR/): R package for working with Fantasy Premier League (FPL) data
+* [Vinylspotting](https://ewenme.shinyapps.io/vinylspotting/): Shiny app for Discogs users to visualise and explore their record collections
+
+### Personal
+
+I'm a collector/selector of dusty records and a player/admirer of The Beautiful Game&trade;. Also, please hit me up with your fire veggie recipes.
 
 ```{r,  echo = FALSE, message = FALSE, fig.align = "center", out.width = "90%"}
 library(magick)
 library(magrittr)
-
 
 me <- image_read("images/me.jpg") %>% 
   image_scale("600") %>% 
