@@ -17,12 +17,12 @@ description: "Developing a Shiny app to explore and visualize record collections
 <p>Enter <a href="http://www.discogs.com">Discogs</a> - the definitive recorded music database and marketplace, with over 8 million record entries and counting. Aside from catching themselves tumbling through all sorts of audio rabbit-holes, Discogs users are able to forensically catalog their own collection. Once you’re at more than a few hundred records, having a well-kept digital archive of your music to refer to is sometimes the only way of knowing “did I already buy that record?”, without having to leaf through the physical lot.</p>
 <p>A user can browse through the individual pages of each of their records, but when the user wants to look at their overall collection they see something like this:</p>
 <p><br></p>
-<p><img src="../vinylspotting_img/Discogs collection page.png" width="100%" style="display: block; margin: auto;" /></p>
+<p><img src="/img/2017-03-01-Vinylspotting/Discogs collection page.png" width="100%" style="display: block; margin: auto;" /></p>
 <p><br></p>
 <p>It’s essentially a tabulated view of your collection with rudimentary info, and some record sleeve thumbnails to boot. The ‘collection value’ is a new (and very addictive) addition that, as far as I can tell, is the <strong>only</strong> summary statistic on show (besides the count), which got me into thinking:</p>
 <div id="if-i-had-put-the-work-in-to-ammassing-a-couple-thousand-records-say-it-would-be-cool-to-know-more-about-my-record-collection-than-just-how-much-its-worth." class="section level3">
 <h3><strong>If I had put the work in to ammassing a couple thousand records, say, it would be cool to know more about my record collection than just how much it’s worth.</strong></h3>
-<p>The obvious next thought was, “R could probably help with that”.</p>
+<p>The obvious next thought was, “R could probably help with that”.<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a></p>
 <p><br></p>
 </div>
 <div id="getting-hot-n-heavy-with-the-discogs-api" class="section level2">
@@ -203,4 +203,11 @@ glimpse(test)</code></pre>
 <p>There are some things that would be cool to incorporate into future iterations. The most glaring omission is any kind of spend analytics - unfortunately, Discogs don’t offer up their marketplace sales data in the public API offering (though there has been previous for publications to get exclusive access (hint, hint)) so for now, it’s off limits. Something that I chose to exclude was record’s rating data (i.e. what the average rating for a record was), which felt like it could be noise in an app that would explore a single user’s collection and, thus, would mostly contain records that person already rated highly (i.e. they bought it).</p>
 <p>Also, the current measure of buying patterns, assuming that a record was bought at the time it was added to the site, is only as accurate as the users timeliness in pushing their new records to the site when they buy them. It may be that for some users who sit on a backlog of records and upload them to the site all at once, such proxies become highly skewed. Some words of caution to users about this in the UI may be appropriate.</p>
 <p>With time, an interesting exercise could be to fit a time series model to user’s collections to provide a forecast of the size of their collection in the future. The recently open-sourced <a href="https://facebookincubator.github.io/prophet/">Prophet</a> could be a suitably flexible procedure to implement in a Shiny app environment. Hold tight for that blog post…</p>
+<p><br></p>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>To keep the post concise I don’t show all of the code, especially code that generates figures. But you can find the full code <a href="https://github.com/rbind/ewenme/blob/master/content/blog/2017-03-01-Vinylspotting.Rmd">here</a>.<a href="#fnref1">↩</a></p></li>
+</ol>
 </div>

@@ -25,7 +25,7 @@ A user can browse through the individual pages of each of their records, but whe
 <br>
 
 ```{r echo = FALSE, out.width = "100%", fig.align = "center"}
-knitr::include_graphics("../vinylspotting_img/Discogs collection page.png")
+knitr::include_graphics("/img/2017-03-01-Vinylspotting/Discogs collection page.png")
 ```
 
 <br>
@@ -34,7 +34,7 @@ It's essentially a tabulated view of your collection with rudimentary info, and 
 
 ### **If I had put the work in to ammassing a couple thousand records, say, it would be cool to know more about my record collection than just how much it's worth.**
 
-The obvious next thought was, "R could probably help with that".
+The obvious next thought was, "R could probably help with that".[^fullcode]
 
 <br>
 
@@ -184,3 +184,7 @@ There are some things that would be cool to incorporate into future iterations. 
 Also, the current measure of buying patterns, assuming that a record was bought at the time it was added to the site, is only as accurate as the users timeliness in pushing their new records to the site when they buy them. It may be that for some users who sit on a backlog of records and upload them to the site all at once, such proxies become highly skewed. Some words of caution to users about this in the UI may be appropriate.
 
 With time, an interesting exercise could be to fit a time series model to user's collections to provide a forecast of the size of their collection in the future. The recently open-sourced [Prophet](https://facebookincubator.github.io/prophet/) could be a suitably flexible procedure to implement in a Shiny app environment. Hold tight for that blog post...
+
+<br>
+
+[^fullcode]: To keep the post concise I don't show all of the code, especially code that generates figures. But you can find the full code [here](https://github.com/rbind/ewenme/blob/master/content/blog/2017-03-01-Vinylspotting.Rmd).

@@ -384,6 +384,6 @@ While the *EveryPolitician project* is still in early days and is first trying t
 <br>
 <br>
 
-[^fullcode]: To keep the post concise I don't show all of the code, especially code that generates figures. But you can find the full code [here](https://github.com/ewenme/ewenme.github.io/blob/master/_R/2017-04-23-UK_Parliament_Representativeness.Rmd).
+[^fullcode]: To keep the post concise I don't show all of the code, especially code that generates figures. But you can find the full code [here](https://github.com/rbind/ewenme/blob/master/content/blog/2017-04-23-UK_Parliament_Representativeness.Rmd).
 [^Missing]: Two MPs with missing ages were excluded from the parts of the analysis studying age, at the time of writing: Sarah Olney (Liberal Democrats) and Caroline Johnson (Conservative).
 [^Speakers]: I decided to exclude Speakers and Deputy Speakers from this part of the analysis. These are individuals performing roles in Parliament that are unaffiliated with any party, and are not publicly elected positions.

@@ -14,7 +14,7 @@ description: "A look at London's pubs and bars with the geofacet package."
 
 <div id="introducing-geofacet" class="section level2">
 <h2>Introducing geofacet</h2>
-<p>The <a href="https://github.com/hafen/geofacet"><code>geofacet</code></a> package dropped recently (I want to say last week?), a <code>ggplot2</code> extension allowing for the user to facet plots in a way that can retain an underlying geographical dimension. It perhaps goes a little bit further towards abstraction than <a href="https://pitchinteractiveinc.github.io/tilegrams/">tilegrams</a>, but the visualizations we produce can be a bit more complex as well. This post documents my first foray into this packages functionality.</p>
+<p>The <a href="https://github.com/hafen/geofacet"><code>geofacet</code></a> package dropped recently (I want to say last week?), a <code>ggplot2</code> extension allowing for the user to facet plots in a way that can retain an underlying geographical dimension. It perhaps goes a little bit further towards abstraction than <a href="https://pitchinteractiveinc.github.io/tilegrams/">tilegrams</a>, but the visualizations we produce can be a bit more complex as well. This post documents my first foray into this packages functionality.<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a></p>
 <p><br></p>
 </div>
 <div id="getting-to-grips-with-grids" class="section level2">
@@ -37,11 +37,7 @@ description: "A look at London's pubs and bars with the geofacet package."
 <h2>Geofaceting London</h2>
 <p>A couple of months ago, <a href="https://data.london.gov.uk/dataset/the-number-of-public-houses-and-bars-in-london-2001-2016">a dataset was published</a> containing the number of public houses (pubs) and bars by local authority (borough) in London from 2001 through 2016. We’ll use this to demonstrate how this package can help us visualize trends in data without losing the geography along the way.</p>
 <p>Below is a map of London’s boroughs, in case you aren’t familiar.</p>
-<div class="figure">
-<img src="http://www.resizr.com/resized/779b.png" />
-
-</div>
-<p><br></p>
+<p><img src="/img/2017-05-30-geofacet_ldn_pubs/boroughs.png" width="100%" style="display: block; margin: auto;" /> <br></p>
 <p>With that cleared up, let’s load up this data and get it into shape.</p>
 <pre class="r"><code>library(geofacet)
 library(tidyverse)
@@ -114,4 +110,11 @@ ggplot(data = pubs, aes(x=year, y=yoy_chg, fill=yoy_chg)) +
 <div id="close" class="section level2">
 <h2>Close</h2>
 <p>As the package author, <a href="https://twitter.com/hafenstats/status/869621852385165312">Ryan Hafen accepts</a> that some of these plot’s readability does rely on some pre-existing knowledge of the underlying geography (Ryan also says to watch out for some ideas to deal with this). Bearing this in mind, there are opportunities to make eye-catching plots on the occasions when this assumption holds (see <a href="https://www.nytimes.com/2017/05/25/opinion/sunday/the-assault-on-colleges-and-the-american-dream.html">this New York Times example</a>). I reckon I’m gonna have fun with it…</p>
+<p><br></p>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>To keep the post concise I don’t show all of the code, especially code that generates figures. But you can find the full code <a href="https://github.com/rbind/ewenme/blob/master/content/blog/2017-05-30-geofacet_ldn_pubs.Rmd">here</a>.<a href="#fnref1">↩</a></p></li>
+</ol>
 </div>

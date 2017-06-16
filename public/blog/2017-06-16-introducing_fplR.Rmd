@@ -1,0 +1,12 @@
+---
+date: "2017-06-16"
+title: "Introducing fplR"
+author: "Ewen Henderson"
+showonlyimage: false
+draft: false
+image: "blog/img/pub-map-uk-all-731587.jpg"
+weight: 0
+type: "post"
+description: "A test drive of my fplR package"
+---
+

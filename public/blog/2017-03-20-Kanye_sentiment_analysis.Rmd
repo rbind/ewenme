@@ -153,7 +153,7 @@ library(RCurl); library(ggplot2); library(hrbrthemes); library(tidytext); librar
 # 
 # saveRDS(kanye_df, "data.Rda")
 
-df <- readRDS("kanye.Rda")
+df <- readRDS("../data/kanye.Rda")
 ```
 
 PSA: This blog *will* cover other stuff besides music, I promise...this post is the fruits of a recent meander into the new [`ggalt`](https://cran.r-project.org/web/packages/ggalt/index.html), [`hrbrthemes`](https://cran.r-project.org/web/packages/hrbrthemes/index.html) and [`tidytext`](https://cran.r-project.org/web/packages/tidytext/index.html) packages.[^fullcode]
@@ -166,7 +166,9 @@ I'm careful to state that this is **not** a sentiment analysis of the music per 
 
 <br>
 
-![](https://i1.wp.com/hypebeast.com/image/2015/08/kanye-west-to-perform-whole-808s-heartbreak-album-1.jpg?quality=95&w=625)
+```{r echo = FALSE, out.width = "100%", fig.align = "center"}
+knitr::include_graphics("/img/2017-03-20-Kanye_sentiment_analysis/808s_heart.jpg")
+```
 
 <br>
 
@@ -260,8 +262,9 @@ ggplot(album_df_b, aes(x=count_per_sec, y=fct_rev(album))) +
 
 Again, as expected, *808s* hangs back in the words-per-second stakes. *The Life Of Pablo* (TLOP) exhibits a lyrical pace more comparable to Kanye's earlier albums (*College Dropout* stays top, still). It's trickier to say for sure if his flow/delivery is a throwback from this metric alone (would be more optimal if tempo was incorporated into this equation, and remember that this figure includes breakdowns, outros, etc.) but maybe someone's been listening...
 
-![](http://deathofthecritic.com/index_files/kanye.png)
-
+```{r echo = FALSE, out.width = "100%", fig.align = "center"}
+knitr::include_graphics("/img/2017-03-20-Kanye_sentiment_analysis/kanye_tweets.png")
+```
 <br>
 
 It's worth taking a look at how some of this looks across tracks, too.
@@ -350,7 +353,9 @@ Kanye's confirmed it, everyone - love conquers all (even sh*t). We'll need to di
 
 <br>
 
-![](https://images.rapgenius.com/lo819l8o8xjarydi10ur9r0d.525x350x4.gif)
+```{r echo = FALSE, out.width = "100%", fig.align = "center"}
+knitr::include_graphics("/img/2017-03-20-Kanye_sentiment_analysis/kanye_croissants.gif")
+```
 
 <br>
 
@@ -401,15 +406,18 @@ So, what did we learn here? It looks like *Graduation's* lyrics have the highest
 
 <br>
 
-![Murakami's design for "Graduation"](http://www.resizr.com/resized/f624.jpg)
-
+```{r echo = FALSE, out.width = "100%", fig.align = "center"}
+knitr::include_graphics("/img/2017-03-20-Kanye_sentiment_analysis/kanye_graduation.jpg")
+```
 <br>
 
 *My Beautiful Dark Twisted Fantasy* has the highest rate of anger and disgust, comparitively. Again, these are prominent in George Condo's bastardized, surreal vision for the record.
 
 <br>
 
-![Condo's designs for "My Beautiful Dark Twisted Fantasy"](http://www.resizr.com/resized/40c2.jpg)
+```{r echo = FALSE, out.width = "100%", fig.align = "center"}
+knitr::include_graphics("/img/2017-03-20-Kanye_sentiment_analysis/kanye_mbdtf.png")
+```
 
 <br>
 
@@ -491,9 +499,10 @@ Finally, a treat for those who know. Thanks for letting me get in my zone.
 
 <br>
 
-![](http://www.iamdashet.com/wp-content/uploads/2012/03/kanyezone-450x280.jpg)
-
+```{r echo = FALSE, out.width = "100%", fig.align = "center"}
+knitr::include_graphics("/img/2017-03-20-Kanye_sentiment_analysis/kanye_zone.jpg")
+```
 <br>
 
-[^fullcode]: To keep the post concise I don't show all of the code, especially code that generates figures. But you can find the full code [here](https://github.com/ewenme/ewenme.github.io/blob/master/_R/2017-03-20-Kanye_sentiment_analysis.Rmd).
+[^fullcode]: To keep the post concise I don't show all of the code, especially code that generates figures. But you can find the full code [here](https://github.com/rbind/ewenme/blob/master/content/blog/2017-03-20-Kanye_sentiment_analysis.Rmd).
 [^RCharlie]: some of these factors are captured by Spotify, as explored in [this piece](http://rcharlie.com/2017-02-16-fitteR-happieR/) (a big inspiration for this post). This data was not available for Kanye's full studio discography through the Spotify API, at the time of this analysis.
