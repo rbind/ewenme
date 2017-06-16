@@ -28,6 +28,10 @@ googleAnalytics = "UA-98719738-1"
   url = "blog/"
 
   [[params.navlinks]]
+  name = "Projects"
+  url = "projects/"
+
+  [[params.navlinks]]
   name = "About"
   url = "about/"
 

@@ -18,7 +18,3 @@ library(knitr)
 ### Web Apps
 
 * [Vinylspotting](https://ewenme.shinyapps.io/vinylspotting/): Shiny app for Discogs users to visualise and explore their record collections
-
-
-
-

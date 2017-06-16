@@ -59,7 +59,18 @@ Intro Kanye West is responsible for some of the realest, funniest (“if you fal
       
       <guid>/about/</guid>
       <description>Analyst / R Developer and data science hopeful. I’m interested in sharing and supporting opinionated analysis, adventures in R and humane, ethical applications of machine learning.
-Projects  fplR: R package for working with Fantasy Premier League (FPL) data Vinylspotting: Shiny app for Discogs users to visualise and explore their record collections   Personal I’m a collector/selector of dusty records and a player/admirer of The Beautiful Game™. Also, please hit me up with your fire veggie recipes.</description>
+I’m also a collector/selector of dusty records and a player/admirer of The Beautiful Game™. Please hit me up with your fire veggie recipes, too.</description>
+    </item>
+    
+    <item>
+      <title>Projects</title>
+      <link>/projects/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/projects/</guid>
+      <description>
+Software  fplR: R package for working with Fantasy Premier League (FPL) data  
+ Web Apps  Vinylspotting: Shiny app for Discogs users to visualise and explore their record collections   </description>
     </item>
     
   </channel>
