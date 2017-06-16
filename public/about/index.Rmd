@@ -5,6 +5,7 @@ type: "about"
 
 ```{r, echo = FALSE}
 library(knitr)
+
 "print.magick-image" <- function(x, ...){
   ext <- ifelse(length(x), tolower(image_info(x[1])$format), "gif")
   tmp <- tempfile(fileext = paste0(".", ext))
@@ -17,9 +18,9 @@ library(knitr)
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-Analyst / R Developer and data science hopeful in UK government, currently. I'm interested in sharing and supporting opinionated analysis, adventures in R and humane, ethical applications of machine learning.
+Analyst / R Developer and data science hopeful. I'm interested in sharing and supporting opinionated analysis, adventures in R and humane, ethical applications of machine learning.
 
-Otherwise, I'm a collector/selector of dusty records and a player/admirer of The Beautiful Game&trade; (football, Euro-style). Please also hit me up with killer veggie recipes.
+Otherwise, I'm a collector/selector of dusty records and a player/admirer of The Beautiful Game&trade;. Please hit me up with your fire veggie recipes.
 
 ```{r,  echo = FALSE, message = FALSE, fig.align = "center", out.width = "90%"}
 library(magick)

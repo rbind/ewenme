@@ -28,6 +28,10 @@ googleAnalytics = "UA-98719738-1"
   url = "blog/"
 
   [[params.navlinks]]
+  name = "Projects"
+  url = "projects/"
+
+  [[params.navlinks]]
   name = "About"
   url = "about/"
 
@@ -35,7 +39,6 @@ googleAnalytics = "UA-98719738-1"
   [params.social]
   email        = "ewenhenderson@gmail.com"
   twitter      = "https://twitter.com/ewen_"
-  linkedin     = "https://www.linkedin.com/in/ewenhenderson"
   github       = "https://www.github.com/ewenme"
 
   #Adding widgets to the sidebar
