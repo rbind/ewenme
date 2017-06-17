@@ -17,7 +17,7 @@ For some, this may be the first election they are able to participate in. For ma
 
 ```{r setup, include=FALSE}
 
-knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, fig.height = 6)
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, out.width = 300)
 
 require(jsonlite)
 require(tidyverse)
