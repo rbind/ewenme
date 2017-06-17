@@ -17,7 +17,7 @@ For some, this may be the first election they are able to participate in. For ma
 
 ```{r setup, include=FALSE}
 
-knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, fig.width = 8, fig.height = 6, out.width = 625, dpi = 180)
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, fig.height = 6)
 
 require(jsonlite)
 require(tidyverse)
@@ -82,7 +82,7 @@ We now have biographic and demographic data for all members of Parliament across
 
 Something which demands immediate attention (not just in this domain) is understanding member's proportional representation by gender. A big problem for many voters is finding members to identify with, given the historic barriers to women entering a male-dominated parliamentary system. How does female representation look over time?
 
-```{r echo=FALSE}
+```{r female_rep, echo=FALSE}
 # female representation over time
 members %>%
   group_by(legislative_period_id, gender) %>%
@@ -109,7 +109,7 @@ Of course, the 30% representation we see in the current term is an aggregate of 
 
 *N.B. The below graphic only includes the three parties with the largest count of members in the latest Parliament. Each of the other parties had fewer than ten representatives.*
 
-```{r echo=FALSE}
+```{r party_genders, echo=FALSE}
 # gender balance by party
 gender_split <- members %>%
   filter(legislative_period_id == "Term 56\n(2015-)" & on_behalf_of_id_recoded %in% c("Conservative",
@@ -146,7 +146,7 @@ Labour, currently the second largest party by no. of MPs (238), has double the p
 
 It must be remembered that these figures represent *elected* officials, and so possible gender biases may stem from voters as well as the parties themselves. An in-depth analysis of historical party candidate gender proportions and subsequent voting patterns could start to unpick this. For the purposes of this analysis, we are interested in sharing information to help the uninformed understand what parties and parliament look like, and this is a good start - perhaps identifying trends over time in the biggest parties would be a good next step.
 
-```{r echo=FALSE}
+```{r female_trend, echo=FALSE}
 # female representation over time by party
 members %>%
   filter(on_behalf_of_id_recoded %in% c("Conservative", "Labour")) %>%
