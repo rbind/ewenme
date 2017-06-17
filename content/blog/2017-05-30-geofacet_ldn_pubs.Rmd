@@ -12,7 +12,7 @@ description: "A look at London's pubs and bars with the geofacet package."
 
 ```{r setup, include=FALSE}
 
-knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, out.width = 625, dpi = 180)
+knitr::opts_chunk$set(cache=TRUE, echo = TRUE, tidy = TRUE, warning = FALSE, message = FALSE, out.width = '100%', dpi = 180)
 
 # devtools::install_github("hafen/geofacet")
 

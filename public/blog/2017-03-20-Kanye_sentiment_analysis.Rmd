@@ -13,7 +13,7 @@ description: "Using the Genius API and sentiment analysis techniques to explore 
 
 ```{r setup, include=FALSE}
 
-knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, fig.width = 8, fig.height = 6, out.width = 625, dpi = 180)
+knitr::opts_chunk$set(cache=TRUE, echo = TRUE, tidy = TRUE, warning = FALSE, message = FALSE, out.width = '100%', dpi = 180)
 
 library(RCurl); library(ggplot2); library(hrbrthemes); library(tidytext); library(data.table); library(tidyverse); library(forcats); library(ggalt); library(broom); library(stringr); library(httr); library(jsonlite); library(rvest)
 
@@ -226,8 +226,8 @@ tidy_df %>%
   ggplot(aes(x=n, y=fct_rev(album))) +
   geom_lollipop(point.colour="firebrick", point.size=2, horizontal=TRUE) +
   scale_x_comma(breaks = seq(0, 15000, by=2500), limits = c(0, 15000)) +
-  theme_ipsum(grid="X", base_size = 16, axis_title_size = 16, caption_size = 12,
-              plot_title_size = 20, subtitle_size = 16) +
+  theme_ipsum(grid="X", base_size = 14, axis_title_size = 14, caption_size = 12,
+              plot_title_size = 18, subtitle_size = 14) +
   labs(title="How many words are in Kanye West albums?",
        x=NULL,
        y=NULL,
@@ -251,8 +251,8 @@ album_df_b <- df %>%
 
 ggplot(album_df_b, aes(x=count_per_sec, y=fct_rev(album))) +
   geom_lollipop(point.colour="firebrick", point.size=2, horizontal=TRUE) +
-  theme_ipsum(grid="X", base_size = 16, axis_title_size = 16, caption_size = 12,
-              plot_title_size = 20, subtitle_size = 16) +
+  theme_ipsum(grid="X", base_size = 14, axis_title_size = 14, caption_size = 12,
+              plot_title_size = 18, subtitle_size = 14) +
   labs(title="Words-per-second in Kanye West albums",
        x=NULL,
        y=NULL,
@@ -276,8 +276,8 @@ tidy_df %>%
   ggplot() +
   geom_histogram(aes(n), fill="firebrick") +
   scale_x_comma(breaks = seq(0, 3000, by=500), limits = c(0, 3000)) +
-  theme_ipsum(base_size = 16, axis_title_size = 16, caption_size = 12,
-              plot_title_size = 20, subtitle_size = 16) +
+  theme_ipsum(base_size = 14, axis_title_size = 14, caption_size = 12,
+              plot_title_size = 18, subtitle_size = 14) +
   annotate("text", label = "'Last Call'", x = 2800, y = 2) +
   labs(title="Distribution of word counts in Kanye West album tracks",
        x="Word count",
@@ -296,8 +296,8 @@ tidy_df %>%
   mutate(count_per_sec=word_count/duration) %>%
   ggplot() +
   geom_histogram(aes(count_per_sec), fill="firebrick") +
-  theme_ipsum(base_size = 16, axis_title_size = 16, caption_size = 12,
-              plot_title_size = 20, subtitle_size = 16) +
+  theme_ipsum(base_size = 14, axis_title_size = 14, caption_size = 12,
+              plot_title_size = 18, subtitle_size = 14) +
   annotate("text", label = "'Freestyle 4'", x = 8.3, y = 2) +
   labs(title="Words-per-second distribution of Kanye West album tracks",
        x="Words per Second",
@@ -320,8 +320,8 @@ df %>%
   scale_x_continuous(breaks = seq(0, 800, by=200)) +
   labs(x="Seconds", y=NULL, title="Range of track lengths in Kanye West albums",
        caption="Lyric data from Genius (https://genius.com/)") +
-  theme_ipsum(base_size = 16, axis_title_size = 16, caption_size = 12,
-              plot_title_size = 20, subtitle_size = 16)
+  theme_ipsum(base_size = 14, axis_title_size = 14, caption_size = 12,
+              plot_title_size = 18, subtitle_size = 14)
 ```
 
 How similar are *Graduation*, *808s* and *Yeezus*?
@@ -339,8 +339,8 @@ sentiment_df %>%
   top_n(n=10, wt=count) %>%
   ggplot(aes(x=reorder(str_to_upper(word), -count), y=count)) +
   geom_lollipop(point.colour="firebrick", point.size=2) +
-  theme_ipsum(base_size = 16, axis_title_size = 16, caption_size = 12,
-              plot_title_size = 20, subtitle_size = 16) +
+  theme_ipsum(base_size = 14, axis_title_size = 14, caption_size = 12,
+              plot_title_size = 18, subtitle_size = 14) +
   labs(title="Most common lyrics in Kanye West albums",
        x=NULL,
        y=NULL,
@@ -388,8 +388,8 @@ by_album_sentiment %>%
   filter(!sentiment %in% c("negative", "positive", "trust", "fear")) %>%
   ggplot(aes(x=album, y=album_prop, group=sentiment, colour=sentiment)) +
   geom_line(size=1.5) +
-  theme_ipsum(base_size = 16, axis_title_size = 16, grid="Y", caption_size = 12,
-              plot_title_size = 20, subtitle_size = 16) +
+  theme_ipsum(base_size = 14, axis_title_size = 14, grid="Y", caption_size = 12,
+              plot_title_size = 18, subtitle_size = 14) +
   scale_color_ipsum() +
   scale_y_percent(limits = c(0, 0.1), breaks = seq(0, 0.1, by=0.02)) +
   labs(title="Sentiment in Kanye West albums",
@@ -397,7 +397,7 @@ by_album_sentiment %>%
        y="Sentiment as a % of album lyric count",
        subtitle="Powered by the NRC lexicon",
        caption="Lyric data from Genius (https://genius.com/)") +
-  theme(axis.text.x=element_text(angle=45, hjust = 1)) +
+  theme(axis.text.x=element_text(angle=45, hjust = 1, size=10)) +
   theme(legend.position="top")
 
 ```
@@ -450,8 +450,8 @@ by_track_sentiment %>%
   filter(album == "My Beautiful Dark Twisted Fantasy") %>%
   ggplot(aes(x=sentiment, y=reorder(str_to_title(name), -track_no))) +
   geom_lollipop(point.colour="firebrick", point.size=2, horizontal=TRUE) +
-  theme_ipsum(base_size = 16, axis_title_size = 16,  grid="Y", caption_size = 12,
-              plot_title_size = 20, subtitle_size = 16) +
+  theme_ipsum(base_size = 14, axis_title_size = 14,  grid="Y", caption_size = 12,
+              plot_title_size = 18, subtitle_size = 14) +
   labs(title="Ratio of negative/positive sentiment in \nMy Beautiful Dark Twisted Fantasy",
        x="Sentiment ratio (negative-positive)",
        y=NULL,
@@ -470,8 +470,8 @@ by_track_sentiment %>%
   filter(row_number()<=10 | row_number()>=n()-10) %>%
   ggplot(aes(x=sentiment, y=reorder(str_to_title(name), sentiment))) +
   geom_lollipop(point.colour="firebrick", point.size=2, horizontal=TRUE) +
-  theme_ipsum(base_size = 16, axis_title_size = 16,  grid="Y", caption_size = 12,
-              plot_title_size = 20, subtitle_size = 16) +
+  theme_ipsum(base_size = 14, axis_title_size = 14,  grid="Y", caption_size = 12,
+              plot_title_size = 18, subtitle_size = 14) +
   labs(title="Highest ratios of positive and negative sentiment in \nKanye West's album cuts",
        x="Sentiment ratio (negative-positive)",
        y=NULL,

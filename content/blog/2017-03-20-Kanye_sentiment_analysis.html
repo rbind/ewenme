@@ -38,86 +38,61 @@ description: "Using the Genius API and sentiment analysis techniques to explore 
 <div id="first-look" class="section level2">
 <h2>First look</h2>
 <p>To begin with, a simple look at Ye’s lyric count by album:</p>
-<p><img src="/blog/2017-03-20-Kanye_sentiment_analysis_files/figure-html/unnamed-chunk-4-1.png" width="625" /></p>
+<p><img src="/blog/2017-03-20-Kanye_sentiment_analysis_files/figure-html/unnamed-chunk-4-1.png" width="100%" /></p>
 <p><em>The College Dropout</em> is clearly the album with biggest (lyrical) bang for your buck, registering <strong>13,679 words</strong>. <em>808s &amp; Heartbreak</em> and <em>Yeezus</em> lag the farthest behind (below five-thousand a piece, and around one-third of <em>College Dropout</em>), and with good reason - <em>808s</em> is memorably less lyrically dense than the others, while the latter has the smallest number of tracks.</p>
 <p>We can normalise by track length and give a measure of ‘lyrical density’ (words-per-second) across time:</p>
-<pre class="r"><code>album_df &lt;- tidy_df %&gt;%
-  count(n(), album) 
+<pre class="r"><code>album_df &lt;- tidy_df %&gt;% count(n(), album)
 
-album_df_b &lt;- df %&gt;%
-  group_by(album) %&gt;%
-  summarise(duration=sum(duration)) %&gt;%
-  left_join(album_df, by=&quot;album&quot;) %&gt;%
-  mutate(count_per_sec=n/duration)
+album_df_b &lt;- df %&gt;% group_by(album) %&gt;% summarise(duration = sum(duration)) %&gt;% 
+    left_join(album_df, by = &quot;album&quot;) %&gt;% mutate(count_per_sec = n/duration)
 
-ggplot(album_df_b, aes(x=count_per_sec, y=fct_rev(album))) +
-  geom_lollipop(point.colour=&quot;firebrick&quot;, point.size=2, horizontal=TRUE) +
-  theme_ipsum(grid=&quot;X&quot;, base_size = 16, axis_title_size = 16, caption_size = 12,
-              plot_title_size = 20, subtitle_size = 16) +
-  labs(title=&quot;Words-per-second in Kanye West albums&quot;,
-       x=NULL,
-       y=NULL,
-       subtitle=&quot;Records in chronological order&quot;,
-       caption=&quot;Lyric data from Genius (https://genius.com/)&quot;)</code></pre>
-<p><img src="/blog/2017-03-20-Kanye_sentiment_analysis_files/figure-html/unnamed-chunk-5-1.png" width="625" /></p>
+ggplot(album_df_b, aes(x = count_per_sec, y = fct_rev(album))) + geom_lollipop(point.colour = &quot;firebrick&quot;, 
+    point.size = 2, horizontal = TRUE) + theme_ipsum(grid = &quot;X&quot;, base_size = 14, 
+    axis_title_size = 14, caption_size = 12, plot_title_size = 18, subtitle_size = 14) + 
+    labs(title = &quot;Words-per-second in Kanye West albums&quot;, x = NULL, y = NULL, 
+        subtitle = &quot;Records in chronological order&quot;, caption = &quot;Lyric data from Genius (https://genius.com/)&quot;)</code></pre>
+<p><img src="/blog/2017-03-20-Kanye_sentiment_analysis_files/figure-html/unnamed-chunk-5-1.png" width="100%" /></p>
 <p>Again, as expected, <em>808s</em> hangs back in the words-per-second stakes. <em>The Life Of Pablo</em> (TLOP) exhibits a lyrical pace more comparable to Kanye’s earlier albums (<em>College Dropout</em> stays top, still). It’s trickier to say for sure if his flow/delivery is a throwback from this metric alone (would be more optimal if tempo was incorporated into this equation, and remember that this figure includes breakdowns, outros, etc.) but maybe someone’s been listening…</p>
 <p><img src="/img/2017-03-20-Kanye_sentiment_analysis/kanye_tweets.png" width="100%" style="display: block; margin: auto;" /> <br></p>
 <p>It’s worth taking a look at how some of this looks across tracks, too.</p>
-<p><img src="/blog/2017-03-20-Kanye_sentiment_analysis_files/figure-html/unnamed-chunk-7-1.png" width="625" /></p>
+<p><img src="/blog/2017-03-20-Kanye_sentiment_analysis_files/figure-html/unnamed-chunk-7-1.png" width="100%" /></p>
 <p>‘Last Call’ stands lone and tall at <strong>2,745</strong> words, with most in and around the 500-mark. However, ‘Last Call’ is also the <em>longest</em> Kanye album track (12:40(!!)). As before, what happens if we normalise by track length?</p>
-<p><img src="/blog/2017-03-20-Kanye_sentiment_analysis_files/figure-html/unnamed-chunk-8-1.png" width="625" /></p>
+<p><img src="/blog/2017-03-20-Kanye_sentiment_analysis_files/figure-html/unnamed-chunk-8-1.png" width="100%" /></p>
 <p>Now, ‘Freestyle 4’ off of <em>TLOP</em> is highest - remember, this metric of lyrical density is inclusive of breakdowns and such. If you listen to this track which is just over two-minutes long, you’ll see there is literally no let-up from the big man.</p>
 <p>For good measure, let’s end this section with a quick look at the range of lyric counts by record (hint: excuse for the dumbbell chart):</p>
-<p><img src="/blog/2017-03-20-Kanye_sentiment_analysis_files/figure-html/unnamed-chunk-9-1.png" width="625" /></p>
+<p><img src="/blog/2017-03-20-Kanye_sentiment_analysis_files/figure-html/unnamed-chunk-9-1.png" width="100%" /></p>
 <p>How similar are <em>Graduation</em>, <em>808s</em> and <em>Yeezus</em>?</p>
 </div>
 <div id="feelings" class="section level2">
 <h2>Feelings</h2>
 <p>We’ve touched on things like the word count and lyrical density of Kanye’s records. Now, lets start to explore what is actually being said.</p>
 <p><em>Note: from this point on, English ‘stop words’ (e.g. and, or, but) are excluded from the analysis.</em></p>
-<p><img src="/blog/2017-03-20-Kanye_sentiment_analysis_files/figure-html/unnamed-chunk-10-1.png" width="625" /></p>
+<p><img src="/blog/2017-03-20-Kanye_sentiment_analysis_files/figure-html/unnamed-chunk-10-1.png" width="100%" /></p>
 <p>Kanye’s confirmed it, everyone - love conquers all (even sh*t). We’ll need to dig further to get into the emotion and the message contained in the tracks that embody these words, though.</p>
 <p><br></p>
 <p><img src="/img/2017-03-20-Kanye_sentiment_analysis/kanye_croissants.gif" width="100%" style="display: block; margin: auto;" /></p>
 <p><br></p>
 <p>I tried to quantify the amount of different types of sentiment in Kanye’s lyrics by using <code>tidytext</code>. In this case, I went with the <a href="http://saifmohammad.com/WebPages/NRC-Emotion-Lexicon.htm">NRC lexicon</a> developed by Saif Mohammad which associates words with some sentiment categories: positive, negative, anger, anticipation, disgust, fear, joy, sadness, surprise, and trust. As a Psychology graduate with some experience in qualitative analysis (and as a music lover, first and foremost) I’m mindful that a lexicon is a simplification that will undoubtedly miss important contextual and cultural cues (especially important in understanding art that nod to lots of subcultures), but can provide us with a useful summary in evaluating the lyric’s emotional composition.</p>
-<pre class="r"><code>nrc &lt;- sentiments %&gt;%
-  filter(lexicon == &quot;nrc&quot;) %&gt;%
-  dplyr::select(word, sentiment)
+<pre class="r"><code>nrc &lt;- sentiments %&gt;% filter(lexicon == &quot;nrc&quot;) %&gt;% dplyr::select(word, sentiment)
 
-albums &lt;- sentiment_df %&gt;%
-  group_by(album) %&gt;%
-  mutate(total_words = n()) %&gt;%
-  ungroup() %&gt;%
-  distinct(album, total_words)
+albums &lt;- sentiment_df %&gt;% group_by(album) %&gt;% mutate(total_words = n()) %&gt;% 
+    ungroup() %&gt;% distinct(album, total_words)
 
-by_album_sentiment &lt;- sentiment_df %&gt;%
-  inner_join(nrc, by = &quot;word&quot;) %&gt;%
-  count(sentiment, album) %&gt;%
-  ungroup() %&gt;%
-  complete(sentiment, album, fill = list(n = 0)) %&gt;%
-  inner_join(albums) %&gt;%
-  group_by(album, sentiment, total_words) %&gt;%
-  summarize(words = sum(n)) %&gt;%
-  mutate(album_prop=words/total_words) %&gt;%
-  ungroup()
+by_album_sentiment &lt;- sentiment_df %&gt;% inner_join(nrc, by = &quot;word&quot;) %&gt;% count(sentiment, 
+    album) %&gt;% ungroup() %&gt;% complete(sentiment, album, fill = list(n = 0)) %&gt;% 
+    inner_join(albums) %&gt;% group_by(album, sentiment, total_words) %&gt;% summarize(words = sum(n)) %&gt;% 
+    mutate(album_prop = words/total_words) %&gt;% ungroup()
 
-by_album_sentiment %&gt;%
-  filter(!sentiment %in% c(&quot;negative&quot;, &quot;positive&quot;, &quot;trust&quot;, &quot;fear&quot;)) %&gt;%
-  ggplot(aes(x=album, y=album_prop, group=sentiment, colour=sentiment)) +
-  geom_line(size=1.5) +
-  theme_ipsum(base_size = 16, axis_title_size = 16, grid=&quot;Y&quot;, caption_size = 12,
-              plot_title_size = 20, subtitle_size = 16) +
-  scale_color_ipsum() +
-  scale_y_percent(limits = c(0, 0.1), breaks = seq(0, 0.1, by=0.02)) +
-  labs(title=&quot;Sentiment in Kanye West albums&quot;,
-       x=NULL,
-       y=&quot;Sentiment as a % of album lyric count&quot;,
-       subtitle=&quot;Powered by the NRC lexicon&quot;,
-       caption=&quot;Lyric data from Genius (https://genius.com/)&quot;) +
-  theme(axis.text.x=element_text(angle=45, hjust = 1)) +
-  theme(legend.position=&quot;top&quot;)</code></pre>
-<p><img src="/blog/2017-03-20-Kanye_sentiment_analysis_files/figure-html/unnamed-chunk-12-1.png" width="625" /></p>
+by_album_sentiment %&gt;% filter(!sentiment %in% c(&quot;negative&quot;, &quot;positive&quot;, &quot;trust&quot;, 
+    &quot;fear&quot;)) %&gt;% ggplot(aes(x = album, y = album_prop, group = sentiment, colour = sentiment)) + 
+    geom_line(size = 1.5) + theme_ipsum(base_size = 14, axis_title_size = 14, 
+    grid = &quot;Y&quot;, caption_size = 12, plot_title_size = 18, subtitle_size = 14) + 
+    scale_color_ipsum() + scale_y_percent(limits = c(0, 0.1), breaks = seq(0, 
+    0.1, by = 0.02)) + labs(title = &quot;Sentiment in Kanye West albums&quot;, x = NULL, 
+    y = &quot;Sentiment as a % of album lyric count&quot;, subtitle = &quot;Powered by the NRC lexicon&quot;, 
+    caption = &quot;Lyric data from Genius (https://genius.com/)&quot;) + theme(axis.text.x = element_text(angle = 45, 
+    hjust = 1, size = 10)) + theme(legend.position = &quot;top&quot;)</code></pre>
+<p><img src="/blog/2017-03-20-Kanye_sentiment_analysis_files/figure-html/unnamed-chunk-12-1.png" width="100%" /></p>
 <p>So, what did we learn here? It looks like <em>Graduation’s</em> lyrics have the highest (proportional) rate of anticipation and surprise sentiment, compared to the other records. Interestingly, this is in keeping with the themes captured in Takashi Murukami’s cover art (below), where we see ‘Dropout Bear’ being thrust out into a new world.</p>
 <p><br></p>
 <p><img src="/img/2017-03-20-Kanye_sentiment_analysis/kanye_graduation.jpg" width="100%" style="display: block; margin: auto;" /> <br></p>
@@ -126,43 +101,28 @@ by_album_sentiment %&gt;%
 <p><img src="/img/2017-03-20-Kanye_sentiment_analysis/kanye_mbdtf.png" width="100%" style="display: block; margin: auto;" /></p>
 <p><br></p>
 <p>Can we look at this record closer to see where these kinds of feelings are most prominent?</p>
-<pre class="r"><code>bing &lt;- sentiments %&gt;%
-  filter(lexicon == &quot;bing&quot;) %&gt;%
-  dplyr::select(word, sentiment)
+<pre class="r"><code>bing &lt;- sentiments %&gt;% filter(lexicon == &quot;bing&quot;) %&gt;% dplyr::select(word, sentiment)
 
-tracks &lt;- sentiment_df %&gt;%
-  group_by(name, album, track_no) %&gt;%
-  mutate(total_words = n()) %&gt;%
-  ungroup() %&gt;%
-  distinct(name, album, track_no, total_words)
+tracks &lt;- sentiment_df %&gt;% group_by(name, album, track_no) %&gt;% mutate(total_words = n()) %&gt;% 
+    ungroup() %&gt;% distinct(name, album, track_no, total_words)
 
-by_track_sentiment &lt;- sentiment_df %&gt;%
-  inner_join(bing, by = &quot;word&quot;) %&gt;%
-  count(sentiment, name) %&gt;%
-  ungroup() %&gt;%
-  complete(sentiment, name, fill = list(n = 0)) %&gt;%
-  inner_join(tracks) %&gt;%
-  group_by(name, album, track_no, sentiment, total_words) %&gt;%
-  summarize(words = sum(n)) %&gt;%
-  spread(sentiment, words, fill = 0) %&gt;%
-  mutate(sentiment = positive - negative) %&gt;%
-  ungroup()
+by_track_sentiment &lt;- sentiment_df %&gt;% inner_join(bing, by = &quot;word&quot;) %&gt;% count(sentiment, 
+    name) %&gt;% ungroup() %&gt;% complete(sentiment, name, fill = list(n = 0)) %&gt;% 
+    inner_join(tracks) %&gt;% group_by(name, album, track_no, sentiment, total_words) %&gt;% 
+    summarize(words = sum(n)) %&gt;% spread(sentiment, words, fill = 0) %&gt;% mutate(sentiment = positive - 
+    negative) %&gt;% ungroup()
 
-by_track_sentiment %&gt;%
-  filter(album == &quot;My Beautiful Dark Twisted Fantasy&quot;) %&gt;%
-  ggplot(aes(x=sentiment, y=reorder(str_to_title(name), -track_no))) +
-  geom_lollipop(point.colour=&quot;firebrick&quot;, point.size=2, horizontal=TRUE) +
-  theme_ipsum(base_size = 16, axis_title_size = 16,  grid=&quot;Y&quot;, caption_size = 12,
-              plot_title_size = 20, subtitle_size = 16) +
-  labs(title=&quot;Ratio of negative/positive sentiment in \nMy Beautiful Dark Twisted Fantasy&quot;,
-       x=&quot;Sentiment ratio (negative-positive)&quot;,
-       y=NULL,
-       subtitle=&quot;Powered by the Bing lexicon&quot;,
-       caption=&quot;Lyric data from Genius (https://genius.com/)&quot;)</code></pre>
-<p><img src="/blog/2017-03-20-Kanye_sentiment_analysis_files/figure-html/unnamed-chunk-15-1.png" width="625" /></p>
+by_track_sentiment %&gt;% filter(album == &quot;My Beautiful Dark Twisted Fantasy&quot;) %&gt;% 
+    ggplot(aes(x = sentiment, y = reorder(str_to_title(name), -track_no))) + 
+    geom_lollipop(point.colour = &quot;firebrick&quot;, point.size = 2, horizontal = TRUE) + 
+    theme_ipsum(base_size = 14, axis_title_size = 14, grid = &quot;Y&quot;, caption_size = 12, 
+        plot_title_size = 18, subtitle_size = 14) + labs(title = &quot;Ratio of negative/positive sentiment in \nMy Beautiful Dark Twisted Fantasy&quot;, 
+    x = &quot;Sentiment ratio (negative-positive)&quot;, y = NULL, subtitle = &quot;Powered by the Bing lexicon&quot;, 
+    caption = &quot;Lyric data from Genius (https://genius.com/)&quot;)</code></pre>
+<p><img src="/blog/2017-03-20-Kanye_sentiment_analysis_files/figure-html/unnamed-chunk-15-1.png" width="100%" /></p>
 <p>The above uses the <a href="https://www.cs.uic.edu/~liub/FBS/sentiment-analysis.html#lexicon">Bing lexicon</a> to examine how positive/negative sentiment manifests by track in <em>My Beautiful Dark Twisted Fantasy</em>. ‘Monster’ is furthest to the left with the highest ratio of negative to positive sentiment in it’s lyrics, followed closely by ‘So Appalled’. In fact, ‘All of the Lights’ would appear to be the only real respite for ‘positive’ lyrical sentiment.</p>
 <p>What if we apply this to the rest of the discography, and see which tracks score highest for positive/negative sentiment across the board?</p>
-<p><img src="/blog/2017-03-20-Kanye_sentiment_analysis_files/figure-html/unnamed-chunk-16-1.png" width="625" /></p>
+<p><img src="/blog/2017-03-20-Kanye_sentiment_analysis_files/figure-html/unnamed-chunk-16-1.png" width="100%" /></p>
 <p>It might be surprising to see ‘Amazing’ way out in front (n.b. I explain Love Lockdown’s perhaps false position in the conclusion). Remember, this is based on lyrics <em>only</em> - here’s a reminder of the hook…</p>
 <blockquote>
 <p><em>No matter what, you’ll never take that from me,</em> <em>My reign is as far as your eyes can see;</em> <em>It’s amazing, so amazing, so amazing, so amazing,</em> <em>It’s amazing, so amazing, so amazing, so amazing</em> <em>It’s amazing, so amazing, so amazing, so amazing</em> <em>It’s amazing, so amazing, so amazing, so amazing</em> <em>It’s amazing</em></p>

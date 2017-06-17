@@ -11,7 +11,7 @@ description: "Developing a Shiny app to explore and visualize record collections
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(cache=TRUE, echo = TRUE, tidy = TRUE, warning = FALSE, message = FALSE, out.width = 625, dpi = 180)
+knitr::opts_chunk$set(cache=TRUE, echo = TRUE, tidy = TRUE, warning = FALSE, message = FALSE, out.width = '100%', dpi = 180)
 ```
 
 <br>

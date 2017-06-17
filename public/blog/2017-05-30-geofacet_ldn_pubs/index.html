@@ -173,18 +173,14 @@ library(viridis)
 library(scales)
 library(hrbrthemes)
 
-#read/clean pubs data
-pubs &lt;- read.xls(&quot;http://files.datapress.com/london/dataset/the-number-of-public-houses-and-bars-in-london-2001-2016/2017-04-13T14:37:50.73/numberofpublichousesandbarsinlondon2001to2016.xls&quot;,
-                 sheet = &quot;Number of workplaces by LA&quot;, skip=2, stringsAsFactors=FALSE) %&gt;%
-  filter(!`X.1` %in% c(&quot;&quot;, &quot;London&quot;)) %&gt;%
-  gather(key=year, value=count, -X, -`X.1`) %&gt;%
-  rename(code_ons=X, area_name=`X.1`) %&gt;%
-  mutate(count=as.numeric(count), year=as.numeric(str_replace(year, &quot;X&quot;, &quot;&quot;))) %&gt;%
-  # add year-on-year pct change
-  arrange(area_name) %&gt;%
-  group_by(area_name) %&gt;%
-  mutate(prev=lag(count, order_by=year, default=first(count)),
-         yoy_chg=(count-prev)/prev)
+# read/clean pubs data
+pubs &lt;- read.xls(&quot;http://files.datapress.com/london/dataset/the-number-of-public-houses-and-bars-in-london-2001-2016/2017-04-13T14:37:50.73/numberofpublichousesandbarsinlondon2001to2016.xls&quot;, 
+    sheet = &quot;Number of workplaces by LA&quot;, skip = 2, stringsAsFactors = FALSE) %&gt;% 
+    filter(!X.1 %in% c(&quot;&quot;, &quot;London&quot;)) %&gt;% gather(key = year, value = count, 
+    -X, -X.1) %&gt;% rename(code_ons = X, area_name = X.1) %&gt;% mutate(count = as.numeric(count), 
+    year = as.numeric(str_replace(year, &quot;X&quot;, &quot;&quot;))) %&gt;% # add year-on-year pct change
+arrange(area_name) %&gt;% group_by(area_name) %&gt;% mutate(prev = lag(count, order_by = year, 
+    default = first(count)), yoy_chg = (count - prev)/prev)
 
 glimpse(pubs)</code></pre>
 <pre><code>## Observations: 528
@@ -204,33 +200,27 @@ glimpse(pubs)</code></pre>
 ## $ code_ons &lt;chr&gt; &quot;E09000001&quot;, &quot;E09000002&quot;, &quot;E09000003&quot;, &quot;E09000004&quot;, &quot;...
 ## $ name     &lt;chr&gt; &quot;City of London&quot;, &quot;Barking and Dagenham&quot;, &quot;Barnet&quot;, &quot;...</code></pre>
 <p>We’re ready to join these on the ONS code field. I’ll also put in some line breaks to the borough names - I think some of these might be too long for a densely paneled plot, otherwise.</p>
-<pre class="r"><code>#clean boro strings in pubs df
+<pre class="r"><code># clean boro strings in pubs df
 pubs$area_name &lt;- str_replace(pubs$area_name, &quot; &quot;, &quot;\n&quot;)
 
-#clean boro strings in geofacet grid df
+# clean boro strings in geofacet grid df
 london_boroughs_grid$name &lt;- str_replace(london_boroughs_grid$name, &quot; &quot;, &quot;\n&quot;)
 
 # join pubs w/ grid
-pubs &lt;- inner_join(pubs, london_boroughs_grid, by =&quot;code_ons&quot;) %&gt;%
-  select(-name)</code></pre>
+pubs &lt;- inner_join(pubs, london_boroughs_grid, by = &quot;code_ons&quot;) %&gt;% select(-name)</code></pre>
 <p>Ready to plot. All we need to do is call <code>facet_geo</code> in the same way we might have faceted by borough using <code>facet_wrap</code> previously. This has to be accompanied by a <code>grid</code> argument, specifying the grid we want to facet with. We can go on to tweak the plot using familiar <code>ggplot2</code> commands.</p>
 <p>Here’s my first effort:</p>
-<pre class="r"><code># geofaceted plot of year-on-year pubs % change 
-ggplot(data = pubs, aes(x=year, y=yoy_chg, fill=yoy_chg)) +
-  geom_col() +
-  geom_hline(yintercept = 0) +
-  facet_geo( ~ area_name, grid = &quot;london_boroughs_grid&quot;) +
-  scale_x_continuous(breaks = c(2001, 2016), 
-                     labels = NULL) +
-  scale_y_percent(limits=c(-0.35,0.25), breaks=c(-0.3, 0, 0.25), labels = NULL) +
-  labs(title = &quot;The Evolution of London&#39;s Pubs &amp; Bars&quot;,
-       subtitle = &quot;No. of Public Houses and Bars by London borough, 2001-2016&quot;,
-       caption = &quot;Source: data.london.gov.uk&quot;, x = &quot;&quot;, y = &quot;&quot;) +
-  theme_minimal(base_family = &quot;Arial Narrow&quot;, base_size = 14) +
-  scale_fill_viridis(option=&quot;D&quot;,limits=c(-0.35,0.25), name=&quot;Year-on-year\n% change&quot;,
-                     labels=percent) +
-  theme(legend.position=c(.9, .95))</code></pre>
-<p><img src="/blog/2017-05-30-geofacet_ldn_pubs_files/figure-html/geofacet-1.png" width="625" /></p>
+<pre class="r"><code># geofaceted plot of year-on-year pubs % change
+ggplot(data = pubs, aes(x = year, y = yoy_chg, fill = yoy_chg)) + geom_col() + 
+    geom_hline(yintercept = 0) + facet_geo(~area_name, grid = &quot;london_boroughs_grid&quot;) + 
+    scale_x_continuous(breaks = c(2001, 2016), labels = NULL) + scale_y_percent(limits = c(-0.35, 
+    0.25), breaks = c(-0.3, 0, 0.25), labels = NULL) + labs(title = &quot;The Evolution of London&#39;s Pubs &amp; Bars&quot;, 
+    subtitle = &quot;No. of Public Houses and Bars by London borough, 2001-2016&quot;, 
+    caption = &quot;Source: data.london.gov.uk&quot;, x = &quot;&quot;, y = &quot;&quot;) + theme_minimal(base_family = &quot;Arial Narrow&quot;, 
+    base_size = 14) + scale_fill_viridis(option = &quot;D&quot;, limits = c(-0.35, 0.25), 
+    name = &quot;Year-on-year\n% change&quot;, labels = percent) + theme(legend.position = c(0.9, 
+    0.95))</code></pre>
+<p><img src="/blog/2017-05-30-geofacet_ldn_pubs_files/figure-html/geofacet-1.png" width="100%" /></p>
 <p><br></p>
 </div>
 <div id="close" class="section level2">
