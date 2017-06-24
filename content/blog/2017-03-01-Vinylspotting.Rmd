@@ -1,7 +1,7 @@
 ---
 date: "2017-03-01"
 title: "Vinylspotting: A Discogs Fairytale"
-author: "Ewen Henderson"
+author: "Ewen"
 showonlyimage: false
 draft: false
 image: "blog/img/vinylspotting.png"

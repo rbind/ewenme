@@ -18,9 +18,9 @@ library(knitr)
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-Analyst / R Developer and data science hopeful. I'm interested in sharing and supporting opinionated analysis, adventures in R and humane, ethical applications of machine learning.
+R fanboy, big on open source and open science. Here to tell stories about my excursions in R and grow humane, ethical applications of data science.
 
-I'm also a collector/selector of dusty records and a player/admirer of The Beautiful Game&trade;. Please hit me up with your fire veggie recipes, too.
+Otherwise, I like listening to weird 'n' dusty records ([check my collection](https://www.discogs.com/user/ewen_henderson/collection)) and playing [The Beautiful Game&trade;](https://en.wikipedia.org/wiki/The_Beautiful_Game). Oh yeah - please hit me up with your fire veggie recipes `r emo::ji("avocado")` `r emo::ji("eggplant")``r emo::ji("hot_pepper")``r emo::ji("corn")` `r emo::ji("potato")` `r emo::ji("green_salad")` `r emo::ji("tomato")` `r emo::ji("egg")` `r emo::ji("cheese")` `r emo::ji("cucumber")`
 
 ```{r,  echo = FALSE, message = FALSE, fig.align = "center", out.width = "90%"}
 library(magick)

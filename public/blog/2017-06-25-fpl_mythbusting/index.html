@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>FPL Mythbusting with fplR</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="all,follow">
+<meta name="googlebot" content="index,follow,snippet,archive">
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:400,300,700,400italic">
+<link rel="stylesheet" href="/css/font-awesome.min.css">
+<link rel="stylesheet" href="/css/owl.carousel.css">
+<link rel="stylesheet" href="/css/owl.theme.css">
+
+
+  <link href="/css/style.default.css" rel="stylesheet" id="theme-stylesheet">
+
+
+<link href="/css/custom.css" rel="stylesheet">
+<link rel="shortcut icon" href="/img/favicon.png">
+
+
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-98719738-1', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='//www.google-analytics.com/analytics.js'></script>
+
+</head>
+<body>
+  <div id="all">
+      <div class="container-fluid">
+          <div class="row row-offcanvas row-offcanvas-left">
+              
+<div id="sidebar" class="col-sb-fixedpos col-xs-6 col-sm-4 col-md-3 sidebar-offcanvas">
+  <div class="sidebar-content">
+    <h1 class="sidebar-heading"><a href="/">ewenme</a></h1>
+
+    <ul class="sidebar-menu">
+      
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/blog/">Blog</a></li>
+      
+        <li><a href="/projects/">Projects</a></li>
+      
+        <li><a href="/about/">About</a></li>
+      
+
+       
+
+
+
+ 
+
+      
+
+ 
+
+      
+ 
+
+    </ul>
+    <p class="social">
+  
+  
+  
+  <a href="https://twitter.com/ewen_" data-animate-hover="pulse" class="external twitter">
+    <i class="fa fa-twitter"></i>
+  </a>
+  
+  
+  
+  <a href="mailto:ewenhenderson@gmail.com" data-animate-hover="pulse" class="email">
+    <i class="fa fa-envelope"></i>
+  </a>
+  
+  
+  
+  
+<a href="https://www.github.com/ewenme">
+  <i class="fa fa-github"></i>
+</a>
+
+
+
+</p>
+
+
+    <div class="copyright">
+      <p class="credit">
+        
+          &copy;2017 Ewen Henderson
+        
+        | Template by <a href="https://bootstrapious.com/free-templates" class="external">Bootstrapious.com</a>
+
+&amp; ported to Hugo by <a href="https://github.com/kishaningithub">Kishan B</a>
+
+      </p>
+    </div>
+  </div>
+</div>
+
+<div class="col-xs-12 col-sm-8 col-md-9 content-column white-background col-main-fixedpos">
+  <div class="small-navbar visible-xs">
+  <button type="button" data-toggle="offcanvas" class="btn btn-ghost pull-left"> <i class="fa fa-align-left"> </i>Menu</button>
+  <h1 class="small-navbar-heading"><a href="/">ewenme</a></h1>
+</div>
+
+
+            <div class="row">
+                  <div class="col-sm-4">
+                    <div class="image">
+                      <img src="/blog/img/Qul9n6x.jpg" class="img-responsive" alt="">
+                    </div>
+                  </div>
+
+                  <div class="col-md-8">
+                      <h2>FPL Mythbusting with fplR</h2>
+                          <p class="author-category">
+                            Ewen
+                          </p>
+
+                          <p class="date-comments">
+                          <i class="fa fa-calendar-o"></i> June 25, 2017
+                          </p>
+
+                          
+                  
+                      </div>
+                    </div>
+                  </br>
+
+<div class="row">
+   <div class="content-column-content">
+          <div class="col-lg-8">
+
+<p><br></p>
+<p>I recently authored my first R package (and definitely have the bug, now). It would be remiss of me to continue without a quick PSA for anyone out there thinking about dabbling in the package game - below is a shout-out of the invaluable resources I found along the way that kept me nice and sane.</p>
+<blockquote class="twitter-tweet" data-lang="en">
+<p lang="en" dir="ltr">
+ease in <a href="https://t.co/NdRYGE1whA">https://t.co/NdRYGE1whA</a><br>more detail <a href="https://t.co/ypqotSAF46">https://t.co/ypqotSAF46</a><br>best practice <a href="https://t.co/qRMZDXBdfQ">https://t.co/qRMZDXBdfQ</a><br>travis 💀 <a href="https://t.co/dEvM3PWsVb">https://t.co/dEvM3PWsVb</a>
+</p>
+— ewen (<span class="citation">@ewen_</span>) <a href="https://twitter.com/ewen_/status/872480326890795009">June 7, 2017</a>
+</blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+<p><br></p>
+<p>In short, I set out on my package contribution journey by focusing on the development of something that I myself would find useful (that way, I could keep at least one user happy). Each year, I play an edition of fantasy sports called <a href="https://fantasy.premierleague.com/">Fantasy Premier League</a> (FPL), the official fantasy football game of England’s top football (or soccer for you stateside peeps) division. If you really want to know the in’s and out’s of FPL, there’s a <a href="https://fantasy.premierleague.com/a/help">section of the site</a> just for rules. TL;DR: for 38 rounds (called ‘gameweeks’), you pick a team of football players to do good things that score you points and help you finish as high up the leader-board as possible.<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a></p>
+<p>It just so happens that we’re in the off-season right now, and I figured I should use this down-time to explore how R could assist with FPL users’ exploits in the coming season.<a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a></p>
+<p><img src="https://raw.githubusercontent.com/ewenme/fplR/master/fplHex.png" width="80%" style="display: block; margin: auto;" /></p>
+<p>Introducing…<a href="https://ewenme.github.io/fplR/"><code>fplR</code></a> - a package for the strange intersection of FPL / R users like me (I hope it’s not just me) to explore the game’s data. In the rest of this post, I want to test drive the package by first pulling out some insights on my most recent season (2016/2017), and then do some exploring of the mythical quirks of FPL as a bit of fun.<a href="#fn3" class="footnoteRef" id="fnref3"><sup>3</sup></a></p>
+<p><br></p>
+<div id="how-did-i-do-last-season" class="section level2">
+<h2>How did I do last season?</h2>
+<p>As the game updates each user’s scores following the day’s matches, the site helpfully tells you your ranking (overall, in your country, in any mini-leagues you are part of, etc.). Still, just knowing your performance at one point in time does not begin to capture the season’s journey (read: roller-coaster of emotions and deep suffering). Time to dive into <code>fplR</code> to see if it can help.</p>
+<pre class="r"><code># get my fpl season performance
+myPerformance &lt;- userPerformance(137633)</code></pre>
+<p><img src="/blog/2017-06-25-FPL_mythbusting_files/figure-html/unnamed-chunk-3-1.png" width="100%" /></p>
+<p>The sharp decline in my ranking around gameweek #5 looks striking, as is the fightback to something respectable in gameweeks 7-10. However, bigger variations in the earlier gameweeks are to be expected - the sample size is small, therefore the pack is close, so to speak (more on this, shortly). Nevertheless, my final rank was a personal best of 4,752nd in the world. (I hope that establishes my credentials, nice and early). Having spent so long invested in something, it’s really nice to just be able to reflect on it with this visual accompaniment.</p>
+<p><br></p>
+</div>
+<div id="fpl-mythbusting" class="section level2">
+<h2>FPL mythbusting</h2>
+<p>Next, I’ll take some time to examine some aspects of the game that the FPL community has debated on since the beginning of time. I won’t necessarily dispel/confirm all of these things here, but it’s a taster of what kinds of analyses can be spun up quickly using <code>fplR</code>.</p>
+<p><br></p>
+<div id="the-early-season-rat-race" class="section level3">
+<h3>The early season rat race</h3>
+<p>Many users emphasise the importance of a good start, claiming that it is more difficult to do well in the latter stages of the season without a solid foundation built early on. To illustrate this, lets look at the average shift in overall rank by gameweek in one of my mini-leagues (a smaller league amongst a peer group) as the season progresses i.e. how much does a users rank change from week-to-week (N.B. in the current package version, I haven’t developed a function to help make this easier, yet. Soon come)?</p>
+<p><img src="/blog/2017-06-25-FPL_mythbusting_files/figure-html/unnamed-chunk-5-1.png" width="100%" /></p>
+<p>The “elbow” in this chart comes at a similar time to when my rank began to level off, somewhat. You might have noticed the spike in the penultimate gameweek - in this instance, lots of players actually played twice (known as a “double gameweek” to insiders), meaning a greater opportunity for big swings in user rankings.</p>
+<p><br></p>
+</div>
+<div id="team-value" class="section level3">
+<h3>Team value</h3>
+<p>Another factor perceived to be important in gaining a healthy position for high scores is that of team value. As football players in the game perform well (or not so well), their price actually changes as a function of market forces i.e. how many users are transferring them into/out of their team? By ‘playing the market’, users can build up the money at their disposal with which to build the best team. Therefore, perhaps we would expect someone’s final team value to be a good predictor of their final rank (N.B. one outlier was removed from this plot - sometimes people chase the team value as a game in itself, incurring lots of points penalties that drastically affect their team’s points total. This was one of those cases).</p>
+<p>To show a fairer picture, I have attempted to remove ‘dead’ users i.e. users that have given up on the game, while their team continues to register scores. To eliminate these zombie teams, I chose to use transfers (bringing a player in for an existing squad player) as a proxy. It is fairly safe to assume that users remaining active until the season end are also making (at least some) transfers up until the end of the season, too. I’ll consider users who made a transfer in one of the final three gameweeks as ‘live’.</p>
+<p><img src="/blog/2017-06-25-FPL_mythbusting_files/figure-html/unnamed-chunk-6-1.png" width="100%" /></p>
+<p>There’s a moderate positive correlation, but plenty of variation as well - as was the case in our outlier, it is possible that users may chase team value at the expense of their league performance. Still, we can say that there appears to be a relationship between retaining a high team value and ranking highly.</p>
+<p><br></p>
+</div>
+<div id="taking-hits" class="section level3">
+<h3>“Taking Hits”</h3>
+<p>While one free transfer is permitted each week, users can make additional transfers at a cost of 4 points each - known as “taking a hit”. This is a frequently toiled upon decision by FPL users, who must decide whether making this move will return a greater number of points (considering the penalty) than sticking. Perhaps the frequency someone incurs hits can tell us something about performance (again, I’ve removed an outlier incurring a huge number of these).</p>
+<p><img src="/blog/2017-06-25-FPL_mythbusting_files/figure-html/unnamed-chunk-7-1.png" width="100%" /></p>
+<p>It appears that taking hits has very little correlation with a user’s rank. This would suggest that there are indeed good ‘hits’, as users are able to get a high rank while racking them up. At the same time, this illuminates other playing styles that can also bring success i.e. users who refrain from taking ‘hits’ are able to get as high rank as those that do.</p>
+<p><br></p>
+</div>
+<div id="picking-the-bench" class="section level3">
+<h3>Picking the bench</h3>
+<p>Every user talks about the time they left that weeks hot player on the bench (each gameweek, you must choose a starting 11 players - if they play, your back-up players, or ‘bench’, do not play and do not collect points). This often leads to disgruntled folk who hold dear the belief that some kind of FPL God is consistently against them. If we look at users’ benches across the season, how much variation is there?</p>
+<p><img src="/blog/2017-06-25-FPL_mythbusting_files/figure-html/unnamed-chunk-8-1.png" width="100%" /></p>
+<p>What we see is close to a normal distribution. So, probably no FPL God’s retribution. Most people benched somewhere in the region of 150-300 points over the course of a season, with an unlucky/lucky few coming in higher or lower respectively.</p>
+<p><br></p>
+</div>
+<div id="bandwagons" class="section level3">
+<h3>Bandwagons</h3>
+<p>Another phenomenon, representing something of an FPL meta-game, is that of the “bandwagon”. This refers to times when certain players put in particularly explosive performances, triggering big movements in the market (i.e. lots of people bringing them in, similar to a hot stock). When were the biggest transfer booms?</p>
+<p><img src="/blog/2017-06-25-FPL_mythbusting_files/figure-html/unnamed-chunk-9-1.png" width="100%" /></p>
+<p>Dele Alli had the biggest influx of transfers all season in gameweek 21, after a masterclass against Chelsea. Incidentally, both the 2nd (Ibrahimovic) and 3rd (Gundogan) highest net transfers followed games against West Brom.</p>
+<p>As for the biggest net losses, these mostly belonged to players of high ownership who suffered serious injuries/suspensions. The most interesting case is that of Diego Costa, who was the center of a media frenzy claiming a (real-life) transfer to China was imminent (this never materialized).</p>
+<p>Of course, these absolute swings are largely governed by a player’s initial ownership size and profile. We can look at percentage changes in ownership of players to consider those who had large <em>relative</em> shifts in selection.</p>
+<p><img src="/blog/2017-06-25-FPL_mythbusting_files/figure-html/unnamed-chunk-10-1.png" width="100%" /></p>
+<p>Here we see huge percentage increases in the ownership of Fer and Stuani after promising displays on the opening day of the season and second gameweek, respectively. It is often in the very early stages that users scramble for players, often after just a single good performance, as there are few data points to go by otherwise. Jesus and Gabbiadini were actually both new arrivals to the game in the mid-season transfer window (in January, clubs can buy additional players) who started well - again, in the absence of any long-term trend, users rushed to scoop up these players.</p>
+<p>Of course, the % drop in ownership is naturally capped (ownership can only fall by 100%). Interestingly, just two games after Jesus’ huge upswing in ownership, he gave us the biggest fall (<strong>almost 90%</strong> of owners dropped him)! If that’s not Murphy’s Law in full effect, I don’t know what is.</p>
+<p><br></p>
+</div>
+<div id="how-often-are-the-top-players-hot" class="section level3">
+<h3>How often are the top players hot?</h3>
+<p>Come the end of the season, we check the top point-scoring players and yearn for what might’ve been if we’d snapped them up at the right time. How much love did the top (eight) overall point scorers actually get from FPL users over the season, and when?</p>
+<p><img src="/blog/2017-06-25-FPL_mythbusting_files/figure-html/unnamed-chunk-12-1.png" width="100%" /></p>
+<p>We see very different relationships between certain players and the transfer market. De Bruyne remains exceptionally stable in ownership after a couple of early season swings, while Kane’s ownership is volatile throughout. Some of this will be determined by player availability (i.e. were they injured/suspended), but also by how much variation there is in their points-scoring. Do we see consistency in the performance level of these players?</p>
+<p><img src="/blog/2017-06-25-FPL_mythbusting_files/figure-html/unnamed-chunk-13-1.png" width="100%" /></p>
+<p>By applying a moving average in the above chart (each data point is an average of the last five gameweeks), we can imagine performance in terms of season phases. For someone like De Bruyne, we notice that his peak performances came at the very start and end of the season, which perhaps explains the tepid market in the middle of the season. In a similar fashion, we can identify ‘purple patches’ of players, like Alli in the season middle. Much of FPL success can be determined by ensuring ownership of these players during such patches.</p>
+<p><br></p>
+</div>
+</div>
+<div id="wrap-up" class="section level2">
+<h2>Wrap-up</h2>
+<p>I hope this illustrates some of the possibilities available with the <code>fplR</code> package. I had a lot of fun making it, and look forward to using it to better understand my FPL experience. Do share any interesting things you’re able to do with it (or any things that go wrong with it…), and <em>try</em> to enjoy the new season. It’s just a game…</p>
+<p><br></p>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>In this post I have referred to actual footballers as ‘players’, and players of the FPL game as ‘users’.<a href="#fnref1">↩</a></p></li>
+<li id="fn2"><p>At current, the FPL site only keeps detailed data for the <em>current</em> season. Therefore, some of the data used in this analysis will likely be unavailable once the new FPL season begins. For access to all data used in this analysis, please go <a href="https://github.com/rbind/ewenme/blob/master/content/data/fplR.RData">here</a>.<a href="#fnref2">↩</a></p></li>
+<li id="fn3"><p>To keep the post concise I don’t show all of the code, especially code that generates figures. But you can find the full code <a href="https://github.com/rbind/ewenme/blob/master/content/blog/2017-06-19-FPL_mythbusting.Rmd">here</a>.<a href="#fnref3">↩</a></p></li>
+</ol>
+</div>
+
+      
+       </div>
+     </div>
+   </div>
+
+
+
+
+
+        <a href="#" class="back-to-top">
+        <i class="fa fa-arrow-circle-o-up" aria-hidden="true"></i>
+
+        </a>
+
+         <div id="disqus_thread"></div>
+<script type="text/javascript">
+
+(function() {
+      
+      
+      if (window.location.hostname == "localhost")
+                return;
+
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      var disqus_shortname = 'http-ewenme-rbind-io';
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com/" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+      </div>
+   
+
+          </div>
+      </div>
+  </div>
+  <script src="/js/jquery.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/jquery.cookie.js"> </script>
+<script src="/js/ekko-lightbox.js"></script>
+<script src="/js/jquery.scrollTo.min.js"></script>
+<script src="/js/masonry.pkgd.min.js"></script>
+<script src="/js/imagesloaded.pkgd.min.js"></script>
+<script src="/js/owl.carousel.min.js"></script>
+<script src="/js/front.js"></script>
+
+</body>
+</html>

@@ -7,10 +7,23 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy;2017 Ewen Henderson</copyright>
-    <lastBuildDate>Tue, 30 May 2017 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 25 Jun 2017 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/blog/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>FPL Mythbusting with fplR</title>
+      <link>/blog/2017-06-25-fpl_mythbusting/</link>
+      <pubDate>Sun, 25 Jun 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/2017-06-25-fpl_mythbusting/</guid>
+      <description>I recently authored my first R package (and definitely have the bug, now). It would be remiss of me to continue without a quick PSA for anyone out there thinking about dabbling in the package game - below is a shout-out of the invaluable resources I found along the way that kept me nice and sane.
+ease in https://t.co/NdRYGE1whA
+more detail https://t.co/ypqotSAF46
+best practice https://t.co/qRMZDXBdfQ
+travis 💀 https://t.co/dEvM3PWsVb — ewen (@ewen_) June 7, 2017</description>
+    </item>
     
     <item>
       <title>Exploring London&#39;s Pubs &amp; Bars with geofacet</title>

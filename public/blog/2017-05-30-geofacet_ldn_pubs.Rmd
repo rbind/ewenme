@@ -1,7 +1,7 @@
 ---
 date: "2017-05-30"
 title: "Exploring London's Pubs & Bars with geofacet"
-author: "Ewen Henderson"
+author: "Ewen"
 showonlyimage: false
 draft: false
 image: "blog/img/pub-map-uk-all-731587.jpg"
