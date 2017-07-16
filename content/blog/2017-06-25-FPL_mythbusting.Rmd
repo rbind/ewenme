@@ -1,6 +1,7 @@
 ---
 date: "2017-06-25"
 title: "FPL Mythbusting with fplR"
+author: "ewen"
 type: "post"
 categories: ["R"]
 tags: ["blogdown", "R", "package"]
