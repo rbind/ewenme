@@ -1,13 +1,10 @@
 ---
 date: "2017-06-25"
 title: "FPL Mythbusting with fplR"
-author: "Ewen"
-showonlyimage: false
-draft: false
-image: "blog/img/Qul9n6x.jpg"
-weight: 0
 type: "post"
-description: "Dissecting fantasy football with my new package, fplR."
+categories: ["R"]
+tags: ["blogdown", "R", "package"]
+excerpt: "Dissecting fantasy football with my new package, fplR."
 ---
 
 ```{r setup, include=FALSE}

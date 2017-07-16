@@ -1,13 +1,10 @@
 ---
 date: "2017-03-20"
 title: "A Sentiment Analysis of Kanye West Album Lyrics"
-author: "Ewen"
-showonlyimage: false
-draft: false
-image: "blog/img/kanye_sentiment.jpg"
-weight: 0
 type: "post"
-description: "Using the Genius API and sentiment analysis techniques to explore Ye's art."
+categories: ["R"]
+tags: ["blogdown", "R", "sentiment analysis", "kanye"]
+excerpt: "Using the Genius API and sentiment analysis techniques to explore Ye's art."
 ---
 
 

@@ -1,13 +1,10 @@
 ---
 date: "2017-05-30"
 title: "Exploring London's Pubs & Bars with geofacet"
-author: "Ewen"
-showonlyimage: false
-draft: false
-image: "blog/img/pub-map-uk-all-731587.jpg"
-weight: 0
 type: "post"
-description: "A look at London's pubs and bars with the geofacet package."
+categories: ["R"]
+tags: ["blogdown", "R", "geofacet", "london"]
+excerpt: "A look at London's pubs and bars with the geofacet package."
 ---
 
 ```{r setup, include=FALSE}

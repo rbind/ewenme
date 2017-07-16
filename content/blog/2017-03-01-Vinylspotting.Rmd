@@ -2,12 +2,10 @@
 date: "2017-03-01"
 title: "Vinylspotting: A Discogs Fairytale"
 author: "Ewen"
-showonlyimage: false
-draft: false
-image: "blog/img/vinylspotting.png"
-weight: 0
 type: "post"
-description: "Developing a Shiny app to explore and visualize record collections."
+categories: ["R"]
+tags: ["blogdown", "R", "shiny", "discogs"]
+excerpt: "Developing a Shiny app to explore and visualize record collections."
 ---
 
 ```{r setup, include=FALSE}
