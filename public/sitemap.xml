@@ -27,6 +27,12 @@
   </url>
   
   <url>
+    <loc>/</loc>
+    <lastmod>2017-06-25T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>/about/</loc>
     <priority>0</priority>
   </url>
@@ -123,12 +129,6 @@
   
   <url>
     <loc>/tags/</loc>
-    <lastmod>2017-06-25T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/</loc>
     <lastmod>2017-06-25T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>

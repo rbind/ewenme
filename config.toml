@@ -1,5 +1,5 @@
 baseurl = "https://ewenme.rbind.io/"
-title = "ewenme"
+title = ""
 theme = "tuftesque"
 publishDir = "public"
 languageCode = "en-us"
