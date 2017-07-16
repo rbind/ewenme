@@ -6,11 +6,7 @@ languageCode = "en-us"
 pluralizeListTitles = false
 disqusShortname = "http-ewenme-rbind-io"
 googleAnalytics = "UA-98719738-1"
-author = "Ewen Henderson"
-
-[params]
-  description = "<big><i>Pronounced you-n-me</i></big>. Opinionated analysis, adventures in R and humane, ethical applications of data science"
-  copyright = "&copy;2017 Ewen Henderson"    
+author = "Ewen Henderson"   
 
   [permalinks]
     post = "/:year/:month/:day/:slug/"
@@ -18,10 +14,6 @@ author = "Ewen Henderson"
   [[menu.main]]
   name = "About"
   url = "about/"
-
-  [[params.navlinks]]
-  name = "Home"
-  url = ""
 
   [[menu.main]]
   name = "Blog"
@@ -47,7 +39,11 @@ author = "Ewen Henderson"
     name = "Mail"
     url = "ewenhenderson@gmail.com"
 
-[params.logo]
+[params]
+  description = "<big><i>Pronounced you-n-me</i></big>. Opinionated analysis, adventures in R and humane, ethical applications of data science"
+
+  showtitle = false
+  [params.logo]
     url = "/images/logo.png"
     width = 50
     height = 50
