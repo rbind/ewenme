@@ -1,7 +1,7 @@
 ---
 date: "2017-03-01"
 title: "Vinylspotting: A Discogs Fairytale"
-author: "Ewen"
+author: "ewen"
 type: "post"
 categories: ["R"]
 tags: ["blogdown", "R", "shiny", "discogs"]
