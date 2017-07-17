@@ -18,36 +18,13 @@ author = "Ewen Henderson"
   weight = -110 
   identifier = "home"
   url = "/"
+
 [[menu.nav]]
   name = "Posts"
   pre = "<i class='fa fa-book fa-lg'></i> "
   weight = -100 
   identifier = "posts"
   url = "/blog"
-
- # [[menu.main]]
- # name = "About"
- # url = "about/"
-
- # [[menu.main]]
- # name = "Blog"
- # url = "blog/"
-
- # [[menu.main]]
- # name = "Projects"
- # url = "projects/"
-
-  [[menu.main]]
-    name = "@ewen_"
-    url = "https://twitter.com/ewen_"
-
-  [[menu.main]]
-    name = "GitHub"
-    url = "https://www.github.com/ewenme"
-
-  [[menu.main]]
-    name = "Mail"
-    url = "ewenhenderson@gmail.com"
 
 [params]
   description = "<big><i>Pronounced you-n-me</i></big>. Opinionated analysis, adventures in R and humane, ethical applications of data science"
@@ -58,3 +35,5 @@ author = "Ewen Henderson"
     width = 50
     height = 50
     alt = "Logo"
+  [params.banner]
+  url = "/images/banner.png"
