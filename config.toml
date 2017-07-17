@@ -1,6 +1,7 @@
 baseurl = "https://ewenme.rbind.io/"
 title = "ewenme"
 theme = "tuftesque"
+layoutdir = "layouts"
 publishDir = "public"
 languageCode = "en-us"
 pluralizeListTitles = false
@@ -11,21 +12,30 @@ author = "Ewen Henderson"
   [permalinks]
     post = "/:year/:month/:day/:slug/"
 
-  [[menu.main]]
-  name = "About"
-  url = "about/"
+  [[menu.nav]]
+  name = "Home"
+  pre = "<i class='fa fa-home fa-lg'></i> "
+  weight = -110 
+  identifier = "home"
+  url = "/"
+[[menu.nav]]
+  name = "Posts"
+  pre = "<i class='fa fa-book fa-lg'></i> "
+  weight = -100 
+  identifier = "posts"
+  url = "/blog"
 
-  [[menu.main]]
-  name = "Blog"
-  url = "blog/"
+ # [[menu.main]]
+ # name = "About"
+ # url = "about/"
 
-  [[menu.main]]
-  name = "Projects"
-  url = "projects/"
+ # [[menu.main]]
+ # name = "Blog"
+ # url = "blog/"
 
-  [[menu.main]]
-    name = "@ewen_"
-    url = "https://twitter.com/ewen_"
+ # [[menu.main]]
+ # name = "Projects"
+ # url = "projects/"
 
   [[menu.main]]
     name = "@ewen_"
