@@ -1,8 +1,7 @@
 ["ewen"]
   name = "Ewen Henderson"
-  bio = "Pronounced you-n. Opinionated analysis, adventures in R and humane, ethical applications of data science."
+  bio = "Pronounced you-n, in case you were wondering. Excursions in R and humane, ethical applications of data science."
   location =  "London, UK"
-  website =  "https://ewenme.rbind.io"
   thumbnail = "https://avatars4.githubusercontent.com/u/10872821?v=4&s=400"
   twitter = "https://twitter.com/ewen_"
   github = "https://github.com/ewenme"
