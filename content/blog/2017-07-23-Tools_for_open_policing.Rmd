@@ -1,30 +1,57 @@
 ---
-title: "Tools for Open Policing"
-author: "Ewen Henderson"
-date: "22/07/2017"
-output: html_document
+date: "2017-07-23"
+title: "Accelerating Open Policing with Sparklyr and Shiny"
+author: "ewen"
+type: "post"
+categories: ["R"]
+tags: ["blogdown", "R", "open policing"]
+excerpt: "Grassroots efforts to advocate open policing practices with R and Spark."
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+
+knitr::opts_chunk$set(cache=TRUE, echo = TRUE, tidy = TRUE, warning = FALSE, message = FALSE, out.width = '100%', dpi = 180, echo = FALSE)
+
+# load pkgs
+library(tidyverse)
+library(sparklyr)
+library(tigris)
+library(sf)
+
+# # read shapefile
+fl_shp <- counties(state = "FL")
+fl_shp <- st_as_sf(fl_shp)
+# 
+# # install spark
+# spark_install()
+# 
+# # creat config to tune memory
+# config <- spark_config()
+# config[["sparklyr.shell.driver-memory"]] <- "2G"
+# 
+# # connect spark
+# sc <- spark_connect(master = "local", config = config)
+# 
+# # read data into spark
+# spark_read_csv(sc, name = "fl_stops",
+#                path = "~/Documents/R bobs/Stanford Open Policing/FL-clean.csv")
+
 ```
 
-## R Markdown
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+```{r}
+# get stop count by county
+county_counts <- tbl(sc, "fl_stops") %>%
+  group_by(county_name, county_fips) %>%
+  summarise(stop_count=n()) %>%
+  collect()
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+class(county_counts)
 
-```{r cars}
-summary(cars)
+# join to county shapefile
+fl_shp <- fl_shp %>%
+  mutate(COUNTYFP=as.numeric(paste0("12", COUNTYFP))) %>%
+  left_join(fl_shp, county_counts, by=c("COUNTYFP"="county_fips"))
+
 ```
 
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
