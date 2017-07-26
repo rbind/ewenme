@@ -4528,3 +4528,17 @@ GROUP BY `stop_date`, `stop_time`
 17/07/26 22:49:25 INFO BlockManagerInfo: Removed broadcast_24_piece0 on localhost:51305 in memory (size: 15.1 KB, free: 436.2 MB)
 17/07/26 22:49:25 INFO ContextCleaner: Cleaned accumulator 113
 17/07/26 22:49:25 INFO ContextCleaner: Cleaned shuffle 9
+17/07/26 22:58:39 INFO SparkContext: Invoking stop() from shutdown hook
+17/07/26 22:58:39 INFO SparkUI: Stopped Spark web UI at http://127.0.0.1:4040
+17/07/26 22:58:40 INFO MapOutputTrackerMasterEndpoint: MapOutputTrackerMasterEndpoint stopped!
+17/07/26 22:58:41 INFO MemoryStore: MemoryStore cleared
+17/07/26 22:58:41 INFO BlockManager: BlockManager stopped
+17/07/26 22:58:41 INFO BlockManagerMaster: BlockManagerMaster stopped
+17/07/26 22:58:41 INFO OutputCommitCoordinator$OutputCommitCoordinatorEndpoint: OutputCommitCoordinator stopped!
+17/07/26 22:58:41 INFO SparkContext: Successfully stopped SparkContext
+17/07/26 22:58:41 INFO ShutdownHookManager: Shutdown hook called
+17/07/26 22:58:41 INFO ShutdownHookManager: Deleting directory /private/var/folders/pr/93qr91nx7kd0xlfnzg43_8t80000gn/T/spark-ecf2d3cb-0efa-413e-a591-18d37460b1b4/httpd-5824407b-4be2-4db0-9538-9547262f1742
+17/07/26 22:58:41 INFO ShutdownHookManager: Deleting directory /private/var/folders/pr/93qr91nx7kd0xlfnzg43_8t80000gn/T/spark-8ce01862-a2a8-4ca5-aa65-d8bb62bb60cd
+17/07/26 22:58:41 INFO RemoteActorRefProvider$RemotingTerminator: Shutting down remote daemon.
+17/07/26 22:58:42 INFO ShutdownHookManager: Deleting directory /private/var/folders/pr/93qr91nx7kd0xlfnzg43_8t80000gn/T/spark-ecf2d3cb-0efa-413e-a591-18d37460b1b4
+17/07/26 22:58:42 INFO RemoteActorRefProvider$RemotingTerminator: Remote daemon shut down; proceeding with flushing remote transports.

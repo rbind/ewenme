@@ -356,4 +356,4 @@ I'm not going to delve into the ins and outs of Shiny development, but I wanted 
 
 ## Wrap-up
 
-I set out to learn a bit more about Spark and Shiny, and put a spotlight on critical policing issues in the process. The trickle down of new technologies can be slower to reach these kinds of spaces. I think it's our job to ensure that as powerful, but often biased algorithms continue to creep into the targeting of disenfranchised groups, there is a pragmatic effort to expose injustice in these systems and encourage open, accountable policing through good data science. I hope writing this helps remind me of this ongoing responsibility to pursuing these causes.
+I set out to learn a bit more about Spark and Shiny, and put a spotlight on critical policing issues in the process. The trickle down of new technologies can be slow to reach these kinds of spaces, but it's as important as ever that there continues to be a pragmatic effort to expose discrimination and biases in systems and encourage open, accountable policing through good data science. Don't hesitate to get stuck in.
