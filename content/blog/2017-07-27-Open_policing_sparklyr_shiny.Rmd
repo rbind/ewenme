@@ -90,7 +90,7 @@ sc <- spark_connect(master = "local", config = config)
 `sc` is now acting as a remote dplyr data source to the Spark cluster. In the latest R Studio IDE, you can check things are looking normal, sparklyr-wise:
 
 ```{r sparklyr screenshot, echo = FALSE, out.width = "100%", fig.align = "center"}
-knitr::include_graphics("/img/2017-07-23-Open_policing_sparklyr_shiny/sparklyr%20screenshot.png")
+knitr::include_graphics("https://github.com/rbind/ewenme/blob/master/static/img/2017-07-23-Open_policing_sparklyr_shiny/sparklyr%20screenshot.png")
 ```
 
 Nice, but, there's not much going on over there at the moment. Enter the data.
@@ -340,7 +340,7 @@ With all of this work going in to data collection, I was inspired to do whatever
 <br>
 
 ```{r polmonitor anim, echo = FALSE, out.width = "100%", fig.align = "center"}
-knitr::include_graphics("/img/2017-07-23-Open_policing_sparklyr_shiny/example.gif")
+knitr::include_graphics("https://github.com/rbind/ewenme/blob/master/static/img/2017-07-23-Open_policing_sparklyr_shiny/example.gif")
 ```
 
 <br>

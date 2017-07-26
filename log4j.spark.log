@@ -4490,3 +4490,41 @@ GROUP BY `stop_date`, `stop_time`
 17/07/26 22:38:35 INFO TaskSchedulerImpl: Removed TaskSet 28.0, whose tasks have all completed, from pool 
 17/07/26 22:38:35 INFO DAGScheduler: ResultStage 28 (collect at utils.scala:196) finished in 0.001 s
 17/07/26 22:38:35 INFO DAGScheduler: Job 16 finished: collect at utils.scala:196, took 0.044770 s
+17/07/26 22:49:25 INFO BlockManagerInfo: Removed broadcast_31_piece0 on localhost:51305 in memory (size: 1224.0 B, free: 436.1 MB)
+17/07/26 22:49:25 INFO ContextCleaner: Cleaned accumulator 142
+17/07/26 22:49:25 INFO BlockManagerInfo: Removed broadcast_30_piece0 on localhost:51305 in memory (size: 1224.0 B, free: 436.1 MB)
+17/07/26 22:49:25 INFO ContextCleaner: Cleaned accumulator 141
+17/07/26 22:49:25 INFO ContextCleaner: Cleaned accumulator 100
+17/07/26 22:49:25 INFO BlockManagerInfo: Removed broadcast_22_piece0 on localhost:51305 in memory (size: 15.2 KB, free: 436.1 MB)
+17/07/26 22:49:25 INFO ContextCleaner: Cleaned accumulator 99
+17/07/26 22:49:25 INFO ContextCleaner: Cleaned shuffle 8
+17/07/26 22:49:25 INFO ContextCleaner: Cleaned accumulator 86
+17/07/26 22:49:25 INFO ContextCleaner: Cleaned accumulator 85
+17/07/26 22:49:25 INFO BlockManagerInfo: Removed broadcast_19_piece0 on localhost:51305 in memory (size: 14.4 KB, free: 436.1 MB)
+17/07/26 22:49:25 INFO ContextCleaner: Cleaned accumulator 84
+17/07/26 22:49:25 INFO ContextCleaner: Cleaned shuffle 7
+17/07/26 22:49:25 INFO ContextCleaner: Cleaned shuffle 6
+17/07/26 22:49:25 INFO ContextCleaner: Cleaned accumulator 69
+17/07/26 22:49:25 INFO BlockManagerInfo: Removed broadcast_17_piece0 on localhost:51305 in memory (size: 5.9 KB, free: 436.2 MB)
+17/07/26 22:49:25 INFO ContextCleaner: Cleaned accumulator 68
+17/07/26 22:49:25 INFO BlockManagerInfo: Removed broadcast_16_piece0 on localhost:51305 in memory (size: 13.6 KB, free: 436.2 MB)
+17/07/26 22:49:25 INFO ContextCleaner: Cleaned accumulator 67
+17/07/26 22:49:25 INFO ContextCleaner: Cleaned shuffle 5
+17/07/26 22:49:25 INFO ContextCleaner: Cleaned shuffle 4
+17/07/26 22:49:25 INFO ContextCleaner: Cleaned accumulator 49
+17/07/26 22:49:25 INFO BlockManagerInfo: Removed broadcast_14_piece0 on localhost:51305 in memory (size: 14.3 KB, free: 436.2 MB)
+17/07/26 22:49:25 INFO ContextCleaner: Cleaned accumulator 48
+17/07/26 22:49:25 INFO ContextCleaner: Cleaned shuffle 3
+17/07/26 22:49:25 INFO ContextCleaner: Cleaned accumulator 140
+17/07/26 22:49:25 INFO BlockManagerInfo: Removed broadcast_28_piece0 on localhost:51305 in memory (size: 15.0 KB, free: 436.2 MB)
+17/07/26 22:49:25 INFO ContextCleaner: Cleaned accumulator 139
+17/07/26 22:49:25 INFO ContextCleaner: Cleaned shuffle 11
+17/07/26 22:49:25 INFO ContextCleaner: Cleaned accumulator 127
+17/07/26 22:49:25 INFO BlockManagerInfo: Removed broadcast_26_piece0 on localhost:51305 in memory (size: 15.3 KB, free: 436.2 MB)
+17/07/26 22:49:25 INFO ContextCleaner: Cleaned accumulator 126
+17/07/26 22:49:25 INFO ContextCleaner: Cleaned shuffle 10
+17/07/26 22:49:25 INFO BlockManagerInfo: Removed broadcast_25_piece0 on localhost:51305 in memory (size: 6.7 KB, free: 436.2 MB)
+17/07/26 22:49:25 INFO ContextCleaner: Cleaned accumulator 114
+17/07/26 22:49:25 INFO BlockManagerInfo: Removed broadcast_24_piece0 on localhost:51305 in memory (size: 15.1 KB, free: 436.2 MB)
+17/07/26 22:49:25 INFO ContextCleaner: Cleaned accumulator 113
+17/07/26 22:49:25 INFO ContextCleaner: Cleaned shuffle 9
