@@ -6,7 +6,7 @@
     <description>Recent content in Tags on ewenme</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 25 Jun 2017 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 26 Jul 2017 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,7 +14,7 @@
     <item>
       <title>Blogdown</title>
       <link>/tags/blogdown/</link>
-      <pubDate>Sun, 25 Jun 2017 00:00:00 +0000</pubDate>
+      <pubDate>Wed, 26 Jul 2017 00:00:00 +0000</pubDate>
       
       <guid>/tags/blogdown/</guid>
       <description></description>
@@ -77,7 +77,7 @@
     <item>
       <title>R</title>
       <link>/tags/r/</link>
-      <pubDate>Sun, 25 Jun 2017 00:00:00 +0000</pubDate>
+      <pubDate>Wed, 26 Jul 2017 00:00:00 +0000</pubDate>
       
       <guid>/tags/r/</guid>
       <description></description>
@@ -95,9 +95,18 @@
     <item>
       <title>Shiny</title>
       <link>/tags/shiny/</link>
-      <pubDate>Wed, 01 Mar 2017 00:00:00 +0000</pubDate>
+      <pubDate>Wed, 26 Jul 2017 00:00:00 +0000</pubDate>
       
       <guid>/tags/shiny/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Spark</title>
+      <link>/tags/spark/</link>
+      <pubDate>Wed, 26 Jul 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/spark/</guid>
       <description></description>
     </item>
     
