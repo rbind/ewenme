@@ -5,11 +5,28 @@
     <link>/</link>
     <description>Recent content on ewenme</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
     <lastBuildDate>Thu, 27 Jul 2017 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Projects</title>
+      <link>/projects/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/projects/</guid>
+      <description> Software  ghibli: Studio Ghibli colour palettes for R fplR: R package for working with Fantasy Premier League (FPL) data  Web Applications  polMonitor: Shiny app for monitoring police violence Vinylspotting: Shiny app for Discogs users to visualise and explore their record collections  </description>
+    </item>
+    
+    <item>
+      <title>About</title>
+      <link>/about/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/about/</guid>
+      <description>Ewen (pronounced you-n). R fanboy and advocate for open source / open science. Telling empathetic stories about my diverse excursions in data science. Otherwise, find me listening to weird &amp;lsquo;n&amp;rsquo; dusty records and sinking into a Discogs wormhole.</description>
+    </item>
     
     <item>
       <title>Advocating for Open Policing with sparklyr and Shiny</title>
@@ -72,27 +89,6 @@ Intro Kanye West is responsible for some of the realest, funniest (“if you fal
       
       <guid>/blog/2017-03-01-vinylspotting/</guid>
       <description>At a cursory glance, it’s almost impossible to get much of an understanding of vinyl record collections beyond their size (or perhaps their age, depending on the smell?). If you get up close, you might recognise some artist names or make out some titles on the spines of LPs, but your average collector is gonna have loads of bits that even they don’t recognise on sight. Now, while the unadulterated excitement of finding a white label on the shelve that even you can’t remember is the romance at the very heart of record digging, that thought of forgotten artifacts would send archivists and librarians bonkers.</description>
-    </item>
-    
-    <item>
-      <title>About</title>
-      <link>/about/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/about/</guid>
-      <description>R fanboy, big on open source and open science. Here to tell stories about my excursions in R and grow humane, ethical applications of data science.
-Otherwise, I like listening to weird ‘n’ dusty records (check my collection) and playing The Beautiful Game™. Oh yeah - please hit me up with your fire veggie recipes 🥑 🍆🌶🌽 🥔 🥗 🍅 🥚 🧀 🥒</description>
-    </item>
-    
-    <item>
-      <title>Projects</title>
-      <link>/projects/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/projects/</guid>
-      <description>
-Software  fplR: R package for working with Fantasy Premier League (FPL) data  
- Web Apps  Vinylspotting: Shiny app for Discogs users to visualise and explore their record collections   </description>
     </item>
     
   </channel>

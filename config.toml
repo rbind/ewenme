@@ -1,39 +1,54 @@
 baseurl = "https://ewenme.rbind.io/"
 title = "ewenme"
-theme = "tuftesque"
-layoutdir = "layouts"
-publishDir = "public"
-languageCode = "en-us"
-pluralizeListTitles = false
+
+theme = "minimo"
+
 disqusShortname = "http-ewenme-rbind-io"
 googleAnalytics = "UA-98719738-1"
-author = "Ewen Henderson"   
 
-  [permalinks]
-    post = "/:year/:month/:day/:slug/"
+Paginate = 8
 
-  [[menu.nav]]
-  name = "Home"
-  pre = "<i class='fa fa-home fa-lg'></i> "
-  weight = -110 
+preserveTaxonomyNames = true
+
+[params]
+  dateFormat = "02 January, 2006"
+  copyrightOwner = "Ewen Henderson"
+  copyrightStartYear = "2017"
+  favicon = "favicon.ico"
+  hideEntryNavigation = true
+  customCSS = ["css/custom.css"]
+  hideSocialMenu = false
+  showReadTime = true
+
+[taxonomies]
+  category = "categories"
+
+[author.social]
+  email = "ewenhenderson@gmail.com"
+  github = "ewenme"
+  twitter = "ewen_"
+
+[permalinks]
+  page = "/:slug/"
+
+[[menu.main]]
+  name = "home"
+  weight = -80
   identifier = "home"
   url = "/"
 
-[[menu.nav]]
-  name = "Posts"
-  pre = "<i class='fa fa-book fa-lg'></i> "
-  weight = -100 
+[[menu.main]]
+  name = "posts"
+  weight = -70
   identifier = "posts"
   url = "/blog"
 
-[params]
-  description = "<big><i>Pronounced you-n-me</i></big>. Opinionated analysis, adventures in R and humane, ethical applications of data science"
+defaultContentLanguage = "en"
 
-  showtitle = false
-  [params.logo]
-    url = "/images/logo.png"
-    width = 50
-    height = 50
-    alt = "Logo"
-  [params.banner]
-  url = "/images/banner.png"
+[languages]
+  [languages.en]
+    lang = "en"
+    languageName = "English"
+    weight = 1
+
+ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]

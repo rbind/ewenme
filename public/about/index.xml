@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>About on ewenme</title>
+    <title>Abouts on ewenme</title>
     <link>/about/</link>
-    <description>Recent content in About on ewenme</description>
+    <description>Recent content in Abouts on ewenme</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
     
 	<atom:link href="/about/index.xml" rel="self" type="application/rss+xml" />
     
@@ -16,8 +15,7 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/about/</guid>
-      <description>R fanboy, big on open source and open science. Here to tell stories about my excursions in R and grow humane, ethical applications of data science.
-Otherwise, I like listening to weird ‘n’ dusty records (check my collection) and playing The Beautiful Game™. Oh yeah - please hit me up with your fire veggie recipes 🥑 🍆🌶🌽 🥔 🥗 🍅 🥚 🧀 🥒</description>
+      <description>Ewen (pronounced you-n). R fanboy and advocate for open source / open science. Telling empathetic stories about my diverse excursions in data science. Otherwise, find me listening to weird &amp;lsquo;n&amp;rsquo; dusty records and sinking into a Discogs wormhole.</description>
     </item>
     
   </channel>
