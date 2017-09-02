@@ -158,7 +158,7 @@ config[[&quot;sparklyr.shell.driver-memory&quot;]] &lt;- &quot;2G&quot;</code></
 <p>The final step of the sparklyr setup is to establish a connection to the Spark instance:</p>
 <pre class="r"><code>sc &lt;- spark_connect(master = &quot;local&quot;, config = config)</code></pre>
 <p><code>sc</code> is now acting as a remote dplyr data source to the Spark cluster. In the latest R Studio IDE, you can check things are looking normal, sparklyr-wise:</p>
-<p><img src="https://github.com/rbind/ewenme/blob/master/static/img/2017-07-27-Open_policing_sparklyr_shiny/sparklyr%20screenshot.png" width="100%" style="display: block; margin: auto;" /></p>
+<p><img src="/img/2017-07-27-Open_policing_sparklyr_shiny/sparklyr screenshot.png" width="100%" style="display: block; margin: auto;" /></p>
 <p>Nice, but, there’s not much going on over there at the moment. Enter the data.</p>
 <p><br></p>
 <div id="back-to-the-data" class="section level3">
@@ -215,7 +215,7 @@ collect()</code></pre>
 <p>polMonitor is a related pet project that has seen the light of day thanks to a herculean effort by <a href="https://mappingpoliceviolence.org/">Mapping Police Violence</a> to compile data about police killings from several disparate sources (namely, FatalEncounters.org, the U.S. Police Shootings Database and KilledbyPolice.net).</p>
 <p>With all of this work going in to data collection, I was inspired to do whatever I could to make the data accessible and engaged with by more people, and ensure more accountable policing. To that end, I developed a Shiny app (now <a href="https://ewenme.shinyapps.io/polMonitor/">hosted over at shinyapps</a>), or an interactive space for folks to immerse themselves in this data. Go see for yourself, and check the repo <a href="https://github.com/ewenme/Vinylspotting">here</a>.</p>
 <p><br></p>
-<p><img src="https://github.com/rbind/ewenme/blob/master/static/img/2017-07-27-Open_policing_sparklyr_shiny/example.gif" width="100%" style="display: block; margin: auto;" /></p>
+<p><img src="/img/2017-07-27-Open_policing_sparklyr_shiny/example.gif" width="100%" style="display: block; margin: auto;" /></p>
 <p><br></p>
 <p>I’m not going to delve into the ins and outs of Shiny development, but I wanted to quickly mention a couple of helping hands I found with this one.</p>
 <p><br></p>
