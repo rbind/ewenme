@@ -38,9 +38,9 @@ preserveTaxonomyNames = true
   url = "/"
 
 [[menu.main]]
-  name = "posts"
+  name = "blog"
   weight = -70
-  identifier = "posts"
+  identifier = "blog"
   url = "/blog"
 
 defaultContentLanguage = "en"
