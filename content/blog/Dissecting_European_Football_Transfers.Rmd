@@ -1,0 +1,222 @@
+---
+title: "Unravelling European Football's Transfer Window"
+type: "post"
+categories: ["R", "Sports", "Web Scraping"]
+---
+
+```{r setup, include=FALSE}
+
+# markdown setup
+knitr::opts_chunk$set(cache=TRUE, echo = TRUE, tidy = TRUE, warning = FALSE, message = FALSE, out.width = '100%', dpi = 180)
+
+# install latest ggplot2 version
+# devtools::install_github("tidyverse/ggplot2", force=TRUE)
+
+# load pkgs for session
+library(jsonlite)
+library(tidyverse)
+library(lubridate)
+library(forcats)
+library(hrbrthemes)
+library(scales)
+library(ggjoy)
+
+```
+
+Followers of European football will be familiar with the infamous transfer window system, which endears clubs to buy and sell players in a specified period - once in the off-season (summer), and once at the turn of each calendar year. This constraint has invited increasingly peculiar and precarious market activity over the years, as clubs vye to secure the hottest new talents with varying parts method and madness. Meanwhile, the fans lap up newspaper gossip columns and tell friends "he looks quality on youtube" as they frantically research *wunderkinds* and *hot prospects* their club has been linked with. It's a truly beguiling collection of rituals and rhetoric (that I helplessly pander to each year). 
+
+```{r regulate pic, echo = FALSE, out.width = "100%", fig.align = "center"}
+knitr::include_graphics("/img/Dissecting_European_Football_Transfers/the-market-will-regulate-itself-15867178.png")
+```
+
+The off-season transfer window closed shut recently, on August 31st across Germany, England, France and Italy. Spain got given slightly longer to finish their business, until the 1st September (a bizarre quirk that is befitting of such a madcap period). As a follower of (English) Premier League football, primarily, the way in which media outlets stoke up the tension here as the window draws to a close really has to be seen to be believed. Chief culprits include Sky Sports, who's latest exruciating move in drama marginal gains includes presenters co-ordinating the colour of their clothes with the canary yellow news ticker on their rolling TV coverage of the window's 'deadline day' (caption competition, indeed).
+
+```{r ssn pic, echo = FALSE, out.width = "100%", fig.align = "center"}
+knitr::include_graphics("/img/Dissecting_European_Football_Transfers/jim-white-yellow-tie-sky-sports-transfer-deadline-1050617.jpg")
+```
+
+<br>
+
+Behind this cucophony of noise, what actually went down in the window? Hopefully, a proper look at the data can help reveal some truths and help me scratch this particular itch.[^fullcode]
+
+## Here's a tweet I made earlier
+
+In early skirmishes with transfer window data, I had managed to scrape [Transfermarkt's](https://www.transfermarkt.co.uk/) site for player transfer data and produced some neat dumbell-style plots that people seemed to get on with.
+
+<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Premier league clubs&#39; summer transfer bizniz (as of today). Idea inspired by <a href="https://twitter.com/Worville">@Worville</a>, execution by <a href="https://twitter.com/hrbrmstr">@hrbrmstr</a>. <a href="https://t.co/upHFzegZ1H">pic.twitter.com/upHFzegZ1H</a></p>&mdash; ewen (@ewen_) <a href="https://twitter.com/ewen_/status/895930106908221440">August 11, 2017</a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<br>
+
+These nicely illustrated intra-league transfer window behaviour, highlighting big buyers and sellers (as well as club's balances) relative to the league itself. One feature that may go unnoticed is the ranking of the y-axis - the clubs have been ordered by their final league position in the previous season (with the promoted clubs at the bottom). This decision means that clubs are proximal to others who demonstrated similar league performance (a reasonable proxy for team quality), and spend information can be compared non-arbitrarily in this way.
+
+However, there wasn't any kind of timestamp present in Transfermarkt's collation of transfer data, which was a dimension I wanted to explore. I would have to try my luck elsewhere.
+
+<br>
+
+## Show me the data
+
+Luckily for me, the Guardian ran a [transfer window interactive](https://www.theguardian.com/football/ng-interactive/2017/jun/22/transfer-window-2017-every-deal-in-europes-top-five-leagues) that included information about *when* tranfers happened. A quick `jsonlite`/`lubridate`/`dplyr`/`forcats` combo is all I needed to grab, parse and clean the data for my purposes.
+
+```{r guardian scrape}
+# load packages
+library(jsonlite)
+library(tidyverse)
+library(lubridate)
+library(forcats)
+
+# SCRAPE --------------------------------------------------------------
+
+# scrape guardian's json transfer data
+request <- fromJSON(txt = "https://interactive.guim.co.uk/docsdata/1YJQzO5Ngc6LSydUaidGNKQi6Zi3Ipi-Q3E59-v2fjgc.json")
+
+# get transfer dataframe
+transfers <- request$sheets$Transfers
+
+# CLEAN --------------------------------------------------------------
+
+# correct variable types
+transfers$timestamp <- dmy_hms(transfers$timestamp)
+transfers$date <- dmy(transfers$date)
+
+transfers <- transfers %>%
+  mutate_at(c("transfer_type", "transfer_status", "is_estimate", "big_transfer"), as_factor) %>%
+  mutate_at(c("price_pounds", "price_euros"), as.numeric)
+
+# remove inane cols
+transfers <- select(transfers, -big_transfer:-article_url)
+```
+
+With that, the temporal aspect of the transfer window data is unlocked.
+
+<br>
+
+## Watching the window go by
+
+As mentioned earlier, there is a perceived high-stakes end to the window here in England, possibly fuelled by sensationalist thrid-parties in the media (among other factors). Given that the other major European leagues find their opportunities for business cut off at the same time, is there a widespread spike in business as the deadline approaches?
+
+```{r league joyplot, echo=FALSE}
+# filter new league as big 5 and transfer has a fee attached
+transfers %>%
+  filter(new_league %in% c("Premier League", "Serie A", "La Liga", "Bundesliga", "Ligue 1"),
+         transfer_type %in% c("fee", "undisclosed fee")) %>%
+  # joy plot
+  ggplot(aes(x=date, y=new_league)) +
+  geom_joy(fill="#85144B", alpha=0.8) +
+  # thematic elements
+  labs(title="When did teams in the big five leagues buy new players?",
+       subtitle= "Distribution of European football transfer window activity in 2017 (permanent transfers only).",
+       x=NULL, y=NULL,
+       caption="Source: the Guardian   |   Made by @ewen_") +
+  theme_ipsum(grid = "X") +
+  scale_x_date(date_breaks = "1 month", date_labels = "%b") +
+  theme(axis.text.x = element_text(size=10),
+        plot.margin = unit(c(0.35, 0.2, 0.3, 0.35), "cm"))
+```
+
+We see the biggest peak in player buys, across all leagues, comes around the start of July (coinciding with the 1st July openining of the window). Business is done earlier than this date, as players agree moves prior to officially jumping ship. It appears that the quickest clubs to start moving are in Germany (Bundesliga), while the biggest spike near to the deadline is clearly in England (Premier League) as their clubs continue to do business later, relative to the others. It is hard to tell haw much media furore influences this late activity (a self-fulfilling prophecy, perhaps), and there are other factors to consider - even an executive's hard negotiating style can make a club's business likely to drag on. 
+
+Another component is that of the loan market, which is a different beast - essentially, club's (usually those less esteemed) borrowing players from another club, usually for a season. It may be that a league's behaviour in this market differs from full transfers.
+
+```{r loans}
+transfers %>%
+  filter(new_league %in% c("Premier League", "Serie A", "La Liga", "Bundesliga", "Ligue 1"),
+         transfer_type %in% c("fee", "loan")) %>%
+  # joy plot
+  ggplot(aes(x=date, y=new_league)) +
+  geom_joy(aes(fill=transfer_type), alpha=0.8) +
+  # thematic elements
+  labs(title="How did the loan market differ from permanent transfers?",
+       x=NULL, y=NULL,
+       caption="Source: the Guardian   |   Made by @ewen_") +
+  theme_ipsum(grid = "X") +
+  scale_x_date(date_breaks = "1 month", date_labels = "%b") +
+  theme(axis.text.x = element_text(size=10),
+        plot.margin = unit(c(0.35, 0.2, 0.3, 0.35), "cm"),
+        legend.position = "top", legend.title = element_blank()) +
+  scale_fill_viridis_d(labels=c("Fee", "Loan"))
+```
+
+Ah - now we see what the other leagues were up to, closer to the deadline. It's noticeable that permanent transfers are mostly done earlier, peaking in July as already mentioned, while loan business is more often than not left until the last knockings.
+
+<br>
+
+## Following the money 
+
+We have an idea of the deadline day effect in transfer activity terms, but haven't yet delved into the finances. I'm dying to know just how much business is left until those final hours.
+
+```{r deadline prop, echo=FALSE}
+
+# deadline
+transfers <- mutate(transfers,
+                    deadline_day=if_else(new_league %in% c("Premier League", "Serie A", "Bundesliga", 
+                                                           "Ligue 1") & date >= "2017-08-31", TRUE, 
+                                         if_else(new_league == "La Liga" & date >= "2017-09-01", TRUE,
+                                                 FALSE)))
+
+# deadline day spend
+transfers %>%
+  filter(new_league %in% c("Premier League", "Serie A", "La Liga", "Bundesliga", "Ligue 1"),
+         transfer_type %in% c("fee")) %>%
+  group_by(new_league, deadline_day) %>%
+  summarise(spend=sum(price_pounds, na.rm = TRUE)) %>%
+  mutate(prop=spend/sum(spend)) %>%
+  ungroup() %>%
+  complete(new_league, deadline_day, fill=list(spend=0)) %>%
+  filter(deadline_day == TRUE) %>%
+  ggplot(aes(x=reorder(new_league, prop), y=prop)) +
+  geom_col(fill="#85144B", alpha=0.8) +
+  # thematic elements
+  scale_y_percent() +
+  theme_ipsum(grid = "X") +
+  geom_hline(yintercept = seq(from=0.05, to=0.15, by=0.05), colour="white") +
+  coord_flip() +
+  theme(axis.text.x = element_text(size=10),
+        plot.margin = unit(c(0.35, 0.2, 0.3, 0.35), "cm")) +
+  labs(title="Deadline Day Spend in European Leagues, 2017",
+       subtitle="League transfer spend on deadline day (1st September in La Liga, 31st\nAugust elsewhere) as a proportion of total transfer window spend.",
+       x=NULL, y="% of league's transfer window spend",
+       caption="Source: the Guardian   |   Made by @ewen_") 
+
+```
+
+Huh. While over 13% of all transfer spend by the Premier League is done on the final day, it turns out that *nothing* was spent on La Liga's extra day (remember, this is disclosed fees only, and doesn't include player loan deals). A failed experiment, perhaps, with the rest of the big leagues shutting up shop by then? Too soon to tell, but I'll be patiently waiting to see if the same thing happens next year...
+
+There are usually some headline-grabbing moves made each summer, and this one got a bit silly. Neymar moved to Paris Saint Germain for £197 million, with fears about inequality in spending power reaching fever pitch. 
+
+```{r league prop, echo=FALSE}
+
+transfers %>%
+  filter(new_league %in% c("Premier League", "Serie A", "La Liga", "Bundesliga", "Ligue 1"),
+         transfer_type %in% c("fee")) %>%
+  group_by(new_league, new_club) %>%
+  summarise(spend=sum(price_pounds, na.rm = TRUE)) %>%
+  mutate(price_prop=spend/sum(spend)) %>%
+  ungroup() %>%
+  arrange(desc(price_prop)) %>%
+  top_n(10, wt=price_prop) %>%
+  ggplot(aes(x=reorder(new_club, price_prop) , y=price_prop)) +
+  geom_col(fill="#85144B", alpha=0.8) +
+  coord_flip() +
+  scale_y_percent() +
+  # thematic elements
+  labs(title="Intra-league inequity in transfer spend",
+       subtitle="Club transfer spend as a proportion of their league's total window spend.",
+       x=NULL, y="% of club league's total spend ",
+       caption="Source: the Guardian   |   Made by @ewen_") +
+  theme(axis.text.x = element_text(size=10),
+        plot.margin = unit(c(0.35, 0.2, 0.3, 0.35), "cm")) +
+  theme_ipsum(grid = "X") +
+  geom_hline(yintercept = seq(from=0.1, to=0.4, by=0.1), colour="white")
+
+```
+
+That deal I mentioned helped PSG on their way to sinking over 40% of the entire leagues business, in financial terms. If anyone from the Financial Fair Play (FFP - a real thing, promise) committee is reading - get at me. 
+
+This doesn't quite tell the full story - Neymar actually moved from Barca to PSG, so a lot of their spending was triggered after that whole palava, and clubs did business the other way, of course. You can refer to my tweets at the start if you're interested in how clubs fared with balancing the books.
+
+
+
+<br>
+
+[^fullcode]: To keep the post concise I don't show all of the code, especially code that generates figures. But you can find the full code [here]().
