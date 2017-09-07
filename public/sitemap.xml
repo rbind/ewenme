@@ -63,6 +63,12 @@
   </url>
   
   <url>
+    <loc>/tags/gis/</loc>
+    <lastmod>2017-05-30T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>/tags/geofacet/</loc>
     <lastmod>2017-05-30T00:00:00+00:00</lastmod>
     <priority>0</priority>
@@ -71,12 +77,6 @@
   <url>
     <loc>/tags/kanye/</loc>
     <lastmod>2017-03-20T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/london/</loc>
-    <lastmod>2017-05-30T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
