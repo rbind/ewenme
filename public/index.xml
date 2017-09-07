@@ -5,7 +5,7 @@
     <link>/</link>
     <description>Recent content on ewenme</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Thu, 27 Jul 2017 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 07 Sep 2017 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
@@ -26,6 +26,15 @@
       
       <guid>/about/</guid>
       <description>Ewen (pronounced you-n). R fanboy and advocate for open source / open science. Telling empathetic stories about my diverse excursions in data science. Otherwise, find me listening to weird &amp;lsquo;n&amp;rsquo; dusty records and sinking into a Discogs wormhole.</description>
+    </item>
+    
+    <item>
+      <title>Unravelling European Football&#39;s Transfer Window</title>
+      <link>/blog/2017-09-07-dissecting_european_football_transfers/</link>
+      <pubDate>Thu, 07 Sep 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/2017-09-07-dissecting_european_football_transfers/</guid>
+      <description>Followers of European football will be familiar with the infamous transfer window system, which endears clubs to buy and sell players in a specified period - once in the off-season (summer), and once at the turn of each calendar year. This constraint has invited increasingly peculiar and precarious market activity over the years, as clubs vie to secure the hottest new talents with varying parts method and madness. Meanwhile, fans lap up newspaper gossip columns and tell friends “he looks quality on YouTube” as they frantically research the latest “wunderkind” their club has been linked with.</description>
     </item>
     
     <item>

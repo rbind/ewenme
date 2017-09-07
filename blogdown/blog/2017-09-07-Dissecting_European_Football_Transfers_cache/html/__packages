@@ -1,0 +1,17 @@
+base
+jsonlite
+tidyverse
+ggplot2
+tibble
+tidyr
+readr
+purrr
+dplyr
+lubridate
+forcats
+hrbrthemes
+scales
+ggjoy
+ggraph
+igraph
+bindrcpp

@@ -21,7 +21,7 @@ preserveTaxonomyNames = true
   showReadTime = true
 
 [taxonomies]
-  category = "categories"
+  tag = "tags"
 
 [author.social]
   email = "ewenhenderson@gmail.com"
