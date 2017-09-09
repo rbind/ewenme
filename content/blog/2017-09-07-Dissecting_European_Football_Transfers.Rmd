@@ -253,5 +253,5 @@ Notice how little other leagues choose to plunder the Premier League...I'll leav
 
 <br>
 
-[^fullcode]: To keep the post concise I don't show all of the code, especially code that generates figures. But you can find the full code [here](https://github.com/rbind/ewenme/blob/master/content/blog/2017-09-07-2017-09-07-Dissecting_European_Football_Transfers.Rmd).
+[^fullcode]: To keep the post concise I don't show all of the code, especially code that generates figures. But you can find the full code [here](https://github.com/rbind/ewenme/blob/master/content/blog/2017-09-07-Dissecting_European_Football_Transfers.Rmd).
 [^disclosed]: Transfer spend in this article refers to *disclosed fees only*. The Guardian did make estimates of fees, where appropriate.
