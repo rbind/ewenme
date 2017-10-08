@@ -1,0 +1,128 @@
+---
+title: "Meet Dumb Hardwax: Markov Chains & Twitter Bots in the Cloud, in R"
+date: "2017-09-07"
+type: "post"
+tags: ["R", "Bots", "Web Scraping", "Cloud Computing", "Markov Chains"]
+---
+
+```{r setup, include=FALSE}
+
+# markdown setup
+knitr::opts_chunk$set(cache=TRUE, echo = FALSE, tidy = TRUE, warning = FALSE, message = FALSE, out.width = '100%', dpi = 180)
+
+# load pkgs for session
+library(tidyverse)
+library(rvest)
+library(stringr)
+
+```
+
+Twitter bots have gotten a fairly bad rap, recently [(often with good reason)](http://uk.businessinsider.com/twitter-russia-investigation-should-look-at-trump-interaction-with-bots-2017-10?r=US&IR=T). When they're done right, a genuinely quirky robot can cut through a feed full of humans with beautiful tidbits. God bless [@tinycarebot](https://twitter.com/tinycarebot).
+
+<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">💟: please dont forget to text back your friends</p>&mdash; here&#39;s your reminder (@tinycarebot) <a href="https://twitter.com/tinycarebot/status/916319972112175105?ref_src=twsrc%5Etfw">October 6, 2017</a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<br>
+
+Another thing I like reading is [Hardwax](https://hardwax.com/), a hugely influential Berlin record store, get excited about their new stock. Their snappy desciptions of new music is steeped in electronic music fan folklore. Gems like this are peppered all over the site:
+
+> "Like Dancehall from cyberspace - awesomely fresh & fearless & full of Grime affinities"
+
+I love flicking through gold like this over there, but as a Londoner I'm usually gonna pick up records from the local stores. This means I don't get around to checking these as much as I should, which got me thinking - I wish I could have Hardwax reviews in the Twitter feed. They even fit in to 140 characters most of the time! 
+
+I'd also been meaning to have a go at generating pseudo random text with Markov chains. For those that don't know, ([this](http://setosa.io/ev/markov-chains/) is a wicked visual intro), these are mathematical systems that describe the probabilities of moving from one "state" (or set of values) to another. There seems legitimate potential to subvert this principle for the purpose of knitting together words to form my own fake Hardwax reviews. 
+
+So, a bot that spits out pseudo-Hardwax reviews, just for my sadistic enjoyment. Let's get it.
+
+<br>
+
+## Getting in to a scrape
+
+Here's what the release pages look like, over at Hardwax's site:
+
+```{r site pic, out.width = "100%", fig.align = "center"}
+knitr::include_graphics("/img/2017-10-03-Meet_Dumb_Hardwax/hardwax site.png")
+```
+
+
+I was able to put together a fairly simple function (leaning heavily on `rvest`) to scrape the reviews (bits encircled in red).
+
+```{r hardwax scrape, echo=TRUE}
+
+# web scraper for hardwax reviews
+hardwax_scrape <- function(page, no) {
+  
+  # construct url
+  x <- paste0("https://hardwax.com/", page, "/?page=", no, "&paginate_by=50")
+  
+  # scrape reviews
+  reviews <- x %>%
+    read_html() %>%
+    html_nodes("p") %>%
+    html_text()
+  
+  return(reviews)
+}
+```
+
+This made it simple business to gather up reviews from different areas, like the latest weeks new ish:
+
+```{r scrape eg, echo=TRUE}
+
+# scrape news
+lapply(seq_along(1:2), hardwax_scrape, page="this-week") %>% unlist() %>% head()
+
+```
+
+```{r scrape rest}
+
+# scrape last weeks news
+last_news <- lapply(seq_along(1:3), hardwax_scrape, page="last-week") %>% unlist()
+
+# scrape back in stock
+back_in_stock <- lapply(seq_along(1:15), hardwax_scrape, page="back-in-stock") %>% unlist()
+
+# scrape downloads
+downloads <- lapply(seq_along(1:202), hardwax_scrape, page="downloads") %>% unlist()
+
+# get electro
+electro <- lapply(seq_along(1:11), hardwax_scrape, page="electro") %>% unlist()
+
+# get grime
+grime <- lapply(seq_along(1:22), hardwax_scrape, page="grime") %>% unlist()
+
+# get techno
+techno <- lapply(seq_along(1:66), hardwax_scrape, page="techno") %>% unlist()
+
+# get house
+house <- lapply(seq_along(1:42), hardwax_scrape, page="house") %>% unlist()
+
+# bind all of these
+reviews <- c(news, last_news, back_in_stock, downloads, electro, grime, techno, house)
+```
+
+Once the various sections were scraped, some minor data cleaning ensures the reviews are fit for purpose to head on to the next stage - remove releases with no reviews, reviews longer than 140 characters, or duplicate reviews. This text would now serve as the corpus of text from which we can start generating whole new reviews.
+
+```{r clean, echo=TRUE}
+
+# check strings 140 chrs at most
+reviews <- reviews[str_length(reviews) <= 140]
+
+# remove empty or NA strings
+reviews <- reviews[!is.na(reviews) & reviews != ""]
+
+# remove duplicates
+reviews <- reviews[!duplicated(reviews)]
+
+reviews <- as_data_frame(reviews)
+```
+
+<br>
+
+## Masquerading Markov Chains
+
+Now we're entering text mining territory, it's time to call on the might of `tidytext` to bring our body of text into forms suitable for Markov Chain text generation. A large part of the prep work here is detailed in a similar 
+
+<br>
+
+[^fullcode]: To keep the post concise I don't show all of the code, especially code that generates figures. But you can find the full code [here](https://github.com/rbind/ewenme/blob/master/content/blog/2017-09-07-Dissecting_European_Football_Transfers.Rmd).
