@@ -41,7 +41,7 @@ Could there be potential to subvert this principle, knitting together words to f
 First up, I went straight to the Hardwax webshop to get hold of the review/description text accompanying releases on there. This would serve as the corpus of text from which we can build our markov chain review generator. Here's what the release pages look like:
 
 ```{r site pic, out.width = "100%", fig.align = "center"}
-knitr::include_graphics("/img/2017-10-03-Meet_Dumb_Hardwax/hardwax site.png")
+knitr::include_graphics("/img/2017-10-11-Meet_Dumb_Hardwax/hardwax site.png")
 ```
 
 Those bits circled in red? *Those* are the Hardwax reviews. I was able to put together a fairly simple function (leaning heavily on `rvest`) to scrape them.
@@ -330,18 +330,34 @@ Look at that - the bot made it's first review. Lets share it with the world...
 
 At this point, we can freely generate a simulated Hardwax review, but it's still just lurking in the R console. To bridge the Twitter-shaped gap, `rtweet` gets us there. I won't go into authentication/set-up details here - you should visit the packages [dedicated site](http://rtweet.info/) for all that (or check the footnotes for the GitHub repo and dig there). Once we've made a twitter app and authenticated R to post on our behalf, we're tweeting in one line yo':
 
-```{r eval=FALSE}
+```{r rtweet, eval=FALSE}
 
 # post tweet
 post_tweet(status = dumb_hardwax(), token = twitter_token)
 ```
 
-Nice. I can generate pseudo-Hardwax reviews and share them with anyone who cares. Still, I need to actually press 'go', which is a bit of a problem. I have to eat, sleep, work, all that stuff, unfortunately - which means this bot is only tweeting when I get around to making one happen myself. There's gotta be a way...
+Nice. I can generate pseudo-Hardwax reviews and share them with anyone who cares. Still, I need to actually press 'go', which is a bit of a problem. I have to eat, sleep, work, all that stuff, unfortunately - which means this bot is only tweeting when I get around to making one happen myself. There's always `cronR`, which is a great way to schedule tasks on my machine, but what if my machine is dead? The people need their reviews, and I don't want this burden on my shoulders. There's gotta be a way...
 
 <br>
 
 ## Up in the Clouds
 
+After some ambling around the hottest cloud providers (namely - AWS, Google Cloud and Azure), I settled on a particular branch of the latter known as [Azure Functions](https://azure.microsoft.com/en-us/services/functions/). While R isn't natively supported, it offers an array of 'triggers', including timer (executes a Function on a schedule), which perfectly fit my needs for a simple tweetbot.
+
+I stumbled across an impeccable tutorial [here](https://github.com/thdeltei/azure-function-r) to guide me through the steps to deployment. Like with `rtweet`, I'm not going to spend time repeating what someone else has covered with aplomb - just read that guide (and check the ins and outs of my repo if you really have to), you'll be fine.
+
+
+<br>
+
+## Meet Dumb Hardwax
+
+My work is done - introducing [@dumb_hardwax](https://twitter.com/dumb_hardwax). Trying it's hardest to make Hardwax gold once an hour. 
+
+```{r bot pic, out.width = "100%", fig.align = "center"}
+knitr::include_graphics("/img/2017-10-11-Meet_Dumb_Hardwax/hardwax site.png")
+```
+
+Well, the result is incredibly niche, but if you've made it this far, I'm sure you already have great plans for a uniquely useless bot (made with love).  
 
 <br>
 
