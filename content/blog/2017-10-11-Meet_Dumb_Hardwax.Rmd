@@ -14,6 +14,7 @@ knitr::opts_chunk$set(cache=TRUE, echo = TRUE, tidy = TRUE, warning = FALSE, mes
 library(tidyverse)
 library(rvest)
 library(stringr)
+library(rtweet)
 
 ```
 
@@ -206,6 +207,23 @@ With the above tasks done, the 'fun' can really begin - crafting our first Hardw
 <br>
 
 ## My Bot's First Words
+
+```{r, include=FALSE}
+
+# load data
+word_counts <- read.csv("https://raw.github.com/ewenme/hardwax_bot/master/Data/words.csv", stringsAsFactors = FALSE)
+
+opener_counts <- read.csv("https://raw.github.com/ewenme/hardwax_bot/master/Data/openers.csv", stringsAsFactors = FALSE)
+
+bigram_counts <- read.csv("https://raw.github.com/ewenme/hardwax_bot/master/Data/bigrams.csv", stringsAsFactors = FALSE)
+
+trigram_counts <- read.csv("https://raw.github.com/ewenme/hardwax_bot/master/Data/trigrams.csv", stringsAsFactors = FALSE)
+
+# set twitter token
+twitter_token <- readRDS(gzcon(url("https://raw.github.com/ewenme/hardwax_bot/master/twitter_token.rds")))
+
+```
+
 
 In short, my tactic here is to add a word on to the end of two existing words opening a pseduo-review (with words that usually follow that bigram being weighted more highly), this process continuing until a sentence is formed (of a specified length). 
 
