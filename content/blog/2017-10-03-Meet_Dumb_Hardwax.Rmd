@@ -24,21 +24,21 @@ Twitter bots have gotten a fairly bad rap, recently [(often with good reason)](h
 
 <br>
 
-Another thing I like reading is [Hardwax](https://hardwax.com/), a hugely influential Berlin record store, get excited about their new stock. Their snappy, idiosyncratic desciptions of new music is steeped in electronic music folklore. Gems like this are peppered all over the site:
+Another thing that gives me life is reading [Hardwax](https://hardwax.com/), a hugely influential Berlin record store, get excited about their new stock. Their snappy, idiosyncratic desciptions of new music is steeped in electronic music folklore. Gems like this are peppered all over:
 
-> "Like Dancehall from cyberspace - awesomely fresh & fearless & full of Grime affinities"
+> "Dancehall from cyberspace - awesomely fresh & fearless & full of Grime affinities"
 
-I could flick throught these all day, but as a Londoner I'm usually gonna pick up records from the local stores. This means I don't get around to checking these as much as I should, which got me thinking - I wish I could have Hardwax reviews in the Twitter feed. They even fit in to 140 characters most of the time...
+I could flick throught this stuff all day, but as a Londoner I'm usually gonna pick up records from my local stores. This means I don't get around to checking these as much as I should, which got me thinking - I wish I could have Hardwax reviews in my Twitter feed, or something. They even fit in to 140 characters most of the time...
 
-I'd also been meaning to have a go at generating pseudo random text with Markov chains, after coming across [Roel's post here](http://rmhogervorst.nl/cleancode/blog/2017/01/21/markov-chain.html). For those that don't know about this type of chain, [this](http://setosa.io/ev/markov-chains/) is a wicked visual intro, but in short they are mathematical systems that describe the probabilities of moving from one "state" (or set of values) to another. Could there be potential to subvert this principle for the purpose of knitting together words to form my own fake Hardwax reviews? 
+I'd *also* been meaning to have a go at generating pseudo random text with Markov chains, after coming across [Roel's post here](http://rmhogervorst.nl/cleancode/blog/2017/01/21/markov-chain.html). For those that don't know about this type of chain - [here's](http://setosa.io/ev/markov-chains/) a wicked visual intro - in short they are mathematical systems that describe the probabilities of moving from one "state" (or set of values) to another. 
 
-So, a bot that spits out pseudo-Hardwax reviews, just for my sadistic enjoyment. Let's get it.
+Could there be potential to subvert this principle, knitting together words to form sentences, imitating this unimitable style? I'm envisaging a bot that spits out pseudo-Hardwax reviews, just for my sadistic enjoyment. Let's get it.
 
 <br>
 
 ## Gettin' in to a scrape
 
-First up, I went straight to the Hardwax webshop to see if I could get hold of the review/description text accompanying releases on there. This could serve as the corpus of text from which we can base our markov chain review generator on. Here's what the release pages look like, over at Hardwax's site:
+First up, I went straight to the Hardwax webshop to get hold of the review/description text accompanying releases on there. This would serve as the corpus of text from which we can build our markov chain review generator. Here's what the release pages look like:
 
 ```{r site pic, out.width = "100%", fig.align = "center"}
 knitr::include_graphics("/img/2017-10-03-Meet_Dumb_Hardwax/hardwax site.png")
@@ -64,7 +64,7 @@ hardwax_scrape <- function(page, no) {
 }
 ```
 
-This URL structure could be applied for each section/genre on the site, like the latest weeks new ish:
+This simple URL structure meant the function could be easily applied for each section/genre on the site, like pulling the latest weeks new ish:
 
 ```{r scrape eg}
 
@@ -120,9 +120,9 @@ reviews <- as_data_frame(reviews)
 
 ## Preppin' the Text  
 
-Now we're entering text mining territory, it's time to call on the might of `tidytext` to bring our body of text into forms suitable for Markov Chain text generation. A few wise steps should see us through.
+Now we're entering text mining territory, it's time to call on the might of `tidytext` to bring our body of text into forms suitable for Markov Chain text generation. A couple of wise steps should see us through.
 
-1. Counts: To aid the probabilistic elements of markov chain text generation, we need an understanding of how many times words appear, in different contexts:
+1. Word counts: To aid the probabilistic elements of markov chain text generation, we need an understanding of how many times words appear, in different contexts:
 
     - No. times words appear in corpus (all webstite review text)
     - No. times words appear at the beginning of a review (herein known as 'openers')
@@ -176,8 +176,8 @@ opener_counts$comma_prob[is.na(opener_counts$comma_prob)] <- 0
 
 2. Ngrams:
 
-    - Bigrams (pairs of consecutive words)
-    - Trigrams (groups of three consecutive words)
+    - Bigram counts (pairs of consecutive words)
+    - Trigram counts (groups of three consecutive words)
     
 ```{r ngrams, echo=FALSE}
 # create bigrams
@@ -201,9 +201,147 @@ trigram_counts <- trigrams %>%
   count(word1, word2, word3, sort = TRUE)
 ```
 
+With the above tasks done, the 'fun' can really begin - crafting our first Hardwax review.
+
 <br>
 
-## 
+## My Bot's First Words
+
+In short, my tactic here is to add a word on to the end of two existing words opening a pseduo-review (with words that usually follow that bigram being weighted more highly), this process continuing until a sentence is formed (of a specified length). 
+
+Here's a function that essentially performs a look-up on the trigram counts dataframe, filtering (non-standardly) based on a couple of inputs (the sentence 'openers') and returning the trigrams final word if possible. Otherwise, the bigram counts are filtered on the sentences current most recent word, and returns the final word again.
+
+```{r third word}
+
+# function to return third word
+return_third_word <- function(woord1, woord2){
+  
+  # sample a word to add to first two words
+  woord <- trigram_counts %>%
+    filter_(~word1 == woord1, ~word2 == woord2)
+  
+  if(nrow(woord) > 0) {
+    woord <- sample_n(woord, 1, weight = n) %>%
+      .[["word3"]]
+    
+  } else {
+    woord <- filter_(bigram_counts, ~word1 == woord2) %>%
+      sample_n(1, weight = n) %>%
+      .[["word2"]]
+  }
+  
+  # print
+  woord
+}
+```
+
+The above word generator function takes place iteratively as part of the below function to construct our review. Here, we again take two words in turn as inputs, along with an argument representing sentence length which will determine the no. of times we cycle through much of the function. Note, there is also the chance for commas to enter the review, based on the probability for words to precede them.
+
+```{r sentence generator}
+
+# capitalise first letter
+firstup <- function(x) {
+  substr(x, 1, 1) <- toupper(substr(x, 1, 1))
+  x
+}
+
+generate_sentence <- function(word1, word2, sentencelength){
+  
+  # comma chance sample
+  commas <- sample(0:100, 1)
+  
+  # choosing to add a comma based on probabilities
+  if(commas <= as.numeric(word1$comma_prob)) {
+    sentence <- paste(word1$word, ", ", word2$word, sep="")
+  } else {
+    sentence <- c(word1$word, word2$word)
+  }
+  
+  # starting to add words
+  woord1 <- word1$word
+  woord2 <- word2$word
+  for(i in seq_len(sentencelength)){
+    
+    commas <- sample(0:100, 1)
+    
+    word <- return_third_word( woord1, woord2)
+    
+    word <- left_join(as_data_frame(word), word_counts, by=c("value"="word"))
+    
+    if(commas <= as.numeric(word$comma_prob)) {
+      sentence <- c(sentence, ", ", word$value[1])
+    } else {
+      sentence <- c(sentence, word$value[1])
+    }
+    
+    woord1 <- woord2
+    woord2 <- word$value[1]
+  }
+  
+  # paste sentence together
+  output <- paste(sentence, collapse = " ")
+  output <- str_replace_all(output, " ,", ",")
+  output <- str_replace_all(output, "  ", " ")
+  
+  # add suffix sometimes
+  tip_n <- sample(1:20, 1)
+  if(tip_n %in% c(1, 2)){
+    output <- paste(output, "- TIP!")
+  } else if(tip_n %in% c(3, 4)){
+    output <- paste(output, "(one per customer)")
+  } else if(tip_n %in% c(5)){
+    output <- paste(output, "- Killer!")
+  } else if(tip_n %in% c(6, 7)){
+    output <- paste(output, "- Warmly Recommended!")
+  } else if(tip_n %in% c(8, 9)){
+    output <- paste(output, "- Highly Recommended!")
+  } else if(tip_n %in% c(10, 11)){
+    output <- paste(output, "(w/ download code)")
+  }
+  
+  # print
+  firstup(output)
+}
+```
+
+The penultimate part of this function appears odd - this is my final artistic fluorish in the process. Hardwax infamously ended reviews with the phrase "TIP!" to indicate strong positive feelings about a piece of music (until this phenomena was later parodied in an artist's track title, after which Hardwax went through the site to remove almost all traces). I'm bringing it back, along with some other of the shop's favourite ways to end a review.
+
+Finally, we create a wrapper function for the word/sentence generator to be called at will - enter the (imaginatively titled) review generator!
+
+```{r review generator}
+
+# generate review
+dumb_hardwax <- function(x) {
+  a <- sample_n(opener_counts, size=1, weight = n)
+  b <- sample_n(word_counts, size=1, weight = n)
+  len <- sample(5:12, 1)
+  
+  generate_sentence(word1=a, word2=b, sentencelength=len)
+}
+
+dumb_hardwax()
+```
+
+Look at that - the bot made it's first review. Lets share it with the world...
+
+<br>
+
+## TwitteRing
+
+At this point, we can freely generate a simulated Hardwax review, but it's still just lurking in the R console. To bridge the Twitter-shaped gap, `rtweet` gets us there. I won't go into authentication/set-up details here - you should visit the packages [dedicated site](http://rtweet.info/) for all that (or check the footnotes for the GitHub repo and dig there). Once we've made a twitter app and authenticated R to post on our behalf, we're tweeting in one line yo':
+
+```{r eval=FALSE}
+
+# post tweet
+post_tweet(status = dumb_hardwax(), token = twitter_token)
+```
+
+Nice. I can generate pseudo-Hardwax reviews and share them with anyone who cares. Still, I need to actually press 'go', which is a bit of a problem. I have to eat, sleep, work, all that stuff, unfortunately - which means this bot is only tweeting when I get around to making one happen myself. There's gotta be a way...
+
+<br>
+
+## Up in the Clouds
+
 
 <br>
 
