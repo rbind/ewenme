@@ -1,5 +1,5 @@
 ---
-title: "Meet Dumb Hardwax: Taking Twitterbots to the Cloud"
+title: "Meet Dumb Hardwax: Continuous Deployment of a Twitterbot"
 date: "2017-10-11"
 type: "post"
 tags: ["R", "Bots", "Web Scraping", "Azure", "Markov Chains"]
@@ -365,9 +365,10 @@ Nice. I can generate pseudo-Hardwax reviews and share them with anyone who cares
 
 ## Up in the Clouds
 
-After some ambling around the hottest cloud providers (namely - AWS, Google Cloud and Azure), I settled on a particular branch of the latter known as [Azure Functions](https://azure.microsoft.com/en-us/services/functions/). While R isn't natively supported, it offers an array of 'triggers', including timer (executes a Function on a schedule), which perfectly fit my needs for a simple tweetbot.
+After some ambling around the hottest cloud providers (namely - AWS, Google Cloud and Azure), I settled on a particular branch of the latter known as [Azure Functions](https://azure.microsoft.com/en-us/services/functions/). While R isn't natively supported, it offers an array of 'triggers', including timer (executes a Function on a schedule), which perfectly fit my needs for a simple tweetbot. By using GitHub as the deployment source, a continuous deployment workflow is possible so I can update the corpus later on, with the tweets adjusting accordingly. Dope! 
 
 I stumbled across an impeccable tutorial [here](https://github.com/thdeltei/azure-function-r) to guide me through the steps to deployment. Like with `rtweet`, I'm not going to spend time repeating what someone else has covered with aplomb - just read that guide (and check the ins and outs of my repo if you really have to), you'll be fine. I would just say that when it comes to running the script for the first time, during which you'll need to install any packages used, the free plan does struggle to get done in five minutes (the default calculation time allowed on the consumption plan) - you can up this to ten minutes by following the [hosting plans documentation](https://docs.microsoft.com/en-us/azure/azure-functions/functions-scale).
+
 
 
 <br>

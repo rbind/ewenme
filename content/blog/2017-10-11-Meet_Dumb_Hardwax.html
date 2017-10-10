@@ -1,5 +1,5 @@
 ---
-title: "Meet Dumb Hardwax: Taking Twitterbots to the Cloud"
+title: "Meet Dumb Hardwax: Continuous Deployment of a Twitterbot"
 date: "2017-10-11"
 type: "post"
 tags: ["R", "Bots", "Web Scraping", "Azure", "Markov Chains"]
@@ -183,7 +183,7 @@ post_tweet(status = dumb_hardwax(), token = twitter_token)</code></pre>
 </div>
 <div id="up-in-the-clouds" class="section level2">
 <h2>Up in the Clouds</h2>
-<p>After some ambling around the hottest cloud providers (namely - AWS, Google Cloud and Azure), I settled on a particular branch of the latter known as <a href="https://azure.microsoft.com/en-us/services/functions/">Azure Functions</a>. While R isn’t natively supported, it offers an array of ‘triggers’, including timer (executes a Function on a schedule), which perfectly fit my needs for a simple tweetbot.</p>
+<p>After some ambling around the hottest cloud providers (namely - AWS, Google Cloud and Azure), I settled on a particular branch of the latter known as <a href="https://azure.microsoft.com/en-us/services/functions/">Azure Functions</a>. While R isn’t natively supported, it offers an array of ‘triggers’, including timer (executes a Function on a schedule), which perfectly fit my needs for a simple tweetbot. By using GitHub as the deployment source, a continuous deployment workflow is possible so I can update the corpus later on, with the tweets adjusting accordingly. Dope!</p>
 <p>I stumbled across an impeccable tutorial <a href="https://github.com/thdeltei/azure-function-r">here</a> to guide me through the steps to deployment. Like with <code>rtweet</code>, I’m not going to spend time repeating what someone else has covered with aplomb - just read that guide (and check the ins and outs of my repo if you really have to), you’ll be fine. I would just say that when it comes to running the script for the first time, during which you’ll need to install any packages used, the free plan does struggle to get done in five minutes (the default calculation time allowed on the consumption plan) - you can up this to ten minutes by following the <a href="https://docs.microsoft.com/en-us/azure/azure-functions/functions-scale">hosting plans documentation</a>.</p>
 <p><br></p>
 </div>
