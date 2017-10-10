@@ -5,7 +5,7 @@
     <link>/</link>
     <description>Recent content on ewenme</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Thu, 07 Sep 2017 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 11 Oct 2017 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
@@ -26,6 +26,17 @@
       
       <guid>/about/</guid>
       <description>Ewen (pronounced you-n). R fanboy and advocate for open source / open science. Telling empathetic stories about my diverse excursions in data science. Otherwise, find me listening to weird &amp;lsquo;n&amp;rsquo; dusty records and sinking into a Discogs wormhole.</description>
+    </item>
+    
+    <item>
+      <title>Meet Dumb Hardwax: Taking Twitterbots to the Cloud</title>
+      <link>/blog/2017-10-11-meet_dumb_hardwax/</link>
+      <pubDate>Wed, 11 Oct 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/2017-10-11-meet_dumb_hardwax/</guid>
+      <description>Twitter bots have gotten a fairly bad rap, recently (often with good reason). When they’re done right, a genuinely quirky robot can cut through a feed full of humans with beautiful tidbits. God bless [@tinycarebot](https://twitter.com/tinycarebot).
+💟: please dont forget to text back your friends — here&#39;s your reminder (@tinycarebot) October 6, 2017   
+Another thing that gives me life is reading Hardwax, a hugely influential Berlin record store, get excited about their new stock.</description>
     </item>
     
     <item>
