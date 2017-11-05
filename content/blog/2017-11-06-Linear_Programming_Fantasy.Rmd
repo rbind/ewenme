@@ -44,7 +44,7 @@ unique_goalies <- distinct(goalie_data, player_id, web_name, team_name, start_pr
 
 ```
 
-[Linear optimization](https://en.wikipedia.org/wiki/Linear_programming) is all around us, even if we don't really know it. For example, how did you come to pick your route to work today? This decision, lovingly known as "getting from A to B", is (most of the time) objectively simple: **which route is the quickest?**
+[Linear optimization](https://en.wikipedia.org/wiki/Linear_programming) (AKA linear programming) is all around us, even if we don't really know it. For example, how did you come to pick your route to work today? This decision, lovingly known as "getting from A to B", is (most of the time) objectively simple: **which route is the quickest?**
 
 ![](http://downloadicons.net/sites/default/files/route-icon-86615.png)
 
@@ -55,9 +55,33 @@ There are known variables that we need to identify and use in solving this probl
 - The speed at which different modes of transports travel
 - The distance of each possible route
 
-As anyone who has ever travelled anywhere will know, there are other parameters that we might want to factor in to a solution. We might prefer to avoid certain modes of transport outright, spend less time walking, etc. Often, linear optimization is used in business settings (not to knock anyone rocking it in their daily life), when there might be additional restrictions to consider - minimizing fuel consumption, or avoiding tolls. Any 'best route' can be reviewed to ensure these **constraints** are taken care of.
+As anyone who has ever travelled anywhere will know, there are other parameters that we might want to factor in to a solution. We might prefer to avoid certain modes of transport outright, spend less time walking, etc. Extending this problem to a business setting (not to knock anyone rocking it in their daily life), when there might be additional restrictions to consider (think of a delivery order operation) - minimizing fuel consumption, or avoiding tolls. Any 'best route' can be reviewed to ensure these **constraints** are taken care of.
 
 ![](http://geovisiongroup.com/wp-content/uploads/2016/04/5_Geovision_Group_Dynamic_Route_Planning.gif)
+
+## Let Me Optimize Your Fantasy
+
+What good can these techniques do for me? I'd come across a couple of nice implementations of linear programming techniques in the [Fantasy Premier League](https://fantasy.premierleague.com/) space - shout out to Martin Eastwood for his [penalty](https://github.com/martineastwood/penalty/tree/master/fantasy_football_optimiser) work and Torvaney's [fpl-optimiser](https://github.com/Torvaney/fpl-optimiser) (honorable mention to Sean Taylor's [NFL fantasy projections](https://gist.github.com/seanjtaylor/b4d423dad0083cc8cc5b2a9fd1e4e63e)in R, but the sport/techniques involved are out of scope just now). Both of these projects look to optimize the same thing: the **total number of points** a fantasy football team scores within some shared constraints that the game rules enforce (staying within a £100 million budget, no more than 3 players per team).
+
+There are obvious weaknesses to these approaches - the game is played on a weekly basis, with player's points scoring varying significantly from week-to-week. 'Managers' (users of the game) are also asked to select 11 players from their 15-man squad to play each week. These solutions optimise player selection based on the points returned over a whole season, and so don't try and emulate these game mechanics. I'll try and work on this now, in one particular area of the game.
+
+## Complementary Keepers (and Where to Find Them)
+
+Rotation - the practice of picking complementary players (those who play at home on alternate weeks, for example) to play in a rotating fashion - is squad-based fantasy sport game 101, allowing managers to seamlessly segue between class acts across a well-balanced squad.
+
+Rotation policy is at it's simplest when applied to goalkeepers. The constraints are simple: you have to buy two, but you can only play one each week. This encourages FPL managers to look at a couple of cheaper options that play home & away alternately, for example, rather than lumping for premium products. Which strategy wins out, though? 
+
+Lets re-frame this as a linear optimization problem:
+
+- Thing we want to optimize = **No. of points per £million**
+- The restrictions (constraints), as discussed:
+    - Two goalkeepers
+    - Only one plays each gameweek
+- Other simplifying assumptions:
+    - We don't want to make any transfers in this position
+    - With every possible goalie pair, we always play the keeper who scores the most points that week (in linear world, all of this is possible...)
+    
+Seems straightforward enough, right? Let's see.
 
 
 [^fullcode]: To keep the post concise I don't show all of the code, especially code that generates figures. But you can find the full code [here](https://github.com/rbind/ewenme/blob/master/content/blog/2017-10-11-Meet_Dumb_Hardwax.Rmd).
