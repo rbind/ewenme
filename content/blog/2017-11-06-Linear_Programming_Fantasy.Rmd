@@ -50,18 +50,14 @@ unique_goalies <- distinct(goalie_data, player_id, web_name, team_name, start_pr
 
 <br>
 
-By knowing  the speed different modes of transports travel at, and the distance of each possible route, a journey time can be calculated. Constraints can also be considered - preferred modes of travel, less time walking, etc. - taking these parameters into account, a single best route can be attained.
+There are known variables that we need to identify and use in solving this problem (known as **decision variables**), for example:
 
-## Gettin' in to a scrape
+- The speed at which different modes of transports travel
+- The distance of each possible route
 
-First up, I went straight to the Hardwax web shop to get hold of the review/description text accompanying releases on there. This would serve as the corpus of text from which we can build our Markov chain review generator. Here's what the release pages look like:
+As anyone who has ever travelled anywhere will know, there are other parameters that we might want to factor in to a solution. We might prefer to avoid certain modes of transport outright, spend less time walking, etc. Often, linear optimization is used in business settings (not to knock anyone rocking it in their daily life), when there might be additional restrictions to consider - minimizing fuel consumption, or avoiding tolls. Any 'best route' can be reviewed to ensure these **constraints** are taken care of.
 
-```{r site pic, out.width = "100%", fig.align = "center", echo=FALSE}
-knitr::include_graphics("/img/2017-10-11-Meet_Dumb_Hardwax/hardwax_site.png")
-```
+![](http://geovisiongroup.com/wp-content/uploads/2016/04/5_Geovision_Group_Dynamic_Route_Planning.gif)
 
-  
-
-<br>
 
 [^fullcode]: To keep the post concise I don't show all of the code, especially code that generates figures. But you can find the full code [here](https://github.com/rbind/ewenme/blob/master/content/blog/2017-10-11-Meet_Dumb_Hardwax.Rmd).
