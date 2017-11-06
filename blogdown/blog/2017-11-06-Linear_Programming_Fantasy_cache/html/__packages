@@ -1,0 +1,17 @@
+base
+tidyverse
+ggplot2
+tibble
+tidyr
+readr
+purrr
+dplyr
+glue
+hrbrthemes
+extrafont
+knitr
+kableExtra
+formattable
+DT
+bindrcpp
+captioner

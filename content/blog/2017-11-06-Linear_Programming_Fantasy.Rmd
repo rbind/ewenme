@@ -3,9 +3,6 @@ title: "My Linear(ish) Optimization Fantasy (Football)"
 date: "2017-11-06"
 type: "post"
 tags: ["R", "Linear Programming", "Linear Optimization", "Fantasy Football"]
-output:
-  html_document:
-    fig_caption: yes
 ---
 
 ```{r setup, include=FALSE}
@@ -22,6 +19,7 @@ library(knitr)
 library(kableExtra)
 library(formattable)
 library(DT)
+library(captioner)
 
 
 # LOAD  ----------------------------------------------
@@ -31,6 +29,9 @@ source('~/Documents/Github/fplinear/lp_funcs.R')
 
 # data load
 player_data <- read_csv("~/Documents/Github/fplinear/player_data.csv")
+
+# set captioner
+prefix <- captioner(prefix = "")
 
 
 # CLEAN -------------------------------------------------------------------
@@ -46,7 +47,7 @@ goalie_data <- filter(player_data, position=="Goalkeeper") %>%
 
 [Linear optimization](https://en.wikipedia.org/wiki/Linear_programming) (AKA linear programming) is all around us, even if we don't really know it. For example, how did you come to pick your route to work today? This decision, lovingly known as "getting from A to B", is (most of the time) objectively simple: **which route is the quickest?**
 
-```{r route_plan, out.width = "100%", fig.align = "center", echo=FALSE, fig.cap="You want this journey to work, don't you."}
+```{r, out.width = "100%", fig.align = "center", echo=FALSE}
 
 knitr::include_graphics("/img/2017-11-06-Linear_Programming_Fantasy/route-icon.png")
 ```
@@ -58,7 +59,7 @@ There are known variables that we need to identify and use in solving this probl
 
 As anyone who has ever travelled anywhere will know, there are other parameters that we might want to factor in to a solution. We might prefer to avoid certain modes of transport outright, spend less time walking, etc. Extending this problem to a business setting (not to knock anyone rocking it in their daily life), when there might be additional restrictions to consider (think of a delivery order operation) - minimizing fuel consumption, or avoiding tolls. Any 'best route' can be reviewed to ensure these **constraints** are taken care of.
 
-```{r optim_cartoon, out.width = "100%", fig.align = "center", echo=FALSE, fig.cap="HGV transportation optimization: is there anything an animated cartoon can't make look fun?"}
+```{r, out.width = "100%", fig.align = "center", echo=FALSE}
 
 knitr::include_graphics("/img/2017-11-06-Linear_Programming_Fantasy/route-plan-anim.gif")
 ```
@@ -67,13 +68,13 @@ knitr::include_graphics("/img/2017-11-06-Linear_Programming_Fantasy/route-plan-a
 
 What good can these techniques do for me? I'd come across a couple of nice implementations of linear programming techniques in the [Fantasy Premier League](https://fantasy.premierleague.com/)(FPL) space - shout out to Martin Eastwood for his [penalty](https://github.com/martineastwood/penalty/tree/master/fantasy_football_optimiser) work and Torvaney's [fpl-optimiser](https://github.com/Torvaney/fpl-optimiser) (honorable mention to Sean Taylor's [NFL fantasy projections](https://gist.github.com/seanjtaylor/b4d423dad0083cc8cc5b2a9fd1e4e63e)in R, but the sport/techniques involved are out of scope just now). Both of these projects look to optimize the same thing: the **total number of points** a fantasy football team scores within some shared constraints that the game rules enforce (staying within a 100 million budget, no more than 3 players per team).
 
-There are obvious weaknesses to these approaches - the game is played on a weekly basis, with player's points scoring varying significantly from week-to-week. 'Managers' (users of the game) are also asked to select 11 players from their 15-man squad to play each week. These solutions optimize player selection based on the points returned over a whole season, and so don't try and emulate these game mechanics. I'll try and work on this now, in one particular area of the game.[^fullcode]
+There are some obvious weaknesses to this approach - the game is played on a weekly basis, with player's points scoring varying significantly from week-to-week. 'Managers' (users of the game) are also asked to select 11 players from their 15-man squad to play each week. These solutions optimize player selection based on the points returned over a whole season, and so don't try and emulate these game mechanics. I'll try and work on this now, in one particular area of the game.[^fullcode]
 
 ## Complementary Keepers (and Where to Find Them)
 
 Rotation - the practice of picking complementary players (those who play at home on alternate weeks, for example) to play in a rotating fashion - is squad-based fantasy sport game 101, allowing managers to seamlessly segue between class acts across a well-balanced squad.
 
-```{r wrong_rotation, out.width = "100%", fig.align = "center", echo=FALSE, fig.cap="Not this kind of segue."}
+```{r, out.width = "100%", fig.align = "center", echo=FALSE}
 
 knitr::include_graphics("/img/2017-11-06-Linear_Programming_Fantasy/rotation-wrong.gif")
 ```
@@ -91,9 +92,10 @@ unique_goalies <- distinct(goalie_data, player_id, web_name, team_name, start_pr
 
 unique_goalies %>%
   arrange(desc(start_price)) %>%
-  datatable(rownames = FALSE,
-            caption = 'FPL goalkeepers, sorted by age')
+  datatable(rownames = FALSE)
 ```
+
+<br>
 
 This list of goalies represents our options for goalkeeper A and goalkeeper B, with their respective teams and associated costs. Now, we specify the ultimate objective that guides this decision.
 
@@ -116,7 +118,11 @@ goalie_data %>%
   scale_fill_viridis_c(option = "A", guide = guide_colourbar(title = "Points", direction = "horizontal")) +
   coord_equal() +
   theme_ipsum() +
-  theme(legend.position = "bottom")
+  theme(legend.position = "bottom",
+        plot.margin = unit(c(0.35, 0.2, 0.3, 0.35), "cm"),
+        plot.title = element_text(hjust = 1, size = 16),
+        plot.subtitle = element_text(hjust = 1, size = 14),
+        axis.text = element_text(size = 12))
 
 ```
 
@@ -235,11 +241,11 @@ goalie_rotation <- goalie_rotation %>%
 
 We're ready to see the optimized goalkeeping combo, maximizing potential points return while minimizing costs [insert drum roll]. I'll leave in the top ten, for some context.
 
-```{r top_ten_optim}
+```{r}
 
 goalie_rotation %>%
   # total points top ten
-  top_n(10, wt=points_per_mil) %>%
+  top_n(5, wt=points_per_mil) %>%
   arrange(desc(points_per_mil)) %>%
   mutate(points_per_mil=round(points_per_mil, digits = 1)) %>%
   select(Combo=combo, Points=points, Cost=total_price, `Points per million`=points_per_mil) %>%
@@ -256,13 +262,13 @@ So, Messrs Hart and Lossl grab top spot when accounting for both points and cost
 
 Before finishing up, let's consider how the solution might change if a new constraint is introduced. What if an FPL manager doesn't have the budget for some of these recommendations, anyway? What recommendations would we make if cost was an enforced constraint - for example, a remaining budget of 9 million?
 
-```{r top_ten_cheap}
+```{r}
 
 goalie_rotation %>%
   # filter for price
   filter(total_price <= 9) %>%
   # top ten
-  top_n(10, wt=points_per_mil) %>%
+  top_n(5, wt=points_per_mil) %>%
   arrange(desc(points_per_mil)) %>%
   mutate(points_per_mil=round(points_per_mil, digits = 1)) %>%
   select(Combo=combo, Points=points, Cost=total_price, `Points per million`=points_per_mil) %>%
