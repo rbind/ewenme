@@ -2,191 +2,191 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>/projects/</loc>
+    <loc>https://ewenme.rbind.io/projects/</loc>
   </url>
   
   <url>
-    <loc>/about/</loc>
+    <loc>https://ewenme.rbind.io/about/</loc>
   </url>
   
   <url>
-    <loc>/blog/2017-11-06-linear_programming_fantasy/</loc>
+    <loc>https://ewenme.rbind.io/blog/2017-11-06-linear_programming_fantasy/</loc>
     <lastmod>2017-11-06T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/blog/2017-10-11-meet_dumb_hardwax/</loc>
+    <loc>https://ewenme.rbind.io/blog/2017-10-11-meet_dumb_hardwax/</loc>
     <lastmod>2017-10-11T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/blog/2017-09-07-dissecting_european_football_transfers/</loc>
+    <loc>https://ewenme.rbind.io/blog/2017-09-07-dissecting_european_football_transfers/</loc>
     <lastmod>2017-09-07T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/blog/2017-07-27-open_policing_sparklyr_shiny/</loc>
+    <loc>https://ewenme.rbind.io/blog/2017-07-27-open_policing_sparklyr_shiny/</loc>
     <lastmod>2017-07-27T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/blog/2017-06-25-fpl_mythbusting/</loc>
+    <loc>https://ewenme.rbind.io/blog/2017-06-25-fpl_mythbusting/</loc>
     <lastmod>2017-06-25T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/blog/2017-05-30-geofacet_ldn_pubs/</loc>
+    <loc>https://ewenme.rbind.io/blog/2017-05-30-geofacet_ldn_pubs/</loc>
     <lastmod>2017-05-30T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/blog/2017-04-23-uk_parliament_representativeness/</loc>
+    <loc>https://ewenme.rbind.io/blog/2017-04-23-uk_parliament_representativeness/</loc>
     <lastmod>2017-04-23T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/blog/2017-03-20-kanye_sentiment_analysis/</loc>
+    <loc>https://ewenme.rbind.io/blog/2017-03-20-kanye_sentiment_analysis/</loc>
     <lastmod>2017-03-20T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/blog/2017-03-01-vinylspotting/</loc>
+    <loc>https://ewenme.rbind.io/blog/2017-03-01-vinylspotting/</loc>
     <lastmod>2017-03-01T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/tags/azure/</loc>
+    <loc>https://ewenme.rbind.io/tags/azure/</loc>
     <lastmod>2017-10-11T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/blogdown/</loc>
+    <loc>https://ewenme.rbind.io/tags/blogdown/</loc>
     <lastmod>2017-07-27T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/blog/</loc>
+    <loc>https://ewenme.rbind.io/blog/</loc>
     <lastmod>2017-11-06T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/bots/</loc>
+    <loc>https://ewenme.rbind.io/tags/bots/</loc>
     <lastmod>2017-10-11T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/discogs/</loc>
+    <loc>https://ewenme.rbind.io/tags/discogs/</loc>
     <lastmod>2017-03-01T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/fantasy-football/</loc>
+    <loc>https://ewenme.rbind.io/tags/fantasy-football/</loc>
     <lastmod>2017-11-06T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/gis/</loc>
+    <loc>https://ewenme.rbind.io/tags/gis/</loc>
     <lastmod>2017-05-30T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/geofacet/</loc>
+    <loc>https://ewenme.rbind.io/tags/geofacet/</loc>
     <lastmod>2017-05-30T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/kanye/</loc>
+    <loc>https://ewenme.rbind.io/tags/kanye/</loc>
     <lastmod>2017-03-20T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/linear-optimization/</loc>
+    <loc>https://ewenme.rbind.io/tags/linear-optimization/</loc>
     <lastmod>2017-11-06T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/linear-programming/</loc>
+    <loc>https://ewenme.rbind.io/tags/linear-programming/</loc>
     <lastmod>2017-11-06T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/markov-chains/</loc>
+    <loc>https://ewenme.rbind.io/tags/markov-chains/</loc>
     <lastmod>2017-10-11T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/package/</loc>
+    <loc>https://ewenme.rbind.io/tags/package/</loc>
     <lastmod>2017-06-25T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/page/</loc>
+    <loc>https://ewenme.rbind.io/page/</loc>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/politics/</loc>
+    <loc>https://ewenme.rbind.io/tags/politics/</loc>
     <lastmod>2017-04-23T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/r/</loc>
+    <loc>https://ewenme.rbind.io/tags/r/</loc>
     <lastmod>2017-11-06T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/sentiment-analysis/</loc>
+    <loc>https://ewenme.rbind.io/tags/sentiment-analysis/</loc>
     <lastmod>2017-03-20T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/shiny/</loc>
+    <loc>https://ewenme.rbind.io/tags/shiny/</loc>
     <lastmod>2017-07-27T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/spark/</loc>
+    <loc>https://ewenme.rbind.io/tags/spark/</loc>
     <lastmod>2017-07-27T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/sports/</loc>
+    <loc>https://ewenme.rbind.io/tags/sports/</loc>
     <lastmod>2017-09-07T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/</loc>
+    <loc>https://ewenme.rbind.io/tags/</loc>
     <lastmod>2017-10-11T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/web-scraping/</loc>
+    <loc>https://ewenme.rbind.io/tags/web-scraping/</loc>
     <lastmod>2017-10-11T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/</loc>
+    <loc>https://ewenme.rbind.io/</loc>
     <lastmod>2017-11-06T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
