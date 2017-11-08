@@ -1,0 +1,23 @@
+---
+title: "Hacking Homelessness & PDF Prisons with hexmapr & tabulizer"
+date: "2017-11-06"
+type: "post"
+tags: ["R", "Mapping", "PDF", "Homelessness"]
+---
+
+```{r setup, include=FALSE}
+
+# markdown setup
+knitr::opts_chunk$set(cache=TRUE, echo = FALSE, tidy = TRUE, warning = FALSE, message = FALSE, out.width = '100%', dpi = 180)
+
+# load pkgs
+library(plyr)
+library(stringr)
+library(tidyverse)
+library(tabulizer)
+library(hexmapr)
+library(sf)
+
+```
+
+
