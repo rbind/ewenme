@@ -2,20 +2,20 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Markov Chains on ewenme</title>
-    <link>https://ewenme.rbind.io/tags/markov-chains/</link>
+    <link>/tags/markov-chains/</link>
     <description>Recent content in Markov Chains on ewenme</description>
     <generator>Hugo -- gohugo.io</generator>
     <lastBuildDate>Wed, 11 Oct 2017 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://ewenme.rbind.io/tags/markov-chains/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/tags/markov-chains/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Meet Dumb Hardwax: Continuous Deployment of a Twitterbot</title>
-      <link>https://ewenme.rbind.io/blog/2017-10-11-meet_dumb_hardwax/</link>
+      <link>/blog/2017-10-11-meet_dumb_hardwax/</link>
       <pubDate>Wed, 11 Oct 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://ewenme.rbind.io/blog/2017-10-11-meet_dumb_hardwax/</guid>
+      <guid>/blog/2017-10-11-meet_dumb_hardwax/</guid>
       <description>Twitter bots have gotten a fairly bad rap, recently (often with good reason). When they’re done right, a genuinely quirky robot can cut through a feed full of humans with beautiful tidbits. God bless [@tinycarebot](https://twitter.com/tinycarebot).
 💟: please dont forget to text back your friends — here&#39;s your reminder (@tinycarebot) October 6, 2017   
 Another thing that gives me life is reading Hardwax, a hugely influential Berlin record store, get excited about their new stock.</description>

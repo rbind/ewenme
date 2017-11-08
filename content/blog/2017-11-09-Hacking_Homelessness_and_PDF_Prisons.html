@@ -1,0 +1,929 @@
+---
+title: "Hacking Homelessness & PDF Prisons with hexmapr & tabulizer"
+date: "2017-11-09"
+type: "post"
+tags: ["R", "Mapping", "PDF", "Homelessness"]
+---
+
+
+
+<p>Shout-out to the <a href="http://us16.campaign-archive2.com/home/?u=5ea551600fcdf84334e5aa6b0&amp;id=26c0b7221a">Monday Morning Data Science</a> mailout from John Hopkins. Making my way through this week’s (#41) edition, I hit upon quite the eulogy concerning a new R package:</p>
+<blockquote>
+<p>“The most compelling data visualization libraries I’ve seen in awhile…you have to see it to believe it”</p>
+</blockquote>
+<p>You had me at compelling (I’m not sure <em>who</em> had me exactly, this was the only entry w/o a name attached to it 🤔).</p>
+<div id="hex-democratization" class="section level2">
+<h2>Hex Democratization</h2>
+<p>Enter <a href="https://github.com/sassalley/hexmapr"><code>hexmapr</code></a> and a solution to the perennial information communication problem of plotting polygons of different sizes, that’s equal parts functional and beautiful. In the link above the author, Joseph Bailey, eloquently explains the motivations behind this package for automatic transformations of geospatial polygons into regular and hexagonal grids. In short, a grid system ensures a fairer representation of spatial data (while retaining geography) and an automated implementation means this is suitable to use in less commonly studied places. On both counts, this is a wicked example of building tools that democratize good data science. 🙌</p>
+<p>Next, I just needed a good reason to wheel it out (aside from sharing with y’all).</p>
+</div>
+<div id="full-metal-data" class="section level2">
+<h2>Full Metal Data</h2>
+<p><a href="https://www.mungos.org/work-with-us/chain/">Combined Homelessness and Information Network (CHAIN)</a> is the foremost project collecting data about homelessness in London. Gaining direct access to the database is strictly limited to those working directly with rough sleepers. However, CHAIN reports are published on the Greater London Authority’s (GLA) <a href="https://data.london.gov.uk/dataset/chain-reports">London Datastore</a>. The full annual report does contain data on the spatial distribution of rough sleepers, but it’s only available in PDF format. 💀</p>
+<p><img src="/img/2017-11-09-Hacking_Homelessness_and_PDF_Prisons/file_extensions.png" width="100%" style="display: block; margin: auto;" /></p>
+<p>This xkcd cartoon is in good humour, but there’s a lot of truth in this - PDF’s have risen to represent a kind of absolute truth, embodied by their relative impenetrability from outside influence (this includes pesky data scientists). This all-but-closed system becomes a big problem when we want to extract the ‘open’ data holed up inside. (Enter next R package to save the day, stage left).</p>
+</div>
+<div id="introducing-tabulizer-aka-governments-lock-up-your-pdfs" class="section level2">
+<h2>Introducing tabulizer AKA Governments, Lock Up Your PDFs</h2>
+<p>Actual footage of <a href="https://github.com/ropensci/tabulizer">`tabulizer</a>, an rOpenSci project dreamed up by Thomas Leeper, encountering impervious PDF #478:</p>
+<p><img src="/img/2017-11-09-Hacking_Homelessness_and_PDF_Prisons/oreally.jpg" width="100%" style="display: block; margin: auto;" /></p>
+<p>As the <a href="https://ropensci.org/blog/2017/04/18/tabulizer/">rOpenSci release</a> tells, <code>tabulizer</code> gives us R mortals the power of the <a href="https://github.com/tabulapdf/tabula-java">tabula-java library</a> for extracting tables from PDF files (which, in turn, powers <a href="http://tabula.technology/">Tabula</a>, which you might have come across). You should dig in to that release blog (and associated GitHub repo) for the juicy inner workings, but I’ll show it off very shortly.</p>
+<p>I should say that I hit some snags trying to get this package fully operational (again, detailed in the package release), owing to the dependency on Java. I will just say that these links were able to get me on my way (as a Mac user) AND it was worth it:</p>
+<ul>
+<li><a href="https://stackoverflow.com/questions/35179151/cannot-load-r-xlsx-package-on-mac-os-10-11/36045290">Relinking Java &amp; rJava</a></li>
+<li><a href="https://stackoverflow.com/questions/30738974/rjava-load-error-in-rstudio-r-after-upgrading-to-osx-yosemite">rJava fix after OSX upgrade</a></li>
+<li><a href="https://github.com/ropensci/tabulizer/issues?utf8=%E2%9C%93&amp;q=is%3Aissue"><code>tabulizer</code> issues page</a></li>
+</ul>
+</div>
+<div id="where-the-magic-happens" class="section level2">
+<h2>Where the Magic Happens</h2>
+<p>With new friends in tow, it’s about to go down on this PDF. Here’s an idea of what we’re working with (Eeyore’s sad at PDFs courtesy of <a href="https://cran.r-project.org/web/packages/magick/vignettes/intro.html"><code>magick</code></a>, if you were wondering):</p>
+<p><img src="/img/2017-11-09-Hacking_Homelessness_and_PDF_Prisons/eeyore.png" width="100%" style="display: block; margin: auto;" /></p>
+<p>To get the data in this table out of it’s prison, we use <code>extract_tables()</code>:</p>
+<pre class="r"><code>library(tabulizer)
+
+homeless_spatial_tab &lt;- extract_tables(file = &quot;https://files.datapress.com/london/dataset/chain-reports/2017-06-30T09:03:07.84/Greater%20London%20full%202016-17.pdf&quot;, 
+    pages = 19)
+
+homeless_spatial_tab</code></pre>
+<pre><code>## [[1]]
+##       [,1]                   [,2]      [,3]      [,4]      [,5]     
+##  [1,] &quot;Borough&quot;              &quot;2013/14&quot; &quot;2014/15&quot; &quot;2015/16&quot; &quot;2016/17&quot;
+##  [2,] &quot;&quot;                     &quot;&quot;        &quot;&quot;        &quot;&quot;        &quot;&quot;       
+##  [3,] &quot;Westminster&quot;          &quot;2197&quot;    &quot;2570&quot;    &quot;2857&quot;    &quot;2767&quot;   
+##  [4,] &quot;Camden&quot;               &quot;501&quot;     &quot;563&quot;     &quot;641&quot;     &quot;702&quot;    
+##  [5,] &quot;Tower Hamlets&quot;        &quot;324&quot;     &quot;377&quot;     &quot;395&quot;     &quot;445&quot;    
+##  [6,] &quot;Newham&quot;               &quot;202&quot;     &quot;221&quot;     &quot;260&quot;     &quot;396&quot;    
+##  [7,] &quot;City of London&quot;       &quot;317&quot;     &quot;373&quot;     &quot;440&quot;     &quot;379&quot;    
+##  [8,] &quot;Lambeth&quot;              &quot;427&quot;     &quot;468&quot;     &quot;445&quot;     &quot;355&quot;    
+##  [9,] &quot;Southwark&quot;            &quot;391&quot;     &quot;373&quot;     &quot;372&quot;     &quot;318&quot;    
+## [10,] &quot;Brent&quot;                &quot;307&quot;     &quot;359&quot;     &quot;212&quot;     &quot;294&quot;    
+## [11,] &quot;Hammersmith &amp; Fulham&quot; &quot;157&quot;     &quot;161&quot;     &quot;241&quot;     &quot;246&quot;    
+## [12,] &quot;Ealing&quot;               &quot;249&quot;     &quot;219&quot;     &quot;287&quot;     &quot;243&quot;    
+## [13,] &quot;Redbridge&quot;            &quot;83&quot;      &quot;121&quot;     &quot;222&quot;     &quot;219&quot;    
+## [14,] &quot;Kensington &amp; Chelsea&quot; &quot;183&quot;     &quot;225&quot;     &quot;230&quot;     &quot;211&quot;    
+## [15,] &quot;Heathrow&quot;             &quot;165&quot;     &quot;266&quot;     &quot;241&quot;     &quot;200&quot;    
+## [16,] &quot;Lewisham&quot;             &quot;141&quot;     &quot;199&quot;     &quot;133&quot;     &quot;200&quot;    
+## [17,] &quot;Croydon&quot;              &quot;155&quot;     &quot;157&quot;     &quot;166&quot;     &quot;192&quot;    
+## [18,] &quot;Islington&quot;            &quot;163&quot;     &quot;135&quot;     &quot;158&quot;     &quot;178&quot;    
+## [19,] &quot;Hounslow&quot;             &quot;146&quot;     &quot;161&quot;     &quot;191&quot;     &quot;163&quot;    
+## [20,] &quot;Haringey&quot;             &quot;84&quot;      &quot;100&quot;     &quot;135&quot;     &quot;146&quot;    
+## [21,] &quot;Hackney&quot;              &quot;141&quot;     &quot;155&quot;     &quot;148&quot;     &quot;134&quot;    
+## [22,] &quot;Enfield&quot;              &quot;97&quot;      &quot;174&quot;     &quot;136&quot;     &quot;106&quot;    
+## [23,] &quot;Barnet&quot;               &quot;153&quot;     &quot;125&quot;     &quot;88&quot;      &quot;106&quot;    
+## [24,] &quot;Richmond&quot;             &quot;101&quot;     &quot;120&quot;     &quot;133&quot;     &quot;105&quot;    
+## [25,] &quot;Greenwich&quot;            &quot;64&quot;      &quot;99&quot;      &quot;110&quot;     &quot;91&quot;     
+## [26,] &quot;Hillingdon&quot;           &quot;63&quot;      &quot;57&quot;      &quot;56&quot;      &quot;91&quot;     
+## [27,] &quot;Waltham Forest&quot;       &quot;75&quot;      &quot;118&quot;     &quot;139&quot;     &quot;82&quot;     
+## [28,] &quot;Wandsworth&quot;           &quot;47&quot;      &quot;125&quot;     &quot;96&quot;      &quot;73&quot;     
+## [29,] &quot;Bromley&quot;              &quot;46&quot;      &quot;44&quot;      &quot;47&quot;      &quot;57&quot;     
+## [30,] &quot;Sutton&quot;               &quot;23&quot;      &quot;46&quot;      &quot;35&quot;      &quot;49&quot;     
+## [31,] &quot;Barking &amp; Dagenham&quot;   &quot;14&quot;      &quot;27&quot;      &quot;32&quot;      &quot;49&quot;     
+## [32,] &quot;Harrow&quot;               &quot;48&quot;      &quot;45&quot;      &quot;65&quot;      &quot;43&quot;     
+## [33,] &quot;Merton&quot;               &quot;36&quot;      &quot;55&quot;      &quot;49&quot;      &quot;40&quot;     
+## [34,] &quot;Kingston upon Thames&quot; &quot;24&quot;      &quot;40&quot;      &quot;31&quot;      &quot;35&quot;     
+## [35,] &quot;Havering&quot;             &quot;11&quot;      &quot;25&quot;      &quot;20&quot;      &quot;31&quot;     
+## [36,] &quot;Bexley&quot;               &quot;8&quot;       &quot;22&quot;      &quot;26&quot;      &quot;22&quot;     
+## [37,] &quot;Bus route&quot;            &quot;1&quot;       &quot;0&quot;       &quot;19&quot;      &quot;21&quot;     
+##       [,6]           [,7]          
+##  [1,] &quot;Change since&quot; &quot;Change since&quot;
+##  [2,] &quot;2015/16&quot;      &quot;2013/14&quot;     
+##  [3,] &quot;-90&quot;          &quot;570&quot;         
+##  [4,] &quot;61&quot;           &quot;201&quot;         
+##  [5,] &quot;50&quot;           &quot;121&quot;         
+##  [6,] &quot;136&quot;          &quot;194&quot;         
+##  [7,] &quot;-61&quot;          &quot;62&quot;          
+##  [8,] &quot;-90&quot;          &quot;-72&quot;         
+##  [9,] &quot;-54&quot;          &quot;-73&quot;         
+## [10,] &quot;82&quot;           &quot;-13&quot;         
+## [11,] &quot;5&quot;            &quot;89&quot;          
+## [12,] &quot;-44&quot;          &quot;-6&quot;          
+## [13,] &quot;-3&quot;           &quot;136&quot;         
+## [14,] &quot;-19&quot;          &quot;28&quot;          
+## [15,] &quot;-41&quot;          &quot;35&quot;          
+## [16,] &quot;67&quot;           &quot;59&quot;          
+## [17,] &quot;26&quot;           &quot;37&quot;          
+## [18,] &quot;20&quot;           &quot;15&quot;          
+## [19,] &quot;-28&quot;          &quot;17&quot;          
+## [20,] &quot;11&quot;           &quot;62&quot;          
+## [21,] &quot;-14&quot;          &quot;-7&quot;          
+## [22,] &quot;-30&quot;          &quot;9&quot;           
+## [23,] &quot;18&quot;           &quot;-47&quot;         
+## [24,] &quot;-28&quot;          &quot;4&quot;           
+## [25,] &quot;-19&quot;          &quot;27&quot;          
+## [26,] &quot;35&quot;           &quot;28&quot;          
+## [27,] &quot;-57&quot;          &quot;7&quot;           
+## [28,] &quot;-23&quot;          &quot;26&quot;          
+## [29,] &quot;10&quot;           &quot;11&quot;          
+## [30,] &quot;14&quot;           &quot;26&quot;          
+## [31,] &quot;17&quot;           &quot;35&quot;          
+## [32,] &quot;-22&quot;          &quot;-5&quot;          
+## [33,] &quot;-9&quot;           &quot;4&quot;           
+## [34,] &quot;4&quot;            &quot;11&quot;          
+## [35,] &quot;11&quot;           &quot;20&quot;          
+## [36,] &quot;-4&quot;           &quot;14&quot;          
+## [37,] &quot;2&quot;            &quot;20&quot;</code></pre>
+<p>We simply fed this two arguments - the filepath of the report and the page number with our table of interest - and returned a list object of length one, containing a character matrix. The resultant object needs some light wrangling to get it just right:</p>
+<pre class="r"><code># specify table list item
+homeless_spatial_tab &lt;- homeless_spatial_tab[[1]]
+
+# remove unneeded rows and cols
+homeless_spatial_tab &lt;- homeless_spatial_tab[c(-2, -15, -37), -6:-7]
+
+# get col names
+col_names &lt;- homeless_spatial_tab[1, ]
+
+# create dataframe
+homeless_spatial_tab &lt;- data.frame(homeless_spatial_tab[-1, ])
+
+# set colnames
+colnames(homeless_spatial_tab) &lt;- col_names
+
+library(tidyverse)
+
+# set col types
+homeless_spatial_tab &lt;- mutate_at(homeless_spatial_tab, c(&quot;2013/14&quot;, &quot;2014/15&quot;, 
+    &quot;2015/16&quot;, &quot;2016/17&quot;), as.character)
+homeless_spatial_tab &lt;- mutate_at(homeless_spatial_tab, c(&quot;2013/14&quot;, &quot;2014/15&quot;, 
+    &quot;2015/16&quot;, &quot;2016/17&quot;), as.numeric)
+
+homeless_spatial_tab</code></pre>
+<pre><code>##                 Borough 2013/14 2014/15 2015/16 2016/17
+## 1           Westminster    2197    2570    2857    2767
+## 2                Camden     501     563     641     702
+## 3         Tower Hamlets     324     377     395     445
+## 4                Newham     202     221     260     396
+## 5        City of London     317     373     440     379
+## 6               Lambeth     427     468     445     355
+## 7             Southwark     391     373     372     318
+## 8                 Brent     307     359     212     294
+## 9  Hammersmith &amp; Fulham     157     161     241     246
+## 10               Ealing     249     219     287     243
+## 11            Redbridge      83     121     222     219
+## 12 Kensington &amp; Chelsea     183     225     230     211
+## 13             Lewisham     141     199     133     200
+## 14              Croydon     155     157     166     192
+## 15            Islington     163     135     158     178
+## 16             Hounslow     146     161     191     163
+## 17             Haringey      84     100     135     146
+## 18              Hackney     141     155     148     134
+## 19              Enfield      97     174     136     106
+## 20               Barnet     153     125      88     106
+## 21             Richmond     101     120     133     105
+## 22            Greenwich      64      99     110      91
+## 23           Hillingdon      63      57      56      91
+## 24       Waltham Forest      75     118     139      82
+## 25           Wandsworth      47     125      96      73
+## 26              Bromley      46      44      47      57
+## 27               Sutton      23      46      35      49
+## 28   Barking &amp; Dagenham      14      27      32      49
+## 29               Harrow      48      45      65      43
+## 30               Merton      36      55      49      40
+## 31 Kingston upon Thames      24      40      31      35
+## 32             Havering      11      25      20      31
+## 33               Bexley       8      22      26      22</code></pre>
+<p>Eeyore is joyful at this sight, mark my words. How effortless was that? This data is ripe for mapping. Speaking of which…</p>
+</div>
+<div id="bring-in-the-maps" class="section level2">
+<h2>Bring in the Maps</h2>
+<p>Back to <code>hexmapr</code> stuff. For starters, let’s load in the shapefiles we need (note: the GitHub repo’s example is actually on London, too, so I won’t dwell on every similar detail):</p>
+<pre class="r"><code>library(hexmapr)
+
+# get spatial polygons
+input_file &lt;- system.file(&quot;extdata&quot;, &quot;london_LA.json&quot;, package = &quot;hexmapr&quot;)
+original_shapes &lt;- read_polygons(input_file)</code></pre>
+<pre><code>## Reading layer `OGRGeoJSON&#39; from data source `/Users/Ewen/Library/R/3.4/library/hexmapr/extdata/london_LA.json&#39; using driver `GeoJSON&#39;
+## Simple feature collection with 33 features and 7 fields
+## geometry type:  MULTIPOLYGON
+## dimension:      XY
+## bbox:           xmin: 503568.2 ymin: 155850.8 xmax: 561957.5 ymax: 200933.9
+## epsg (SRID):    4326
+## proj4string:    +proj=longlat +datum=WGS84 +no_defs</code></pre>
+<pre class="r"><code># get polygon details
+original_details &lt;- get_shape_details(original_shapes)</code></pre>
+<p>In the case of spatial joins, I’ve found <a href="https://github.com/r-spatial/sf"><code>sf</code></a>(simple features) incredibly intuitive and so I’ll employ this tactic now to merge the distinct datasets together. I did notice some differences in the names given to certain London Boroughs (mainly the use of ‘&amp;’/‘and’) which will need addressing as well.</p>
+<pre class="r"><code># rename homeless data boroughs strings not matching hexmapr shp
+homeless_spatial_tab$Borough &lt;- str_replace(homeless_spatial_tab$Borough, pattern = &quot;Richmond&quot;, 
+    replacement = &quot;Richmond upon Thames&quot;)
+homeless_spatial_tab$Borough &lt;- str_replace(homeless_spatial_tab$Borough, pattern = &quot;&amp;&quot;, 
+    replacement = &quot;and&quot;)
+
+library(sf)
+
+# turn hexmapr shapefile into sf format
+original_shapes_sf &lt;- st_as_sf(original_shapes)
+
+# join homeless data
+original_shapes_sf &lt;- left_join(original_shapes_sf, homeless_spatial_tab, by = c(NAME = &quot;Borough&quot;))</code></pre>
+<p>We’re about ready to put plot to paper. First, let’s take a look at a traditional, real space assignment of the area.</p>
+<pre class="r"><code># get coords
+coords &lt;- original_shapes_sf %&gt;% # find polygon centroids (sf points object)
+st_centroid %&gt;% # extract the coordinates of these points as a matrix
+st_coordinates
+
+# insert centroid long and lat fields as attributes of polygons
+original_shapes_sf$long &lt;- coords[, 1]
+original_shapes_sf$lat &lt;- coords[, 2]
+
+# get percentage change from baseline
+original_shapes_sf$pct_chg &lt;- (original_shapes_sf$`2016/17` - original_shapes_sf$`2013/14`)/original_shapes_sf$`2013/14` * 
+    100
+
+# traditional map
+ggplot(original_shapes_sf) + geom_sf(aes(fill = pct_chg)) + geom_text(aes(long, 
+    lat, label = str_sub(NAME, 1, 4)), alpha = 0.75, size = 2.5, color = &quot;white&quot;) + 
+    coord_sf() + scale_fill_viridis_c() + theme_void()</code></pre>
+<p><img src="/blog/2017-11-09-Hacking_Homelessness_and_PDF_Prisons_files/figure-html/traditional_map-1.png" width="100%" /></p>
+<p>The metric used here represents % change in 2016/17 rough sleepers compared to 2013/14. Barking is highest (14 up to 49), but the eye and mind may be more drawn to some of it’s bigger neighbours (e.g. Havering).</p>
+<p>Algorithmic tesselation is used to generate possible grid layouts for the data (as explained in the GitHub repo - I’ll just be demo-ing the hexes, but the same can be done with regular grids):</p>
+<pre><code>## [1] 9
+## [1] 14597.32
+## [1] &quot;too few polygons&quot;
+## [1] 7
+## [1] 14159.41
+## [1] &quot;too few polygons&quot;
+## [1] 8
+## [1] 13734.62
+## [1] &quot;too few polygons&quot;
+## [1] 8
+## [1] 13322.58
+## [1] &quot;too few polygons&quot;
+## [1] 11
+## [1] 12922.91
+## [1] &quot;too few polygons&quot;
+## [1] 12
+## [1] 12535.22
+## [1] &quot;too few polygons&quot;
+## [1] 10
+## [1] 12159.16
+## [1] &quot;too few polygons&quot;
+## [1] 11
+## [1] 11794.39
+## [1] &quot;too few polygons&quot;
+## [1] 11
+## [1] 11440.56
+## [1] &quot;too few polygons&quot;
+## [1] 13
+## [1] 11097.34
+## [1] &quot;too few polygons&quot;
+## [1] 13
+## [1] 10764.42
+## [1] &quot;too few polygons&quot;
+## [1] 16
+## [1] 10441.49
+## [1] &quot;too few polygons&quot;
+## [1] 15
+## [1] 10128.24
+## [1] &quot;too few polygons&quot;
+## [1] 19
+## [1] 9824.395
+## [1] &quot;too few polygons&quot;
+## [1] 21
+## [1] 9529.663
+## [1] &quot;too few polygons&quot;
+## [1] 20
+## [1] 9243.773
+## [1] &quot;too few polygons&quot;
+## [1] 25
+## [1] 8966.46
+## [1] &quot;too few polygons&quot;
+## [1] 21
+## [1] 8697.466
+## [1] &quot;too few polygons&quot;
+## [1] 22
+## [1] 8436.542
+## [1] &quot;too few polygons&quot;
+## [1] 23
+## [1] 8183.446
+## [1] &quot;too few polygons&quot;
+## [1] 28
+## [1] 7937.943
+## [1] &quot;too few polygons&quot;
+## [1] 29
+## [1] 7699.804
+## [1] &quot;too few polygons&quot;
+## [1] 30
+## [1] 7468.81
+## [1] &quot;too few polygons&quot;
+## [1] 33
+## [1] 7244.746
+## [1] &quot;The cellsize is 7244.74602973458&quot;</code></pre>
+<pre><code>## [1] 8
+## [1] 14597.32
+## [1] &quot;too few polygons&quot;
+## [1] 10
+## [1] 14159.41
+## [1] &quot;too few polygons&quot;
+## [1] 8
+## [1] 13734.62
+## [1] &quot;too few polygons&quot;
+## [1] 9
+## [1] 13322.58
+## [1] &quot;too few polygons&quot;
+## [1] 9
+## [1] 12922.91
+## [1] &quot;too few polygons&quot;
+## [1] 10
+## [1] 12535.22
+## [1] &quot;too few polygons&quot;
+## [1] 10
+## [1] 12159.16
+## [1] &quot;too few polygons&quot;
+## [1] 13
+## [1] 11794.39
+## [1] &quot;too few polygons&quot;
+## [1] 13
+## [1] 11440.56
+## [1] &quot;too few polygons&quot;
+## [1] 13
+## [1] 11097.34
+## [1] &quot;too few polygons&quot;
+## [1] 13
+## [1] 10764.42
+## [1] &quot;too few polygons&quot;
+## [1] 14
+## [1] 10441.49
+## [1] &quot;too few polygons&quot;
+## [1] 15
+## [1] 10128.24
+## [1] &quot;too few polygons&quot;
+## [1] 17
+## [1] 9824.395
+## [1] &quot;too few polygons&quot;
+## [1] 17
+## [1] 9529.663
+## [1] &quot;too few polygons&quot;
+## [1] 22
+## [1] 9243.773
+## [1] &quot;too few polygons&quot;
+## [1] 18
+## [1] 8966.46
+## [1] &quot;too few polygons&quot;
+## [1] 23
+## [1] 8697.466
+## [1] &quot;too few polygons&quot;
+## [1] 22
+## [1] 8436.542
+## [1] &quot;too few polygons&quot;
+## [1] 26
+## [1] 8183.446
+## [1] &quot;too few polygons&quot;
+## [1] 24
+## [1] 7937.943
+## [1] &quot;too few polygons&quot;
+## [1] 31
+## [1] 7699.804
+## [1] &quot;too few polygons&quot;
+## [1] 30
+## [1] 7468.81
+## [1] &quot;too few polygons&quot;
+## [1] 32
+## [1] 7244.746
+## [1] &quot;too few polygons&quot;
+## [1] 37
+## [1] 7027.404
+## [1] &quot;too many polygons&quot;
+## [1] 33
+## [1] 7238.226
+## [1] &quot;The cellsize is 7238.22575830782&quot;</code></pre>
+<pre><code>## [1] 7
+## [1] 14597.32
+## [1] &quot;too few polygons&quot;
+## [1] 9
+## [1] 14159.41
+## [1] &quot;too few polygons&quot;
+## [1] 8
+## [1] 13734.62
+## [1] &quot;too few polygons&quot;
+## [1] 10
+## [1] 13322.58
+## [1] &quot;too few polygons&quot;
+## [1] 10
+## [1] 12922.91
+## [1] &quot;too few polygons&quot;
+## [1] 9
+## [1] 12535.22
+## [1] &quot;too few polygons&quot;
+## [1] 11
+## [1] 12159.16
+## [1] &quot;too few polygons&quot;
+## [1] 10
+## [1] 11794.39
+## [1] &quot;too few polygons&quot;
+## [1] 13
+## [1] 11440.56
+## [1] &quot;too few polygons&quot;
+## [1] 15
+## [1] 11097.34
+## [1] &quot;too few polygons&quot;
+## [1] 15
+## [1] 10764.42
+## [1] &quot;too few polygons&quot;
+## [1] 15
+## [1] 10441.49
+## [1] &quot;too few polygons&quot;
+## [1] 19
+## [1] 10128.24
+## [1] &quot;too few polygons&quot;
+## [1] 17
+## [1] 9824.395
+## [1] &quot;too few polygons&quot;
+## [1] 16
+## [1] 9529.663
+## [1] &quot;too few polygons&quot;
+## [1] 21
+## [1] 9243.773
+## [1] &quot;too few polygons&quot;
+## [1] 20
+## [1] 8966.46
+## [1] &quot;too few polygons&quot;
+## [1] 25
+## [1] 8697.466
+## [1] &quot;too few polygons&quot;
+## [1] 22
+## [1] 8436.542
+## [1] &quot;too few polygons&quot;
+## [1] 25
+## [1] 8183.446
+## [1] &quot;too few polygons&quot;
+## [1] 31
+## [1] 7937.943
+## [1] &quot;too few polygons&quot;
+## [1] 31
+## [1] 7699.804
+## [1] &quot;too few polygons&quot;
+## [1] 31
+## [1] 7468.81
+## [1] &quot;too few polygons&quot;
+## [1] 32
+## [1] 7244.746
+## [1] &quot;too few polygons&quot;
+## [1] 38
+## [1] 7027.404
+## [1] &quot;too many polygons&quot;
+## [1] 35
+## [1] 7238.226
+## [1] &quot;too many polygons&quot;
+## [1] 32
+## [1] 7455.373
+## [1] &quot;too few polygons&quot;
+## [1] 32
+## [1] 7231.711
+## [1] &quot;too few polygons&quot;
+## [1] 34
+## [1] 7014.76
+## [1] &quot;too many polygons&quot;
+## [1] 34
+## [1] 7225.203
+## [1] &quot;too many polygons&quot;
+## [1] 30
+## [1] 7441.959
+## [1] &quot;too few polygons&quot;
+## [1] 29
+## [1] 7218.7
+## [1] &quot;too few polygons&quot;
+## [1] 34
+## [1] 7002.139
+## [1] &quot;too many polygons&quot;
+## [1] 33
+## [1] 7212.203
+## [1] &quot;The cellsize is 7212.20330225318&quot;</code></pre>
+<pre><code>## [1] 9
+## [1] 14597.32
+## [1] &quot;too few polygons&quot;
+## [1] 10
+## [1] 14159.41
+## [1] &quot;too few polygons&quot;
+## [1] 7
+## [1] 13734.62
+## [1] &quot;too few polygons&quot;
+## [1] 8
+## [1] 13322.58
+## [1] &quot;too few polygons&quot;
+## [1] 9
+## [1] 12922.91
+## [1] &quot;too few polygons&quot;
+## [1] 9
+## [1] 12535.22
+## [1] &quot;too few polygons&quot;
+## [1] 13
+## [1] 12159.16
+## [1] &quot;too few polygons&quot;
+## [1] 13
+## [1] 11794.39
+## [1] &quot;too few polygons&quot;
+## [1] 12
+## [1] 11440.56
+## [1] &quot;too few polygons&quot;
+## [1] 12
+## [1] 11097.34
+## [1] &quot;too few polygons&quot;
+## [1] 12
+## [1] 10764.42
+## [1] &quot;too few polygons&quot;
+## [1] 17
+## [1] 10441.49
+## [1] &quot;too few polygons&quot;
+## [1] 17
+## [1] 10128.24
+## [1] &quot;too few polygons&quot;
+## [1] 16
+## [1] 9824.395
+## [1] &quot;too few polygons&quot;
+## [1] 19
+## [1] 9529.663
+## [1] &quot;too few polygons&quot;
+## [1] 20
+## [1] 9243.773
+## [1] &quot;too few polygons&quot;
+## [1] 20
+## [1] 8966.46
+## [1] &quot;too few polygons&quot;
+## [1] 23
+## [1] 8697.466
+## [1] &quot;too few polygons&quot;
+## [1] 25
+## [1] 8436.542
+## [1] &quot;too few polygons&quot;
+## [1] 27
+## [1] 8183.446
+## [1] &quot;too few polygons&quot;
+## [1] 23
+## [1] 7937.943
+## [1] &quot;too few polygons&quot;
+## [1] 28
+## [1] 7699.804
+## [1] &quot;too few polygons&quot;
+## [1] 33
+## [1] 7468.81
+## [1] &quot;The cellsize is 7468.81033993256&quot;</code></pre>
+<pre><code>## [1] 7
+## [1] 14597.32
+## [1] &quot;too few polygons&quot;
+## [1] 7
+## [1] 14159.41
+## [1] &quot;too few polygons&quot;
+## [1] 7
+## [1] 13734.62
+## [1] &quot;too few polygons&quot;
+## [1] 8
+## [1] 13322.58
+## [1] &quot;too few polygons&quot;
+## [1] 8
+## [1] 12922.91
+## [1] &quot;too few polygons&quot;
+## [1] 11
+## [1] 12535.22
+## [1] &quot;too few polygons&quot;
+## [1] 12
+## [1] 12159.16
+## [1] &quot;too few polygons&quot;
+## [1] 11
+## [1] 11794.39
+## [1] &quot;too few polygons&quot;
+## [1] 13
+## [1] 11440.56
+## [1] &quot;too few polygons&quot;
+## [1] 13
+## [1] 11097.34
+## [1] &quot;too few polygons&quot;
+## [1] 13
+## [1] 10764.42
+## [1] &quot;too few polygons&quot;
+## [1] 19
+## [1] 10441.49
+## [1] &quot;too few polygons&quot;
+## [1] 15
+## [1] 10128.24
+## [1] &quot;too few polygons&quot;
+## [1] 19
+## [1] 9824.395
+## [1] &quot;too few polygons&quot;
+## [1] 20
+## [1] 9529.663
+## [1] &quot;too few polygons&quot;
+## [1] 20
+## [1] 9243.773
+## [1] &quot;too few polygons&quot;
+## [1] 26
+## [1] 8966.46
+## [1] &quot;too few polygons&quot;
+## [1] 23
+## [1] 8697.466
+## [1] &quot;too few polygons&quot;
+## [1] 25
+## [1] 8436.542
+## [1] &quot;too few polygons&quot;
+## [1] 27
+## [1] 8183.446
+## [1] &quot;too few polygons&quot;
+## [1] 26
+## [1] 7937.943
+## [1] &quot;too few polygons&quot;
+## [1] 29
+## [1] 7699.804
+## [1] &quot;too few polygons&quot;
+## [1] 30
+## [1] 7468.81
+## [1] &quot;too few polygons&quot;
+## [1] 30
+## [1] 7244.746
+## [1] &quot;too few polygons&quot;
+## [1] 35
+## [1] 7027.404
+## [1] &quot;too many polygons&quot;
+## [1] 36
+## [1] 7238.226
+## [1] &quot;too many polygons&quot;
+## [1] 31
+## [1] 7455.373
+## [1] &quot;too few polygons&quot;
+## [1] 31
+## [1] 7231.711
+## [1] &quot;too few polygons&quot;
+## [1] 35
+## [1] 7014.76
+## [1] &quot;too many polygons&quot;
+## [1] 34
+## [1] 7225.203
+## [1] &quot;too many polygons&quot;
+## [1] 30
+## [1] 7441.959
+## [1] &quot;too few polygons&quot;
+## [1] 32
+## [1] 7218.7
+## [1] &quot;too few polygons&quot;
+## [1] 33
+## [1] 7002.139
+## [1] &quot;The cellsize is 7002.13912840115&quot;</code></pre>
+<pre><code>## [1] 7
+## [1] 14597.32
+## [1] &quot;too few polygons&quot;
+## [1] 9
+## [1] 14159.41
+## [1] &quot;too few polygons&quot;
+## [1] 7
+## [1] 13734.62
+## [1] &quot;too few polygons&quot;
+## [1] 9
+## [1] 13322.58
+## [1] &quot;too few polygons&quot;
+## [1] 11
+## [1] 12922.91
+## [1] &quot;too few polygons&quot;
+## [1] 10
+## [1] 12535.22
+## [1] &quot;too few polygons&quot;
+## [1] 15
+## [1] 12159.16
+## [1] &quot;too few polygons&quot;
+## [1] 10
+## [1] 11794.39
+## [1] &quot;too few polygons&quot;
+## [1] 13
+## [1] 11440.56
+## [1] &quot;too few polygons&quot;
+## [1] 13
+## [1] 11097.34
+## [1] &quot;too few polygons&quot;
+## [1] 12
+## [1] 10764.42
+## [1] &quot;too few polygons&quot;
+## [1] 18
+## [1] 10441.49
+## [1] &quot;too few polygons&quot;
+## [1] 18
+## [1] 10128.24
+## [1] &quot;too few polygons&quot;
+## [1] 18
+## [1] 9824.395
+## [1] &quot;too few polygons&quot;
+## [1] 18
+## [1] 9529.663
+## [1] &quot;too few polygons&quot;
+## [1] 21
+## [1] 9243.773
+## [1] &quot;too few polygons&quot;
+## [1] 18
+## [1] 8966.46
+## [1] &quot;too few polygons&quot;
+## [1] 23
+## [1] 8697.466
+## [1] &quot;too few polygons&quot;
+## [1] 24
+## [1] 8436.542
+## [1] &quot;too few polygons&quot;
+## [1] 25
+## [1] 8183.446
+## [1] &quot;too few polygons&quot;
+## [1] 27
+## [1] 7937.943
+## [1] &quot;too few polygons&quot;
+## [1] 30
+## [1] 7699.804
+## [1] &quot;too few polygons&quot;
+## [1] 30
+## [1] 7468.81
+## [1] &quot;too few polygons&quot;
+## [1] 34
+## [1] 7244.746
+## [1] &quot;too many polygons&quot;
+## [1] 30
+## [1] 7462.088
+## [1] &quot;too few polygons&quot;
+## [1] 35
+## [1] 7238.226
+## [1] &quot;too many polygons&quot;
+## [1] 32
+## [1] 7455.373
+## [1] &quot;too few polygons&quot;
+## [1] 34
+## [1] 7231.711
+## [1] &quot;too many polygons&quot;
+## [1] 28
+## [1] 7448.663
+## [1] &quot;too few polygons&quot;
+## [1] 35
+## [1] 7225.203
+## [1] &quot;too many polygons&quot;
+## [1] 31
+## [1] 7441.959
+## [1] &quot;too few polygons&quot;
+## [1] 32
+## [1] 7218.7
+## [1] &quot;too few polygons&quot;
+## [1] 38
+## [1] 7002.139
+## [1] &quot;too many polygons&quot;
+## [1] 35
+## [1] 7212.203
+## [1] &quot;too many polygons&quot;
+## [1] 28
+## [1] 7428.569
+## [1] &quot;too few polygons&quot;
+## [1] 35
+## [1] 7205.712
+## [1] &quot;too many polygons&quot;
+## [1] 30
+## [1] 7421.884
+## [1] &quot;too few polygons&quot;
+## [1] 31
+## [1] 7199.227
+## [1] &quot;too few polygons&quot;
+## [1] 38
+## [1] 6983.25
+## [1] &quot;too many polygons&quot;
+## [1] 35
+## [1] 7192.748
+## [1] &quot;too many polygons&quot;
+## [1] 33
+## [1] 7408.53
+## [1] &quot;The cellsize is 7408.53030994543&quot;</code></pre>
+<p><img src="/blog/2017-11-09-Hacking_Homelessness_and_PDF_Prisons_files/figure-html/seeds-1.png" width="100%" /></p>
+<p>I’m quite partial to #3. Manoeuvreing from real space geography to this grid involves an implementation of the <a href="https://github.com/RcppCore/rcpp-gallery/blob/gh-pages/src/2013-09-24-minimal-assignment.cpp">hungarian algorithm</a>. All you have to do is <code>calculate_cell_size()</code> with the grid (seed) of choice and <code>assign_polygons()</code> to the shapefile containing the original geography. From there, the steps to visualisation are identical to previous ones:</p>
+<pre class="r"><code>new_cells_hex &lt;- calculate_cell_size(original_shapes, original_details, 0.03, 
+    &quot;hexagonal&quot;, 3)</code></pre>
+<pre><code>## [1] 7
+## [1] 14597.32
+## [1] &quot;too few polygons&quot;
+## [1] 9
+## [1] 14159.41
+## [1] &quot;too few polygons&quot;
+## [1] 8
+## [1] 13734.62
+## [1] &quot;too few polygons&quot;
+## [1] 10
+## [1] 13322.58
+## [1] &quot;too few polygons&quot;
+## [1] 10
+## [1] 12922.91
+## [1] &quot;too few polygons&quot;
+## [1] 9
+## [1] 12535.22
+## [1] &quot;too few polygons&quot;
+## [1] 11
+## [1] 12159.16
+## [1] &quot;too few polygons&quot;
+## [1] 10
+## [1] 11794.39
+## [1] &quot;too few polygons&quot;
+## [1] 13
+## [1] 11440.56
+## [1] &quot;too few polygons&quot;
+## [1] 15
+## [1] 11097.34
+## [1] &quot;too few polygons&quot;
+## [1] 15
+## [1] 10764.42
+## [1] &quot;too few polygons&quot;
+## [1] 15
+## [1] 10441.49
+## [1] &quot;too few polygons&quot;
+## [1] 19
+## [1] 10128.24
+## [1] &quot;too few polygons&quot;
+## [1] 17
+## [1] 9824.395
+## [1] &quot;too few polygons&quot;
+## [1] 16
+## [1] 9529.663
+## [1] &quot;too few polygons&quot;
+## [1] 21
+## [1] 9243.773
+## [1] &quot;too few polygons&quot;
+## [1] 20
+## [1] 8966.46
+## [1] &quot;too few polygons&quot;
+## [1] 25
+## [1] 8697.466
+## [1] &quot;too few polygons&quot;
+## [1] 22
+## [1] 8436.542
+## [1] &quot;too few polygons&quot;
+## [1] 25
+## [1] 8183.446
+## [1] &quot;too few polygons&quot;
+## [1] 31
+## [1] 7937.943
+## [1] &quot;too few polygons&quot;
+## [1] 31
+## [1] 7699.804
+## [1] &quot;too few polygons&quot;
+## [1] 31
+## [1] 7468.81
+## [1] &quot;too few polygons&quot;
+## [1] 32
+## [1] 7244.746
+## [1] &quot;too few polygons&quot;
+## [1] 38
+## [1] 7027.404
+## [1] &quot;too many polygons&quot;
+## [1] 35
+## [1] 7238.226
+## [1] &quot;too many polygons&quot;
+## [1] 32
+## [1] 7455.373
+## [1] &quot;too few polygons&quot;
+## [1] 32
+## [1] 7231.711
+## [1] &quot;too few polygons&quot;
+## [1] 34
+## [1] 7014.76
+## [1] &quot;too many polygons&quot;
+## [1] 34
+## [1] 7225.203
+## [1] &quot;too many polygons&quot;
+## [1] 30
+## [1] 7441.959
+## [1] &quot;too few polygons&quot;
+## [1] 29
+## [1] 7218.7
+## [1] &quot;too few polygons&quot;
+## [1] 34
+## [1] 7002.139
+## [1] &quot;too many polygons&quot;
+## [1] 33
+## [1] 7212.203
+## [1] &quot;The cellsize is 7212.20330225318&quot;</code></pre>
+<pre class="r"><code>resulthex &lt;- assign_polygons(original_shapes, new_cells_hex)
+
+# turn hexmapr shapefile into sf format
+resulthex_sf &lt;- st_as_sf(resulthex)
+
+# join homeless data
+resulthex_sf &lt;- left_join(resulthex_sf, homeless_spatial_tab, by = c(NAME = &quot;Borough&quot;))
+
+# get coords
+coords &lt;- resulthex_sf %&gt;% # find polygon centroids (sf points object)
+st_centroid %&gt;% # extract the coordinates of these points as a matrix
+st_coordinates
+
+# insert centroid long and lat fields as attributes of polygons
+resulthex_sf$long &lt;- coords[, 1]
+resulthex_sf$lat &lt;- coords[, 2]
+
+# get percentage change from baseline
+resulthex_sf$pct_chg &lt;- (resulthex_sf$`2016/17` - resulthex_sf$`2013/14`)/resulthex_sf$`2013/14`
+
+# hex plot
+ggplot(resulthex_sf) + geom_sf(aes(fill = pct_chg)) + geom_text(aes(long, lat, 
+    label = str_sub(NAME, 1, 4)), size = 2.5, color = &quot;white&quot;) + scale_fill_viridis_c(labels = percent) + 
+    coord_sf() + labs(title = &quot;Where are homeless sightings becoming more frequent in London?&quot;, 
+    subtitle = &quot;People seen rough sleeping, % change 2013/14 to 2016/17 by borough&quot;, 
+    caption = &quot;@ewen_&quot;) + theme_void() + theme(text = element_text(size = 9), 
+    plot.title = element_text(size = 12, face = &quot;bold&quot;), plot.subtitle = element_text(size = 9), 
+    axis.ticks = element_blank(), legend.direction = &quot;vertical&quot;, legend.position = &quot;right&quot;, 
+    legend.title = element_blank(), plot.margin = margin(1, 1, 1, 1, &quot;cm&quot;), 
+    legend.key.height = unit(1, &quot;cm&quot;), legend.key.width = unit(0.2, &quot;cm&quot;))</code></pre>
+<p><img src="/blog/2017-11-09-Hacking_Homelessness_and_PDF_Prisons_files/figure-html/hex_map-1.png" width="100%" /></p>
+<p>From PDF prison to 🔥 hex map with ease. May this inspire you to solve your own <a href="https://twitter.com/hashtag/otherpeoplesdata?src=hash">#otherpeoplesdata</a> horror stories.</p>
+</div>
+<div id="on-a-serious-note" class="section level2">
+<h2>On a Serious Note</h2>
+<p>I also hope that the seriousness of the subject matter was not forgotten. The rise in homelessness sightings is really bad. A major reason why getting hold of this homelessness data was so difficult is that organisations like St Mungo’s suffer from chronic under-funding, and so machine-readable data is understandably not their top priority. They are amazing so please consider <a href="https://www.mungos.org/get-involved/donate/">donating to them</a> if you can, and others like them below:</p>
+<ul>
+<li><a href="https://www.salvationarmyappeals.org.uk/site/Donation2;jsessionid=00000000.app203a?idb=2000701064&amp;df_id=2425&amp;mfc_pref=T&amp;2425.donation=form1&amp;NONCE_TOKEN=DA7336ADD131AA3751E20B98219A74D7&amp;utm_campaign=GRANT&amp;utm_source=Google&amp;utm_content=Phrase&amp;utm_medium=PPC&amp;gclsrc=aw.ds&amp;utm_term=homeless&amp;gclid=Cj0KCQiA84rQBRDCARIsAPO8RFzawzfPkv1IMLJYy1LxToJvUthor11u6VKSmGbx2xOuRyD3ssUNm2YaAv9jEALw_wcB">The Salvation Army</a></li>
+<li><a href="https://donate.barnardos.org.uk/?ref=112326&amp;gclid=Cj0KCQiA84rQBRDCARIsAPO8RFz9vr7leNhxRGfSouzzwJ4eY55HBLGh5VAcyCNA7EctyTbM7UYmmrQaAotFEALw_wcB">Barnardo’s</a></li>
+<li><a href="https://centrepoint.org.uk/donate/">centre point</a></li>
+</ul>
+</div>

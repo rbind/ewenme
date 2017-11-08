@@ -1,6 +1,6 @@
 ---
 title: "Hacking Homelessness & PDF Prisons with hexmapr & tabulizer"
-date: "2017-11-10"
+date: "2017-11-09"
 type: "post"
 tags: ["R", "Mapping", "PDF", "Homelessness"]
 ---
@@ -18,6 +18,7 @@ library(tabulizer)
 library(hexmapr)
 library(sf)
 library(magick)
+library(scales)
 
 ```
 
@@ -39,7 +40,7 @@ Next, I just needed a good reason to wheel it out (aside from sharing with y'all
 
 ```{r, out.width = "100%", fig.align = "center", echo=FALSE}
 
-knitr::include_graphics("/img/2017-11-10-Hacking_Homelessness_and_PDF_Prisons/file_extensions.png")
+knitr::include_graphics("/img/2017-11-09-Hacking_Homelessness_and_PDF_Prisons/file_extensions.png")
 ```
 
 This xkcd cartoon is in good humour, but there's a lot of truth in this - PDF's have risen to represent a kind of absolute truth, embodied by their relative impenetrability from outside influence (this includes pesky data scientists). This all-but-closed system becomes a big problem when we want to extract the 'open' data holed up inside. (Enter next R package to save the day, stage left).
@@ -50,7 +51,7 @@ Actual footage of [`tabulizer](https://github.com/ropensci/tabulizer), an rOpenS
 
 ```{r, out.width = "100%", fig.align = "center", echo=FALSE}
 
-knitr::include_graphics("/img/2017-11-10-Hacking_Homelessness_and_PDF_Prisons/oreally.jpg")
+knitr::include_graphics("/img/2017-11-09-Hacking_Homelessness_and_PDF_Prisons/oreally.jpg")
 ```
 
 As the [rOpenSci release](https://ropensci.org/blog/2017/04/18/tabulizer/) tells, `tabulizer` gives us R mortals the power of the [tabula-java library](https://github.com/tabulapdf/tabula-java) for extracting tables from PDF files (which, in turn, powers [Tabula](http://tabula.technology/), which you might have come across). You should dig in to that release blog (and associated GitHub repo) for the juicy inner workings, but I'll show it off very shortly.
@@ -63,16 +64,23 @@ I should say that I hit some snags trying to get this package fully operational 
 
 ## Where the Magic Happens
 
-With new friends in tow, it's about to go down on this PDF. Here's an idea of what we're working with (Eeyore sad at PDFs courtesy of [`magick`](https://cran.r-project.org/web/packages/magick/vignettes/intro.html), if you were wondering):
+With new friends in tow, it's about to go down on this PDF. Here's an idea of what we're working with (Eeyore's sad at PDFs courtesy of [`magick`](https://cran.r-project.org/web/packages/magick/vignettes/intro.html), if you were wondering):
 
-```{r screenshot}
+```{r screenshot, eval=FALSE}
 # read screenshot and eeyore
-scrn <- image_read('~/Documents/Github/ewenme/static/img/2017-11-10-Hacking_Homelessness_and_PDF_Prisons/report_scrn.png')
+scrn <- image_read('~/Documents/Github/ewenme/static/img/2017-11-09-Hacking_Homelessness_and_PDF_Prisons/report_scrn.png')
 eeyore <- image_read('https://upload.wikimedia.org/wikipedia/en/7/70/Eeyore.gif')
 
 # composing
 scrn_eeyore <- image_scale(image_background(eeyore, "none"), "x150")
-image_composite(image_scale(scrn, "x400"), scrn_eeyore, offset = "+550+30")
+scrn_eeyore_fin <- image_composite(image_scale(scrn, "x400"), scrn_eeyore, offset = "+550+30")
+
+image_write(scrn_eeyore_fin, path = "~/Documents/Github/ewenme/static/img/2017-11-09-Hacking_Homelessness_and_PDF_Prisons/eeyore.png", format = "png")
+```
+
+```{r, out.width = "100%", fig.align = "center", echo=FALSE}
+
+knitr::include_graphics("/img/2017-11-09-Hacking_Homelessness_and_PDF_Prisons/eeyore.png")
 ```
 
 To get the data in this table out of it's prison, we use `extract_tables()`:
@@ -197,7 +205,7 @@ plot(new_cells[[2]], main = paste("Seed",i, sep=" "))
 
 I'm quite partial to #3. Manoeuvreing from real space geography to this grid involves an implementation of the [hungarian algorithm](https://github.com/RcppCore/rcpp-gallery/blob/gh-pages/src/2013-09-24-minimal-assignment.cpp). All you have to do is `calculate_cell_size()` with the grid (seed) of choice and `assign_polygons()` to the shapefile containing the original geography. From there, the steps to visualisation are identical to previous ones:
 
-```{r hex_map}
+```{r hex_map, echo=TRUE}
 
 new_cells_hex <-  calculate_cell_size(original_shapes, original_details, 0.03, 'hexagonal', 3)
 resulthex <- assign_polygons(original_shapes, new_cells_hex)
@@ -220,25 +228,38 @@ resulthex_sf$long <- coords[,1]
 resulthex_sf$lat <- coords[,2]
 
 # get percentage change from baseline
-resulthex_sf$pct_chg <- (resulthex_sf$`2016/17`- resulthex_sf$`2013/14`) / resulthex_sf$`2013/14` * 100
+resulthex_sf$pct_chg <- (resulthex_sf$`2016/17`- resulthex_sf$`2013/14`) / resulthex_sf$`2013/14`
 
 # hex plot
 ggplot(resulthex_sf) +
   geom_sf( aes(fill = pct_chg)) +
-  geom_text(aes(long, lat, label=str_sub(NAME, 1, 4)), size = 3, color = 'white') +
-  scale_fill_viridis_c() +
+  geom_text(aes(long, lat, label=str_sub(NAME, 1, 4)), size = 2.5, color = 'white') +
+  scale_fill_viridis_c(labels = percent) +
   coord_sf() +
+  labs(title="Where are homeless sightings becoming more frequent in London?",
+       subtitle="People seen rough sleeping, % change 2013/14 to 2016/17 by borough",
+       caption="@ewen_") +
   theme_void() +
   theme(
-    text = element_text(size = 7),
-    plot.title = element_text(size = 11, color = "#1c5074", hjust = 0, vjust = 2, face = "bold"), 
-    plot.subtitle = element_text(size = 8, color = "#3474A2", hjust = 0, vjust = 0),
+    text = element_text(size = 9),
+    plot.title = element_text(size = 12, face = "bold"), 
+    plot.subtitle = element_text(size = 9),
     axis.ticks = element_blank(), 
     legend.direction = "vertical", 
     legend.position = "right",
+    legend.title=element_blank(),
     plot.margin = margin(1, 1, 1, 1, 'cm'),
     legend.key.height = unit(1, "cm"), legend.key.width = unit(0.2, "cm")
   ) 
 
 ```
 
+From PDF prison to `r emo::ji("fire")` hex map with ease. May this inspire you to solve your own [#otherpeoplesdata](https://twitter.com/hashtag/otherpeoplesdata?src=hash) horror stories.
+
+## On a Serious Note
+
+I also hope that the seriousness of the subject matter was not forgotten. The rise in homelessness sightings is really bad. A major reason why getting hold of this homelessness data was so difficult is that organisations like St Mungo's suffer from chronic under-funding, and so machine-readable data is understandably not their top priority. They are amazing so please consider [donating to them](https://www.mungos.org/get-involved/donate/) if you can, and others like them below:
+
+- [The Salvation Army](https://www.salvationarmyappeals.org.uk/site/Donation2;jsessionid=00000000.app203a?idb=2000701064&df_id=2425&mfc_pref=T&2425.donation=form1&NONCE_TOKEN=DA7336ADD131AA3751E20B98219A74D7&utm_campaign=GRANT&utm_source=Google&utm_content=Phrase&utm_medium=PPC&gclsrc=aw.ds&utm_term=homeless&gclid=Cj0KCQiA84rQBRDCARIsAPO8RFzawzfPkv1IMLJYy1LxToJvUthor11u6VKSmGbx2xOuRyD3ssUNm2YaAv9jEALw_wcB)
+- [Barnardo's](https://donate.barnardos.org.uk/?ref=112326&gclid=Cj0KCQiA84rQBRDCARIsAPO8RFz9vr7leNhxRGfSouzzwJ4eY55HBLGh5VAcyCNA7EctyTbM7UYmmrQaAotFEALw_wcB)
+- [centre point](https://centrepoint.org.uk/donate/)
