@@ -1,6 +1,6 @@
 ---
 title: "Hacking Homelessness & PDF Prisons with hexmapr & tabulizer"
-date: "2017-11-06"
+date: "2017-11-10"
 type: "post"
 tags: ["R", "Mapping", "PDF", "Homelessness"]
 ---
@@ -20,4 +20,45 @@ library(sf)
 
 ```
 
+Shout-out to the [Monday Morning Data Science](http://us16.campaign-archive2.com/home/?u=5ea551600fcdf84334e5aa6b0&id=26c0b7221a) mailout from John Hopkins. Making my way through this week's (#41) edition, I hit upon quite the eulogy concerning a new R package: 
+
+> "The most compelling data visualization libraries I’ve seen in awhile...you have to see it to believe it"
+
+You had me at compelling (I'm not sure *who* had me exactly, this was the only entry w/o a name attached to it `r emo::ji("thinking")`).
+
+## Hex Democratization 
+
+Enter [`hexmapr`](https://github.com/sassalley/hexmapr) and a solution to the perennial information communication problem of plotting polygons of different sizes, that's equal parts functional and beautiful. In the link above the author, Joseph Bailey, eloquently explains the motivations behind this package for automatic transformations of geospatial polygons into regular and hexagonal grids. In short, a grid system ensures a fairer representation of spatial data (while retaining geography) and an automated implementation means this is suitable to use in less commonly studied places. On both counts, this is a wicked example of building tools that democratize good data science. `r emo::ji("hands")`
+
+Next, I just needed a good reason to wheel it out (aside from sharing with y'all). 
+
+## Full Metal Data
+
+[Combined Homelessness and Information Network (CHAIN)](https://www.mungos.org/work-with-us/chain/) is the foremost project collecting data about homelessness in London. Gaining direct access to the database is strictly limited to those working directly with rough sleepers. However, CHAIN reports are published on the Greater London Authority's (GLA) [London Datastore](https://data.london.gov.uk/dataset/chain-reports). The full annual report does contain data on the spatial distribution of rough sleepers, but it's only available in PDF format. `r emo::ji("skull")`
+
+```{r, out.width = "100%", fig.align = "center", echo=FALSE}
+
+knitr::include_graphics("/img/2017-11-10-Hacking_Homelessness_and_PDF_Prisons/file_extensions.png")
+```
+
+This xkcd cartoon is in good humour, but there's a lot of truth in this - PDF's have risen to represent a kind of absolute truth, embodied by their relative impenetrability from outside influence (this includes pesky data scientists). This all-but-closed system becomes a big problem when we want to extract the 'open' data holed up inside. (Enter next R package to save the day, stage left).
+
+## Introducing tabulizer AKA Governments, Lock Up Your PDFs
+
+Actual footage of [`tabulizer](https://github.com/ropensci/tabulizer), an rOpenSci project dreamed up by Thomas Leeper, encountering impervious PDF #478:
+
+```{r, out.width = "100%", fig.align = "center", echo=FALSE}
+
+knitr::include_graphics("/img/2017-11-10-Hacking_Homelessness_and_PDF_Prisons/oreally.jpg")
+```
+
+As the [rOpenSci release](https://ropensci.org/blog/2017/04/18/tabulizer/) tells, `tabulizer` gives us R mortals the power of the [tabula-java library](https://github.com/tabulapdf/tabula-java) for extracting tables from PDF files (which, in turn, powers [Tabula](http://tabula.technology/), which you might have come across). You should dig in to that release blog (and associated GitHub repo) for the juicy inner workings, but I'll show it off very shortly.
+
+I should say that I hit some snags trying to get this package fully operational (again, detailed in the package release), owing to the dependency on Java. I will just say that these links were able to get me on my way (as a Mac user) AND it was worth it:
+
+- [Relinking Java & rJava](https://stackoverflow.com/questions/35179151/cannot-load-r-xlsx-package-on-mac-os-10-11/36045290)
+- [rJava fix after OSX upgrade](https://stackoverflow.com/questions/30738974/rjava-load-error-in-rstudio-r-after-upgrading-to-osx-yosemite)
+- [`tabulizer` issues page](https://github.com/ropensci/tabulizer/issues?utf8=%E2%9C%93&q=is%3Aissue)
+
+## Where the Magic Happens
 
