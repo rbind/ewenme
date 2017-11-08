@@ -77,7 +77,8 @@ image_composite(image_scale(scrn, "x400"), scrn_eeyore, offset = "+550+30")
 
 To get the data in this table out of it's prison, we use `extract_tables()`:
 
-```{r extract}
+```{r extract, echo=TRUE}
+library(tabulizer)
 
 homeless_spatial_tab <- extract_tables(file = "https://files.datapress.com/london/dataset/chain-reports/2017-06-30T09:03:07.84/Greater%20London%20full%202016-17.pdf",
                                        pages = 19)
@@ -88,7 +89,7 @@ homeless_spatial_tab
 
 We simply fed this two arguments - the filepath of the report and the page number with our table of interest - and returned a list object of length one, containing a character matrix. The resultant object needs some light wrangling to get it just right:
 
-```{r wrangle}
+```{r wrangle, echo=TRUE}
 
 # specify table list item
 homeless_spatial_tab <- homeless_spatial_tab[[1]]
@@ -105,6 +106,8 @@ homeless_spatial_tab <- data.frame(homeless_spatial_tab[-1, ])
 # set colnames
 colnames(homeless_spatial_tab) <- col_names
 
+library(tidyverse)
+
 # set col types
 homeless_spatial_tab <- mutate_at(homeless_spatial_tab, c("2013/14", "2014/15", "2015/16", "2016/17"), as.character)
 homeless_spatial_tab <- mutate_at(homeless_spatial_tab, c("2013/14", "2014/15", "2015/16", "2016/17"), as.numeric)
@@ -114,4 +117,128 @@ homeless_spatial_tab
 
 Eeyore is joyful at this sight, mark my words. How effortless was that? This data is ripe for mapping. Speaking of which...
 
-## 
+## Bring in the Maps
+
+Back to `hexmapr` stuff. For starters, let's load in the shapefiles we need (note: the GitHub repo's example is actually on London, too, so I won't dwell on every similar detail):
+
+```{r hex_load, echo=TRUE}
+library(hexmapr)
+
+# get spatial polygons
+input_file <- system.file('extdata', 'london_LA.json', package='hexmapr')
+original_shapes <- read_polygons(input_file)
+
+# get polygon details
+original_details <- get_shape_details(original_shapes)
+
+```
+
+In the case of spatial joins, I've found [`sf`](https://github.com/r-spatial/sf)(simple features) incredibly intuitive and so I'll employ this tactic now to merge the distinct datasets together. I did notice some differences in the names given to certain London Boroughs (mainly the use of '&'/'and') which will need addressing as well.
+
+```{r spatial_join, echo=TRUE}
+# rename homeless data boroughs strings not matching hexmapr shp
+homeless_spatial_tab$Borough <- str_replace(homeless_spatial_tab$Borough, pattern = "Richmond",
+                                            replacement = "Richmond upon Thames")
+homeless_spatial_tab$Borough <- str_replace(homeless_spatial_tab$Borough, 
+                                            pattern = "&",
+                                            replacement = "and")
+
+library(sf)
+
+# turn hexmapr shapefile into sf format
+original_shapes_sf <- st_as_sf(original_shapes)
+
+# join homeless data
+original_shapes_sf <- left_join(original_shapes_sf, homeless_spatial_tab, by=c("NAME"="Borough"))
+
+```
+
+We're about ready to put plot to paper. First, let's take a look at a traditional, real space assignment of the area.
+
+```{r traditional_map, echo=TRUE}
+
+# get coords
+coords <- original_shapes_sf %>%
+  # find polygon centroids (sf points object)
+  st_centroid %>%
+  # extract the coordinates of these points as a matrix
+  st_coordinates
+
+# insert centroid long and lat fields as attributes of polygons
+original_shapes_sf$long <- coords[,1]
+original_shapes_sf$lat <- coords[,2]
+
+# get percentage change from baseline
+original_shapes_sf$pct_chg <- (original_shapes_sf$`2016/17` - original_shapes_sf$`2013/14`) / original_shapes_sf$`2013/14` * 100
+
+# traditional map
+ggplot(original_shapes_sf) +
+  geom_sf(aes(fill = pct_chg)) +
+  geom_text(aes(long, lat, label=str_sub(NAME, 1, 4)), alpha = 0.75, size = 2.5, color = 'white') +
+  coord_sf() +
+  scale_fill_viridis_c() +
+  theme_void()
+
+```
+
+The metric used here represents % change in 2016/17 rough sleepers compared to 2013/14. Barking is highest (14 up to 49), but the eye and mind may be more drawn to some of it's bigger neighbours (e.g. Havering). 
+
+Algorithmic tesselation is used to generate possible grid layouts for the data (as explained in the GitHub repo - I'll just be demo-ing the hexes, but the same can be done with regular grids):
+
+```{r seeds}
+
+par(mfrow=c(2,3), mar = c(0,0,2,0))
+for (i in 1:6){
+new_cells <-  calculate_cell_size(original_shapes, original_details,0.03, 'hexagonal', i)
+plot(new_cells[[2]], main = paste("Seed",i, sep=" "))
+}
+
+```
+
+I'm quite partial to #3. Manoeuvreing from real space geography to this grid involves an implementation of the [hungarian algorithm](https://github.com/RcppCore/rcpp-gallery/blob/gh-pages/src/2013-09-24-minimal-assignment.cpp). All you have to do is `calculate_cell_size()` with the grid (seed) of choice and `assign_polygons()` to the shapefile containing the original geography. From there, the steps to visualisation are identical to previous ones:
+
+```{r hex_map}
+
+new_cells_hex <-  calculate_cell_size(original_shapes, original_details, 0.03, 'hexagonal', 3)
+resulthex <- assign_polygons(original_shapes, new_cells_hex)
+
+# turn hexmapr shapefile into sf format
+resulthex_sf <- st_as_sf(resulthex)
+
+# join homeless data
+resulthex_sf <- left_join(resulthex_sf, homeless_spatial_tab, by=c("NAME"="Borough"))
+
+# get coords
+coords <- resulthex_sf %>%
+  # find polygon centroids (sf points object)
+  st_centroid %>%
+  # extract the coordinates of these points as a matrix
+  st_coordinates
+
+# insert centroid long and lat fields as attributes of polygons
+resulthex_sf$long <- coords[,1]
+resulthex_sf$lat <- coords[,2]
+
+# get percentage change from baseline
+resulthex_sf$pct_chg <- (resulthex_sf$`2016/17`- resulthex_sf$`2013/14`) / resulthex_sf$`2013/14` * 100
+
+# hex plot
+ggplot(resulthex_sf) +
+  geom_sf( aes(fill = pct_chg)) +
+  geom_text(aes(long, lat, label=str_sub(NAME, 1, 4)), size = 3, color = 'white') +
+  scale_fill_viridis_c() +
+  coord_sf() +
+  theme_void() +
+  theme(
+    text = element_text(size = 7),
+    plot.title = element_text(size = 11, color = "#1c5074", hjust = 0, vjust = 2, face = "bold"), 
+    plot.subtitle = element_text(size = 8, color = "#3474A2", hjust = 0, vjust = 0),
+    axis.ticks = element_blank(), 
+    legend.direction = "vertical", 
+    legend.position = "right",
+    plot.margin = margin(1, 1, 1, 1, 'cm'),
+    legend.key.height = unit(1, "cm"), legend.key.width = unit(0.2, "cm")
+  ) 
+
+```
+
