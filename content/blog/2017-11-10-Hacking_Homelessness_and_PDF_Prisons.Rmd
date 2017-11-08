@@ -17,6 +17,7 @@ library(tidyverse)
 library(tabulizer)
 library(hexmapr)
 library(sf)
+library(magick)
 
 ```
 
@@ -62,3 +63,55 @@ I should say that I hit some snags trying to get this package fully operational 
 
 ## Where the Magic Happens
 
+With new friends in tow, it's about to go down on this PDF. Here's an idea of what we're working with (Eeyore sad at PDFs courtesy of [`magick`](https://cran.r-project.org/web/packages/magick/vignettes/intro.html), if you were wondering):
+
+```{r screenshot}
+# read screenshot and eeyore
+scrn <- image_read('~/Documents/Github/ewenme/static/img/2017-11-10-Hacking_Homelessness_and_PDF_Prisons/report_scrn.png')
+eeyore <- image_read('https://upload.wikimedia.org/wikipedia/en/7/70/Eeyore.gif')
+
+# composing
+scrn_eeyore <- image_scale(image_background(eeyore, "none"), "x150")
+image_composite(image_scale(scrn, "x400"), scrn_eeyore, offset = "+550+30")
+```
+
+To get the data in this table out of it's prison, we use `extract_tables()`:
+
+```{r extract}
+
+homeless_spatial_tab <- extract_tables(file = "https://files.datapress.com/london/dataset/chain-reports/2017-06-30T09:03:07.84/Greater%20London%20full%202016-17.pdf",
+                                       pages = 19)
+
+homeless_spatial_tab
+
+```
+
+We simply fed this two arguments - the filepath of the report and the page number with our table of interest - and returned a list object of length one, containing a character matrix. The resultant object needs some light wrangling to get it just right:
+
+```{r wrangle}
+
+# specify table list item
+homeless_spatial_tab <- homeless_spatial_tab[[1]]
+
+# remove unneeded rows and cols
+homeless_spatial_tab <- homeless_spatial_tab[c(-2, -15, -37), -6:-7]
+
+# get col names
+col_names <- homeless_spatial_tab[1, ]
+
+# create dataframe
+homeless_spatial_tab <- data.frame(homeless_spatial_tab[-1, ])
+
+# set colnames
+colnames(homeless_spatial_tab) <- col_names
+
+# set col types
+homeless_spatial_tab <- mutate_at(homeless_spatial_tab, c("2013/14", "2014/15", "2015/16", "2016/17"), as.character)
+homeless_spatial_tab <- mutate_at(homeless_spatial_tab, c("2013/14", "2014/15", "2015/16", "2016/17"), as.numeric)
+
+homeless_spatial_tab
+```
+
+Eeyore is joyful at this sight, mark my words. How effortless was that? This data is ripe for mapping. Speaking of which...
+
+## 
