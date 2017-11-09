@@ -14,7 +14,7 @@ tags: ["R", "Mapping", "PDF", "Homelessness"]
 <p>You had me at compelling (I’m not sure <em>who</em> had me exactly, this was the only entry w/o a name attached to it 🤔).</p>
 <div id="hex-democratization" class="section level2">
 <h2>Hex Democratization</h2>
-<p>Enter <a href="https://github.com/sassalley/hexmapr"><code>hexmapr</code></a> and a solution to the perennial information communication problem of plotting polygons of different sizes, that’s equal parts functional and beautiful. In the link above the author, Joseph Bailey, eloquently explains the motivations behind this package for automatic transformations of geospatial polygons into regular and hexagonal grids. In short, a grid system ensures a fairer representation of spatial data (while retaining geography) and an automated implementation means this is suitable to use in less commonly studied places. On both counts, this is a wicked example of building tools that democratize good data science. 👋</p>
+<p>Enter <a href="https://github.com/sassalley/hexmapr"><code>hexmapr</code></a> and a solution to the perennial information communication problem of plotting polygons of different sizes, that’s equal parts functional and beautiful. In the link above the author, Joseph Bailey, eloquently explains the motivations behind this package for automatic transformations of geospatial polygons into regular and hexagonal grids. In short, a grid system ensures a fairer representation of spatial data (while retaining geography) and an automated implementation means this is suitable to use in less commonly studied places. On both counts, this is a wicked example of building tools that democratize good data science. 👏</p>
 <p>Next, I just needed a good reason to wheel it out (aside from sharing with y’all).</p>
 </div>
 <div id="full-metal-data" class="section level2">
@@ -200,10 +200,10 @@ original_shapes_sf$pct_chg &lt;- (original_shapes_sf$`2016/17` - original_shapes
 ggplot(original_shapes_sf) + geom_sf(aes(fill = pct_chg)) + geom_text(aes(long, 
     lat, label = str_sub(NAME, 1, 4)), alpha = 0.75, size = 2.5, color = &quot;white&quot;) + 
     coord_sf() + scale_fill_viridis_c() + theme_void()</code></pre>
-<p><img src="/blog/2017-11-09-Hacking_Homelessness_and_PDF_Prisons_files/figure-html/traditional_map-1.png" width="100%" /></p>
+<p><img src="/blog/2017-11-09-hacking_homelessness_and_pdf_prisons_files/figure-html/traditional_map-1.png" width="100%" /></p>
 <p>The metric used here represents % change in 2016/17 rough sleepers compared to 2013/14. Barking is highest (14 up to 49), but the eye and mind may be more drawn to some of it’s bigger neighbours (e.g. Havering).</p>
 <p>Algorithmic tessellation is used to generate possible grid layouts for the data (as explained in the GitHub repo - I’ll just be demo-ing the hexes, but the same can be done with regular grids):</p>
-<p><img src="/blog/2017-11-09-Hacking_Homelessness_and_PDF_Prisons_files/figure-html/seeds-1.png" width="100%" /></p>
+<p><img src="/blog/2017-11-09-hacking_homelessness_and_pdf_prisons_files/figure-html/seeds-1.png" width="100%" /></p>
 <p>I’m quite partial to #3. Maneuvering from real space geography to this grid involves an implementation of the <a href="https://github.com/RcppCore/rcpp-gallery/blob/gh-pages/src/2013-09-24-minimal-assignment.cpp">hungarian algorithm</a>. All you have to do is <code>calculate_cell_size()</code> with the grid (seed) of choice and <code>assign_polygons()</code> to the shapefile containing the original geography. From there, the steps to visualisation are identical to previous ones:</p>
 <pre class="r"><code>new_cells_hex &lt;- calculate_cell_size(original_shapes, original_details, 0.03, 
     &quot;hexagonal&quot;, 3)
@@ -237,7 +237,7 @@ ggplot(resulthex_sf) + geom_sf(aes(fill = pct_chg)) + geom_text(aes(long, lat,
     axis.ticks = element_blank(), legend.direction = &quot;vertical&quot;, legend.position = &quot;right&quot;, 
     legend.title = element_blank(), plot.margin = margin(1, 1, 1, 1, &quot;cm&quot;), 
     legend.key.height = unit(1, &quot;cm&quot;), legend.key.width = unit(0.2, &quot;cm&quot;))</code></pre>
-<p><img src="/blog/2017-11-09-Hacking_Homelessness_and_PDF_Prisons_files/figure-html/hex_map-1.png" width="100%" /></p>
+<p><img src="/blog/2017-11-09-hacking_homelessness_and_pdf_prisons_files/figure-html/hex_map-1.png" width="100%" /></p>
 <p>From PDF prison to 🔥 hex map with ease. May this inspire you to solve your own <a href="https://twitter.com/hashtag/otherpeoplesdata?src=hash">#otherpeoplesdata</a> horror stories.</p>
 </div>
 <div id="on-a-serious-note" class="section level2">
