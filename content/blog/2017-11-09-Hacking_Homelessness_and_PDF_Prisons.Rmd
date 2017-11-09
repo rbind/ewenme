@@ -32,7 +32,7 @@ You had me at compelling (I'm not sure *who* had me exactly, this was the only e
 
 Enter [`hexmapr`](https://github.com/sassalley/hexmapr) and a solution to the perennial information communication problem of plotting polygons of different sizes, that's equal parts functional and beautiful. In the link above the author, Joseph Bailey, eloquently explains the motivations behind this package for automatic transformations of geospatial polygons into regular and hexagonal grids. In short, a grid system ensures a fairer representation of spatial data (while retaining geography) and an automated implementation means this is suitable to use in less commonly studied places. On both counts, this is a wicked example of building tools that democratize good data science. `r emo::ji("hands")`
 
-Next, I just needed a good reason to wheel it out (aside from sharing with y'all). 
+Next, I just needed a good reason to wheel it out (aside from sharing with y'all).[^fullcode] 
 
 ## Full Metal Data
 
@@ -260,10 +260,14 @@ ggplot(resulthex_sf) +
 
 From PDF prison to `r emo::ji("fire")` hex map with ease. May this inspire you to solve your own [#otherpeoplesdata](https://twitter.com/hashtag/otherpeoplesdata?src=hash) horror stories.
 
-## On a Serious Note
+## On a More Serious Note
 
 I also hope that the seriousness of the subject matter was not forgotten. The rise in homelessness sightings is really bad. A major reason why getting hold of this homelessness data was so difficult is that organisations like St Mungo's suffer from chronic under-funding, and so machine-readable data is understandably not their top priority. They are amazing so please consider [donating to them](https://www.mungos.org/get-involved/donate/) if you can, and others like them below:
 
 - [The Salvation Army](https://www.salvationarmyappeals.org.uk/site/Donation2;jsessionid=00000000.app203a?idb=2000701064&df_id=2425&mfc_pref=T&2425.donation=form1&NONCE_TOKEN=DA7336ADD131AA3751E20B98219A74D7&utm_campaign=GRANT&utm_source=Google&utm_content=Phrase&utm_medium=PPC&gclsrc=aw.ds&utm_term=homeless&gclid=Cj0KCQiA84rQBRDCARIsAPO8RFzawzfPkv1IMLJYy1LxToJvUthor11u6VKSmGbx2xOuRyD3ssUNm2YaAv9jEALw_wcB)
 - [Barnardo's](https://donate.barnardos.org.uk/?ref=112326&gclid=Cj0KCQiA84rQBRDCARIsAPO8RFz9vr7leNhxRGfSouzzwJ4eY55HBLGh5VAcyCNA7EctyTbM7UYmmrQaAotFEALw_wcB)
 - [centre point](https://centrepoint.org.uk/donate/)
+
+<br>
+
+[^fullcode]: To keep the post concise I don't show all of the code, especially code that generates figures. But you can find the full code [here](https://github.com/rbind/ewenme/blob/master/content/blog/2017-11-09-Hacking_Homelessness_And_PDF_Prisons.Rmd).
