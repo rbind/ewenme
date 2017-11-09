@@ -8,15 +8,27 @@ googleAnalytics = "UA-98719738-1"
 
 Paginate = 8
 
-preserveTaxonomyNames = true
+preserveTaxonomyNames = false
 
 [params]
-  dateFormat = "02 January, 2006"
-  copyrightOwner = "Ewen Henderson"
-  copyrightStartYear = "2017"
+  highlightjsVersion = "9.11.0"
+  highlightjsCDN = "//cdn.bootcss.com"
+  highlightjsLang = ["r", "yaml"]
+  highlightjsTheme = "tomorrow"
+
+[params.assets]
   favicon = "favicon.ico"
-  hideEntryNavigation = true
   customCSS = ["css/custom.css"]
+  customJS = ["js/custom.js"]
+
+[params.copyright]
+  holder = "Ewen Henderson"
+  startYear = "2017"
+
+[params.settings]
+  dateFormat = "02 Jan, 2006"
+  listDateFormat = "02 Jan, 2006"
+  hideEntryNavigation = true
   hideSocialMenu = false
   showReadTime = true
 
