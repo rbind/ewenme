@@ -95,7 +95,7 @@ head(homeless_spatial_tab)
 
 ```
 
-We simply fed this two arguments - the filepath of the report and the page number with our table of interest - and returned a list object of length one, containing a character matrix. The resultant object needs some light wrangling to get it just right:
+We simply fed this two arguments - the file path of the report and the page number with our table of interest - and returned a list object of length one, containing a character matrix. The resultant object needs some light wrangling to get it just right:
 
 ```{r wrangle, echo=TRUE}
 
@@ -191,7 +191,7 @@ ggplot(original_shapes_sf) +
 
 The metric used here represents % change in 2016/17 rough sleepers compared to 2013/14. Barking is highest (14 up to 49), but the eye and mind may be more drawn to some of it's bigger neighbours (e.g. Havering). 
 
-Algorithmic tesselation is used to generate possible grid layouts for the data (as explained in the GitHub repo - I'll just be demo-ing the hexes, but the same can be done with regular grids):
+Algorithmic tessellation is used to generate possible grid layouts for the data (as explained in the GitHub repo - I'll just be demo-ing the hexes, but the same can be done with regular grids):
 
 ```{r seeds, results='hide'}
 
@@ -203,7 +203,7 @@ plot(new_cells[[2]], main = paste("Seed",i, sep=" "))
 
 ```
 
-I'm quite partial to #3. Manoeuvreing from real space geography to this grid involves an implementation of the [hungarian algorithm](https://github.com/RcppCore/rcpp-gallery/blob/gh-pages/src/2013-09-24-minimal-assignment.cpp). All you have to do is `calculate_cell_size()` with the grid (seed) of choice and `assign_polygons()` to the shapefile containing the original geography. From there, the steps to visualisation are identical to previous ones:
+I'm quite partial to #3. Maneuvering from real space geography to this grid involves an implementation of the [hungarian algorithm](https://github.com/RcppCore/rcpp-gallery/blob/gh-pages/src/2013-09-24-minimal-assignment.cpp). All you have to do is `calculate_cell_size()` with the grid (seed) of choice and `assign_polygons()` to the shapefile containing the original geography. From there, the steps to visualisation are identical to previous ones:
 
 ```{r hex_map, echo=TRUE, results='hide'}
 

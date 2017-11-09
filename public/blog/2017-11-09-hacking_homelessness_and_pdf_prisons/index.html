@@ -131,7 +131,7 @@ ga('send', 'pageview');
 <p>You had me at compelling (I’m not sure <em>who</em> had me exactly, this was the only entry w/o a name attached to it 🤔).</p>
 <div id="hex-democratization" class="section level2">
 <h2>Hex Democratization</h2>
-<p>Enter <a href="https://github.com/sassalley/hexmapr"><code>hexmapr</code></a> and a solution to the perennial information communication problem of plotting polygons of different sizes, that’s equal parts functional and beautiful. In the link above the author, Joseph Bailey, eloquently explains the motivations behind this package for automatic transformations of geospatial polygons into regular and hexagonal grids. In short, a grid system ensures a fairer representation of spatial data (while retaining geography) and an automated implementation means this is suitable to use in less commonly studied places. On both counts, this is a wicked example of building tools that democratize good data science. 🤙</p>
+<p>Enter <a href="https://github.com/sassalley/hexmapr"><code>hexmapr</code></a> and a solution to the perennial information communication problem of plotting polygons of different sizes, that’s equal parts functional and beautiful. In the link above the author, Joseph Bailey, eloquently explains the motivations behind this package for automatic transformations of geospatial polygons into regular and hexagonal grids. In short, a grid system ensures a fairer representation of spatial data (while retaining geography) and an automated implementation means this is suitable to use in less commonly studied places. On both counts, this is a wicked example of building tools that democratize good data science. 👋</p>
 <p>Next, I just needed a good reason to wheel it out (aside from sharing with y’all).</p>
 </div>
 <div id="full-metal-data" class="section level2">
@@ -240,7 +240,7 @@ head(homeless_spatial_tab)</code></pre>
 ## [35,] &quot;11&quot;           &quot;20&quot;          
 ## [36,] &quot;-4&quot;           &quot;14&quot;          
 ## [37,] &quot;2&quot;            &quot;20&quot;</code></pre>
-<p>We simply fed this two arguments - the filepath of the report and the page number with our table of interest - and returned a list object of length one, containing a character matrix. The resultant object needs some light wrangling to get it just right:</p>
+<p>We simply fed this two arguments - the file path of the report and the page number with our table of interest - and returned a list object of length one, containing a character matrix. The resultant object needs some light wrangling to get it just right:</p>
 <pre class="r"><code># specify table list item
 homeless_spatial_tab &lt;- homeless_spatial_tab[[1]]
 
@@ -319,9 +319,9 @@ ggplot(original_shapes_sf) + geom_sf(aes(fill = pct_chg)) + geom_text(aes(long,
     coord_sf() + scale_fill_viridis_c() + theme_void()</code></pre>
 <p><img src="/blog/2017-11-09-Hacking_Homelessness_and_PDF_Prisons_files/figure-html/traditional_map-1.png" width="100%" /></p>
 <p>The metric used here represents % change in 2016/17 rough sleepers compared to 2013/14. Barking is highest (14 up to 49), but the eye and mind may be more drawn to some of it’s bigger neighbours (e.g. Havering).</p>
-<p>Algorithmic tesselation is used to generate possible grid layouts for the data (as explained in the GitHub repo - I’ll just be demo-ing the hexes, but the same can be done with regular grids):</p>
+<p>Algorithmic tessellation is used to generate possible grid layouts for the data (as explained in the GitHub repo - I’ll just be demo-ing the hexes, but the same can be done with regular grids):</p>
 <p><img src="/blog/2017-11-09-Hacking_Homelessness_and_PDF_Prisons_files/figure-html/seeds-1.png" width="100%" /></p>
-<p>I’m quite partial to #3. Manoeuvreing from real space geography to this grid involves an implementation of the <a href="https://github.com/RcppCore/rcpp-gallery/blob/gh-pages/src/2013-09-24-minimal-assignment.cpp">hungarian algorithm</a>. All you have to do is <code>calculate_cell_size()</code> with the grid (seed) of choice and <code>assign_polygons()</code> to the shapefile containing the original geography. From there, the steps to visualisation are identical to previous ones:</p>
+<p>I’m quite partial to #3. Maneuvering from real space geography to this grid involves an implementation of the <a href="https://github.com/RcppCore/rcpp-gallery/blob/gh-pages/src/2013-09-24-minimal-assignment.cpp">hungarian algorithm</a>. All you have to do is <code>calculate_cell_size()</code> with the grid (seed) of choice and <code>assign_polygons()</code> to the shapefile containing the original geography. From there, the steps to visualisation are identical to previous ones:</p>
 <pre class="r"><code>new_cells_hex &lt;- calculate_cell_size(original_shapes, original_details, 0.03, 
     &quot;hexagonal&quot;, 3)
 resulthex &lt;- assign_polygons(original_shapes, new_cells_hex)
