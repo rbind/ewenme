@@ -270,4 +270,4 @@ I also hope that the seriousness of the subject matter was not forgotten. The ri
 
 <br>
 
-[^fullcode]: To keep the post concise I don't show all of the code, especially code that generates figures. But you can find the full code [here](https://github.com/rbind/ewenme/blob/master/content/blog/2017-11-09-Hacking_Homelessness_And_PDF_Prisons.Rmd).
+[^fullcode]: To keep the post concise I don't show all of the code, especially code that generates figures. But you can find the full code [here](https://github.com/rbind/ewenme/blob/master/content/blog/2017-11-09-Hacking_Homelessness_and_PDF_Prisons.Rmd).
