@@ -2,28 +2,28 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Pages on ewenme</title>
-    <link>/page/</link>
+    <link>https://ewenme.rbind.io/page/</link>
     <description>Recent content in Pages on ewenme</description>
     <generator>Hugo -- gohugo.io</generator>
     
-	<atom:link href="/page/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://ewenme.rbind.io/page/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Projects</title>
-      <link>/projects/</link>
+      <link>https://ewenme.rbind.io/projects/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/projects/</guid>
+      <guid>https://ewenme.rbind.io/projects/</guid>
       <description> Software  ghibli: Studio Ghibli colour palettes for R fplR: R package for working with Fantasy Premier League (FPL) data  Web Applications  polMonitor: Shiny app for monitoring police violence Vinylspotting: Shiny app for Discogs users to visualise and explore their record collections  </description>
     </item>
     
     <item>
       <title>About</title>
-      <link>/about/</link>
+      <link>https://ewenme.rbind.io/about/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/about/</guid>
+      <guid>https://ewenme.rbind.io/about/</guid>
       <description>Ewen (pronounced you-n). R fanboy and advocate for open source / open science. Telling empathetic stories about my diverse excursions in data science. Otherwise, find me listening to weird &amp;lsquo;n&amp;rsquo; dusty records and sinking into a Discogs wormhole.</description>
     </item>
     
