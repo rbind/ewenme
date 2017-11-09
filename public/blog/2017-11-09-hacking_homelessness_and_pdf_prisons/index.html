@@ -285,7 +285,7 @@ original_shapes &lt;- read_polygons(input_file)
 
 # get polygon details
 original_details &lt;- get_shape_details(original_shapes)</code></pre>
-<p>In the case of spatial joins, I’ve found <a href="https://github.com/r-spatial/sf"><code>sf</code></a>(simple features) incredibly intuitive and so I’ll employ this tactic now to merge the distinct datasets together. I did notice some differences in the names given to certain London Boroughs (mainly the use of ‘&amp;’/‘and’) which will need addressing as well.</p>
+<p>In the case of spatial joins, I’ve found [<code>sf</code>] (<a href="https://github.com/r-spatial/sf" class="uri">https://github.com/r-spatial/sf</a>)(simple features) incredibly intuitive and so I’ll employ this tactic now to merge the distinct datasets together. I did notice some differences in the names given to certain London Boroughs (mainly the use of ‘&amp;’/‘and’) which will need addressing as well.</p>
 <pre class="r"><code># rename homeless data boroughs strings not matching hexmapr shp
 homeless_spatial_tab$Borough &lt;- str_replace(homeless_spatial_tab$Borough, pattern = &quot;Richmond&quot;, 
     replacement = &quot;Richmond upon Thames&quot;)

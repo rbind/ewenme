@@ -141,7 +141,7 @@ original_details <- get_shape_details(original_shapes)
 
 ```
 
-In the case of spatial joins, I've found [`sf`](https://github.com/r-spatial/sf)(simple features) incredibly intuitive and so I'll employ this tactic now to merge the distinct datasets together. I did notice some differences in the names given to certain London Boroughs (mainly the use of '&'/'and') which will need addressing as well.
+In the case of spatial joins, I've found [`sf`] (https://github.com/r-spatial/sf)(simple features) incredibly intuitive and so I'll employ this tactic now to merge the distinct datasets together. I did notice some differences in the names given to certain London Boroughs (mainly the use of '&'/'and') which will need addressing as well.
 
 ```{r spatial_join, echo=TRUE}
 # rename homeless data boroughs strings not matching hexmapr shp
