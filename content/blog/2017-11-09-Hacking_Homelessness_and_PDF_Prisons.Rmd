@@ -91,7 +91,7 @@ library(tabulizer)
 homeless_spatial_tab <- extract_tables(file = "https://files.datapress.com/london/dataset/chain-reports/2017-06-30T09:03:07.84/Greater%20London%20full%202016-17.pdf",
                                        pages = 19)
 
-homeless_spatial_tab
+head(homeless_spatial_tab)
 
 ```
 
@@ -120,7 +120,7 @@ library(tidyverse)
 homeless_spatial_tab <- mutate_at(homeless_spatial_tab, c("2013/14", "2014/15", "2015/16", "2016/17"), as.character)
 homeless_spatial_tab <- mutate_at(homeless_spatial_tab, c("2013/14", "2014/15", "2015/16", "2016/17"), as.numeric)
 
-homeless_spatial_tab
+head(homeless_spatial_tab)
 ```
 
 Eeyore is joyful at this sight, mark my words. How effortless was that? This data is ripe for mapping. Speaking of which...
@@ -129,7 +129,7 @@ Eeyore is joyful at this sight, mark my words. How effortless was that? This dat
 
 Back to `hexmapr` stuff. For starters, let's load in the shapefiles we need (note: the GitHub repo's example is actually on London, too, so I won't dwell on every similar detail):
 
-```{r hex_load, echo=TRUE}
+```{r hex_load, echo=TRUE, results='hide'}
 library(hexmapr)
 
 # get spatial polygons
@@ -193,7 +193,7 @@ The metric used here represents % change in 2016/17 rough sleepers compared to 2
 
 Algorithmic tesselation is used to generate possible grid layouts for the data (as explained in the GitHub repo - I'll just be demo-ing the hexes, but the same can be done with regular grids):
 
-```{r seeds}
+```{r seeds, results='hide'}
 
 par(mfrow=c(2,3), mar = c(0,0,2,0))
 for (i in 1:6){
@@ -205,7 +205,7 @@ plot(new_cells[[2]], main = paste("Seed",i, sep=" "))
 
 I'm quite partial to #3. Manoeuvreing from real space geography to this grid involves an implementation of the [hungarian algorithm](https://github.com/RcppCore/rcpp-gallery/blob/gh-pages/src/2013-09-24-minimal-assignment.cpp). All you have to do is `calculate_cell_size()` with the grid (seed) of choice and `assign_polygons()` to the shapefile containing the original geography. From there, the steps to visualisation are identical to previous ones:
 
-```{r hex_map, echo=TRUE}
+```{r hex_map, echo=TRUE, results='hide'}
 
 new_cells_hex <-  calculate_cell_size(original_shapes, original_details, 0.03, 'hexagonal', 3)
 resulthex <- assign_polygons(original_shapes, new_cells_hex)
@@ -251,6 +251,10 @@ ggplot(resulthex_sf) +
     plot.margin = margin(1, 1, 1, 1, 'cm'),
     legend.key.height = unit(1, "cm"), legend.key.width = unit(0.2, "cm")
   ) 
+
+```
+
+```{r}
 
 ```
 
