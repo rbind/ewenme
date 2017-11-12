@@ -2,20 +2,20 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Gis on ewenme</title>
-    <link>/tags/gis/</link>
+    <link>https://ewenme.rbind.io/tags/gis/</link>
     <description>Recent content in Gis on ewenme</description>
     <generator>Hugo -- gohugo.io</generator>
     <lastBuildDate>Tue, 30 May 2017 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="/tags/gis/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://ewenme.rbind.io/tags/gis/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Exploring London&#39;s Pubs &amp; Bars with geofacet</title>
-      <link>/blog/2017-05-30-geofacet_ldn_pubs/</link>
+      <link>https://ewenme.rbind.io/blog/2017-05-30-geofacet_ldn_pubs/</link>
       <pubDate>Tue, 30 May 2017 00:00:00 +0000</pubDate>
       
-      <guid>/blog/2017-05-30-geofacet_ldn_pubs/</guid>
+      <guid>https://ewenme.rbind.io/blog/2017-05-30-geofacet_ldn_pubs/</guid>
       <description>Introducing geofacet The geofacet package dropped recently (I want to say last week?), a ggplot2 extension allowing for the user to facet plots in a way that can retain an underlying geographical dimension. It perhaps goes a little bit further towards abstraction than tilegrams, but the visualizations we produce can be a bit more complex as well. This post documents my first foray into this packages functionality.1
 
  Getting to grips with grids If we think about faceting in ggplot2 (facet_wrap, facet_grid), we are already familiar with the idea of placing a sequence of plots into a number of panels, arranged according to a variable(s) of interest.</description>
