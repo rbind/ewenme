@@ -2,209 +2,209 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on ewenme</title>
-    <link>https://ewenme.rbind.io/tags/</link>
+    <link>/tags/</link>
     <description>Recent content in Tags on ewenme</description>
     <generator>Hugo -- gohugo.io</generator>
     <lastBuildDate>Wed, 11 Oct 2017 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://ewenme.rbind.io/tags/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Azure</title>
-      <link>https://ewenme.rbind.io/tags/azure/</link>
+      <link>/tags/azure/</link>
       <pubDate>Wed, 11 Oct 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://ewenme.rbind.io/tags/azure/</guid>
+      <guid>/tags/azure/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Blogdown</title>
-      <link>https://ewenme.rbind.io/tags/blogdown/</link>
+      <link>/tags/blogdown/</link>
       <pubDate>Thu, 27 Jul 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://ewenme.rbind.io/tags/blogdown/</guid>
+      <guid>/tags/blogdown/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Bots</title>
-      <link>https://ewenme.rbind.io/tags/bots/</link>
+      <link>/tags/bots/</link>
       <pubDate>Wed, 11 Oct 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://ewenme.rbind.io/tags/bots/</guid>
+      <guid>/tags/bots/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Discogs</title>
-      <link>https://ewenme.rbind.io/tags/discogs/</link>
+      <link>/tags/discogs/</link>
       <pubDate>Wed, 01 Mar 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://ewenme.rbind.io/tags/discogs/</guid>
+      <guid>/tags/discogs/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Fantasy Football</title>
-      <link>https://ewenme.rbind.io/tags/fantasy-football/</link>
+      <link>/tags/fantasy-football/</link>
       <pubDate>Mon, 06 Nov 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://ewenme.rbind.io/tags/fantasy-football/</guid>
+      <guid>/tags/fantasy-football/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Geofacet</title>
-      <link>https://ewenme.rbind.io/tags/geofacet/</link>
+      <link>/tags/geofacet/</link>
       <pubDate>Tue, 30 May 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://ewenme.rbind.io/tags/geofacet/</guid>
+      <guid>/tags/geofacet/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Gis</title>
-      <link>https://ewenme.rbind.io/tags/gis/</link>
+      <link>/tags/gis/</link>
       <pubDate>Tue, 30 May 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://ewenme.rbind.io/tags/gis/</guid>
+      <guid>/tags/gis/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Homelessness</title>
-      <link>https://ewenme.rbind.io/tags/homelessness/</link>
+      <link>/tags/homelessness/</link>
       <pubDate>Thu, 09 Nov 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://ewenme.rbind.io/tags/homelessness/</guid>
+      <guid>/tags/homelessness/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Kanye</title>
-      <link>https://ewenme.rbind.io/tags/kanye/</link>
+      <link>/tags/kanye/</link>
       <pubDate>Mon, 20 Mar 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://ewenme.rbind.io/tags/kanye/</guid>
+      <guid>/tags/kanye/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Linear Optimization</title>
-      <link>https://ewenme.rbind.io/tags/linear-optimization/</link>
+      <link>/tags/linear-optimization/</link>
       <pubDate>Mon, 06 Nov 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://ewenme.rbind.io/tags/linear-optimization/</guid>
+      <guid>/tags/linear-optimization/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Linear Programming</title>
-      <link>https://ewenme.rbind.io/tags/linear-programming/</link>
+      <link>/tags/linear-programming/</link>
       <pubDate>Mon, 06 Nov 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://ewenme.rbind.io/tags/linear-programming/</guid>
+      <guid>/tags/linear-programming/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Mapping</title>
-      <link>https://ewenme.rbind.io/tags/mapping/</link>
+      <link>/tags/mapping/</link>
       <pubDate>Thu, 09 Nov 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://ewenme.rbind.io/tags/mapping/</guid>
+      <guid>/tags/mapping/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Markov Chains</title>
-      <link>https://ewenme.rbind.io/tags/markov-chains/</link>
+      <link>/tags/markov-chains/</link>
       <pubDate>Wed, 11 Oct 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://ewenme.rbind.io/tags/markov-chains/</guid>
+      <guid>/tags/markov-chains/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Package</title>
-      <link>https://ewenme.rbind.io/tags/package/</link>
+      <link>/tags/package/</link>
       <pubDate>Sun, 25 Jun 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://ewenme.rbind.io/tags/package/</guid>
+      <guid>/tags/package/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Pdf</title>
-      <link>https://ewenme.rbind.io/tags/pdf/</link>
+      <link>/tags/pdf/</link>
       <pubDate>Thu, 09 Nov 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://ewenme.rbind.io/tags/pdf/</guid>
+      <guid>/tags/pdf/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Politics</title>
-      <link>https://ewenme.rbind.io/tags/politics/</link>
+      <link>/tags/politics/</link>
       <pubDate>Sun, 23 Apr 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://ewenme.rbind.io/tags/politics/</guid>
+      <guid>/tags/politics/</guid>
       <description></description>
     </item>
     
     <item>
       <title>R</title>
-      <link>https://ewenme.rbind.io/tags/r/</link>
+      <link>/tags/r/</link>
       <pubDate>Thu, 09 Nov 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://ewenme.rbind.io/tags/r/</guid>
+      <guid>/tags/r/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Sentiment Analysis</title>
-      <link>https://ewenme.rbind.io/tags/sentiment-analysis/</link>
+      <link>/tags/sentiment-analysis/</link>
       <pubDate>Mon, 20 Mar 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://ewenme.rbind.io/tags/sentiment-analysis/</guid>
+      <guid>/tags/sentiment-analysis/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Shiny</title>
-      <link>https://ewenme.rbind.io/tags/shiny/</link>
+      <link>/tags/shiny/</link>
       <pubDate>Thu, 27 Jul 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://ewenme.rbind.io/tags/shiny/</guid>
+      <guid>/tags/shiny/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Spark</title>
-      <link>https://ewenme.rbind.io/tags/spark/</link>
+      <link>/tags/spark/</link>
       <pubDate>Thu, 27 Jul 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://ewenme.rbind.io/tags/spark/</guid>
+      <guid>/tags/spark/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Sports</title>
-      <link>https://ewenme.rbind.io/tags/sports/</link>
+      <link>/tags/sports/</link>
       <pubDate>Thu, 07 Sep 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://ewenme.rbind.io/tags/sports/</guid>
+      <guid>/tags/sports/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Web Scraping</title>
-      <link>https://ewenme.rbind.io/tags/web-scraping/</link>
+      <link>/tags/web-scraping/</link>
       <pubDate>Wed, 11 Oct 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://ewenme.rbind.io/tags/web-scraping/</guid>
+      <guid>/tags/web-scraping/</guid>
       <description></description>
     </item>
     

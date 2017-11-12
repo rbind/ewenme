@@ -2,20 +2,20 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Sentiment Analysis on ewenme</title>
-    <link>https://ewenme.rbind.io/tags/sentiment-analysis/</link>
+    <link>/tags/sentiment-analysis/</link>
     <description>Recent content in Sentiment Analysis on ewenme</description>
     <generator>Hugo -- gohugo.io</generator>
     <lastBuildDate>Mon, 20 Mar 2017 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://ewenme.rbind.io/tags/sentiment-analysis/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/tags/sentiment-analysis/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>A Sentiment Analysis of Kanye West Album Lyrics</title>
-      <link>https://ewenme.rbind.io/blog/2017-03-20-kanye_sentiment_analysis/</link>
+      <link>/blog/2017-03-20-kanye_sentiment_analysis/</link>
       <pubDate>Mon, 20 Mar 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://ewenme.rbind.io/blog/2017-03-20-kanye_sentiment_analysis/</guid>
+      <guid>/blog/2017-03-20-kanye_sentiment_analysis/</guid>
       <description>PSA: This blog will cover other stuff besides music, I promise…this post is the fruits of a recent meander into the new ggalt, hrbrthemes and tidytext packages.1
 Intro Kanye West is responsible for some of the realest, funniest (“if you fall on the concrete thats your ass fault”…asphalt…anyone?) and inspiring lyrics in music. The strength of these words has had a profound effect on me and my generation. Can the application of sentiment analysis techniques help us understand more about his art?</description>
     </item>
