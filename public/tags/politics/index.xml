@@ -2,20 +2,20 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Politics on ewenme</title>
-    <link>https://ewenme.rbind.io/tags/politics/</link>
+    <link>/tags/politics/</link>
     <description>Recent content in Politics on ewenme</description>
     <generator>Hugo -- gohugo.io</generator>
     <lastBuildDate>Sun, 23 Apr 2017 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://ewenme.rbind.io/tags/politics/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/tags/politics/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>The Representativeness of UK Parliament</title>
-      <link>https://ewenme.rbind.io/blog/2017-04-23-uk_parliament_representativeness/</link>
+      <link>/blog/2017-04-23-uk_parliament_representativeness/</link>
       <pubDate>Sun, 23 Apr 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://ewenme.rbind.io/blog/2017-04-23-uk_parliament_representativeness/</guid>
+      <guid>/blog/2017-04-23-uk_parliament_representativeness/</guid>
       <description>As a general election looms, a familiar UK media maelstrom has begun. The key difference here is that the public has been taken by surprise, somewhat - Theresa May’s call for a snap election (we weren’t actually due one until 2020) has left folk with little under two months to decide where their vote will go.
 For some, this may be the first election they are able to participate in. For many, the traditional delivery of party politics might not have kept them engaged all that well since the last election.</description>
     </item>

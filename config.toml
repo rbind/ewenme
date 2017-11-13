@@ -8,9 +8,11 @@ googleAnalytics = "UA-98719738-1"
 
 Paginate = 8
 
-preserveTaxonomyNames = false
+preserveTaxonomyNames = true
 
 [params]
+  fontbody = "Work Sans"
+  fontheading = "Open Sans"
   highlightjsVersion = "9.11.0"
   highlightjsCDN = "//cdn.bootcss.com"
   highlightjsLang = ["r", "yaml"]
@@ -19,7 +21,6 @@ preserveTaxonomyNames = false
 [params.assets]
   favicon = "favicon.ico"
   customCSS = ["css/custom.css"]
-  customJS = ["js/custom.js"]
 
 [params.copyright]
   holder = "Ewen Henderson"
