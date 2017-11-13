@@ -13,18 +13,10 @@ preserveTaxonomyNames = true
 [params]
   fontbody = "Work Sans"
   fontheading = "Open Sans"
-  highlightjsVersion = "9.11.0"
-  highlightjsCDN = "//cdn.bootcss.com"
-  highlightjsLang = ["r", "yaml"]
-  highlightjsTheme = "tomorrow"
-
-[params.assets]
   favicon = "favicon.ico"
   customCSS = ["css/custom.css"]
-
-[params.copyright]
-  holder = "Ewen Henderson"
-  startYear = "2017"
+  CopyrightOwner = "Ewen Henderson"
+  CopyrightStartYear = "2017"
 
 [params.settings]
   dateFormat = "02 Jan, 2006"
