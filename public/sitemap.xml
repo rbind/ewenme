@@ -96,13 +96,13 @@
   </url>
   
   <url>
-    <loc>https://ewenme.rbind.io/tags/gis/</loc>
+    <loc>https://ewenme.rbind.io/tags/geofacet/</loc>
     <lastmod>2017-05-30T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://ewenme.rbind.io/tags/geofacet/</loc>
+    <loc>https://ewenme.rbind.io/tags/gis/</loc>
     <lastmod>2017-05-30T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
@@ -144,12 +144,6 @@
   </url>
   
   <url>
-    <loc>https://ewenme.rbind.io/tags/pdf/</loc>
-    <lastmod>2017-11-09T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>https://ewenme.rbind.io/tags/package/</loc>
     <lastmod>2017-06-25T00:00:00+00:00</lastmod>
     <priority>0</priority>
@@ -157,6 +151,12 @@
   
   <url>
     <loc>https://ewenme.rbind.io/page/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://ewenme.rbind.io/tags/pdf/</loc>
+    <lastmod>2017-11-09T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   

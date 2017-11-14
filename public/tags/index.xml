@@ -56,20 +56,20 @@
     </item>
     
     <item>
-      <title>GIS</title>
-      <link>https://ewenme.rbind.io/tags/gis/</link>
-      <pubDate>Tue, 30 May 2017 00:00:00 +0000</pubDate>
-      
-      <guid>https://ewenme.rbind.io/tags/gis/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>Geofacet</title>
       <link>https://ewenme.rbind.io/tags/geofacet/</link>
       <pubDate>Tue, 30 May 2017 00:00:00 +0000</pubDate>
       
       <guid>https://ewenme.rbind.io/tags/geofacet/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Gis</title>
+      <link>https://ewenme.rbind.io/tags/gis/</link>
+      <pubDate>Tue, 30 May 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://ewenme.rbind.io/tags/gis/</guid>
       <description></description>
     </item>
     
@@ -128,20 +128,20 @@
     </item>
     
     <item>
-      <title>PDF</title>
-      <link>https://ewenme.rbind.io/tags/pdf/</link>
-      <pubDate>Thu, 09 Nov 2017 00:00:00 +0000</pubDate>
-      
-      <guid>https://ewenme.rbind.io/tags/pdf/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>Package</title>
       <link>https://ewenme.rbind.io/tags/package/</link>
       <pubDate>Sun, 25 Jun 2017 00:00:00 +0000</pubDate>
       
       <guid>https://ewenme.rbind.io/tags/package/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Pdf</title>
+      <link>https://ewenme.rbind.io/tags/pdf/</link>
+      <pubDate>Thu, 09 Nov 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://ewenme.rbind.io/tags/pdf/</guid>
       <description></description>
     </item>
     
@@ -164,7 +164,7 @@
     </item>
     
     <item>
-      <title>Sentiment analysis</title>
+      <title>Sentiment Analysis</title>
       <link>https://ewenme.rbind.io/tags/sentiment-analysis/</link>
       <pubDate>Mon, 20 Mar 2017 00:00:00 +0000</pubDate>
       

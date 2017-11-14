@@ -8,7 +8,7 @@ googleAnalytics = "UA-98719738-1"
 
 Paginate = 8
 
-preserveTaxonomyNames = true
+preserveTaxonomyNames = false
 
 [params]
   fontbody = "Work Sans"
