@@ -17,13 +17,12 @@ preserveTaxonomyNames = false
   customCSS = ["css/custom.css"]
   CopyrightOwner = "Ewen Henderson"
   CopyrightStartYear = "2017"
-
-[params.settings]
   dateFormat = "02 Jan, 2006"
   listDateFormat = "02 Jan, 2006"
   hideEntryNavigation = true
   hideSocialMenu = false
   showReadTime = true
+  
 
 [taxonomies]
   tag = "tags"
