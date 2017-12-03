@@ -1,0 +1,27 @@
+---
+title: "Introducing geniusr"
+date: "2017-11-09"
+type: "post"
+tags: ["R", "Package", "Genius", "API"]
+---
+
+```{r setup, include=FALSE}
+# markdown setup
+knitr::opts_chunk$set(cache=TRUE, echo = FALSE, tidy = TRUE, warning = FALSE, message = FALSE, out.width = '100%', dpi = 180)
+
+# load pkgs
+# devtools::install_github("ewenme/geniusr")
+library(geniusr)
+library(tidyverse)
+library(tidytext)
+```
+
+I made a new R package (`r emo::ji("fire")` `r emo::ji("package")` `r emo::ji("fire")`) this week. My [sophomore post here](https://ewenme.rbind.io/blog/2017-03-20-kanye_sentiment_analysis/) (from way back in March) was a text-based analysis of Kanye West records, which exposed me to the [Genius](https://genius.com/) API[^documentation] treasure trove once I wanted to get hold of lyrical content. In the process, I'd written some functions for playing nicely with this API in R that would probably be handy for others dabbling/wanting to dabble in similar matters. Since then, I've found a window of time to build on and consolidate this work into a well-rounded package. `geniusr` is now available on CRAN (with the dev version sat on GitHub [here](https://github.com/ewenme/geniusr). Time for the tour.[^admin] 
+
+PS why not try searching the titles in this post in the API
+
+## What Is It That I Search 4
+
+The Genius API's search capabilities allows for users to scan all hosted content on the site (i.e. all songs). There are a couple of quick implementations in the package for utilising this
+
+
