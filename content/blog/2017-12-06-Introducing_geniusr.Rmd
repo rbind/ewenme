@@ -18,10 +18,20 @@ library(tidytext)
 
 I made a new R package (`r emo::ji("fire")` `r emo::ji("package")` `r emo::ji("fire")`) this week. My [sophomore post here](https://ewenme.rbind.io/blog/2017-03-20-kanye_sentiment_analysis/) (from way back in March) was a text-based analysis of Kanye West records, which exposed me to the [Genius](https://genius.com/) API[^documentation] treasure trove once I wanted to get hold of lyrical content. In the process, I'd written some functions for playing nicely with this API in R that would probably be handy for others dabbling/wanting to dabble in similar matters. Since then, I've found a window of time to build on and consolidate this work into a well-rounded package. `geniusr` is now available on CRAN (with the dev version sat on GitHub [here](https://github.com/ewenme/geniusr). Time for the tour.[^admin] 
 
-PS why not try searching the titles in this post in the API
+## Searchin'
 
-## What Is It That I Search 4
+The Genius API's search capabilities allows for users to scan all hosted content on the site (i.e. all songs). A couple of quick implementations exist in the package for retrieving artist (`search_artist()`) and song (`search_song()`) matches for search terms. Let's start by looking for songs brought back by a simple search for "Hennessey".
 
-The Genius API's search capabilities allows for users to scan all hosted content on the site (i.e. all songs). There are a couple of quick implementations in the package for utilising this
+```{r song_search}
+search_song(search_term = "Hennessey", n_results = 50)
+```
+
+## Goin' Meta
+
+Wanna bring back some fuller information about a particular song (`get_song_meta()`), artist (`get_artist_meta()`) or album (`get_album_meta()`)? Well, now you can. Let's test one out - how about a Hennessey-themed track from our last search.
+
+```{r song_meta}
+get_song_meta(song_id = 6596) %>% glimpse
+```
 
 
