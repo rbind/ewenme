@@ -1,6 +1,6 @@
 ---
 title: "Introducing geniusr"
-date: "2017-11-09"
+date: "2017-11-06"
 type: "post"
 tags: ["R", "Package", "Genius", "API"]
 ---
@@ -8,7 +8,7 @@ tags: ["R", "Package", "Genius", "API"]
 ```{r setup, include=FALSE}
 # markdown setup
 knitr::opts_chunk$set(cache=TRUE, echo = FALSE, tidy = TRUE, warning = FALSE, message = FALSE, 
-                      out.width = '100%', dpi = 180)
+                      out.width = '100%', dpi = 180, dev="svg")
 
 # load pkgs
 # devtools::install_github("ewenme/geniusr")
@@ -20,7 +20,9 @@ library(waffle)
 library(extrafont)
 ```
 
-I made a new R package (`r emo::ji("fire")` `r emo::ji("package")` `r emo::ji("fire")`) this week. My [sophomore post here](https://ewenme.rbind.io/blog/2017-03-20-kanye_sentiment_analysis/) (from way back in March) was a text-based analysis of Kanye West records, which exposed me to the [Genius](https://genius.com/) API[^documentation] treasure trove once I wanted to get hold of lyrical content. In the process, I'd written some functions for playing nicely with this API in R that would probably be handy for others dabbling/wanting to dabble in similar matters. Since then, I've found a window of time to build on and consolidate this work into a well-rounded package. `geniusr` is now available on CRAN (with the dev version sat on GitHub [here](https://github.com/ewenme/geniusr). Time for the tour.[^admin] 
+I made a new R package (I understand `r emo::ji("fire")``r emo::ji("package")``r emo::ji("fire")` is the correct term) this week. My [sophomore post on this site](https://ewenme.rbind.io/blog/2017-03-20-kanye_sentiment_analysis/) (from way back in March) was a text-based analysis of Kanye West records, which exposed me to the [Genius](https://genius.com/) API[^documentation] treasure trove once I wanted to get hold of some lyrical content. In the process, I wrote some functions for playing nicely with this API in R that I knew would probably be handy for others dabbling/wanting to dabble in similar matters. 
+
+Since then, I've found a window of time to build on and consolidate this work into a well-rounded package. `geniusr` is now available on CRAN. Time for the tour.[^admin] 
 
 ## Searchin'
 
@@ -40,11 +42,11 @@ versace_meta <- get_song_meta(song_id = versace_search$song_id[5]) %>% glimpse
 
 With this metadata, we can easily pull up the song's artwork, for example. Why not.
 
-```{r artwork}
+```{r artwork, out.width = "100%", fig.align = "center"}
 knitr::include_graphics(path = versace_meta$song_art_image_url)
 ```
 
-## Lyrics for Lyrics, Calm
+## Lyrics for Lyrics (Calm)
 
 The package allows you to grab lyrics for tracks real quick, using the `scrape_lyrics_id()` (or `scrape_lyrics_url()`) function.[^scrape] While we're at it, let's call on `tidytext` and answer a question for the people - *just how much were the Migos chatting about "Versace" in 'Versace'?*
 
@@ -63,7 +65,14 @@ versace_prop <- scrape_lyrics_url(versace_meta$song_lyrics_url) %>%
 parts <- c("Not Versace" = versace_prop$proportion[[1]],
            "Versace" = versace_prop$proportion[[2]])
 
-waffle(parts, rows = 8, size = 1, colors = c("#3C3A32", "#E3BD08"), use_glyph = "volume-up", glyph_size = 10, legend_pos = "bottom", title = "How Much Versace was in Migos' 'Versace'?")
+waffle(parts, rows = 8, size = 1, colors = c("#3C3A32", "#E3BD08"), use_glyph = "volume-up", glyph_size = 10, legend_pos = "bottom", title = "How much did Migos actually talk about Versace in 'Versace'?")
 ```
 
 When the Migos were speaking in their track 'Versace', they were saying the word "Versace" 32.5% of the time. Phew.
+
+That's all for now, enjoy the package and keep up with future developments over at the [GitHub repo](https://github.com/ewenme/geniusr).
+
+<br>
+
+[^admin]: For installation & authentication guidance, head for the [README](https://github.com/ewenme/geniusr). 
+[^scrape]: As well as API helper functions, the package includes things that are scraping the Genius site (Genius' API doesn't include lyrics, for example). Be sure to read the [terms of service](https://genius.com/static/terms) in case of any concerns.
