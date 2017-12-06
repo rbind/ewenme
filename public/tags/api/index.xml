@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Api on ewenme</title>
+    <link>/tags/api/</link>
+    <description>Recent content in Api on ewenme</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Wed, 06 Dec 2017 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/api/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Introducing geniusr</title>
+      <link>/blog/2017-12-06-introducing_geniusr/</link>
+      <pubDate>Wed, 06 Dec 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/2017-12-06-introducing_geniusr/</guid>
+      <description>I made a new R package (I understand 🔥📦🔥 is the correct term) this week. My sophomore post on this site (from way back in March) was a text-based analysis of Kanye West records, which exposed me to the Genius API1 once I wanted to get hold of some lyrical content. In the process, I wrote some functions for playing nicely with this API in R that I knew would probably be handy for others dabbling/wanting to dabble in similar matters.</description>
+    </item>
+    
+  </channel>
+</rss>
