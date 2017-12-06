@@ -16,7 +16,3 @@ weight: -60
 
 - [polMonitor](https://ewenme.shinyapps.io/polMonitor): Shiny app for monitoring police violence 
 - [Vinylspotting](https://ewenme.shinyapps.io/vinylspotting): Shiny app for Discogs users to visualise and explore their record collections
-
-### Other Work
-
-- [Who Got The Assist? (WGTA)](http://whogottheassist.com/author/ewen_/): Writing for the WGTA website
