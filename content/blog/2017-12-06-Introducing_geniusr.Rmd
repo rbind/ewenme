@@ -64,7 +64,11 @@ versace_prop <- scrape_lyrics_url(versace_meta$song_lyrics_url) %>%
 parts <- c("Not Versace" = versace_prop$proportion[[1]],
            "Versace" = versace_prop$proportion[[2]])
 
-waffle(parts, rows = 8, size = 1, colors = c("#3C3A32", "#E3BD08"), use_glyph = "volume-up", glyph_size = 10, legend_pos = "bottom", title = "How much Versace is in Migos - 'Versace'?")
+waffle(parts, rows = 8, size = 1, colors = c("#3C3A32", "#E3BD08"), use_glyph = "volume-up", 
+       glyph_size = 10, title = "How much Versace is in Migos - 'Versace'?") +
+  labs(caption="@ewen_") +
+  theme_void(base_family = "Work Sans", base_size = 12) +
+  theme(legend.position = "bottom")
 ```
 
 The word "Versace" represents 32.5% of the lyrics in Migos - Versace. Phew.

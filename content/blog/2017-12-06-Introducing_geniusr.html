@@ -58,7 +58,9 @@ mutate(versace_or_the_rest = if_else(word == &quot;versace&quot;, &quot;Versace&
 parts &lt;- c(`Not Versace` = versace_prop$proportion[[1]], Versace = versace_prop$proportion[[2]])
 
 waffle(parts, rows = 8, size = 1, colors = c(&quot;#3C3A32&quot;, &quot;#E3BD08&quot;), use_glyph = &quot;volume-up&quot;, 
-    glyph_size = 10, legend_pos = &quot;bottom&quot;, title = &quot;How much Versace is in Migos - &#39;Versace&#39;?&quot;)</code></pre>
+    glyph_size = 10, title = &quot;How much Versace is in Migos - &#39;Versace&#39;?&quot;) + 
+    labs(caption = &quot;@ewen_&quot;) + theme_void(base_family = &quot;Work Sans&quot;, base_size = 12) + 
+    theme(legend.position = &quot;bottom&quot;)</code></pre>
 <p><img src="/blog/2017-12-06-Introducing_geniusr_files/figure-html/lyrics-1.svg" width="100%" /></p>
 <p>The word “Versace” represents 32.5% of the lyrics in Migos - Versace. Phew.</p>
 <p>That’s all for now, enjoy the package and keep up with future developments over at the <a href="https://github.com/ewenme/geniusr">GitHub repo</a>.</p>
