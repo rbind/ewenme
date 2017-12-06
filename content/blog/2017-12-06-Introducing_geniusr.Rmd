@@ -8,7 +8,7 @@ tags: ["R", "Package", "Genius", "API"]
 ```{r setup, include=FALSE}
 # markdown setup
 knitr::opts_chunk$set(cache=TRUE, echo = TRUE, tidy = TRUE, warning = FALSE, message = FALSE, 
-                      out.width = '100%', dev="svg", dpi = 180)
+                      out.width = '100%', dpi = 180)
 
 # load pkgs
 library(geniusr)
