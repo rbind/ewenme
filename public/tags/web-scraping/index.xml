@@ -2,20 +2,20 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Web Scraping on ewen</title>
-    <link>/tags/web-scraping/</link>
+    <link>https://ewen.io/tags/web-scraping/</link>
     <description>Recent content in Web Scraping on ewen</description>
     <generator>Hugo -- gohugo.io</generator>
     <lastBuildDate>Wed, 11 Oct 2017 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="/tags/web-scraping/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://ewen.io/tags/web-scraping/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Meet Dumb Hardwax</title>
-      <link>/blog/2017-10-11-meet_dumb_hardwax/</link>
+      <link>https://ewen.io/blog/2017-10-11-meet_dumb_hardwax/</link>
       <pubDate>Wed, 11 Oct 2017 00:00:00 +0000</pubDate>
       
-      <guid>/blog/2017-10-11-meet_dumb_hardwax/</guid>
+      <guid>https://ewen.io/blog/2017-10-11-meet_dumb_hardwax/</guid>
       <description>Twitter bots have gotten a fairly bad rap, recently (often with good reason). When they’re done right, a genuinely quirky robot can cut through a feed full of humans with beautiful tidbits. God bless [@tinycarebot](https://twitter.com/tinycarebot).
 💟: please dont forget to text back your friends — here&#39;s your reminder (@tinycarebot) October 6, 2017   
 Another thing that gives me life is reading Hardwax, a hugely influential Berlin record store, get excited about their new stock.</description>
@@ -23,10 +23,10 @@ Another thing that gives me life is reading Hardwax, a hugely influential Berlin
     
     <item>
       <title>Unravelling the European Football Transfer Window</title>
-      <link>/blog/2017-09-07-dissecting_european_football_transfers/</link>
+      <link>https://ewen.io/blog/2017-09-07-dissecting_european_football_transfers/</link>
       <pubDate>Thu, 07 Sep 2017 00:00:00 +0000</pubDate>
       
-      <guid>/blog/2017-09-07-dissecting_european_football_transfers/</guid>
+      <guid>https://ewen.io/blog/2017-09-07-dissecting_european_football_transfers/</guid>
       <description>Followers of European football will be familiar with the infamous transfer window system, which endears clubs to buy and sell players in a specified period - once in the off-season (summer), and once at the turn of each calendar year. This constraint has invited increasingly peculiar and precarious market activity over the years, as clubs vie to secure the hottest new talents with varying parts method and madness. Meanwhile, fans lap up newspaper gossip columns and tell friends “he looks quality on YouTube” as they frantically research the latest “wunderkind” their club has been linked with.</description>
     </item>
     
