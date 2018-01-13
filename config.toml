@@ -29,8 +29,8 @@ preserveTaxonomyNames = false
 
 [author.social]
   email = "ewenhenderson@gmail.com"
-  github = "ewenme"
   twitter = "ewen_"
+  github = "ewenme"
 
 [permalinks]
   page = "/:slug/"
