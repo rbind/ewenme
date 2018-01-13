@@ -1,11 +1,10 @@
 ---
 date: "2017-05-30"
-title: "Exploring London's Pubs & Bars with geofacet"
+title: "Tracking London's Pub & Bar Landscape"
 author: "ewen"
 type: "post"
 categories: ["R"]
 tags: ["R", "geofacet", "GIS"]
-excerpt: "A look at London's pubs and bars with the geofacet package."
 ---
 
 ```{r setup, include=FALSE}

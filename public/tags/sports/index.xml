@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Sports on ewenme</title>
-    <link>https://ewenme.rbind.io/tags/sports/</link>
-    <description>Recent content in Sports on ewenme</description>
+    <title>Sports on ewen</title>
+    <link>/tags/sports/</link>
+    <description>Recent content in Sports on ewen</description>
     <generator>Hugo -- gohugo.io</generator>
     <lastBuildDate>Thu, 07 Sep 2017 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://ewenme.rbind.io/tags/sports/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/tags/sports/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Unravelling the European Football Transfer Window</title>
-      <link>https://ewenme.rbind.io/blog/2017-09-07-dissecting_european_football_transfers/</link>
+      <link>/blog/2017-09-07-dissecting_european_football_transfers/</link>
       <pubDate>Thu, 07 Sep 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://ewenme.rbind.io/blog/2017-09-07-dissecting_european_football_transfers/</guid>
+      <guid>/blog/2017-09-07-dissecting_european_football_transfers/</guid>
       <description>Followers of European football will be familiar with the infamous transfer window system, which endears clubs to buy and sell players in a specified period - once in the off-season (summer), and once at the turn of each calendar year. This constraint has invited increasingly peculiar and precarious market activity over the years, as clubs vie to secure the hottest new talents with varying parts method and madness. Meanwhile, fans lap up newspaper gossip columns and tell friends “he looks quality on YouTube” as they frantically research the latest “wunderkind” their club has been linked with.</description>
     </item>
     

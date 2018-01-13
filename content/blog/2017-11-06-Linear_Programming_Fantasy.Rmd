@@ -1,5 +1,5 @@
 ---
-title: "My Linear(ish) Optimization Fantasy (Football)"
+title: "My Linear(ish) Optimization Fantasy"
 date: "2017-11-06"
 type: "post"
 tags: ["R", "Linear Programming", "Linear Optimization", "Fantasy Football"]

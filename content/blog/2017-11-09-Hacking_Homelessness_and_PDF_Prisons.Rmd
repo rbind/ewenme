@@ -1,5 +1,5 @@
 ---
-title: "Hacking Homelessness & PDF Prisons with hexmapr & tabulizer"
+title: "Hacking Homelessness & PDF Prisons"
 date: "2017-11-09"
 type: "post"
 tags: ["R", "Mapping", "PDF", "Homelessness"]

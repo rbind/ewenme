@@ -1,5 +1,5 @@
-baseurl = "https://ewenme.rbind.io/"
-title = "ewenme"
+baseurl = "https://ewen.io/"
+title = "ewen"
 
 theme = "minimo"
 
@@ -16,7 +16,7 @@ preserveTaxonomyNames = false
   favicon = "favicon.ico"
   customCSS = ["css/custom.css"]
   CopyrightOwner = "Ewen Henderson"
-  CopyrightStartYear = "2017"
+  CopyrightStartYear = "2018"
   dateFormat = "02 Jan, 2006"
   listDateFormat = "02 Jan, 2006"
   hideEntryNavigation = true
