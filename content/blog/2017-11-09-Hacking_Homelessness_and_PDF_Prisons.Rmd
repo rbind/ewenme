@@ -56,7 +56,7 @@ knitr::include_graphics("/img/2017-11-09-Hacking_Homelessness_and_PDF_Prisons/or
 
 As the [rOpenSci release](https://ropensci.org/blog/2017/04/18/tabulizer/) tells, `tabulizer` gives us R mortals the power of the [tabula-java library](https://github.com/tabulapdf/tabula-java) for extracting tables from PDF files (which, in turn, powers [Tabula](http://tabula.technology/), which you might have come across). You should dig in to that release blog (and associated GitHub repo) for the juicy inner workings, but I'll show it off very shortly.
 
-I should say that I hit some snags trying to get this package fully operational (again, detailed in the package release), owing to the dependency on Java. I will just say that these links were able to get me on my way (as a Mac user) AND it was worth it:
+I should say that I hit some snags trying to get this package fully operational (again, detailed in the package release), owing to the dependency on Java. I will just say that the help contained within the below links were able to get me on my way (as a Mac user) AND it was worth it:
 
 - [Relinking Java & rJava](https://stackoverflow.com/questions/35179151/cannot-load-r-xlsx-package-on-mac-os-10-11/36045290)
 - [rJava fix after OSX upgrade](https://stackoverflow.com/questions/30738974/rjava-load-error-in-rstudio-r-after-upgrading-to-osx-yosemite)

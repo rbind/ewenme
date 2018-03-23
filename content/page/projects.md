@@ -7,7 +7,7 @@ weight: -60
 
 ### Software
 
-- [fplR](https://ewenme.github.io/fplR): R package for working with Fantasy Premier League (FPL) data
+- [fplR](https://ewenme.github.io/fplR): Tools for working with Fantasy Premier League (FPL) data
 - [geniusr](https://ewenme.github.io/fplR): R package for interacting nicely with the [Genius](https://genius.com/) API
 - [ghibli](https://github.com/ewenme/ghibli): Studio Ghibli colour palettes for R
 
