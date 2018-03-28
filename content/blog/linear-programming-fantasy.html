@@ -1,0 +1,351 @@
+---
+title: "My Linear(ish) Programming Fantasy"
+description: "Applying linear programming principles to the selection of a fantasy football team."
+date: "2017-11-06"
+tags: ["r", "linear-programming", "fpl"]
+---
+
+<script src="/rmarkdown-libs/htmlwidgets/htmlwidgets.js"></script>
+<script src="/rmarkdown-libs/jquery/jquery.min.js"></script>
+<link href="/rmarkdown-libs/datatables-css/datatables-crosstalk.css" rel="stylesheet" />
+<script src="/rmarkdown-libs/datatables-binding/datatables.js"></script>
+<link href="/rmarkdown-libs/dt-core/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="/rmarkdown-libs/dt-core/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="/rmarkdown-libs/dt-core/js/jquery.dataTables.min.js"></script>
+<link href="/rmarkdown-libs/crosstalk/css/crosstalk.css" rel="stylesheet" />
+<script src="/rmarkdown-libs/crosstalk/js/crosstalk.min.js"></script>
+
+
+<p><a href="https://en.wikipedia.org/wiki/Linear_programming">Linear optimization</a> (AKA linear programming) is all around us, even if we don’t really know it. For example, how did you come to pick your route to work today? This decision, lovingly known as “getting from A to B”, is (most of the time) objectively simple: <strong>which route is the quickest?</strong></p>
+<p><img src="/img/2017-11-06-Linear_Programming_Fantasy/route-icon.png" width="75%" style="display: block; margin: auto;" /></p>
+<p>There are known variables that we need to identify and use in solving this problem (known as <strong>decision variables</strong>), for example:</p>
+<ul>
+<li>The speed at which different modes of transports travel</li>
+<li>The distance of each possible route</li>
+</ul>
+<p>As anyone who has ever travelled anywhere will know, there are other parameters that we might want to factor in to a solution. We might prefer to avoid certain modes of transport outright, spend less time walking, etc. Extending this problem to a business setting (not to knock anyone rocking it in their daily life), when there might be additional restrictions to consider (think of a delivery order operation) - minimizing fuel consumption, or avoiding tolls. Any ‘best route’ can be reviewed to ensure these <strong>constraints</strong> are taken care of.</p>
+<p><img src="/img/2017-11-06-Linear_Programming_Fantasy/route-plan-anim.gif" width="75%" style="display: block; margin: auto;" /></p>
+<div id="let-me-optimize-your-fantasy" class="section level2">
+<h2>Let Me Optimize Your Fantasy</h2>
+<p>What good can these techniques do for me? I’d come across a couple of nice implementations of linear programming techniques in the <a href="https://fantasy.premierleague.com/">Fantasy Premier League</a>(FPL) space - shout out to Martin Eastwood for his <a href="https://github.com/martineastwood/penalty/tree/master/fantasy_football_optimiser">penalty</a> work and Torvaney’s <a href="https://github.com/Torvaney/fpl-optimiser">fpl-optimiser</a> (honorable mention to Sean Taylor’s <a href="https://gist.github.com/seanjtaylor/b4d423dad0083cc8cc5b2a9fd1e4e63e">NFL fantasy projections</a>in R, but the sport/techniques involved are out of scope just now). Both of these projects look to optimize the same thing: the <strong>total number of points</strong> a fantasy football team scores within some shared constraints that the game rules enforce (staying within a 100 million budget, no more than 3 players per team).</p>
+<p>There are some obvious weaknesses to this approach - the game is played on a weekly basis, with player’s points scoring varying significantly from week-to-week. ‘Managers’ (users of the game) are also asked to select 11 players from their 15-man squad to play each week. These solutions optimize player selection based on the points returned over a whole season, and so don’t try and emulate these game mechanics. I’ll try and work on this now, in one particular area of the game.<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a></p>
+</div>
+<div id="complementary-keepers-and-where-to-find-them" class="section level2">
+<h2>Complementary Keepers (and Where to Find Them)</h2>
+<p>Rotation - the practice of picking complementary players (those who play at home on alternate weeks, for example) to play in a rotating fashion - is squad-based fantasy sport game 101, allowing managers to seamlessly segue between class acts across a well-balanced squad.</p>
+<p><img src="/img/2017-11-06-Linear_Programming_Fantasy/rotation-wrong.gif" width="75%" style="display: block; margin: auto;" /></p>
+<p>Rotation policy is at it’s simplest when applied to goalkeepers. The constraints are simple: you have to buy two, but you can only play one each week. This encourages FPL managers to look at a couple of cheaper options that play home &amp; away alternately, for example, rather than lumping for premium products. Which strategy wins out, though? Lets re-frame this as a real-world linear optimization problem, defining the pieces we need.</p>
+</div>
+<div id="decision-variables" class="section level2">
+<h2>Decision Variables</h2>
+<p>The <strong>decision variables</strong> comprise the things that will decide the output and represent the solution. In our case, these are the points scored by the two goalkeepers we pick - let’s call them Goalkeeper A and Goalkeeper B. It’s also worth noting the <strong>non-negativity restriction</strong> on decision variables i.e. the values should be greater than or equal to zero.</p>
+<div id="htmlwidget-1" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-1">{"x":{"filter":"none","data":[[2,94,240,260,375,1,74,95,96,135,189,213,214,241,261,306,328,376,559,29,30,54,75,115,136,137,163,190,287,305,329,350,396,397,421,438,439,469,473,479,530,536,565,3,31,53,116,162,262,286,351,420,506,529,540,545,547,549,554,555,557,566,569],["Cech","Courtois","Ederson","de Gea","Lloris","Ospina","Heaton","Eduardo","Caballero","Pickford","Schmeichel","Mignolet","Karius","Bravo","Romero","Forster","Butland","Vorm","Macey","Begovic","Boruc","Ryan","Robinson","Hennessey","Robles","Stekelenburg","Lössl","Hamer","Darlow","McCarthy","Grant","Fabianski","Pantilimon","Gomes","Foster","Adrián","Randolph","Pope","Jakupovic","Hart","Ward","Karnezis","Gazzaniga","Martinez","Federici","Mäenpää","Speroni","Coleman","Joel Pereira","Elliot","Nordfeldt","Myhill","Taylor","Woodman","Krul","Legzdins","Green","Ramsdale","Lindegaard","Henry","Palmer","Whiteman","Haugaard"],["Arsenal","Chelsea","Man City","Man Utd","Spurs","Arsenal","Burnley","Chelsea","Chelsea","Everton","Leicester","Liverpool","Liverpool","Man City","Man Utd","Southampton","Stoke","Spurs","Arsenal","Bournemouth","Bournemouth","Brighton","Burnley","Crystal Palace","Everton","Everton","Huddersfield","Leicester","Newcastle","Southampton","Stoke","Swansea","Watford","Watford","West Brom","West Ham","West Ham","Burnley","Leicester","West Ham","Liverpool","Watford","Spurs","Arsenal","Bournemouth","Brighton","Crystal Palace","Huddersfield","Man Utd","Newcastle","Swansea","West Brom","Southampton","Newcastle","Brighton","Burnley","Huddersfield","Bournemouth","Burnley","Crystal Palace","West Brom","Spurs","Stoke"],[5.5,5.5,5.5,5.5,5.5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>player_id<\/th>\n      <th>web_name<\/th>\n      <th>team_name<\/th>\n      <th>start_price<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[0,3]}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<p>This list of goalies represents our options for goalkeeper A and goalkeeper B, with their respective teams and associated costs. Now, we specify the ultimate objective that guides this decision.</p>
+</div>
+<div id="objective-function" class="section level2">
+<h2>Objective Function</h2>
+<p>The <strong>objective function</strong> summarizes the objective of making decisions (i.e. picking goalkeepers). Ultimately, we want to score as many points as possible per unit cost (we’ll leave the value aspect of this function, for now). First, it’s necessary to identify point-scoring patterns at a weekly level, so lets examine an example goalkeeping pair’s points.</p>
+<p><img src="/blog/linear-programming-fantasy_files/figure-html/goalies_plot-1.svg" width="100%" /></p>
+<p>There are a few things at play in the above plot, which shows the points scored by week for Chelsea’s Courtois and Arsenal’s Cech. Not only can we identify the level of points these players score individually, but how well the patterns of point-scoring complement each other (i.e. do they score well in alternate weeks).</p>
+</div>
+<div id="constraints" class="section level2">
+<h2>Constraints</h2>
+<p>This brings us nicely into the world of <strong>constraints</strong>, or the restrictions placed on our decision variables (goalkeeper A and goalkeeper B):</p>
+<ul>
+<li>Only one of Goalkeeper A and Goalkeeper B can play (and, in turn, collect points) on any given gameweek</li>
+<li>We don’t want to make any transfers in this position (‘managers’ have the opportunity to switch a player in their squad for someone else each week)</li>
+</ul>
+<p>There would be other constraints if we were to extrapolate this problem to cover the whole team (e.g. only three players from a particular team are allowed in a squad, 100 million budget, no. of players required in each position). We’ll also make the simplifying assumption here that in any prospective goalie pair, the ‘manager’ always plays the keeper who scores the most points that week (in linear world, all of this is possible…).</p>
+<p>We’ve successfully identified the facets of our problem in the language of linear optimization, so…we have a linear programming problem! Seems straightforward enough, right? Let’s see how it all goes down.</p>
+</div>
+<div id="goalie-go-round" class="section level2">
+<h2>Goalie-Go-Round</h2>
+<p>Based on the parameters outlined previously, an implementation of linear programming would go something something like:</p>
+<ol style="list-style-type: decimal">
+<li>Cycle through every possible pair of FPL goalkeepers</li>
+<li>For each gameweek, pick the goalie who scored the most points</li>
+<li>Tally up the total points potential for each pair</li>
+<li>Work out the points-per-million value (total points potential / total price)</li>
+</ol>
+<p>It’s worth pointing out that I didn’t use <a href="https://cran.r-project.org/web/packages/lpSolve/lpSolve.pdf"><code>lpSolve</code></a>, R’s interface to <a href="http://lpsolve.sourceforge.net/5.5/">lpsolve</a>(well-known linear programming OSS), which would be advisable in a situation when the problem’s level of complexity is greater than that seen here. I was interested in seeing how I could fare with a <code>tidyverse</code>-friendly (thanks to the beast that is <code>purrr</code>) implementation.<a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a> Here’s a function that does the first three steps listed above.</p>
+<pre class="r"><code># function to get points potential for all rotations with a given player
+rotate_all &lt;- function(data, id_player) {
+  
+  # get named player&#39;s points
+  player_points &lt;- data %&gt;%
+    # match player id to inputs
+    dplyr::filter(player_id == id_player) %&gt;%
+    # keep points
+    dplyr::select(round, player_id, total_points)
+  
+  # get all other player points
+  other_points &lt;- data %&gt;%
+    # match player id to inputs
+    dplyr::filter(player_id != id_player) %&gt;%
+    # keep points
+    dplyr::select(round, player_id, total_points)
+  
+  # nest the other players&#39; points
+  other_points_nested &lt;- other_points %&gt;%
+    split(.$player_id)
+  
+  # now, a function to get named player / other players&#39; potential points
+  collect_points &lt;- function(x) { 
+    
+    # get max points for each round
+    x &lt;- x %&gt;%
+    dplyr::group_by(round) %&gt;%
+    dplyr::summarise(best_points=max(total_points))
+    
+    # get max points total
+    max_points_total &lt;- sum(x$best_points)
+  }
+  
+  # iterate through other players to compare points to named player
+  points_compare &lt;- other_points_nested %&gt;%
+    purrr::map(~dplyr::bind_rows(., player_points)) %&gt;%
+    purrr::map(~collect_points(.))
+  
+  # create df from named list
+  points_compare &lt;- stack(points_compare)
+  
+  # set colnames
+  points_compare &lt;- points_compare %&gt;%
+    dplyr::mutate(player_id=id_player) %&gt;%
+    dplyr::select(player_id, rotation_player_id=ind, points=values)
+  
+  # convert factor to numeric
+  points_compare$rotation_player_id &lt;- as.numeric(as.character(points_compare$rotation_player_id))
+  
+  return(points_compare)
+  
+}</code></pre>
+<p>This implementation tells us how a single goalie does when paired with everyone else. Let’s iterate this iteration (iter…ception?) for all unique goalkeepers, then grab the player metadata (note the <a href="https://www.tidyverse.org/articles/2017/10/glue-1.2.0/"><code>glue</code></a> cameo - looking forward to getting deep with this dope package in future) and calculate our ‘value’ metric (points / price).</p>
+<pre class="r"><code># get points rotation for all goalies
+goalie_rotation &lt;- lapply(unique(goalie_data$player_id), rotate_all, data=goalie_data)
+
+# bind these runs together
+goalie_rotation &lt;- bind_rows(goalie_rotation) %&gt;%
+  # get unique goalie combos
+  mutate(key = paste0(pmin(player_id, rotation_player_id), pmax(player_id, rotation_player_id), 
+                      sep = &quot;&quot;)) %&gt;% 
+  distinct(key, .keep_all = TRUE) %&gt;%
+  select(-key)
+
+# join on the player metadata
+goalie_rotation &lt;- goalie_rotation %&gt;%
+  # join original player
+  left_join(unique_goalies, by=&quot;player_id&quot;) %&gt;%
+  # join rotation pplayer
+  left_join(unique_goalies, by=c(&quot;rotation_player_id&quot;=&quot;player_id&quot;)) %&gt;%
+  # rename cols
+  rename(player_name=web_name.x, team_name=team_name.x, start_price=start_price.x,
+         rotation_player_name=web_name.y, rotation_team_name=team_name.y, 
+         rotation_start_price=start_price.y) %&gt;%
+  # add total value col and name col
+  mutate(total_price=start_price+rotation_start_price,
+         combo=glue(&quot;{player_name} ({team_name}) &amp; {rotation_player_name} ({rotation_team_name}) &quot;),
+         points_per_mil=points/total_price)</code></pre>
+<p>We’re ready to see the optimized goalkeeping combo, maximizing potential points return while minimizing costs [insert drum roll]. I’ll leave in the top ten, for some context.</p>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:unnamed-chunk-4">Table 1: </span>Top goalkeeper combos (optimized on points per million)
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+Combo
+</th>
+<th style="text-align:right;">
+Points
+</th>
+<th style="text-align:left;">
+Cost
+</th>
+<th style="text-align:left;">
+Points per million
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Lössl (Huddersfield) &amp; Hart (West Ham)
+</td>
+<td style="text-align:right;">
+80
+</td>
+<td style="text-align:left;">
+<span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffa500">9.0</span>
+</td>
+<td style="text-align:left;">
+<span style="display: inline-block; direction: rtl; border-radius: 4px; padding-right: 2px; background-color: lightgreen; width: 100.00%">8.9</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Lössl (Huddersfield) &amp; Fabianski (Swansea)
+</td>
+<td style="text-align:right;">
+79
+</td>
+<td style="text-align:left;">
+<span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffa500">9.0</span>
+</td>
+<td style="text-align:left;">
+<span style="display: inline-block; direction: rtl; border-radius: 4px; padding-right: 2px; background-color: lightgreen; width: 98.88%">8.8</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Lössl (Huddersfield) &amp; Pope (Burnley)
+</td>
+<td style="text-align:right;">
+79
+</td>
+<td style="text-align:left;">
+<span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffa500">9.0</span>
+</td>
+<td style="text-align:left;">
+<span style="display: inline-block; direction: rtl; border-radius: 4px; padding-right: 2px; background-color: lightgreen; width: 98.88%">8.8</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Elliot (Newcastle) &amp; Pope (Burnley)
+</td>
+<td style="text-align:right;">
+74
+</td>
+<td style="text-align:left;">
+<span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffffff">8.5</span>
+</td>
+<td style="text-align:left;">
+<span style="display: inline-block; direction: rtl; border-radius: 4px; padding-right: 2px; background-color: lightgreen; width: 97.75%">8.7</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Fabianski (Swansea) &amp; Pope (Burnley)
+</td>
+<td style="text-align:right;">
+78
+</td>
+<td style="text-align:left;">
+<span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffa500">9.0</span>
+</td>
+<td style="text-align:left;">
+<span style="display: inline-block; direction: rtl; border-radius: 4px; padding-right: 2px; background-color: lightgreen; width: 97.75%">8.7</span>
+</td>
+</tr>
+</tbody>
+</table>
+<p>So, Messrs Hart and Lossl grab top spot when accounting for both points and cost in our quest for optimization. This season, that combination returned a points potential of 70 while costing a combined 9 million, which works out at 7.8 points per million.</p>
+<p>Before finishing up, let’s consider how the solution might change if a new constraint is introduced. What if an FPL manager doesn’t have the budget for some of these recommendations, anyway? What recommendations would we make if cost was an enforced constraint - for example, a remaining budget of 9 million?</p>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:unnamed-chunk-5">Table 2: </span>Top goalkeeper combos for 9 million or less (optimized on points per million)
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+Combo
+</th>
+<th style="text-align:right;">
+Points
+</th>
+<th style="text-align:right;">
+Cost
+</th>
+<th style="text-align:left;">
+Points per million
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Lössl (Huddersfield) &amp; Hart (West Ham)
+</td>
+<td style="text-align:right;">
+80
+</td>
+<td style="text-align:right;">
+9.0
+</td>
+<td style="text-align:left;">
+<span style="display: inline-block; direction: rtl; border-radius: 4px; padding-right: 2px; background-color: lightgreen; width: 100.00%">8.9</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Lössl (Huddersfield) &amp; Fabianski (Swansea)
+</td>
+<td style="text-align:right;">
+79
+</td>
+<td style="text-align:right;">
+9.0
+</td>
+<td style="text-align:left;">
+<span style="display: inline-block; direction: rtl; border-radius: 4px; padding-right: 2px; background-color: lightgreen; width: 98.88%">8.8</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Lössl (Huddersfield) &amp; Pope (Burnley)
+</td>
+<td style="text-align:right;">
+79
+</td>
+<td style="text-align:right;">
+9.0
+</td>
+<td style="text-align:left;">
+<span style="display: inline-block; direction: rtl; border-radius: 4px; padding-right: 2px; background-color: lightgreen; width: 98.88%">8.8</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Elliot (Newcastle) &amp; Pope (Burnley)
+</td>
+<td style="text-align:right;">
+74
+</td>
+<td style="text-align:right;">
+8.5
+</td>
+<td style="text-align:left;">
+<span style="display: inline-block; direction: rtl; border-radius: 4px; padding-right: 2px; background-color: lightgreen; width: 97.75%">8.7</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Fabianski (Swansea) &amp; Pope (Burnley)
+</td>
+<td style="text-align:right;">
+78
+</td>
+<td style="text-align:right;">
+9.0
+</td>
+<td style="text-align:left;">
+<span style="display: inline-block; direction: rtl; border-radius: 4px; padding-right: 2px; background-color: lightgreen; width: 97.75%">8.7</span>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Of course, the optimized solution remains the same in this case, but hopefully this helps illustrate how flexible linear programming can be in taking on new restrictions.</p>
+</div>
+<div id="wrap-up" class="section level2">
+<h2>Wrap-up</h2>
+<p>The principles of linear optimization can be applied to many problems that have a fundamentally simple goal - in this case, scoring more fantasy points than all your mates. R is an ideal tool to get started with putting these concepts into practice. Go work on your own linear programming fantasies, y’all…</p>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>To keep the post concise I don’t show all of the code, especially code that generates figures. But you can find the full code <a href="https://github.com/rbind/ewenme/blob/master/content/blog/linear-programming-fantasy.Rmd">here</a>.<a href="#fnref1">↩</a></p></li>
+<li id="fn2"><p>The current Github repo I’m using for linear programming implementations in FPL is <a href="https://github.com/ewenme/fplinear">here</a>, called fplinear.<a href="#fnref2">↩</a></p></li>
+</ol>
+</div>

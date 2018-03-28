@@ -1,8 +1,8 @@
-.comments-container #disqus_thread:before,
-.entry-header:after,
-.entry-nav-links:before,
-.footer:before,
-.prev-entry~.next-entry:before,
-.site-header:after {
-  border-bottom-color: black;
+.content h1,
+.content h2,
+.content h3,
+.content h4,
+.content h5,
+.content h6 {
+  color: #511F6D;
 }

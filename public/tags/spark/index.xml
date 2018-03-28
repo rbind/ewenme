@@ -5,6 +5,8 @@
     <link>https://ewen.io/tags/spark/</link>
     <description>Recent content in Spark on ewen</description>
     <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>&amp;copy; Ewen Henderson &lt;/a&gt; 2017-18</copyright>
     <lastBuildDate>Thu, 27 Jul 2017 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://ewen.io/tags/spark/index.xml" rel="self" type="application/rss+xml" />
@@ -12,10 +14,10 @@
     
     <item>
       <title>Advocating for Open Policing with sparklyr and Shiny</title>
-      <link>https://ewen.io/blog/2017-07-27-open_policing_sparklyr_shiny/</link>
+      <link>https://ewen.io/blog/open-policing-sparklyr-shiny/</link>
       <pubDate>Thu, 27 Jul 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://ewen.io/blog/2017-07-27-open_policing_sparklyr_shiny/</guid>
+      <guid>https://ewen.io/blog/open-policing-sparklyr-shiny/</guid>
       <description>I don’t have much reason to dip in to big data processing tools in my current working capacity. Luckily for me, I have a (self-indulgent) blog now - perfect place to scratch these sorts of itches, and then share the resultant mishaps with the whole world.
 I’d recently been working on a Shiny app for increasing visibility and engagement with police violence data. It just so happened that I stumbled across Stanford’s Open Policing Project, with some hefty open data ripe for exploring with big data tools, right after the app’s first build was finished.</description>
     </item>

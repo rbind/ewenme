@@ -1,0 +1,123 @@
+---
+title: "The Representativeness of UK Parliament"
+description: "Leveraging open data on politicians to learn more about representation and diversity within UK Parliament."
+date: "2017-04-23"
+tags: ["r", "politics", "everypolitician"]
+---
+
+
+
+<p>As a general election looms, a familiar UK media maelstrom has begun. The key difference here is that the public has been taken by surprise, somewhat - Theresa May’s call for a snap election (we weren’t actually due one until 2020) has left folk with little under two months to decide where their vote will go.</p>
+<p>For some, this may be the first election they are able to participate in. For many, the traditional delivery of party politics might not have kept them engaged all that well since the last election. Unfortunately, there isn’t too much time to get all cases like these as up to speed as we would like this time round. The good news is there are ambitious projects like <a href="http://everypolitician.org/uk/">EveryPolitician</a> looking to make governments around the world more transparent - perhaps we can leverage the data inside to empower voters, in some small way, ahead of 8th June.<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a></p>
+<div id="inside-everypolicitian" class="section level2">
+<h2>Inside EveryPolicitian</h2>
+<p>EveryPolitician’s mission is simple: <em>“collect and share data about every politician in every country in the world, in a consistent, open format that anyone can use.”</em> They don’t provide an API to query, but we can download the whole lot (for the UK) in JSON format to work on:</p>
+<pre class="r"><code>data &lt;- fromJSON(&quot;https://cdn.rawgit.com/everypolitician/everypolitician-data/8382ff6bd31785d630950716ccb53eccfbe8485f/data/UK/Commons/ep-popolo-v1.0.json&quot;)
+
+members &lt;- as.data.frame(data$persons) %&gt;%
+  left_join(as.data.frame(data$memberships), by = c(&quot;id&quot;=&quot;person_id&quot;)) %&gt;%
+  mutate(legislative_period_id=as_factor(legislative_period_id),
+         birth_date=as.Date(birth_date),
+         on_behalf_of_id=as_factor(on_behalf_of_id),
+         on_behalf_of_id_recoded =fct_recode(on_behalf_of_id, &quot;Conservative&quot;=&quot;conservative&quot;,
+                                             &quot;DUP&quot;=&quot;dup&quot;, &quot;Labour&quot;=&quot;labour&quot;, 
+                                             &quot;SNP&quot;=&quot;scottish-national-party&quot;,
+                                             &quot;Lib Dem&quot;=&quot;liberal-democrat&quot;, &quot;UUP&quot;=&quot;uup&quot;,
+                                             &quot;Plaid Cymru&quot;=&quot;plaid-cymru&quot;,
+                                             &quot;Independent&quot;=&quot;independent&quot;, 
+                                             &quot;Labour&quot;=&quot;labourco-operative&quot;,
+                                             &quot;Sinn Fein&quot;=&quot;sinn-fein&quot;, 
+                                             &quot;Deputy Speaker&quot;=&quot;deputy-speaker&quot;, 
+                                             &quot;Speaker&quot;=&quot;speaker&quot;, &quot;Green&quot;=&quot;green&quot;,
+                                             &quot;UKIP&quot;=&quot;ukip&quot;,
+                                             &quot;SDLP&quot;=&quot;social-democratic-and-labour-party&quot;,
+                                             &quot;Independent&quot;=&quot;independent-conservative&quot;,
+                                             &quot;Independent&quot;=&quot;independent-ulster-unionist&quot;,
+                                             &quot;Respect&quot;=&quot;respect&quot;, &quot;UKUP&quot;=&quot;ukup&quot;,
+                                             &quot;Independent&quot;=&quot;independent-labour&quot;,
+                                             &quot;Alliance&quot;=&quot;alliance&quot;),
+         term_start=as.Date(fct_recode(legislative_period_id, &quot;2015-05-08&quot;=&quot;term/56&quot;,
+                                       &quot;2010-05-06&quot;=&quot;term/55&quot;, &quot;2005-05-05&quot;=&quot;term/54&quot;,
+                                       &quot;2001-06-07&quot;=&quot;term/53&quot;, &quot;1997-05-01&quot;=&quot;term/52&quot;)),
+         legislative_period_id=fct_recode(legislative_period_id, &quot;Term 56\n(2015-)&quot;=&quot;term/56&quot;,
+                                          &quot;Term 55\n(2010-2015)&quot;=&quot;term/55&quot;, 
+                                          &quot;Term 54\n(2005-2010)&quot;=&quot;term/54&quot;,
+                                          &quot;Term 53\n(2001-2005)&quot;=&quot;term/53&quot;, 
+                                          &quot;Term 52\n(1997-2001)&quot;=&quot;term/52&quot;),
+         age_at_term_start=as.numeric(floor(difftime(term_start, birth_date,
+                                                     units=&quot;days&quot;)/365))) %&gt;%
+  select(name, birth_date, gender, on_behalf_of_id_recoded, role, legislative_period_id,
+         term_start, age_at_term_start, id)
+
+glimpse(members)</code></pre>
+<pre><code>## Observations: 3,374
+## Variables: 9
+## $ name                    &lt;chr&gt; &quot;Ron Davies&quot;, &quot;George Osborne&quot;, &quot;Georg...
+## $ birth_date              &lt;date&gt; 1946-08-06, 1971-05-23, 1971-05-23, 1...
+## $ gender                  &lt;chr&gt; &quot;male&quot;, &quot;male&quot;, &quot;male&quot;, &quot;male&quot;, &quot;male&quot;...
+## $ on_behalf_of_id_recoded &lt;fct&gt; Labour, Conservative, Conservative, Co...
+## $ role                    &lt;chr&gt; &quot;member&quot;, &quot;member&quot;, &quot;member&quot;, &quot;member&quot;...
+## $ legislative_period_id   &lt;fct&gt; Term 52
+## (1997-2001), Term 53
+## (2001-200...
+## $ term_start              &lt;date&gt; 1997-05-01, 2001-06-07, 2005-05-05, 2...
+## $ age_at_term_start       &lt;dbl&gt; 50, 30, 33, 38, 43, 53, 57, 61, 48, 52...
+## $ id                      &lt;chr&gt; &quot;007f7ffe-65df-4166-afad-f3c8934afd8d&quot;...</code></pre>
+<p>We now have biographic and demographic data for all members of Parliament across the last five legislative periods, or terms. With this information, it may be possible to start demonstrating how representativeness manifests itself in Parliament.</p>
+</div>
+<div id="gender-balance" class="section level2">
+<h2>Gender Balance</h2>
+<p>Something which demands immediate attention (not just in this domain) is understanding member’s proportional representation by gender. A big problem for many voters is finding members to identify with, given the historic barriers to women entering a male-dominated parliamentary system. How does female representation look over time?</p>
+<p><img src="/blog/uk-parliament-representativeness_files/figure-html/female_rep-1.svg" width="100%" /></p>
+<p>There has been sustained improvements in gender balance since the mid-00s, however it’s still some way short of equality.</p>
+<p>Of course, the 30% representation we see in the current term is an aggregate of different political parties. What does this percentage look like by party?</p>
+<blockquote>
+<p>N.B. The below graphic only includes the three parties with the largest count of members in the latest Parliament. Each of the other parties had fewer than ten representatives.</p>
+</blockquote>
+<p><img src="/blog/uk-parliament-representativeness_files/figure-html/party_genders-1.svg" width="100%" /></p>
+<p>Labour, currently the second largest party by no. of MPs (238), has double the proportionate amount of female MPs in comparison with the biggest, the Conservatives (333).</p>
+<p>It must be remembered that these figures represent <em>elected</em> officials, and so possible gender biases may stem from voters as well as the parties themselves. An in-depth analysis of historical party candidate gender proportions and subsequent voting patterns could start to unpick this. For the purposes of this analysis, we are interested in sharing information to help the uninformed understand what parties and parliament look like, and this is a good start - perhaps identifying trends over time in the biggest parties would be a good next step.</p>
+<p><img src="/blog/uk-parliament-representativeness_files/figure-html/female_trend-1.svg" width="100%" /></p>
+<p>It appears that Labour was first to demonstrate growth in female representation during the mid-00s, with the Conservatives following this example in Term 55. What is most apparent is that Labour now appears close to an equal gender split, while the Conservative party is still lower than Labour has ever been over the considered period.</p>
+</div>
+<div id="age" class="section level2">
+<h2>Age</h2>
+<p>Another important characteristic when considering the representativeness of government is member’s ages. Amongst parties, demonstrating the distribution of ages can illuminate whether a party reflects the public.<a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a></p>
+<p><em>N.B. The below graphic only includes parties with 30 or more members across the last five Parliamentary terms.</em></p>
+<p><img src="/blog/uk-parliament-representativeness_files/figure-html/unnamed-chunk-1-1.svg" width="100%" /></p>
+<p>Looking across the previous five Parliamentary terms in the above plot, you can see that the Labour ‘bulge’ is higher than the Conservatives, hinting at an older pool of members. Has this always been the case?</p>
+<p><img src="/blog/uk-parliament-representativeness_files/figure-html/unnamed-chunk-2-1.svg" width="100%" /></p>
+<p>This divergence in MP ages across the Labour and Conservative parties came into being after commencement of the 54th term, which was the last Labour victory. The gap has been maintained ever since.</p>
+</div>
+<div id="turnover" class="section level2">
+<h2>Turnover</h2>
+<p>We’ve explored how gender and age manifest in Parliament across time and parties, and perhaps now would be a good time to examine these factors in relation to how often MPs actually keep their seats.<a href="#fn3" class="footnoteRef" id="fnref3"><sup>3</sup></a></p>
+<p><img src="/blog/uk-parliament-representativeness_files/figure-html/unnamed-chunk-3-1.svg" width="100%" /></p>
+<p>The above chart gives a sense of the ‘turnover’ in Parliament between terms. We see a decline in the likelihood of an MP keeping their seat as their time in situ increases (beyond the first re-election). How does this stand up by gender?</p>
+<p><img src="/blog/uk-parliament-representativeness_files/figure-html/unnamed-chunk-4-1.svg" width="100%" /></p>
+<p>This is revealing as to why the Conservative party has seen limited growth in female representation - their female MPs are most likely to not be re-elected at all.</p>
+</div>
+<div id="an-international-peek" class="section level2">
+<h2>An International Peek</h2>
+<p>It might be useful to provide some international context to proceedings. By returning to the <em>EveryPolitician</em> data store, we can extract similar data for other countries and see how they stack up on some of the hot topics discussed above.</p>
+<p><em>N.B. At the time of writing, there aren’t an abundance of nations with politician data beyond the most recent government term. The below selection represents those countries with data enough to look at trends over time.</em></p>
+<p><img src="/blog/uk-parliament-representativeness_files/figure-html/unnamed-chunk-5-1.svg" width="100%" /></p>
+<p>Now, the range of data still varies quite a lot here (for the U.S. we have data back to 1983, compared with 2001 for the UK), so the above trends should be treated as indicative timelines of a countries record in this area. Still, we can certainly compare recent performance and see some obvious worries - both Germany and the U.S. have experienced big drop-offs in female representation in their elected governments, and have shown little signs of recovery since. Big-ups must be given to Sweden, with mid-40% female representation across their previous six terms.</p>
+</div>
+<div id="some-last-words" class="section level2">
+<h2>Some last words</h2>
+<p>I hope this exercise, shedding light on the current and historical level of representativeness within UK Parliament (and beyond), can achieve a couple of things:</p>
+<ul>
+<li>Help first-time or unsure voters who care about representativeness and diversity understand more about the composition of parties, and the progress these parties are making to combat issues</li>
+<li>Demonstrate the utility and importance of resources like EveryPolitician in making governments more transparent</li>
+</ul>
+<p>While the <em>EveryPolitician project</em> is still in early days and is first trying to get basic information for <em>all</em> countries (if you can help with <a href="http://everypolitician.org/countries.html">these missing ones</a>, please do), a vital next step would be to collect data on ethnicity to expand this sort of ‘demographic audit’ and enable more measures of diversity in governments. Also, a fuller international bench-marking exercise beckons for sure! That’s all from me for now…</p>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>To keep the post concise I don’t show all of the code, especially code that generates figures. But you can find the full code <a href="https://github.com/rbind/ewenme/blob/master/content/blog/uk-parliament-representativeness.Rmd">here</a>.<a href="#fnref1">↩</a></p></li>
+<li id="fn2"><p>Two MPs with missing ages were excluded from the parts of the analysis studying age, at the time of writing: Sarah Olney (Liberal Democrats) and Caroline Johnson (Conservative).<a href="#fnref2">↩</a></p></li>
+<li id="fn3"><p>I decided to exclude Speakers and Deputy Speakers from this part of the analysis. These are individuals performing roles in Parliament that are unaffiliated with any party, and are not publicly elected positions.<a href="#fnref3">↩</a></p></li>
+</ol>
+</div>

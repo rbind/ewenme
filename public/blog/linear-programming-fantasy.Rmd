@@ -1,0 +1,286 @@
+---
+title: "My Linear(ish) Programming Fantasy"
+description: "Applying linear programming principles to the selection of a fantasy football team."
+date: "2017-11-06"
+tags: ["r", "linear-programming", "fpl"]
+---
+
+```{r setup, include=FALSE}
+
+# markdown setup
+knitr::opts_chunk$set(cache=TRUE, echo = FALSE, warning = FALSE, message = FALSE, out.width = '100%', dev = 'svg')
+
+# load pkgs
+library(tidyverse)
+library(glue)
+library(hrbrthemes)
+library(extrafont)
+library(knitr)
+library(kableExtra)
+library(formattable)
+library(DT)
+library(captioner)
+
+
+# LOAD  ----------------------------------------------
+
+# load funcs
+source('~/Documents/Github/fplinear/lp_funcs.R')
+
+# data load
+player_data <- read_csv("~/Documents/Github/fplinear/player_data.csv")
+
+# set captioner
+prefix <- captioner(prefix = "")
+
+
+# CLEAN -------------------------------------------------------------------
+
+# create goalies df
+goalie_data <- filter(player_data, position=="Goalkeeper") %>%
+  # add 'start price' col
+  group_by(player_id) %>%
+  mutate(start_price=first(price)) %>%
+  ungroup()
+
+```
+
+[Linear optimization](https://en.wikipedia.org/wiki/Linear_programming) (AKA linear programming) is all around us, even if we don't really know it. For example, how did you come to pick your route to work today? This decision, lovingly known as "getting from A to B", is (most of the time) objectively simple: **which route is the quickest?**
+
+```{r, out.width = "75%", fig.align = "center", echo=FALSE}
+knitr::include_graphics("/img/2017-11-06-Linear_Programming_Fantasy/route-icon.png")
+```
+
+There are known variables that we need to identify and use in solving this problem (known as **decision variables**), for example:
+
+- The speed at which different modes of transports travel
+- The distance of each possible route
+
+As anyone who has ever travelled anywhere will know, there are other parameters that we might want to factor in to a solution. We might prefer to avoid certain modes of transport outright, spend less time walking, etc. Extending this problem to a business setting (not to knock anyone rocking it in their daily life), when there might be additional restrictions to consider (think of a delivery order operation) - minimizing fuel consumption, or avoiding tolls. Any 'best route' can be reviewed to ensure these **constraints** are taken care of.
+
+```{r, out.width = "75%", fig.align = "center", echo=FALSE}
+knitr::include_graphics("/img/2017-11-06-Linear_Programming_Fantasy/route-plan-anim.gif")
+```
+
+## Let Me Optimize Your Fantasy
+
+What good can these techniques do for me? I'd come across a couple of nice implementations of linear programming techniques in the [Fantasy Premier League](https://fantasy.premierleague.com/)(FPL) space - shout out to Martin Eastwood for his [penalty](https://github.com/martineastwood/penalty/tree/master/fantasy_football_optimiser) work and Torvaney's [fpl-optimiser](https://github.com/Torvaney/fpl-optimiser) (honorable mention to Sean Taylor's [NFL fantasy projections](https://gist.github.com/seanjtaylor/b4d423dad0083cc8cc5b2a9fd1e4e63e)in R, but the sport/techniques involved are out of scope just now). Both of these projects look to optimize the same thing: the **total number of points** a fantasy football team scores within some shared constraints that the game rules enforce (staying within a 100 million budget, no more than 3 players per team).
+
+There are some obvious weaknesses to this approach - the game is played on a weekly basis, with player's points scoring varying significantly from week-to-week. 'Managers' (users of the game) are also asked to select 11 players from their 15-man squad to play each week. These solutions optimize player selection based on the points returned over a whole season, and so don't try and emulate these game mechanics. I'll try and work on this now, in one particular area of the game.[^fullcode]
+
+## Complementary Keepers (and Where to Find Them)
+
+Rotation - the practice of picking complementary players (those who play at home on alternate weeks, for example) to play in a rotating fashion - is squad-based fantasy sport game 101, allowing managers to seamlessly segue between class acts across a well-balanced squad.
+
+```{r, out.width = "75%", fig.align = "center", echo=FALSE}
+knitr::include_graphics("/img/2017-11-06-Linear_Programming_Fantasy/rotation-wrong.gif")
+```
+
+Rotation policy is at it's simplest when applied to goalkeepers. The constraints are simple: you have to buy two, but you can only play one each week. This encourages FPL managers to look at a couple of cheaper options that play home & away alternately, for example, rather than lumping for premium products. Which strategy wins out, though? Lets re-frame this as a real-world linear optimization problem, defining the pieces we need.
+
+## Decision Variables
+
+The **decision variables** comprise the things that will decide the output and represent the solution. In our case, these are the points scored by the two goalkeepers we pick - let's call them Goalkeeper A and Goalkeeper B. It's also worth noting the **non-negativity restriction** on decision variables i.e. the values should be greater than or equal to zero.
+
+```{r goalies_tab}
+# unique goalies list
+unique_goalies <- distinct(goalie_data, player_id, web_name, team_name, start_price)
+
+unique_goalies %>%
+  arrange(desc(start_price)) %>%
+  datatable(rownames = FALSE)
+```
+
+This list of goalies represents our options for goalkeeper A and goalkeeper B, with their respective teams and associated costs. Now, we specify the ultimate objective that guides this decision.
+
+## Objective Function
+
+The **objective function** summarizes the objective of making decisions (i.e. picking goalkeepers). Ultimately, we want to score as many points as possible per unit cost (we'll leave the value aspect of this function, for now). First, it's necessary to identify point-scoring patterns at a weekly level, so lets examine an example goalkeeping pair's points.
+
+```{r goalies_plot}
+# plot Courtois vs Cech weekly points
+goalie_data %>%
+  # filter data
+  filter(player_id %in% c(2, 94)) %>%
+  # plot
+  ggplot(aes(x=round, y=web_name, fill=total_points)) +
+  geom_tile(color="white", size=0.1) +
+  labs(x="Gameweek", y=NULL, 
+       title="Goalkeeper Scoring Patterns", subtitle="Courtois vs. Cech, Gameweeks 1-10",
+       caption="made by @ewen_") +
+  scale_x_continuous(breaks = seq(1, 10, 1)) +
+  # aesthetics
+  scale_fill_viridis_c(option = "A", 
+                       guide = guide_colourbar(title = "Points", direction = "horizontal")) +
+  coord_equal() +
+  theme_ipsum() +
+  theme(legend.position = "bottom",
+        plot.margin = unit(c(0.35, 0.2, 0.3, 0.35), "cm"),
+        plot.title = element_text(hjust = 1, size = 16),
+        plot.subtitle = element_text(hjust = 1, size = 14),
+        axis.text = element_text(size = 12))
+
+```
+
+There are a few things at play in the above plot, which shows the points scored by week for Chelsea's Courtois and Arsenal's Cech. Not only can we identify the level of points these players score individually, but how well the patterns of point-scoring complement each other (i.e. do they score well in alternate weeks).
+
+## Constraints
+
+This brings us nicely into the world of **constraints**, or the restrictions placed on our decision variables (goalkeeper A and goalkeeper B):
+
+- Only one of Goalkeeper A and Goalkeeper B can play (and, in turn, collect points) on any given gameweek
+- We don't want to make any transfers in this position ('managers' have the opportunity to switch a player in their squad for someone else each week)
+
+There would be other constraints if we were to extrapolate this problem to cover the whole team (e.g. only three players from a particular team are allowed in a squad, 100 million budget, no. of players required in each position). We'll also make the simplifying assumption here that in any prospective goalie pair, the 'manager' always plays the keeper who scores the most points that week (in linear world, all of this is possible...).
+
+We've successfully identified the facets of our problem in the language of linear optimization, so...we have a linear programming problem! Seems straightforward enough, right? Let's see how it all goes down.
+
+## Goalie-Go-Round
+
+Based on the parameters outlined previously, an implementation of linear programming would go something something like:
+
+1. Cycle through every possible pair of FPL goalkeepers
+2. For each gameweek, pick the goalie who scored the most points
+3. Tally up the total points potential for each pair
+4. Work out the points-per-million value (total points potential / total price)
+
+It's worth pointing out that I didn't use [`lpSolve`](https://cran.r-project.org/web/packages/lpSolve/lpSolve.pdf), R's interface to [lpsolve](http://lpsolve.sourceforge.net/5.5/)(well-known linear programming OSS), which would be advisable in a situation when the problem's level of complexity is greater than that seen here. I was interested in seeing how I could fare with a `tidyverse`-friendly (thanks to the beast that is `purrr`) implementation.[^implementation] Here's a function that does the first three steps listed above.
+
+```{r rotation_function, echo=TRUE}
+# function to get points potential for all rotations with a given player
+rotate_all <- function(data, id_player) {
+  
+  # get named player's points
+  player_points <- data %>%
+    # match player id to inputs
+    dplyr::filter(player_id == id_player) %>%
+    # keep points
+    dplyr::select(round, player_id, total_points)
+  
+  # get all other player points
+  other_points <- data %>%
+    # match player id to inputs
+    dplyr::filter(player_id != id_player) %>%
+    # keep points
+    dplyr::select(round, player_id, total_points)
+  
+  # nest the other players' points
+  other_points_nested <- other_points %>%
+    split(.$player_id)
+  
+  # now, a function to get named player / other players' potential points
+  collect_points <- function(x) { 
+    
+    # get max points for each round
+    x <- x %>%
+    dplyr::group_by(round) %>%
+    dplyr::summarise(best_points=max(total_points))
+    
+    # get max points total
+    max_points_total <- sum(x$best_points)
+  }
+  
+  # iterate through other players to compare points to named player
+  points_compare <- other_points_nested %>%
+    purrr::map(~dplyr::bind_rows(., player_points)) %>%
+    purrr::map(~collect_points(.))
+  
+  # create df from named list
+  points_compare <- stack(points_compare)
+  
+  # set colnames
+  points_compare <- points_compare %>%
+    dplyr::mutate(player_id=id_player) %>%
+    dplyr::select(player_id, rotation_player_id=ind, points=values)
+  
+  # convert factor to numeric
+  points_compare$rotation_player_id <- as.numeric(as.character(points_compare$rotation_player_id))
+  
+  return(points_compare)
+  
+}
+
+```
+
+This implementation tells us how a single goalie does when paired with everyone else. Let's iterate this iteration (iter...ception?) for all unique goalkeepers, then grab the player metadata (note the [`glue`](https://www.tidyverse.org/articles/2017/10/glue-1.2.0/) cameo - looking forward to getting deep with this dope package in future) and calculate our 'value' metric (points / price).
+
+```{r rotation_solve, echo=TRUE}
+# get points rotation for all goalies
+goalie_rotation <- lapply(unique(goalie_data$player_id), rotate_all, data=goalie_data)
+
+# bind these runs together
+goalie_rotation <- bind_rows(goalie_rotation) %>%
+  # get unique goalie combos
+  mutate(key = paste0(pmin(player_id, rotation_player_id), pmax(player_id, rotation_player_id), 
+                      sep = "")) %>% 
+  distinct(key, .keep_all = TRUE) %>%
+  select(-key)
+
+# join on the player metadata
+goalie_rotation <- goalie_rotation %>%
+  # join original player
+  left_join(unique_goalies, by="player_id") %>%
+  # join rotation pplayer
+  left_join(unique_goalies, by=c("rotation_player_id"="player_id")) %>%
+  # rename cols
+  rename(player_name=web_name.x, team_name=team_name.x, start_price=start_price.x,
+         rotation_player_name=web_name.y, rotation_team_name=team_name.y, 
+         rotation_start_price=start_price.y) %>%
+  # add total value col and name col
+  mutate(total_price=start_price+rotation_start_price,
+         combo=glue("{player_name} ({team_name}) & {rotation_player_name} ({rotation_team_name}) "),
+         points_per_mil=points/total_price)
+
+```
+
+We're ready to see the optimized goalkeeping combo, maximizing potential points return while minimizing costs [insert drum roll]. I'll leave in the top ten, for some context.
+
+```{r}
+goalie_rotation %>%
+  # total points top ten
+  top_n(5, wt=points_per_mil) %>%
+  arrange(desc(points_per_mil)) %>%
+  mutate(points_per_mil=round(points_per_mil, digits = 1)) %>%
+  select(Combo=combo, Points=points, Cost=total_price, 
+         `Points per million`=points_per_mil) %>%
+  # formattable styling
+  mutate(`Points per million`=color_bar("lightgreen")(`Points per million`),
+         Cost=color_tile("white", "orange")(Cost)) %>%
+  # kable table
+  kable("html", caption = "Top goalkeeper combos (optimized on points per million)", 
+        escape = F) %>%
+  kable_styling()
+
+```
+
+So, Messrs Hart and Lossl grab top spot when accounting for both points and cost in our quest for optimization. This season, that combination returned a points potential of 70 while costing a combined 9 million, which works out at 7.8 points per million.
+
+Before finishing up, let's consider how the solution might change if a new constraint is introduced. What if an FPL manager doesn't have the budget for some of these recommendations, anyway? What recommendations would we make if cost was an enforced constraint - for example, a remaining budget of 9 million?
+
+```{r}
+goalie_rotation %>%
+  # filter for price
+  filter(total_price <= 9) %>%
+  # top ten
+  top_n(5, wt=points_per_mil) %>%
+  arrange(desc(points_per_mil)) %>%
+  mutate(points_per_mil=round(points_per_mil, digits = 1)) %>%
+  select(Combo=combo, Points=points, Cost=total_price, 
+         `Points per million`=points_per_mil) %>%
+  # formattable styling
+  mutate(`Points per million`=color_bar("lightgreen")(`Points per million`)) %>%
+  # kable table
+  kable("html", caption = "Top goalkeeper combos for 9 million or less (optimized on points per million)", 
+        escape = F) %>%
+  kable_styling()
+
+```
+
+Of course, the optimized solution remains the same in this case, but hopefully this helps illustrate how flexible linear programming can be in taking on new restrictions.
+
+## Wrap-up
+
+The principles of linear optimization can be applied to many problems that have a fundamentally simple goal - in this case, scoring more fantasy points than all your mates. R is an ideal tool to get started with putting these concepts into practice. Go work on your own linear programming fantasies, y'all...
+
+[^fullcode]: To keep the post concise I don't show all of the code, especially code that generates figures. But you can find the full code [here](https://github.com/rbind/ewenme/blob/master/content/blog/linear-programming-fantasy.Rmd).
+[^implementation]: The current Github repo I'm using for linear programming implementations in FPL is [here](https://github.com/ewenme/fplinear), called fplinear.

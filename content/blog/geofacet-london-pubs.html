@@ -1,0 +1,111 @@
+---
+title: "Tracking London's Pub & Bar Landscape with geofacet"
+description: "Toying around with geofacet, a ggplot2 extension for geographic small multiples."
+date: "2017-05-30"
+tags: ["r", "ggplot2", "geofacet", "gis"]
+---
+
+
+
+<div id="introducing-geofacet" class="section level2">
+<h2>Introducing geofacet</h2>
+<p>The <a href="https://github.com/hafen/geofacet"><code>geofacet</code></a> package dropped recently (I want to say last week?), a <code>ggplot2</code> extension allowing for the user to facet plots in a way that can retain an underlying geographical dimension. It perhaps goes a little bit further towards abstraction than <a href="https://pitchinteractiveinc.github.io/tilegrams/">tilegrams</a>, but the visualizations we produce can be a bit more complex as well. This post documents my first foray into this packages functionality.<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a></p>
+</div>
+<div id="getting-to-grips-with-grids" class="section level2">
+<h2>Getting to grips with grids</h2>
+<p>If we think about faceting in <code>ggplot2</code> (<code>facet_wrap</code>, <code>facet_grid</code>), we are already familiar with the idea of placing a sequence of plots into a number of panels, arranged according to a variable(s) of interest.</p>
+<p><code>geofacet</code> is based on the assumption that we want to arrange our sequence of plots into a grid that preserves some known geographical orientation. These known geographical orientations are stored as <strong>grids</strong>, which provide us with row and column values corresponding to a panel’s position in a faceted plot. Take this US states example, providing grid positions for US states:</p>
+<pre class="r"><code>head(geofacet::us_state_grid1)</code></pre>
+<pre><code>##   row col code       name
+## 1   6   7   AL    Alabama
+## 2   7   2   AK     Alaska
+## 3   5   2   AZ    Arizona
+## 4   5   5   AR   Arkansas
+## 5   4   1   CA California
+## 6   4   3   CO   Colorado</code></pre>
+<p>This grid also contains geographical data (state codes/names). We can simply join our data, that sits nicely within this geographical framework, to this grid and start ‘geofaceting’.</p>
+<p>There is a function in the package, <code>submit_grid</code>, which allows users to submit their own grids (as a dataframe, like in the above example) as a github issue and hopefully get them incorporated into the package proper. Having kicked off with just the US states, there’s now grids for EU countries, South African provinces, Australian states and London boroughs. Nice - my business is with the latter…</p>
+</div>
+<div id="geofaceting-london" class="section level2">
+<h2>Geofaceting London</h2>
+<p>A couple of months ago, <a href="https://data.london.gov.uk/dataset/the-number-of-public-houses-and-bars-in-london-2001-2016">a dataset was published</a> containing the number of public houses (pubs) and bars by local authority (borough) in London from 2001 through 2016. We’ll use this to demonstrate how this package can help us visualize trends in data without losing the geography along the way.</p>
+<p>Below is a map of London’s boroughs, in case you aren’t familiar.</p>
+<p><img src="/img/2017-05-30-geofacet_ldn_pubs/boroughs.png" width="75%" style="display: block; margin: auto;" /></p>
+<p>With that cleared up, let’s load up this data and get it into shape.</p>
+<pre class="r"><code>library(geofacet)
+library(tidyverse)
+library(gdata)
+library(stringr)
+library(viridis)
+library(scales)
+library(hrbrthemes)
+
+#read/clean pubs data
+pubs &lt;- read.xls(&quot;http://files.datapress.com/london/dataset/the-number-of-public-houses-and-bars-in-london-2001-2016/2017-04-13T14:37:50.73/numberofpublichousesandbarsinlondon2001to2016.xls&quot;,
+                 sheet = &quot;Number of workplaces by LA&quot;, skip=2, stringsAsFactors=FALSE) %&gt;%
+  filter(!`X.1` %in% c(&quot;&quot;, &quot;London&quot;)) %&gt;%
+  gather(key=year, value=count, -X, -`X.1`) %&gt;%
+  rename(code_ons=X, area_name=`X.1`) %&gt;%
+  mutate(count=as.numeric(count), year=as.numeric(str_replace(year, &quot;X&quot;, &quot;&quot;))) %&gt;%
+  # add year-on-year pct change
+  arrange(area_name) %&gt;%
+  group_by(area_name) %&gt;%
+  mutate(prev=lag(count, order_by=year, default=first(count)),
+         yoy_chg=(count-prev)/prev)
+
+glimpse(pubs)</code></pre>
+<pre><code>## Observations: 528
+## Variables: 6
+## $ code_ons  &lt;chr&gt; &quot;E09000002&quot;, &quot;E09000002&quot;, &quot;E09000002&quot;, &quot;E09000002&quot;, ...
+## $ area_name &lt;chr&gt; &quot;Barking and Dagenham&quot;, &quot;Barking and Dagenham&quot;, &quot;Bar...
+## $ year      &lt;dbl&gt; 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009...
+## $ count     &lt;dbl&gt; 45, 40, 45, 40, 40, 40, 30, 30, 25, 25, 25, 30, 20, ...
+## $ prev      &lt;dbl&gt; 45, 45, 40, 45, 40, 40, 40, 30, 30, 25, 25, 25, 30, ...
+## $ yoy_chg   &lt;dbl&gt; 0.00000000, -0.11111111, 0.12500000, -0.11111111, 0....</code></pre>
+<p>So, we have a tidy dataframe with yearly counts and year-on-year change in pub numbers by borough. Let’s peek at the existing <code>geofacet</code> grid for London boroughs.</p>
+<pre class="r"><code>glimpse(london_boroughs_grid)</code></pre>
+<pre><code>## Observations: 33
+## Variables: 4
+## $ row      &lt;int&gt; 4, 4, 2, 5, 3, 6, 3, 6, 3, 1, 5, 3, 4, 2, 2, 3, 3, 4,...
+## $ col      &lt;int&gt; 5, 8, 4, 8, 3, 6, 4, 5, 2, 5, 7, 6, 2, 5, 3, 8, 1, 1,...
+## $ code_ons &lt;chr&gt; &quot;E09000001&quot;, &quot;E09000002&quot;, &quot;E09000003&quot;, &quot;E09000004&quot;, &quot;...
+## $ name     &lt;chr&gt; &quot;City of London&quot;, &quot;Barking and Dagenham&quot;, &quot;Barnet&quot;, &quot;...</code></pre>
+<p>We’re ready to join these on the ONS code field. I’ll also put in some line breaks to the borough names - I think some of these might be too long for a densely paneled plot, otherwise.</p>
+<pre class="r"><code>#clean boro strings in pubs df
+pubs$area_name &lt;- str_replace(pubs$area_name, &quot; &quot;, &quot;\n&quot;)
+
+#clean boro strings in geofacet grid df
+london_boroughs_grid$name &lt;- str_replace(london_boroughs_grid$name, &quot; &quot;, &quot;\n&quot;)
+
+# join pubs w/ grid
+pubs &lt;- inner_join(pubs, london_boroughs_grid, by =&quot;code_ons&quot;) %&gt;%
+  select(-name)</code></pre>
+<p>Ready to plot. All we need to do is call <code>facet_geo</code> in the same way we might have faceted by borough using <code>facet_wrap</code> previously. This has to be accompanied by a <code>grid</code> argument, specifying the grid we want to facet with. We can go on to tweak the plot using familiar <code>ggplot2</code> commands.</p>
+<p>Here’s my first effort:</p>
+<pre class="r"><code># geofaceted plot of year-on-year pubs % change 
+ggplot(data = pubs, aes(x=year, y=yoy_chg, fill=yoy_chg)) +
+  geom_col() +
+  geom_hline(yintercept = 0) +
+  facet_geo( ~ area_name, grid = &quot;london_boroughs_grid&quot;) +
+  scale_x_continuous(breaks = c(2001, 2016), 
+                     labels = NULL) +
+  scale_y_percent(limits=c(-0.35,0.25), breaks=c(-0.3, 0, 0.25), labels = NULL) +
+  labs(title = &quot;The Evolution of London&#39;s Pubs &amp; Bars&quot;,
+       subtitle = &quot;No. of Public Houses and Bars by London borough, 2001-2016&quot;,
+       caption = &quot;Source: data.london.gov.uk&quot;, x = &quot;&quot;, y = &quot;&quot;) +
+  theme_minimal(base_family = &quot;Arial Narrow&quot;, base_size = 14) +
+  scale_fill_viridis(option=&quot;D&quot;,limits=c(-0.35,0.25), name=&quot;Year-on-year\n% change&quot;,
+                     labels=percent) +
+  theme(legend.position=c(.9, .95))</code></pre>
+<p><img src="/blog/geofacet-london-pubs_files/figure-html/geofacet-1.png" width="100%" /></p>
+</div>
+<div id="close" class="section level2">
+<h2>Close</h2>
+<p>As the package author, <a href="https://twitter.com/hafenstats/status/869621852385165312">Ryan Hafen accepts</a> that some of these plot’s readability does rely on some pre-existing knowledge of the underlying geography (Ryan also says to watch out for some ideas to deal with this). Bearing this in mind, there are opportunities to make eye-catching plots on the occasions when this assumption holds (see <a href="https://www.nytimes.com/2017/05/25/opinion/sunday/the-assault-on-colleges-and-the-american-dream.html">this New York Times example</a>). I reckon I’m gonna have fun with it…</p>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>To keep the post concise I don’t show all of the code, especially code that generates figures. But you can find the full code <a href="https://github.com/rbind/ewenme/blob/master/content/blog/geofacet-london-pubs.Rmd">here</a>.<a href="#fnref1">↩</a></p></li>
+</ol>
+</div>

@@ -5,7 +5,9 @@
     <link>https://ewen.io/tags/</link>
     <description>Recent content in Tags on ewen</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Wed, 06 Dec 2017 00:00:00 +0000</lastBuildDate>
+    <language>en</language>
+    <copyright>&amp;copy; Ewen Henderson &lt;/a&gt; 2017-18</copyright>
+    <lastBuildDate>Wed, 01 Mar 2017 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://ewen.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
@@ -13,7 +15,7 @@
     <item>
       <title>Api</title>
       <link>https://ewen.io/tags/api/</link>
-      <pubDate>Wed, 06 Dec 2017 00:00:00 +0000</pubDate>
+      <pubDate>Wed, 01 Mar 2017 00:00:00 +0000</pubDate>
       
       <guid>https://ewen.io/tags/api/</guid>
       <description></description>
@@ -29,24 +31,6 @@
     </item>
     
     <item>
-      <title>Blogdown</title>
-      <link>https://ewen.io/tags/blogdown/</link>
-      <pubDate>Thu, 27 Jul 2017 00:00:00 +0000</pubDate>
-      
-      <guid>https://ewen.io/tags/blogdown/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Bots</title>
-      <link>https://ewen.io/tags/bots/</link>
-      <pubDate>Wed, 11 Oct 2017 00:00:00 +0000</pubDate>
-      
-      <guid>https://ewen.io/tags/bots/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>Discogs</title>
       <link>https://ewen.io/tags/discogs/</link>
       <pubDate>Wed, 01 Mar 2017 00:00:00 +0000</pubDate>
@@ -56,11 +40,38 @@
     </item>
     
     <item>
-      <title>Fantasy Football</title>
-      <link>https://ewen.io/tags/fantasy-football/</link>
+      <title>Everypolitician</title>
+      <link>https://ewen.io/tags/everypolitician/</link>
+      <pubDate>Sun, 23 Apr 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://ewen.io/tags/everypolitician/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Football</title>
+      <link>https://ewen.io/tags/football/</link>
+      <pubDate>Thu, 07 Sep 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://ewen.io/tags/football/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Fpl</title>
+      <link>https://ewen.io/tags/fpl/</link>
       <pubDate>Mon, 06 Nov 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://ewen.io/tags/fantasy-football/</guid>
+      <guid>https://ewen.io/tags/fpl/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Fplr</title>
+      <link>https://ewen.io/tags/fplr/</link>
+      <pubDate>Sun, 25 Jun 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://ewen.io/tags/fplr/</guid>
       <description></description>
     </item>
     
@@ -74,6 +85,15 @@
     </item>
     
     <item>
+      <title>Geniusr</title>
+      <link>https://ewen.io/tags/geniusr/</link>
+      <pubDate>Wed, 06 Dec 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://ewen.io/tags/geniusr/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Geofacet</title>
       <link>https://ewen.io/tags/geofacet/</link>
       <pubDate>Tue, 30 May 2017 00:00:00 +0000</pubDate>
@@ -83,9 +103,18 @@
     </item>
     
     <item>
+      <title>Ggplot2</title>
+      <link>https://ewen.io/tags/ggplot2/</link>
+      <pubDate>Tue, 30 May 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://ewen.io/tags/ggplot2/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Gis</title>
       <link>https://ewen.io/tags/gis/</link>
-      <pubDate>Tue, 30 May 2017 00:00:00 +0000</pubDate>
+      <pubDate>Thu, 09 Nov 2017 00:00:00 +0000</pubDate>
       
       <guid>https://ewen.io/tags/gis/</guid>
       <description></description>
@@ -101,20 +130,11 @@
     </item>
     
     <item>
-      <title>Kanye</title>
-      <link>https://ewen.io/tags/kanye/</link>
+      <title>Kanye West</title>
+      <link>https://ewen.io/tags/kanye-west/</link>
       <pubDate>Mon, 20 Mar 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://ewen.io/tags/kanye/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Linear Optimization</title>
-      <link>https://ewen.io/tags/linear-optimization/</link>
-      <pubDate>Mon, 06 Nov 2017 00:00:00 +0000</pubDate>
-      
-      <guid>https://ewen.io/tags/linear-optimization/</guid>
+      <guid>https://ewen.io/tags/kanye-west/</guid>
       <description></description>
     </item>
     
@@ -124,15 +144,6 @@
       <pubDate>Mon, 06 Nov 2017 00:00:00 +0000</pubDate>
       
       <guid>https://ewen.io/tags/linear-programming/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Mapping</title>
-      <link>https://ewen.io/tags/mapping/</link>
-      <pubDate>Thu, 09 Nov 2017 00:00:00 +0000</pubDate>
-      
-      <guid>https://ewen.io/tags/mapping/</guid>
       <description></description>
     </item>
     
@@ -209,18 +220,27 @@
     </item>
     
     <item>
-      <title>Sports</title>
-      <link>https://ewen.io/tags/sports/</link>
-      <pubDate>Thu, 07 Sep 2017 00:00:00 +0000</pubDate>
+      <title>Sparklyr</title>
+      <link>https://ewen.io/tags/sparklyr/</link>
+      <pubDate>Thu, 27 Jul 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://ewen.io/tags/sports/</guid>
+      <guid>https://ewen.io/tags/sparklyr/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Tweetbot</title>
+      <link>https://ewen.io/tags/tweetbot/</link>
+      <pubDate>Wed, 11 Oct 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://ewen.io/tags/tweetbot/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Web Scraping</title>
       <link>https://ewen.io/tags/web-scraping/</link>
-      <pubDate>Wed, 11 Oct 2017 00:00:00 +0000</pubDate>
+      <pubDate>Thu, 07 Sep 2017 00:00:00 +0000</pubDate>
       
       <guid>https://ewen.io/tags/web-scraping/</guid>
       <description></description>

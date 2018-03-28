@@ -1,58 +1,31 @@
 baseurl = "https://ewen.io/"
 title = "ewen"
+languageCode = "en"
+theme = "kiss"
+copyright = "&copy; Ewen Henderson </a> 2017-18"
 
-theme = "minimo"
+Paginate = 5
+enableRobotsTXT = true
 
-disqusShortname = "http-ewenme-rbind-io"
-googleAnalytics = "UA-98719738-1"
+[params.assets]
+customCSS = ["css/custom.css"]
 
-Paginate = 8
+[params.info]
+adsense = "" # Adsense ID (ID only, without ca-pub-)
+enableSocial = false # Adds OpenGraph and Twitter cards
+homeTitle = "ewen" # Title for home page
+poweredby = false # Adds powered by Hugo and Kiss below Copyright section
+related = false # Includes related articles
 
-preserveTaxonomyNames = false
-
-[params]
-  fontbody = "Work Sans"
-  fontheading = "Open Sans"
-  favicon = "favicon.ico"
-  customCSS = ["css/custom.css"]
-  CopyrightOwner = "Ewen Henderson"
-  CopyrightStartYear = "2018"
-  dateFormat = "02 Jan, 2006"
-  listDateFormat = "02 Jan, 2006"
-  hideEntryNavigation = true
-  hideSocialMenu = false
-  showReadTime = true
-  
+[params.social]
+email = "ewenhenderson@gmail.com"
+twitter = "ewen_"
+github = "ewenme"
 
 [taxonomies]
-  tag = "tags"
-
-[author.social]
-  email = "ewenhenderson@gmail.com"
-  twitter = "ewen_"
-  github = "ewenme"
+tag = "tags"
 
 [permalinks]
-  page = "/:slug/"
-
-[[menu.main]]
-  name = "home"
-  weight = -80
-  identifier = "home"
-  url = "/"
-
-[[menu.main]]
-  name = "blog"
-  weight = -70
-  identifier = "blog"
-  url = "/blog"
-
-defaultContentLanguage = "en"
-
-[languages]
-  [languages.en]
-    lang = "en"
-    languageName = "English"
-    weight = 1
+page = "/:year/:month/:day/:slug/"
 
 ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]

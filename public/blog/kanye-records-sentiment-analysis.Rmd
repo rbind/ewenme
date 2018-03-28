@@ -1,0 +1,482 @@
+---
+title: "A Sentiment Analysis of Kanye West Records"
+description: "Using the Genius API and sentiment analysis techniques to explore Ye's art."
+date: "2017-03-20"
+tags: ["r", "sentiment-analysis", "kanye-west", "genius"]
+---
+
+
+```{r setup, include=FALSE}
+
+knitr::opts_chunk$set(cache=TRUE, echo = TRUE, warning = FALSE, message = FALSE, out.width = '100%', dpi = 180, dev = 'svg')
+
+library(RCurl); library(ggplot2); library(hrbrthemes); library(tidytext); library(data.table); library(tidyverse); library(forcats); library(ggalt); library(broom); library(stringr); library(httr); library(jsonlite); library(rvest)
+
+df <- readRDS("../data/kanye.Rda")
+
+```
+
+
+```{r functions, include=FALSE, eval=FALSE}
+
+# LAST FM API ----------------------------------------------------------------
+
+#function to get artist album details from Last.fm's API
+getAlbum <- function(artist, album) {
+  url <- paste0("http://ws.audioscrobbler.com/2.0/?method=album.getinfo&api_key=", API_key,
+                "&artist=", artist, "&album=", album, "&format=json")
+  album_info <- getURL(url)
+  album_info <- fromJSON(album_info)
+  tracks <- do.call("rbind", album_info$album$tracks)
+  tracks <- select(tracks, -`@attr`, -streamable)
+  tracks$album <- as.character(album_info$album$name)
+  tracks$artist <- as.character(album_info$album$artist)
+  tracks$track_no <- seq.int(nrow(tracks))
+  tracks
+}
+
+# GENIUS API ---------------------------------------------------
+
+#functions adapted from Charlie Thompson - http://rcharlie.com/2017-02-16-fitteR-happieR/
+
+# function to get artist details from Genius
+genius_get_artists <- function(artist_name, n_results = 10) {
+  baseURL <- 'https://api.genius.com/search?q='
+  requestURL <- paste0(baseURL, gsub(' ', '%20', artist_name),
+                       '&per_page=', n_results,
+                       '&access_token=', token)
+
+  res <- GET(requestURL) %>% content %>% .$response %>% .$hits
+
+  map_df(1:length(res), function(x) {
+    tmp <- res[[x]]$result$primary_artist
+    list(
+      artist_id = tmp$id,
+      artist_name = tmp$name
+    )
+  }) %>% unique
+}
+
+# scrape Genius lyrics
+lyric_scraper <- function(url) {
+  read_html(url) %>%
+    html_node('lyrics') %>%
+    html_text
+}
+```
+
+```{r ETL, include=FALSE, eval=FALSE}
+
+# genius token
+token <- 'xxxxxxxxx'
+
+# LAST FM -------------------------------------
+
+API_key <- "xxxxxxxxx"
+
+kanye_albums <- c("the college dropout", "late registration", "graduation",
+                  "808s and heartbreaks", "my beautiful dark twisted fantasy",
+                  "yeezus", "the life of pablo")
+
+data <- rbindlist(lapply(kanye_albums, function(x) FUN = getAlbum("kanye west", album = x)))
+
+# GENIUS ------------------------------------
+
+#artist
+genius_artists <- genius_get_artists('Kanye West')
+
+#lyrics
+baseURL <- 'https://api.genius.com/artists/'
+requestURL <- paste0(baseURL, genius_artists$artist_id[1], '/songs')
+
+track_lyric_urls <- list()
+i <- 1
+while (i > 0) {
+  tmp <- GET(requestURL, query = list(access_token = token, per_page = 50, page = i)) %>% content %>% .$response
+  track_lyric_urls <- c(track_lyric_urls, tmp$songs)
+  if (!is.null(tmp$next_page)) {
+    i <- tmp$next_page
+  } else {
+    break
+  }
+}
+
+genius_df <- map_df(1:length(track_lyric_urls), function(x) {
+  lyrics <- lyric_scraper(track_lyric_urls[[x]]$url)
+  # strip out non-lyric text and extra spaces
+  lyrics <- str_replace_all(lyrics, '\\[(Verse [[:digit:]]|Chorus|Outro|Verse|Refrain|Hook|Bridge|Intro|Instrumental)\\]|[[:digit:]]', '')
+  lyrics <- str_replace_all(lyrics, '\\n', ' ')
+  lyrics <- str_replace_all(lyrics, '([A-Z])', ' \\1')
+  lyrics <- str_replace_all(lyrics, ' {2,}', ' ')
+  lyrics <- tolower(str_trim(lyrics))
+  tots <- list(
+    track_name = track_lyric_urls[[x]]$title,
+    lyrics = lyrics
+  )
+  return(tots)
+})
+
+# JOIN --------------------------------------
+
+test <- genius_df
+
+genius_df$track_name[genius_df$track_name == "School Spirit (Skit 1)"] <- "School Spirit Skit 1"
+genius_df$track_name[genius_df$track_name == "School Spirit (Skit 2)"] <- "School Spirit Skit 2"
+genius_df$track_name[genius_df$track_name == "Lil' Jimmy (Skit)"] <- "Lil Jimmy Skit"
+genius_df$track_name[genius_df$track_name == "Drive Slow"] <- "Drive Slow (feat. Paul Wall & GLC)"
+genius_df$track_name[genius_df$track_name == "My Way Home"] <- "My Way Home (feat. Common)"
+genius_df$track_name[genius_df$track_name == "Crack Music"] <- "Crack Music (feat. The Game)"
+genius_df$track_name[genius_df$track_name == "Diamonds From Sierra Leone (Remix)"] <- "Diamonds From Sierra Leone (Remix) [feat. Jay-Z]"
+genius_df$track_name[genius_df$track_name == "We Major"] <- "We Major (feat. Nas & Really Doe)"
+genius_df$track_name[genius_df$track_name == "Gone"] <- "Gone (feat. Consequence & Cam'ron)"
+genius_df$track_name[genius_df$track_name == "Diamonds from Sierra Leone"] <- "Diamonds From Sierra Leone (Bonus Track)"
+genius_df$track_name[genius_df$track_name == "Late"] <- "Late (Hidden Track)"
+genius_df$track_name[genius_df$track_name == "Drunk and Hot Girls"] <- "Drunk & Hot Girls"
+genius_df$track_name[genius_df$track_name == "Pinocchio Story"] <- "Pinocchio Story (Freestyle Live from Singapore)"
+
+genius_df <- genius_df %>%
+  mutate(name= tolower(str_replace(track_name, '[[:punct:]]', ''))) %>%
+  filter(!duplicated(name)) %>%
+  select(-track_name)
+
+kanye_df <- data %>%
+  mutate(name = tolower(str_replace(name, '[[:punct:]]', ''))) %>%
+  left_join(genius_df, by = 'name')
+
+rm(data, genius_df, kanye_albums, API_key, baseURL, i, requestURL, tmp, token,
+   track_lyric_urls, url)
+
+### EXPORT -------------------------------------------------
+
+saveRDS(kanye_df, "data.Rda")
+
+```
+
+PSA: This blog *will* cover other stuff besides music, I promise...this post is the fruits of a recent meander into the new [`ggalt`](https://cran.r-project.org/web/packages/ggalt/index.html), [`hrbrthemes`](https://cran.r-project.org/web/packages/hrbrthemes/index.html) and [`tidytext`](https://cran.r-project.org/web/packages/tidytext/index.html) packages.[^fullcode]
+
+## Intro
+
+Kanye West is responsible for some of the realest, funniest ("*if you fall on the concrete thats your ass fault*"...asphalt...anyone?) and inspiring lyrics in music. The strength of these words has had a profound effect on me and my generation. Can the application of sentiment analysis techniques help us understand more about his art?
+
+I'm careful to state that this is **not** a sentiment analysis of the music per se - nothing in here about keys, tempo, melody or any other components of music that influence the emotional valence of the piece[^RCharlie] - the analysis is reflective of the lyrical content only, while the sample is limited to Ye's solo studio albums (album editions taken from Last.fm [here](https://www.last.fm/music/Kanye+West/+albums)). Also, the analysis includes lyrics from artists featured on the records, so is representative of the body of work rather than the individual.
+
+```{r echo = FALSE, out.width = "75%", fig.align = "center"}
+knitr::include_graphics("/img/2017-03-20-Kanye_sentiment_analysis/808s_heart.jpg")
+```
+
+## The Data
+
+See the footnotes for links to full code and more information on data extraction, using the [Genius](https://docs.genius.com/) and [Last.fm](http://www.last.fm/api) APIs. Essentially, this is the tidied-up output of Kanye album lyrics:
+
+```{r echo=FALSE}
+# remove track part cues
+df$lyrics <- gsub("\\[[^\\]]*\\]", "", df$lyrics, perl=TRUE)
+
+df$duration <- as.numeric(df$duration)
+
+#make album an ordered factor
+df$album <- fct_inorder(as.factor(df$album))
+
+glimpse(df)
+```
+
+```{r, include=FALSE}
+#turn the data into one row, one word, and remove stop words
+tidy_df <- df %>%
+  unnest_tokens(word, lyrics) %>%
+  filter(!word %in% c("la", "uh"))
+
+#censor some things
+tidy_df$word[tidy_df$word == "nigga"] <- "n**ga"
+tidy_df$word[tidy_df$word == "niggas"] <- "n**gas"
+tidy_df$word[tidy_df$word == "shit"] <- "s**t"
+tidy_df$word[tidy_df$word == "fuck"] <- "f**k"
+
+#sentiment_df
+sentiment_df <- df %>%
+  unnest_tokens(word, lyrics) %>%
+  anti_join(stop_words) %>%
+  filter(!word %in% c("la", "uh"))
+
+#censor some things
+sentiment_df$word[sentiment_df$word == "nigga"] <- "n**ga"
+sentiment_df$word[sentiment_df$word == "niggas"] <- "n**gas"
+sentiment_df$word[sentiment_df$word == "shit"] <- "s**t"
+sentiment_df$word[sentiment_df$word == "fuck"] <- "f**k"
+```
+
+## First look
+
+To begin with, a simple look at Ye's lyric count by album:
+
+```{r echo=FALSE}
+
+tidy_df %>%
+  count(n(), album) %>%
+  ggplot(aes(x=n, y=fct_rev(album))) +
+  geom_lollipop(point.colour="firebrick", point.size=2, horizontal=TRUE) +
+  scale_x_comma(breaks = seq(0, 15000, by=2500), limits = c(0, 15000)) +
+  theme_ipsum(grid="X", base_size = 14, axis_title_size = 14, caption_size = 12,
+              plot_title_size = 18, subtitle_size = 14) +
+  labs(title="How many words are in Kanye West albums?",
+       x=NULL,
+       y=NULL,
+       subtitle="Records in chronological order",
+       caption="Lyric data from Genius (https://genius.com/)")
+```
+
+*The College Dropout* is clearly the album with biggest (lyrical) bang for your buck, registering **13,679 words**. *808s & Heartbreak* and *Yeezus* lag the farthest behind (below five-thousand a piece, and around one-third of *College Dropout*), and with good reason - *808s* is memorably less lyrically dense than the others, while the latter has the smallest number of tracks. 
+
+We can normalise by track length and give a measure of 'lyrical density' (words-per-second) across time:
+
+```{r}
+album_df <- tidy_df %>%
+  count(n(), album) 
+
+album_df_b <- df %>%
+  group_by(album) %>%
+  summarise(duration=sum(duration)) %>%
+  left_join(album_df, by="album") %>%
+  mutate(count_per_sec=n/duration)
+
+ggplot(album_df_b, aes(x=count_per_sec, y=fct_rev(album))) +
+  geom_lollipop(point.colour="firebrick", point.size=2, horizontal=TRUE) +
+  theme_ipsum(grid="X", base_size = 14, axis_title_size = 14, caption_size = 12,
+              plot_title_size = 18, subtitle_size = 14) +
+  labs(title="Words-per-second in Kanye West albums",
+       x=NULL,
+       y=NULL,
+       subtitle="Records in chronological order",
+       caption="Lyric data from Genius (https://genius.com/)")
+```
+
+Again, as expected, *808s* hangs back in the words-per-second stakes. *The Life Of Pablo* (TLOP) exhibits a lyrical pace more comparable to Kanye's earlier albums (*College Dropout* stays top, still). It's trickier to say for sure if his flow/delivery is a throwback from this metric alone (would be more optimal if tempo was incorporated into this equation, and remember that this figure includes breakdowns, outros, etc.) but maybe someone's been listening...
+
+```{r echo = FALSE, out.width = "75%", fig.align = "center"}
+knitr::include_graphics("/img/2017-03-20-Kanye_sentiment_analysis/kanye_tweets.png")
+```
+
+It's worth taking a look at how some of this looks across tracks, too.
+
+```{r echo=FALSE}
+
+tidy_df %>%
+  count(n(), name) %>%
+  ggplot() +
+  geom_histogram(aes(n), fill="firebrick") +
+  scale_x_comma(breaks = seq(0, 3000, by=500), limits = c(0, 3000)) +
+  theme_ipsum(base_size = 14, axis_title_size = 14, caption_size = 12,
+              plot_title_size = 18, subtitle_size = 14) +
+  annotate("text", label = "'Last Call'", x = 2800, y = 2) +
+  labs(title="Distribution of word counts in Kanye West album tracks",
+       x="Word count",
+       y="No. of tracks",
+       caption="Lyric data from Genius (https://genius.com/)")
+```
+
+'Last Call' stands lone and tall at **2,745** words, with most in and around the 500-mark. However, 'Last Call' is also the *longest* Kanye album track (12:40(!!)). As before, what happens if we normalise by track length?
+
+```{r, echo=FALSE}
+
+tidy_df %>%
+  group_by(name) %>%
+  summarise(word_count=n()) %>%
+  left_join(df, by="name") %>%
+  mutate(count_per_sec=word_count/duration) %>%
+  ggplot() +
+  geom_histogram(aes(count_per_sec), fill="firebrick") +
+  theme_ipsum(base_size = 14, axis_title_size = 14, caption_size = 12,
+              plot_title_size = 18, subtitle_size = 14) +
+  annotate("text", label = "'Freestyle 4'", x = 8.3, y = 2) +
+  labs(title="Words-per-second distribution of Kanye West album tracks",
+       x="Words per Second",
+       y="No. of tracks",
+       caption="Lyric data from Genius (https://genius.com/)")
+```
+
+Now, 'Freestyle 4' off of *TLOP* is highest - remember, this metric of lyrical density is inclusive of breakdowns and such. If you listen to this track which is just over two-minutes long, you'll see there is literally no let-up from the big man.
+
+For good measure, let's end this section with a quick look at the range of lyric counts by record (hint: excuse for the dumbbell chart):
+
+```{r echo=FALSE}
+df %>%
+  group_by(album) %>%
+  summarise(min=min(duration), max=max(duration)) %>%
+  ggplot(aes(y=fct_rev(album), x=min, xend=max)) + 
+  geom_dumbbell(size=3, color="#e3e2e1", 
+                colour_x = "firebrick", colour_xend = "firebrick",
+                dot_guide=TRUE, dot_guide_size=0.25) +
+  scale_x_continuous(breaks = seq(0, 800, by=200)) +
+  labs(x="Seconds", y=NULL, title="Range of track lengths in Kanye West albums",
+       caption="Lyric data from Genius (https://genius.com/)") +
+  theme_ipsum(base_size = 14, axis_title_size = 14, caption_size = 12,
+              plot_title_size = 18, subtitle_size = 14)
+```
+
+How similar are *Graduation*, *808s* and *Yeezus*?
+
+## Feelings
+
+We've touched on things like the word count and lyrical density of Kanye's records. Now, lets start to explore what is actually being said.
+
+*Note: from this point on, English 'stop words' (e.g. and, or, but) are excluded from the analysis.*
+
+```{r echo=FALSE}
+sentiment_df %>%
+  group_by(word) %>%
+  summarise(count=n()) %>%
+  top_n(n=10, wt=count) %>%
+  ggplot(aes(x=reorder(str_to_upper(word), -count), y=count)) +
+  geom_lollipop(point.colour="firebrick", point.size=2) +
+  theme_ipsum(base_size = 14, axis_title_size = 14, caption_size = 12,
+              plot_title_size = 18, subtitle_size = 14) +
+  labs(title="Most common lyrics in Kanye West albums",
+       x=NULL,
+       y=NULL,
+       subtitle="Ranked by word count",
+       caption="Lyric data from Genius (https://genius.com/)")
+
+```
+
+Kanye's confirmed it, everyone - love conquers all (even sh*t). We'll need to dig further to get into the emotion and the message contained in the tracks that embody these words, though.
+
+```{r echo = FALSE, out.width = "75%", fig.align = "center"}
+knitr::include_graphics("/img/2017-03-20-Kanye_sentiment_analysis/kanye_croissants.gif")
+```
+
+I tried to quantify the amount of different types of sentiment in Kanye's lyrics by using `tidytext`. In this case, I went with the [NRC lexicon](http://saifmohammad.com/WebPages/NRC-Emotion-Lexicon.htm) developed by Saif Mohammad which associates words with some sentiment categories: positive, negative, anger, anticipation, disgust, fear, joy, sadness, surprise, and trust. As a Psychology graduate with some experience in qualitative analysis (and as a music lover, first and foremost) I'm mindful that a lexicon is a simplification that will undoubtedly miss important contextual and cultural cues (especially important in understanding art that nod to lots of subcultures), but can provide us with a useful summary in evaluating the lyric's emotional composition.
+
+```{r}
+nrc <- sentiments %>%
+  filter(lexicon == "nrc") %>%
+  dplyr::select(word, sentiment)
+
+albums <- sentiment_df %>%
+  group_by(album) %>%
+  mutate(total_words = n()) %>%
+  ungroup() %>%
+  distinct(album, total_words)
+
+by_album_sentiment <- sentiment_df %>%
+  inner_join(nrc, by = "word") %>%
+  count(sentiment, album) %>%
+  ungroup() %>%
+  complete(sentiment, album, fill = list(n = 0)) %>%
+  inner_join(albums) %>%
+  group_by(album, sentiment, total_words) %>%
+  summarize(words = sum(n)) %>%
+  mutate(album_prop=words/total_words) %>%
+  ungroup()
+
+by_album_sentiment %>%
+  filter(!sentiment %in% c("negative", "positive", "trust", "fear")) %>%
+  ggplot(aes(x=album, y=album_prop, group=sentiment, colour=sentiment)) +
+  geom_line(size=1.5) +
+  theme_ipsum(base_size = 14, axis_title_size = 14, grid="Y", caption_size = 12,
+              plot_title_size = 18, subtitle_size = 14) +
+  scale_color_ipsum() +
+  scale_y_percent(limits = c(0, 0.1), breaks = seq(0, 0.1, by=0.02)) +
+  labs(title="Sentiment in Kanye West albums",
+       x=NULL,
+       y="Sentiment as a % of album lyric count",
+       subtitle="Powered by the NRC lexicon",
+       caption="Lyric data from Genius (https://genius.com/)") +
+  theme(axis.text.x=element_text(angle=45, hjust = 1, size=10)) +
+  theme(legend.position="top")
+
+```
+
+So, what did we learn here? It looks like *Graduation's* lyrics have the highest (proportional) rate of anticipation and surprise sentiment, compared to the other records. Interestingly, this is in keeping with the themes captured in Takashi Murukami's cover art (below), where we see 'Dropout Bear' being thrust out into a new world.
+
+```{r echo = FALSE, out.width = "75%", fig.align = "center"}
+knitr::include_graphics("/img/2017-03-20-Kanye_sentiment_analysis/kanye_graduation.jpg")
+```
+
+*My Beautiful Dark Twisted Fantasy* has the highest rate of anger and disgust, comparitively. Again, these are prominent in George Condo's bastardized, surreal vision for the record.
+
+```{r echo = FALSE, out.width = "75%", fig.align = "center"}
+knitr::include_graphics("/img/2017-03-20-Kanye_sentiment_analysis/kanye_mbdtf.png")
+```
+
+Can we look at this record closer to see where these kinds of feelings are most prominent?
+
+```{r}
+bing <- sentiments %>%
+  filter(lexicon == "bing") %>%
+  dplyr::select(word, sentiment)
+
+tracks <- sentiment_df %>%
+  group_by(name, album, track_no) %>%
+  mutate(total_words = n()) %>%
+  ungroup() %>%
+  distinct(name, album, track_no, total_words)
+
+by_track_sentiment <- sentiment_df %>%
+  inner_join(bing, by = "word") %>%
+  count(sentiment, name) %>%
+  ungroup() %>%
+  complete(sentiment, name, fill = list(n = 0)) %>%
+  inner_join(tracks) %>%
+  group_by(name, album, track_no, sentiment, total_words) %>%
+  summarize(words = sum(n)) %>%
+  spread(sentiment, words, fill = 0) %>%
+  mutate(sentiment = positive - negative) %>%
+  ungroup()
+
+by_track_sentiment %>%
+  filter(album == "My Beautiful Dark Twisted Fantasy") %>%
+  ggplot(aes(x=sentiment, y=reorder(str_to_title(name), -track_no))) +
+  geom_lollipop(point.colour="firebrick", point.size=2, horizontal=TRUE) +
+  theme_ipsum(base_size = 14, axis_title_size = 14,  grid="Y", caption_size = 12,
+              plot_title_size = 18, subtitle_size = 14) +
+  labs(title="Ratio of negative/positive sentiment in \nMy Beautiful Dark Twisted Fantasy",
+       x="Sentiment ratio (negative-positive)",
+       y=NULL,
+       subtitle="Powered by the Bing lexicon",
+       caption="Lyric data from Genius (https://genius.com/)")
+```
+
+The above uses the [Bing lexicon](https://www.cs.uic.edu/~liub/FBS/sentiment-analysis.html#lexicon) to examine how positive/negative sentiment manifests by track in *My Beautiful Dark Twisted Fantasy*. 'Monster' is furthest to the left with the highest ratio of negative to positive sentiment in it's lyrics, followed closely by 'So Appalled'. In fact, 'All of the Lights' would appear to be the only real respite for 'positive' lyrical sentiment.
+
+What if we apply this to the rest of the discography, and see which tracks score highest for positive/negative sentiment across the board?
+
+```{r echo=FALSE}
+
+by_track_sentiment %>%
+  arrange(desc(sentiment)) %>%
+  filter(row_number()<=10 | row_number()>=n()-10) %>%
+  ggplot(aes(x=sentiment, y=reorder(str_to_title(name), sentiment))) +
+  geom_lollipop(point.colour="firebrick", point.size=2, horizontal=TRUE) +
+  theme_ipsum(base_size = 14, axis_title_size = 14,  grid="Y", caption_size = 12,
+              plot_title_size = 18, subtitle_size = 14) +
+  labs(title="Highest ratios of positive and negative sentiment in \nKanye West's album cuts",
+       x="Sentiment ratio (negative-positive)",
+       y=NULL,
+       subtitle=" Powered by the Bing lexicon",
+       caption="Lyric data from Genius (https://genius.com/)")
+```
+
+It might be surprising to see 'Amazing' way out in front (n.b. I explain Love Lockdown's perhaps false position in the conclusion). Remember, this is based on lyrics *only* - here's a reminder of the hook...
+
+> *No matter what, you'll never take that from me,*
+*My reign is as far as your eyes can see;*
+*It's amazing, so amazing, so amazing, so amazing,*
+*It's amazing, so amazing, so amazing, so amazing*
+*It's amazing, so amazing, so amazing, so amazing*
+*It's amazing, so amazing, so amazing, so amazing*
+*It's amazing*
+
+## Some last words
+
+We were able to answer some novel questions with this analysis. How many lyrics are in Kanye's tracks and albums/tracks, and how are these distributed by track and within-track (lyrical density)? What lyrics are most common, and how can we summarise the emotional content of these lyrics using different categories of sentiment? How does this look at an album and track level?
+
+Of course, we're missing the full story by just considering words as individual units and the relationship to sentiment in this way. Lyric's meaning often comes from their relation to each other. In future, one can try and get at this by exploring the co-occurrence of words, or consecutive sequences of words known as n-grams, and validating sentiment scores by understanding context (e.g. 'loving' preceded by 'not' in 'Love Lockdown' would not have been picked up here, hence why it scored unexpectedly high on 'positive' sentiment).
+
+Finally, a treat for those who know. Thanks for letting me get in my zone.
+
+```{r echo = FALSE, out.width = "75%", fig.align = "center"}
+knitr::include_graphics("/img/2017-03-20-Kanye_sentiment_analysis/kanye_zone.jpg")
+```
+
+[^fullcode]: To keep the post concise I don't show all of the code, especially code that generates figures. But you can find the full code [here](https://github.com/rbind/ewenme/blob/master/content/blog/kanye-records-sentiment-analysis.Rmd).
+[^RCharlie]: some of these factors are captured by Spotify, as explored in [this piece](http://rcharlie.com/2017-02-16-fitteR-happieR/) (a big inspiration for this post). This data was not available for Kanye's full studio discography through the Spotify API, at the time of this analysis.

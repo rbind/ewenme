@@ -1,0 +1,16 @@
+base
+bitops
+RCurl
+jsonlite
+httr
+tidyverse
+ggplot2
+tibble
+tidyr
+readr
+purrr
+dplyr
+stringr
+forcats
+data.table
+bindrcpp

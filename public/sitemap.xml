@@ -1,72 +1,65 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://ewen.io/projects/</loc>
-  </url>
-  
-  <url>
-    <loc>https://ewen.io/about/</loc>
-  </url>
-  
-  <url>
-    <loc>https://ewen.io/blog/2017-12-06-introducing_geniusr/</loc>
+    <loc>https://ewen.io/blog/introducing-geniusr/</loc>
     <lastmod>2017-12-06T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://ewen.io/blog/2017-11-09-hacking_homelessness_and_pdf_prisons/</loc>
+    <loc>https://ewen.io/blog/hacking-homelessness-pdf-prisons/</loc>
     <lastmod>2017-11-09T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://ewen.io/blog/2017-11-06-linear_programming_fantasy/</loc>
+    <loc>https://ewen.io/blog/linear-programming-fantasy/</loc>
     <lastmod>2017-11-06T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://ewen.io/blog/2017-10-11-meet_dumb_hardwax/</loc>
+    <loc>https://ewen.io/blog/meet-dumb-hardwax/</loc>
     <lastmod>2017-10-11T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://ewen.io/blog/2017-09-07-dissecting_european_football_transfers/</loc>
+    <loc>https://ewen.io/blog/dissecting-euro-football-transfers/</loc>
     <lastmod>2017-09-07T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://ewen.io/blog/2017-07-27-open_policing_sparklyr_shiny/</loc>
+    <loc>https://ewen.io/blog/open-policing-sparklyr-shiny/</loc>
     <lastmod>2017-07-27T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://ewen.io/blog/2017-06-25-fpl_mythbusting/</loc>
+    <loc>https://ewen.io/blog/fpl-mythbusting-with-fplr/</loc>
     <lastmod>2017-06-25T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://ewen.io/blog/2017-05-30-geofacet_ldn_pubs/</loc>
+    <loc>https://ewen.io/blog/geofacet-london-pubs/</loc>
     <lastmod>2017-05-30T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://ewen.io/blog/2017-04-23-uk_parliament_representativeness/</loc>
+    <loc>https://ewen.io/blog/uk-parliament-representativeness/</loc>
     <lastmod>2017-04-23T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://ewen.io/blog/2017-03-20-kanye_sentiment_analysis/</loc>
+    <loc>https://ewen.io/blog/kanye-records-sentiment-analysis/</loc>
     <lastmod>2017-03-20T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://ewen.io/blog/2017-03-01-vinylspotting/</loc>
+    <loc>https://ewen.io/blog/vinylspotting-discogs-fairytale/</loc>
     <lastmod>2017-03-01T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://ewen.io/tags/api/</loc>
-    <lastmod>2017-12-06T00:00:00+00:00</lastmod>
+    <lastmod>2017-03-01T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -77,20 +70,8 @@
   </url>
   
   <url>
-    <loc>https://ewen.io/tags/blogdown/</loc>
-    <lastmod>2017-07-27T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>https://ewen.io/blog/</loc>
     <lastmod>2017-12-06T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://ewen.io/tags/bots/</loc>
-    <lastmod>2017-10-11T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -101,13 +82,37 @@
   </url>
   
   <url>
-    <loc>https://ewen.io/tags/fantasy-football/</loc>
+    <loc>https://ewen.io/tags/everypolitician/</loc>
+    <lastmod>2017-04-23T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://ewen.io/tags/football/</loc>
+    <lastmod>2017-09-07T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://ewen.io/tags/fpl/</loc>
     <lastmod>2017-11-06T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
+    <loc>https://ewen.io/tags/fplr/</loc>
+    <lastmod>2017-06-25T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://ewen.io/tags/genius/</loc>
+    <lastmod>2017-12-06T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://ewen.io/tags/geniusr/</loc>
     <lastmod>2017-12-06T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
@@ -119,8 +124,14 @@
   </url>
   
   <url>
-    <loc>https://ewen.io/tags/gis/</loc>
+    <loc>https://ewen.io/tags/ggplot2/</loc>
     <lastmod>2017-05-30T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://ewen.io/tags/gis/</loc>
+    <lastmod>2017-11-09T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -131,26 +142,14 @@
   </url>
   
   <url>
-    <loc>https://ewen.io/tags/kanye/</loc>
+    <loc>https://ewen.io/tags/kanye-west/</loc>
     <lastmod>2017-03-20T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://ewen.io/tags/linear-optimization/</loc>
-    <lastmod>2017-11-06T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://ewen.io/tags/linear-programming/</loc>
     <lastmod>2017-11-06T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://ewen.io/tags/mapping/</loc>
-    <lastmod>2017-11-09T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -163,11 +162,6 @@
   <url>
     <loc>https://ewen.io/tags/package/</loc>
     <lastmod>2017-12-06T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://ewen.io/page/</loc>
     <priority>0</priority>
   </url>
   
@@ -208,20 +202,26 @@
   </url>
   
   <url>
-    <loc>https://ewen.io/tags/sports/</loc>
-    <lastmod>2017-09-07T00:00:00+00:00</lastmod>
+    <loc>https://ewen.io/tags/sparklyr/</loc>
+    <lastmod>2017-07-27T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://ewen.io/tags/</loc>
-    <lastmod>2017-12-06T00:00:00+00:00</lastmod>
+    <lastmod>2017-03-01T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://ewen.io/tags/tweetbot/</loc>
+    <lastmod>2017-10-11T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://ewen.io/tags/web-scraping/</loc>
-    <lastmod>2017-10-11T00:00:00+00:00</lastmod>
+    <lastmod>2017-09-07T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   

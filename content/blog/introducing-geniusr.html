@@ -1,0 +1,80 @@
+---
+title: "Introducing geniusr"
+description: "I made an R interface to the Genius API."
+date: "2017-12-06"
+tags: ["r", "package", "genius", "geniusr"]
+---
+
+
+
+<p>I made a new R package (🔥📦🔥) this week. My <a href="https://ewenme.rbind.io/blog/2017-03-20-kanye_sentiment_analysis/">sophomore post on this site</a> (from way back in March) was a text-based analysis of Kanye West records, which exposed me to the <a href="https://genius.com/">Genius</a> API<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a> once I wanted to get hold of some lyrical content. In the process, I wrote some functions for playing nicely with this API in R that I knew would probably be handy for others dabbling/wanting to dabble in similar matters.</p>
+<p>Since then, I’ve found a window of time to build on and consolidate this work into a well-rounded package. <code>geniusr</code> is now <a href="https://cran.r-project.org/web/packages/geniusr/index.html">available on CRAN</a>. This is the tour.<a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a></p>
+<div id="searchin" class="section level2">
+<h2>Searchin’</h2>
+<p>The Genius API’s search capabilities allows for users to scan all hosted content on the site (i.e. all songs). A couple of quick implementations exist in the package for retrieving artist (<code>search_artist()</code>) and song (<code>search_song()</code>) matches for search terms. Let’s start by looking for songs brought back by a simple search for “Versace”.</p>
+<pre class="r"><code>versace_search &lt;- search_song(search_term = &quot;Versace&quot;) %&gt;% glimpse</code></pre>
+<pre><code>## Observations: 10
+## Variables: 5
+## $ song_id         &lt;int&gt; 176872, 2898687, 182654, 176951, 183346, 20050...
+## $ song_name       &lt;chr&gt; &quot;Versace (Remix) (Ft. Drake)&quot;, &quot;Versace on the...
+## $ song_lyrics_url &lt;chr&gt; &quot;https://genius.com/Migos-versace-remix-lyrics...
+## $ artist_id       &lt;int&gt; 44080, 500, 1319, 44080, 554, 32397, 2236, 358...
+## $ artist_name     &lt;chr&gt; &quot;Migos&quot;, &quot;Bruno Mars&quot;, &quot;Meek Mill&quot;, &quot;Migos&quot;, &quot;...</code></pre>
+</div>
+<div id="goin-meta" class="section level2">
+<h2>Goin’ Meta</h2>
+<p>Wanna bring back some fuller information about a particular song (<code>get_song_meta()</code>), artist (<code>get_artist_meta()</code>) or album (<code>get_album_meta()</code>)? Well, now you can. Let’s test one out - how about investigating a classic Versace-themed track from our last search, ‘Versace’ by Migos.</p>
+<pre class="r"><code>versace_meta &lt;- get_song_meta(song_id = versace_search$song_id[5]) %&gt;% glimpse</code></pre>
+<pre><code>## Observations: 1
+## Variables: 13
+## $ song_id            &lt;int&gt; 183346
+## $ song_name          &lt;chr&gt; &quot;Versace&quot;
+## $ song_lyrics_url    &lt;chr&gt; &quot;https://genius.com/Tyga-versace-lyrics&quot;
+## $ song_art_image_url &lt;chr&gt; &quot;https://images.genius.com/934f724eda446a64...
+## $ release_date       &lt;chr&gt; &quot;2013-01-01&quot;
+## $ pageviews          &lt;int&gt; 82623
+## $ annotation_count   &lt;int&gt; 25
+## $ artist_id          &lt;int&gt; 554
+## $ artist_name        &lt;chr&gt; &quot;Tyga&quot;
+## $ artist_url         &lt;chr&gt; &quot;https://genius.com/artists/Tyga&quot;
+## $ album_id           &lt;int&gt; 38405
+## $ album_name         &lt;chr&gt; &quot;Well Done 4&quot;
+## $ album_url          &lt;chr&gt; &quot;https://genius.com/albums/Tyga/Well-done-4&quot;</code></pre>
+<p>With this metadata, we can easily pull up the song’s artwork, for example. Why not.</p>
+<pre class="r"><code>knitr::include_graphics(path = versace_meta$song_art_image_url)</code></pre>
+<p><img src="https://images.genius.com/934f724eda446a64483f52d66dfcf8ca.475x475x1.jpg" width="75%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="gettin-lyrical" class="section level2">
+<h2>Gettin’ Lyrical</h2>
+<p>The package allows you to grab lyrics for tracks real quick, using the <code>scrape_lyrics_id()</code> (or <code>scrape_lyrics_url()</code>) function.<a href="#fn3" class="footnoteRef" id="fnref3"><sup>3</sup></a> While we’re at it, let’s call on <code>tidytext</code> and answer a question for the people - <em>just how much were the Migos chatting about “Versace” in ‘Versace’?</em></p>
+<pre class="r"><code># get words proportion representation
+versace_prop &lt;- scrape_lyrics_url(versace_meta$song_lyrics_url) %&gt;%
+  unnest_tokens(word, line) %&gt;%
+  count(word) %&gt;%
+  mutate(proportion = n / sum(n)) %&gt;%
+  # was the word versace or the rest
+  mutate(versace_or_the_rest=if_else(word == &quot;versace&quot;, &quot;Versace&quot;, &quot;Not Versace&quot;)) %&gt;%
+  group_by(versace_or_the_rest) %&gt;%
+  summarise(proportion=sum(proportion)*100)
+
+# waffle plot
+parts &lt;- c(&quot;Not Versace&quot; = versace_prop$proportion[[1]],
+           &quot;Versace&quot; = versace_prop$proportion[[2]])
+
+waffle(parts, rows = 8, size = 1, colors = c(&quot;#3C3A32&quot;, &quot;#E3BD08&quot;), use_glyph = &quot;volume-up&quot;, 
+       glyph_size = 10, title = &quot;How much Versace is in Migos - &#39;Versace&#39;?&quot;) +
+  labs(caption=&quot;@ewen_&quot;) +
+  theme_void(base_family = &quot;Work Sans&quot;, base_size = 12) +
+  theme(legend.position = &quot;bottom&quot;)</code></pre>
+<p><img src="/blog/introducing-geniusr_files/figure-html/lyrics-1.svg" width="672" /></p>
+<p>The word “Versace” represents 32.5% of the lyrics in Migos - Versace. Phew.</p>
+<p>That’s all for now, enjoy the package and keep up with future developments over at the <a href="https://github.com/ewenme/geniusr">GitHub repo</a>.</p>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>Genius’ <a href="https://docs.genius.com/">documentation pages</a> are helpful if you want to know more about the API.<a href="#fnref1">↩</a></p></li>
+<li id="fn2"><p>For installation &amp; authentication guidance, head for the <a href="https://github.com/ewenme/geniusr">README</a>.<a href="#fnref2">↩</a></p></li>
+<li id="fn3"><p>As well as API helper functions, the package includes things that are scraping the Genius site (Genius’ API doesn’t include lyrics, for example). Be sure to read the <a href="https://genius.com/static/terms">terms of service</a> in case of any concerns.<a href="#fnref3">↩</a></p></li>
+</ol>
+</div>

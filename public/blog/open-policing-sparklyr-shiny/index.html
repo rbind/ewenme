@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"  lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<title>Advocating for Open Policing with sparklyr and Shiny | ewen</title>
+
+
+<link rel="stylesheet" href="https://ewen.io/css/style.css"/><link rel='stylesheet' href='https://ewen.io/css/custom.css'></head>
+<body>
+
+<section class="section">
+  <div class="container">
+    <nav class="nav">
+      <div class="nav-left">
+        <a class="nav-item" href="https://ewen.io/"><h1 class="title is-4">ewen</h1></a>
+      </div>
+      <div class="nav-right">
+        <nav class="nav-item level is-mobile"><a class="level-item" href='mailto:ewenhenderson@gmail.com' target='_blank' rel='noopener'>
+            <span class="icon">
+              <i class><svg viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+    
+    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+    <polyline points="22,6 12,13 2,6"/>
+    
+  </svg></i>
+            </span>
+          </a><a class="level-item" href='https://github.com/ewenme' target='_blank' rel='noopener'>
+            <span class="icon">
+              <i class><svg viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+    
+    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+    
+  </svg></i>
+            </span>
+          </a><a class="level-item" href='https://twitter.com/ewen_' target='_blank' rel='noopener'>
+            <span class="icon">
+              <i class><svg viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
+    
+    <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/>
+    
+  </svg></i>
+            </span>
+          </a></nav>
+      </div>
+    </nav>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="subtitle is-6 is-pulled-right">
+      
+      
+<a class="subtitle is-6" href="/tags/r">#r</a>
+
+
+
+  
+  | <a class="subtitle is-6" href="/tags/spark">#spark</a>
+  
+  | <a class="subtitle is-6" href="/tags/sparklyr">#sparklyr</a>
+  
+  | <a class="subtitle is-6" href="/tags/shiny">#shiny</a>
+  
+
+      
+    </div>
+    <h2 class="subtitle is-6">July 27, 2017</h2>
+    <h1 class="title">Advocating for Open Policing with sparklyr and Shiny</h1>
+    
+    <div class="content">
+      <p>I don’t have much reason to dip in to big data processing tools in my current working capacity. Luckily for me, I have a (self-indulgent) blog now - perfect place to scratch these sorts of itches, and then share the resultant mishaps with the whole world.</p>
+<p>I’d recently been working on a <a href="https://shiny.rstudio.com/">Shiny</a> app for increasing visibility and engagement with police violence data. It just so happened that I stumbled across <a href="https://openpolicing.stanford.edu/">Stanford’s Open Policing Project</a>, with some hefty open data ripe for exploring with big data tools, right after the app’s first build was finished.<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a> I figured introducing these things together should make for a smooth read.</p>
+<div id="stanfords-open-policing-project" class="section level2">
+<h2>Stanford’s Open Policing Project</h2>
+<p>Stanford is, slowly but surely, compiling and standardizing data on vehicle and pedestrian stops from law enforcement departments across the U.S.</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/iwOWcuFjNfw" frameborder="0" allowfullscreen>
+</iframe>
+<p>This information is being made freely available - not just the data, but everything needed to reproduce the analysis (<a href="https://github.com/5harad/openpolicing">repo in here</a>). The data files for d/l have been heavily cleaned (sounds like some clean-up job, too), but the strong-stomached can contact the project team for access to the raw stuff.</p>
+<p>All the ingredients for a juicy pet project are in place, then, until I reach this sentence in the project overview:</p>
+<blockquote>
+<p>“We’ve already gathered 130 million records from 31 state police agencies…”</p>
+</blockquote>
+<p>For those of us rocking modest MacBooks est. 2k13, introducing our machines to this magnitude of data may trigger a ripple in the space-time. Without any further ado, I’ll move onto my next trick.</p>
+</div>
+<div id="introducing-sparklyr" class="section level2">
+<h2>Introducing spark(lyr)</h2>
+<p><a href="http://spark.rstudio.com/">sparklyr</a> is R Studio’s interface to <a href="https://spark.apache.org/">Apache Spark</a>, a pre-eminent open-source cluster-computing framework. The coup de grâce for sparklyr is it’s complete <a href="https://github.com/hadley/dplyr">dplyr</a> back-end, meaning there isn’t too much unfamiliar code to see here.</p>
+<blockquote>
+<p>The what-does-Spark-do TL;DR: Spark makes programs run faster by utilising a distributed computing engine for expressive data processing. A useful analogy - now, you’re sending one person into a house to find something, whereas a distributed system sends someone into each room of the house and they communicate progress to each other.</p>
+</blockquote>
+<p>What happens now? First off, the usual CRAN install/load one-two:</p>
+<pre class="r"><code>install.packages(&quot;sparklyr&quot;)
+library(sparklyr)</code></pre>
+<p>Spark also needs to be installed locally. This is as simple as:</p>
+<pre class="r"><code>spark_install()</code></pre>
+<p>Deploying Spark locally will be as far as this post goes. When you need it, you can find out more about cluster deployment <a href="https://spark.apache.org/docs/2.1.1/">here</a>.</p>
+<p>Now, there are all kinds of Spark configuration options at hand to change the behaviour of sparklyr and the cluster itself. I won’t go into extensive detail on this (Spark do, <a href="https://spark.apache.org/docs/latest/spark-standalone.html">here</a>) - for now, I’ll just initialize a <code>spark_config</code> object with just the amount of memory used for the driver process set.</p>
+<pre class="r"><code>config &lt;- spark_config()
+config[[&quot;sparklyr.shell.driver-memory&quot;]] &lt;- &quot;2G&quot;</code></pre>
+<p>The final step of the sparklyr setup is to establish a connection to the Spark instance:</p>
+<pre class="r"><code>sc &lt;- spark_connect(master = &quot;local&quot;, config = config)</code></pre>
+<p><code>sc</code> is now acting as a remote dplyr data source to the Spark cluster. Nice, but, there’s not much going on over there at the moment. Enter the data.</p>
+</div>
+<div id="back-to-the-data" class="section level2">
+<h2>Back to the Data</h2>
+<p>Stanford have made the police stops data available in a manageable way, as a series of <a href="https://openpolicing.stanford.edu/data/">data files</a> (one for each state). I decided to take a look at Washington, which had all common fields available and relatively few data quality issues.<a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a> There are two main methods for getting data up into a Spark instance.</p>
+<ul>
+<li>Read data into R as normal, and then use sparklyr’s <code>copy_to</code> function to copy the data over</li>
+<li>Read data directly into Spark Dataframes using <code>spark_read_csv</code> (or another of sparklyr’s ‘read’ functions)</li>
+</ul>
+<p>I will be adopting the latter approach. The dataset in question is a not-to-be-sniffed-at 8+ million rows, so I don’t want to be doing much with it in-memory in R. So, here we go…</p>
+<pre class="r"><code>spark_read_csv(sc, name = &quot;wa_stops&quot;,
+               path = &quot;../data/WA-clean.csv&quot;)</code></pre>
+<p>…and, ~five minutes later, it’s showtime. The data has been copied into the Spark cluster, and I promise there’s no more session prep work.<a href="#fn3" class="footnoteRef" id="fnref3"><sup>3</sup></a></p>
+</div>
+<div id="hello-dplyr-my-old-friend" class="section level2">
+<h2><em>“Hello dplyr, my old friend”</em></h2>
+<p>We can use all of your favourite dplyr moves to manipulate the data<a href="#fn4" class="footnoteRef" id="fnref4"><sup>4</sup></a>, and these computations will take place over in the cluster.</p>
+<p>Here’s an example of a dplyr transformation that returns a summary of the data grouped on several demographic fields.</p>
+<pre class="r"><code># initiate spark data source
+demog_stats &lt;- tbl(sc, &quot;wa_stops&quot;) %&gt;%
+  # filter 2011-2015 date range
+  filter(year(stop_date) &gt;= 2011,
+         year(stop_date) &lt;= 2015) %&gt;%
+  # make search/hits boolean fields and a month field
+  mutate(search=if_else(search_conducted == &quot;TRUE&quot;, 1, 0),
+         hits=if_else(contraband_found == &quot;TRUE&quot;, 1, 0),
+         month=month(stop_date)) %&gt;%
+  # group data by desired fields
+  group_by(driver_race, driver_gender, driver_age, county_name,
+           month) %&gt;%
+  # summary stats for stops, searches and hits
+  summarise(n_stops=n(),
+            n_searches=sum(search),
+            n_hits=sum(hits)) %&gt;%
+  # remove grouping
+  ungroup() %&gt;%
+  # drag data from spark to R
+  collect()</code></pre>
+<p>Most of this will be familiar to the dplyr-literate. The function you might not be familiar with is <code>collect</code>, which is the function that gets sparklyr to drop the query result into our R environment. It’s generally advisable not to do too much piping (%&gt;%) at once, so you can debug your code adequately. You can use <em>compute</em> to store query results in Spark within a temporary table, and take into a subsequent query.</p>
+<p>Once necessary data transformations have been done in Spark and collected in R’s environment, you can close the connection down, and it’s back to R for the analysis work.</p>
+<pre class="r"><code>spark_disconnect(sc)</code></pre>
+</div>
+<div id="monitoring-washingtons-police-stops" class="section level2">
+<h2>Monitoring Washington’s Police Stops</h2>
+<p>First, a look at the trends of police stops, searches and ‘hits’ (searches finding contraband) over time. For comparative purposes, I’ve used January 2011 as a baseline figure and measured percentage change from this baseline for each of these metrics.</p>
+<p><img src="/blog/open-policing-sparklyr-shiny_files/figure-html/stop%20trend%20plot-1.svg" width="100%" /></p>
+<p>While stops have remained pretty stable over time, there’s been a drop-off in searches and (an even bigger one) in hits. That is, apart from the immediate period following legalisation of marijuana possession for adults 21 and over at the end of February 2015 in D.C. - I’m hypothesizing that the police were extra vigilant during this period to make sure such a controversial law change was being followed to the letter.</p>
+<p>How has the police force itself fared over time? With the officer ID field, a proxy of the number of active officers on patrol can be established - I’ve gone with the number of unique officer IDs making at least one stop in a month.</p>
+<p><img src="/blog/open-policing-sparklyr-shiny_files/figure-html/active%20officers%20plot-1.svg" width="100%" /></p>
+<p>The force seems to be getting smaller. Notice that there’s also a clear seasonal component to the number of officers on patrol - maybe officers don’t really want to be out for too long in those winter months.</p>
+<p>There are fields in the data that can be used to get at racial disparities and possible bias in police behaviour. For example, the search/hits metrics from earlier can be taken a bit further and considered as rates based on stops and searches respectively. This study of outcomes may indicate discrimination.</p>
+<p><img src="/blog/open-policing-sparklyr-shiny_files/figure-html/search/hit%20rates-1.svg" width="100%" /></p>
+<p>While Black/Hispanic people are searched more often than Whites when searched, the hit rate (% of searches with contraband found) is lower for these minority groups, demonstrating the discrimination they face in this area.</p>
+<p>Is this phenomenon seen across country forces? Using the geographic data fields, it’s possible to identify regional trends.</p>
+<p><img src="/blog/open-policing-sparklyr-shiny_files/figure-html/search/hit%20scatter-1.svg" width="100%" /></p>
+<p>The rate of searches is consistently higher amongst Black and Hispanic people, compared to Whites.The fact that there are a number of instances when the ‘hit rate’ is close to zero amongst searches of minority groups suggests that the threshold for searches, or standard of evidence needed to initiate a search, is lower than for whites.</p>
+<p>Quick word of warning - hit rates can be misleading. While a good indicator of discrimination, it’s not quite enough to infer racial bias. For example, suppose there are just two types of white drivers with either a 5% or 75% likelihood of carrying contraband. Suppose there are also just two types of black drivers: some black drivers have a 5% chance of carrying contraband, and the others have a 50% chance of carrying contraband. If a fair police officer only searches drivers with at least a 10% chance of carrying something illegal, the white hit rate would be 75% and the black hit rate would be 50%. The officer used the same standard to search each driver, and so did not discriminate, even though the hit rates differ.</p>
+<p>This was a taste of how Spark can be utilized to power large-scale analyses of police behaviour and profiling - I hope to revisit the data as more states join in (and perhaps do a comparison with our forces across the pond, someday).</p>
+</div>
+<div id="introducing-polmonitor-and-mapping-police-violence" class="section level2">
+<h2>Introducing polMonitor (and Mapping Police Violence)</h2>
+<p>polMonitor is a related pet project that has seen the light of day thanks to a herculean effort by <a href="https://mappingpoliceviolence.org/">Mapping Police Violence</a> to compile data about police killings from several disparate sources (namely, FatalEncounters.org, the U.S. Police Shootings Database and KilledbyPolice.net).</p>
+<p>With all of this work going in to data collection, I was inspired to do whatever I could to make the data accessible and engaged with by more people, and ensure more accountable policing. To that end, I developed a Shiny app (now <a href="https://ewenme.shinyapps.io/polMonitor/">hosted over at shinyapps</a>), or an interactive space for folks to immerse themselves in this data. Go see for yourself, and check the repo <a href="https://github.com/ewenme/Vinylspotting">here</a>.</p>
+<p><img src="https://github.com/ewenme/polMonitor/raw/master/example.gif" width="75%" style="display: block; margin: auto;" /></p>
+<p>I’m not going to delve into the ins and outs of Shiny development, but I wanted to quickly mention a couple of helping hands I found with this one.</p>
+<ul>
+<li>Going that extra 10 yards with <a href="http://deanattali.com/shinyjs/">shinyjs</a>: Dean Attali’s Shiny package lets dummies like me do neat JavaScript tricks all over the shop. I particularly digged the <code>hidden</code> function, which lets you choose bits of the app for the user to hide when not particularly useful.</li>
+<li>The GIS dream-team of <a href="https://github.com/r-spatial/sf">sf</a> and <a href="https://github.com/walkerke/tidycensus">tidycensus</a>: Boy did this package combo come through for me when it was a choropleth map situation.</li>
+</ul>
+</div>
+<div id="wrap-up" class="section level2">
+<h2>Wrap-up</h2>
+<p>I set out to learn a bit more about Spark and Shiny, and put a spotlight on critical policing issues in the process. The trickle down of new technologies can be slow to reach these kinds of spaces, but it’s as important as ever that there continues to be a pragmatic effort to expose discrimination and biases in systems and encourage open, accountable policing through good data science. Don’t hesitate to get stuck in.</p>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>I hope to find time to incorporate Stanford’s police stops data into my app. At the time of writing, there’s still a lot of states missing from their data.<a href="#fnref1">↩</a></p></li>
+<li id="fn2"><p>On the d/l page, a table explains which fields are present in each data file. The GitHub repo’s <a href="https://github.com/5harad/openpolicing/blob/master/README.md">readme</a> has detailed data quality information about each state, which you should review before getting stuck in.<a href="#fnref2">↩</a></p></li>
+<li id="fn3"><p>Due to the sheer size of the data, I haven’t actually pushed it to GitHub. However, you can get it <a href="https://openpolicing.stanford.edu/data/">here</a> (it’s the one called Washington).<a href="#fnref3">↩</a></p></li>
+<li id="fn4"><p>I found that the extended tidyverse family of packages could be used with mixed results. For example, lubridate’s <code>year</code> function worked OK, but not <code>wday</code>. Therefore, some transformations may still need to be done in R. Keep up with updates over at the sparklyr <a href="https://github.com/rstudio/sparklyr">GitHub repo</a>.<a href="#fnref4">↩</a></p></li>
+</ol>
+</div>
+
+      
+    </div>
+    
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container has-text-centered">
+    <p>&copy; Ewen Henderson </a> 2017-18</p>
+    
+  </div>
+</section>
+
+</body>
+</html>
+
