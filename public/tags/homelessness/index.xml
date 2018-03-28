@@ -2,22 +2,22 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Homelessness on ewen</title>
-    <link>https://ewen.io/tags/homelessness/</link>
+    <link>/tags/homelessness/</link>
     <description>Recent content in Homelessness on ewen</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>&amp;copy; Ewen Henderson &lt;/a&gt; 2017-18</copyright>
     <lastBuildDate>Thu, 09 Nov 2017 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://ewen.io/tags/homelessness/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/tags/homelessness/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Hacking Homelessness &amp; PDF Prisons</title>
-      <link>https://ewen.io/blog/hacking-homelessness-pdf-prisons/</link>
+      <link>/2017/11/09/hacking-homelessness--pdf-prisons/</link>
       <pubDate>Thu, 09 Nov 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://ewen.io/blog/hacking-homelessness-pdf-prisons/</guid>
+      <guid>/2017/11/09/hacking-homelessness--pdf-prisons/</guid>
       <description>Shout-out to the Monday Morning Data Science mailout from John Hopkins. Making my way through this week’s (#41) edition, I hit upon quite the eulogy concerning a new R package:
  “The most compelling data visualization libraries I’ve seen in awhile…you have to see it to believe it”
  You had me at compelling (I’m not sure who had me exactly, this was the only entry w/o a name attached to it 🤔).</description>

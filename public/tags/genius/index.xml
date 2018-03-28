@@ -2,31 +2,31 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Genius on ewen</title>
-    <link>https://ewen.io/tags/genius/</link>
+    <link>/tags/genius/</link>
     <description>Recent content in Genius on ewen</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>&amp;copy; Ewen Henderson &lt;/a&gt; 2017-18</copyright>
     <lastBuildDate>Wed, 06 Dec 2017 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://ewen.io/tags/genius/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/tags/genius/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Introducing geniusr</title>
-      <link>https://ewen.io/blog/introducing-geniusr/</link>
+      <link>/2017/12/06/introducing-geniusr/</link>
       <pubDate>Wed, 06 Dec 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://ewen.io/blog/introducing-geniusr/</guid>
+      <guid>/2017/12/06/introducing-geniusr/</guid>
       <description>I made a new R package (🔥📦🔥) this week. My sophomore post on this site (from way back in March) was a text-based analysis of Kanye West records, which exposed me to the Genius API1 once I wanted to get hold of some lyrical content. In the process, I wrote some functions for playing nicely with this API in R that I knew would probably be handy for others dabbling/wanting to dabble in similar matters.</description>
     </item>
     
     <item>
       <title>A Sentiment Analysis of Kanye West Records</title>
-      <link>https://ewen.io/blog/kanye-records-sentiment-analysis/</link>
+      <link>/2017/03/20/a-sentiment-analysis-of-kanye-west-records/</link>
       <pubDate>Mon, 20 Mar 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://ewen.io/blog/kanye-records-sentiment-analysis/</guid>
+      <guid>/2017/03/20/a-sentiment-analysis-of-kanye-west-records/</guid>
       <description>PSA: This blog will cover other stuff besides music, I promise…this post is the fruits of a recent meander into the new ggalt, hrbrthemes and tidytext packages.1
 Intro Kanye West is responsible for some of the realest, funniest (“if you fall on the concrete thats your ass fault”…asphalt…anyone?) and inspiring lyrics in music. The strength of these words has had a profound effect on me and my generation. Can the application of sentiment analysis techniques help us understand more about his art?</description>
     </item>

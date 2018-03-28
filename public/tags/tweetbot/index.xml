@@ -2,22 +2,22 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tweetbot on ewen</title>
-    <link>https://ewen.io/tags/tweetbot/</link>
+    <link>/tags/tweetbot/</link>
     <description>Recent content in Tweetbot on ewen</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>&amp;copy; Ewen Henderson &lt;/a&gt; 2017-18</copyright>
     <lastBuildDate>Wed, 11 Oct 2017 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://ewen.io/tags/tweetbot/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/tags/tweetbot/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Meet Dumb Hardwax</title>
-      <link>https://ewen.io/blog/meet-dumb-hardwax/</link>
+      <link>/2017/10/11/meet-dumb-hardwax/</link>
       <pubDate>Wed, 11 Oct 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://ewen.io/blog/meet-dumb-hardwax/</guid>
+      <guid>/2017/10/11/meet-dumb-hardwax/</guid>
       <description>Twitter bots have gotten a fairly bad rap, recently (often with good reason). When they’re done right, a genuinely quirky robot can cut through a feed full of humans with beautiful tidbits. God bless [@tinycarebot](https://twitter.com/tinycarebot).
 💟: please dont forget to text back your friends — here&#39;s your reminder (@tinycarebot) October 6, 2017   
 Another thing that gives me life is reading Hardwax, a hugely influential Berlin record store, get excited about their new stock.</description>
