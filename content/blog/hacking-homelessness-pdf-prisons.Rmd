@@ -15,7 +15,7 @@ library(plyr)
 library(stringr)
 library(tidyverse)
 library(tabulizer)
-library(hexmapr)
+library(geogrid)
 library(sf)
 library(magick)
 library(scales)
@@ -30,7 +30,7 @@ You had me at compelling (I'm not sure *who* had me exactly, this was the only e
 
 ## Hex Democratization 
 
-Enter [`hexmapr`](https://github.com/sassalley/hexmapr) and a solution to the perennial information communication problem of plotting polygons of different sizes, that's equal parts functional and beautiful. In the link above the author, Joseph Bailey, eloquently explains the motivations behind this package for automatic transformations of geospatial polygons into regular and hexagonal grids. In short, a grid system ensures a fairer representation of spatial data (while retaining geography) and an automated implementation means this is suitable to use in less commonly studied places. On both counts, this is a wicked example of building tools that democratize good data science. `r emo::ji("hands")`
+Enter [`geogrid`](https://github.com/jbaileyh/geogrid) and a solution to the perennial information communication problem of plotting polygons of different sizes, that's equal parts functional and beautiful. In the link above the author, Joseph Bailey, eloquently explains the motivations behind this package for automatic transformations of geospatial polygons into regular and hexagonal grids. In short, a grid system ensures a fairer representation of spatial data (while retaining geography) and an automated implementation means this is suitable to use in less commonly studied places. On both counts, this is a wicked example of building tools that democratize good data science. `r emo::ji("hands")`
 
 Next, I just needed a good reason to wheel it out (aside from sharing with y'all).[^fullcode] 
 
@@ -118,24 +118,24 @@ Eeyore is joyful at this sight, mark my words. How effortless was that? This dat
 
 ## Bring in the Maps
 
-Back to `hexmapr` stuff. For starters, let's load in the shapefiles we need (note: the GitHub repo's example is actually on London, too, so I won't dwell on every similar detail):
+Back to `geogrid` stuff. For starters, let's load in the shapefiles we need (note: the GitHub repo's example is actually on London, too, so I won't dwell on every similar detail):
 
 ```{r hex_load, echo=TRUE, results='hide'}
-library(hexmapr)
+library(geogrid)
 
 # get spatial polygons
-input_file <- system.file('extdata', 'london_LA.json', package='hexmapr')
+input_file <- system.file('extdata', 'london_LA.json', package='geogrid')
 original_shapes <- read_polygons(input_file)
 
 # get polygon details
-original_details <- get_shape_details(original_shapes)
+original_details <- calculate_grid(original_shapes)
 
 ```
 
 In the case of spatial joins, I've found [`sf`] (https://github.com/r-spatial/sf)(simple features) incredibly intuitive and so I'll employ this tactic now to merge the distinct datasets together. I did notice some differences in the names given to certain London Boroughs (mainly the use of '&'/'and') which will need addressing as well.
 
 ```{r spatial_join, echo=TRUE}
-# rename homeless data boroughs strings not matching hexmapr shp
+# rename homeless data boroughs strings not matching geogrid shp
 homeless_spatial_tab$Borough <- str_replace(homeless_spatial_tab$Borough, pattern = "Richmond",
                                             replacement = "Richmond upon Thames")
 homeless_spatial_tab$Borough <- str_replace(homeless_spatial_tab$Borough, 
@@ -144,7 +144,7 @@ homeless_spatial_tab$Borough <- str_replace(homeless_spatial_tab$Borough,
 
 library(sf)
 
-# turn hexmapr shapefile into sf format
+# turn geogrid shapefile into sf format
 original_shapes_sf <- st_as_sf(original_shapes)
 
 # join homeless data
@@ -187,8 +187,8 @@ Algorithmic tessellation is used to generate possible grid layouts for the data 
 ```{r seeds, results='hide'}
 par(mfrow=c(2,3), mar = c(0,0,2,0))
 for (i in 1:6){
-new_cells <-  calculate_cell_size(original_shapes, original_details,0.03, 'hexagonal', i)
-plot(new_cells[[2]], main = paste("Seed",i, sep=" "))
+new_cells <-  calculate_grid(original_shapes, 0.03, 'hexagonal', i)
+plot(new_cells, main = paste("Seed",i, sep=" "))
 }
 ```
 
@@ -196,10 +196,10 @@ I'm quite partial to #3. Maneuvering from real space geography to this grid invo
 
 ```{r hex_map, echo=TRUE, results='hide'}
 
-new_cells_hex <-  calculate_cell_size(original_shapes, original_details, 0.03, 'hexagonal', 3)
+new_cells_hex <-  calculate_grid(original_shapes, 0.03, 'hexagonal', 3)
 resulthex <- assign_polygons(original_shapes, new_cells_hex)
 
-# turn hexmapr shapefile into sf format
+# turn geogrid shapefile into sf format
 resulthex_sf <- st_as_sf(resulthex)
 
 # join homeless data

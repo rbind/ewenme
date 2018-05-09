@@ -5529,7 +5529,7 @@ a.panel-block:hover {
 }
 .section {
   background-color: #fff;
-  padding: 40px 20px;
+  padding: 40px 0px;
 }
 @media screen and (min-width: 980px) {
   .section.is-medium {

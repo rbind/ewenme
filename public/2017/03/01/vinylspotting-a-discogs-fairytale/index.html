@@ -136,7 +136,7 @@ glimpse(as.data.frame(rbind.pages(pages)))</code></pre>
     pages[[i+1]] &lt;- mydata$releases
   }
   data &lt;- rbind.pages(pages)
-  data &lt;- as.data.table(data)
+  # data &lt;- as.data.table(data)
   data &lt;- data[!duplicated(data), ]
   
   #flatten and clean label info
@@ -188,7 +188,7 @@ glimpse(as.data.frame(rbind.pages(pages)))</code></pre>
 my_collection &lt;- getCollection(&quot;ewen_henderson&quot;)
 
 as_tibble(my_collection)</code></pre>
-<pre><code>## # A tibble: 428 x 42
+<pre><code>## # A tibble: 436 x 42
 ##    instance_id date_added              id basic_information.… artist_name 
 ##          &lt;int&gt; &lt;chr&gt;                &lt;int&gt;               &lt;int&gt; &lt;chr&gt;       
 ##  1   124611189 2015-03-22T11:49:…  5.87e6                2014 Airhead (5) 
@@ -201,9 +201,9 @@ as_tibble(my_collection)</code></pre>
 ##  8   191490761 2016-10-06T14:40:…  8.98e6                2016 Various     
 ##  9   134248074 2015-07-05T05:13:…  7.16e6                2015 PLO Man     
 ## 10   256803647 2017-10-22T14:18:…  1.06e7                2017 Money Morni…
-## # ... with 418 more rows, and 37 more variables:
+## # ... with 426 more rows, and 37 more variables:
 ## #   basic_information.title &lt;chr&gt;, artist_url &lt;chr&gt;, label_name &lt;chr&gt;,
-## #   catno &lt;chr&gt;, label_url &lt;chr&gt;, id.1 &lt;chr&gt;, format_name &lt;chr&gt;,
+## #   catno &lt;chr&gt;, label_url &lt;chr&gt;, id.1 &lt;fct&gt;, format_name &lt;chr&gt;,
 ## #   qty &lt;chr&gt;, format_text &lt;chr&gt;, `10&quot;` &lt;chr&gt;, `12&quot;` &lt;chr&gt;, `33 ⅓
 ## #   RPM` &lt;chr&gt;, `45 RPM` &lt;chr&gt;, `7&quot;` &lt;chr&gt;, Album &lt;chr&gt;,
 ## #   Compilation &lt;chr&gt;, EP &lt;chr&gt;, Etched &lt;chr&gt;, `Limited Edition` &lt;chr&gt;,

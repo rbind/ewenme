@@ -10,7 +10,7 @@ tags: ["r", "sentiment-analysis", "kanye-west", "genius"]
 
 knitr::opts_chunk$set(cache=TRUE, echo = TRUE, warning = FALSE, message = FALSE, out.width = '100%', dpi = 180, dev = 'svg')
 
-library(RCurl); library(ggplot2); library(hrbrthemes); library(tidytext); library(data.table); library(tidyverse); library(forcats); library(ggalt); library(broom); library(stringr); library(httr); library(jsonlite); library(rvest)
+library(RCurl); library(ggplot2); library(hrbrthemes); library(tidytext); library(tidyverse); library(forcats); library(ggalt); library(broom); library(stringr); library(httr); library(jsonlite); library(rvest)
 
 df <- readRDS("../data/kanye.Rda")
 
