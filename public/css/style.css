@@ -5566,6 +5566,7 @@ html {
 .container {
   max-width: 800px;
   margin: 0 auto;
+  padding: 0px 20px;
 }
 .content h1:not(:first-child),
 .content h2:not(:first-child),
