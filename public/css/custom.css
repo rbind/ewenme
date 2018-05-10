@@ -16,6 +16,7 @@ h6,
   font-family: 'Work Sans', sans-serif;
   font-weight:500;
   color:#000000;
+  word-break: break-word;
 }
 
 body {
