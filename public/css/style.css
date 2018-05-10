@@ -2053,7 +2053,6 @@ a.box:active {
 .subtitle,
 .title {
   font-weight: 300;
-  word-break: break-word;
 }
 .subtitle em,
 .subtitle span,
