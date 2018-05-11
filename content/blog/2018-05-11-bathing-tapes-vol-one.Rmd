@@ -4,6 +4,7 @@ description: "Debuting an infrequent mix series and reframing this site a bit."
 date: '2018-05-11'
 slug: bathing-tapes-vol-one
 tags: ["mixes", "bathing-tapes"]
+cover: https://img.buzzfeed.com/buzzfeed-static/static/2016-09/7/13/asset/buzzfeed-prod-web03/sub-buzz-17815-1473269426-1.jpg?downsize=715:*&output-format=auto&output-quality=auto
 ---
 
 Last month I recorded a studio mix, the first volume of an occasional series for sharing sounds I'm bumping. I'm calling it *bathing tapes* (don't sue me, [Nigo](https://en.wikipedia.org/wiki/Nigo)), 'cos most of the jams shouldn't sound out of place (or should enhance) if you so decide to give it a spin during an exfoliation session. If not, enjoy the soothing vibes inside wherever you find yourself.
