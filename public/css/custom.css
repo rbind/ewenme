@@ -12,12 +12,13 @@ h6,
 .content h4,
 .content h5,
 .content h6,
-.subtitle, .title {
+.title {
   font-family: 'Work Sans', sans-serif;
   font-weight:500;
   color:#000000;
 }
 
+.subtitle,
 body {
   font-family: 'Work Sans', sans-serif;
   font-weight:400;
