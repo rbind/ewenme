@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://ewen.io/2018/05/11/bathing-tapes-vol-one/</loc>
+    <lastmod>2018-05-11T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://ewen.io/2017/12/06/introducing-geniusr/</loc>
     <lastmod>2017-12-06T00:00:00+00:00</lastmod>
   </url>
@@ -70,8 +75,14 @@
   </url>
   
   <url>
+    <loc>https://ewen.io/tags/bathing-tapes/</loc>
+    <lastmod>2018-05-11T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://ewen.io/blog/</loc>
-    <lastmod>2017-12-06T00:00:00+00:00</lastmod>
+    <lastmod>2018-05-11T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -160,6 +171,12 @@
   </url>
   
   <url>
+    <loc>https://ewen.io/tags/mixes/</loc>
+    <lastmod>2018-05-11T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://ewen.io/tags/package/</loc>
     <lastmod>2017-12-06T00:00:00+00:00</lastmod>
     <priority>0</priority>
@@ -227,7 +244,7 @@
   
   <url>
     <loc>https://ewen.io/</loc>
-    <lastmod>2017-12-06T00:00:00+00:00</lastmod>
+    <lastmod>2018-05-11T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
