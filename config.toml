@@ -12,7 +12,7 @@ customCSS = ["css/custom.css"]
 
 [params.info]
 adsense = "" # Adsense ID (ID only, without ca-pub-)
-enableSocial = false # Adds OpenGraph and Twitter cards
+enableSocial = true # Adds OpenGraph and Twitter cards
 homeTitle = "ewen" # Title for home page
 poweredby = false # Adds powered by Hugo and Kiss below Copyright section
 related = false # Includes related articles
