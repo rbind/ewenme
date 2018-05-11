@@ -2,32 +2,32 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Fpl on ewen</title>
-    <link>/tags/fpl/</link>
+    <link>https://ewen.io/tags/fpl/</link>
     <description>Recent content in Fpl on ewen</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>&amp;copy; Ewen Henderson &lt;/a&gt; 2017-18</copyright>
     <lastBuildDate>Mon, 06 Nov 2017 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="/tags/fpl/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://ewen.io/tags/fpl/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>My Linear(ish) Programming Fantasy</title>
-      <link>/2017/11/06/my-linearish-programming-fantasy/</link>
+      <link>https://ewen.io/2017/11/06/my-linearish-programming-fantasy/</link>
       <pubDate>Mon, 06 Nov 2017 00:00:00 +0000</pubDate>
       
-      <guid>/2017/11/06/my-linearish-programming-fantasy/</guid>
+      <guid>https://ewen.io/2017/11/06/my-linearish-programming-fantasy/</guid>
       <description>Linear optimization (AKA linear programming) is all around us, even if we don’t really know it. For example, how did you come to pick your route to work today? This decision, lovingly known as “getting from A to B”, is (most of the time) objectively simple: which route is the quickest?
 There are known variables that we need to identify and use in solving this problem (known as decision variables), for example:</description>
     </item>
     
     <item>
       <title>FPL Mythbusting with fplR</title>
-      <link>/2017/06/25/fpl-mythbusting-with-fplr/</link>
+      <link>https://ewen.io/2017/06/25/fpl-mythbusting-with-fplr/</link>
       <pubDate>Sun, 25 Jun 2017 00:00:00 +0000</pubDate>
       
-      <guid>/2017/06/25/fpl-mythbusting-with-fplr/</guid>
+      <guid>https://ewen.io/2017/06/25/fpl-mythbusting-with-fplr/</guid>
       <description>I recently authored my first R package (and definitely have the bug, now). It would be remiss of me to continue without a quick PSA for anyone out there thinking about dabbling in the package game - below is a shout-out of the invaluable resources I found along the way that kept me nice and sane.
 ease in https://t.co/NdRYGE1whA
 more detail https://t.co/ypqotSAF46
