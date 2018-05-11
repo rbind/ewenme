@@ -21,17 +21,6 @@
     {{- end -}}'>
 {{- end -}}
 
-{{- with .Params.images -}}
-  {{- range first 5 . -}}
-    <meta property='og:image' content='{{ . | absURL }}'>
-  {{- end -}}
-{{- else -}}
-{{- with .Site.Params.Social.email -}}
-    <meta property='og:image' content='https://www.gravatar.com/avatar/
-        {{- . | md5 -}}
-        ?s=256'>
-{{- end -}}
-
 {{- with .Params.audios -}}
   {{- range first 6 . -}}
     <meta property='og:audio' content='{{ . | absURL }}'>
