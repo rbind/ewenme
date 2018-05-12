@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://ewen.io/2018/05/12/deejae/</loc>
+    <lastmod>2018-05-12T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://ewen.io/2018/05/11/bathing-tapes-vol-one/</loc>
     <lastmod>2018-05-11T00:00:00+00:00</lastmod>
   </url>
@@ -82,7 +87,13 @@
   
   <url>
     <loc>https://ewen.io/blog/</loc>
-    <lastmod>2018-05-11T00:00:00+00:00</lastmod>
+    <lastmod>2018-05-12T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://ewen.io/tags/deejae/</loc>
+    <lastmod>2018-05-12T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -196,7 +207,7 @@
   
   <url>
     <loc>https://ewen.io/tags/r/</loc>
-    <lastmod>2017-12-06T00:00:00+00:00</lastmod>
+    <lastmod>2018-05-12T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -208,7 +219,7 @@
   
   <url>
     <loc>https://ewen.io/tags/shiny/</loc>
-    <lastmod>2017-07-27T00:00:00+00:00</lastmod>
+    <lastmod>2018-05-12T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -231,6 +242,12 @@
   </url>
   
   <url>
+    <loc>https://ewen.io/tags/traktor/</loc>
+    <lastmod>2018-05-12T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://ewen.io/tags/tweetbot/</loc>
     <lastmod>2017-10-11T00:00:00+00:00</lastmod>
     <priority>0</priority>
@@ -244,7 +261,7 @@
   
   <url>
     <loc>https://ewen.io/</loc>
-    <lastmod>2018-05-11T00:00:00+00:00</lastmod>
+    <lastmod>2018-05-12T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
