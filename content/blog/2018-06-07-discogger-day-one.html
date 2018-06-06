@@ -3,10 +3,8 @@ title: "discogger, day one"
 description: "Building an R interface to the Discogs API."
 date: '2018-06-07'
 slug: discogger-day-one
-tags:
-  - discogger
-  - discogs
-  - r
+tags: ["discogger", "discogs", "r"]
+cover: https://raw.githubusercontent.com/rbind/ewenme/master/public/blog/2018-06-07-discogger-day-one_files/figure-html/unnamed-chunk-4-1.svg
 ---
 
 
@@ -97,18 +95,18 @@ dm_releases_df &lt;- dm_releases$content %&gt;%
 
 dm_releases_df</code></pre>
 <pre><code>## # A tibble: 581 x 10
-##    status  thumb     format  title catno  year resource_url artist      id
-##    &lt;chr&gt;   &lt;chr&gt;     &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt; &lt;int&gt; &lt;chr&gt;        &lt;chr&gt;    &lt;int&gt;
-##  1 Accept… https://… &quot;12\&quot;&quot;  Hous… 14040  1987 https://api… The Ho… 6.40e4
-##  2 Accept… https://… &quot;12\&quot;&quot;  What… 5100…  1985 https://api… The Br… 1.09e6
-##  3 Accept… https://… &quot;12\&quot;&quot;  Hous… B.C.…  1987 https://api… The Ho… 4.21e5
-##  4 Accept… https://… &quot;12\&quot;&quot;  Hous… B.C.…  1987 https://api… The Ho… 1.97e5
-##  5 Accept… https://… &quot;12\&quot;&quot;  Frea… D.J.…  1996 https://api… D.J. F… 6.75e4
-##  6 Accept… https://… &quot;12\&quot;,… This… D.M.…  1988 https://api… Mello … 5.17e6
-##  7 Accept… https://… &quot;12\&quot;&quot;  This… D.M.…  1988 https://api… Mello … 4.27e5
-##  8 Accept… https://… &quot;12\&quot;&quot;  Hous… DM 0…  1986 https://api… The Ho… 7.30e3
-##  9 Accept… https://… &quot;12\&quot;&quot;  Hard… DM 0…  1987 https://api… Duane … 1.40e3
-## 10 Accept… https://… &quot;12\&quot;,… Hard… DM 0…  1987 https://api… Duane … 6.52e6
+##    status  thumb     title  format catno  year resource_url artist      id
+##    &lt;chr&gt;   &lt;chr&gt;     &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt; &lt;int&gt; &lt;chr&gt;        &lt;chr&gt;    &lt;int&gt;
+##  1 Accept… https://… House… &quot;12\&quot;&quot; 14040  1987 https://api… The Ho… 6.40e4
+##  2 Accept… https://… What&#39;… &quot;12\&quot;&quot; 5100…  1985 https://api… The Br… 1.09e6
+##  3 Accept… https://… House… &quot;12\&quot;&quot; B.C.…  1987 https://api… The Ho… 4.21e5
+##  4 Accept… https://… House… &quot;12\&quot;&quot; B.C.…  1987 https://api… The Ho… 1.97e5
+##  5 Accept… https://… Freak… &quot;12\&quot;&quot; D.J.…  1996 https://api… D.J. F… 6.75e4
+##  6 Accept… https://… This … &quot;12\&quot;… D.M.…  1988 https://api… Mello … 5.17e6
+##  7 Accept… https://… This … &quot;12\&quot;&quot; D.M.…  1988 https://api… Mello … 4.27e5
+##  8 Accept… https://… House… &quot;12\&quot;&quot; DM 0…  1986 https://api… The Ho… 7.30e3
+##  9 Accept… https://… Hard … &quot;12\&quot;&quot; DM 0…  1987 https://api… Duane … 1.40e3
+## 10 Accept… https://… Hard … &quot;12\&quot;… DM 0…  1987 https://api… Duane … 6.52e6
 ## # ... with 571 more rows, and 1 more variable: label_id &lt;dbl&gt;</code></pre>
 <p>The tidy tibble format returned is much better suited to analysis in R, but the content I’m after is not quite there. Turns out community metrics, such as the number of users who own or have marked a record as one they “want”, are available from a records release page (not it’s label release listing). <code>discogs_release()</code> can be used, in conjunction with <code>map()</code> (from the <a href="https://purrr.tidyverse.org/"><code>purrr</code></a> package), to iterate through releases and collect this information.</p>
 <pre class="r"><code># get DM release info
