@@ -2,7 +2,7 @@
 title: "discogger, day one"
 description: "Building an R interface to the Discogs API."
 date: '2018-06-07'
-slug: discogger
+slug: discogger-day-one
 tags:
   - discogger
   - discogs
@@ -13,7 +13,7 @@ tags:
 knitr::opts_chunk$set(warning = FALSE, message = FALSE, out.width = '100%', dev = 'svg')
 ```
 
-I've been working on a new R package. [**`discogger`**](https://github.com/ewenme/discogger) is an open-source effort, at an experimental stage of development, providing straightforward tools to help out with Discogs' [API v2.0](https://www.discogs.com/developers/#). [Discogs](https://www.discogs.com) is a crowdsourced music database and marketplace, a proper treasure trove for record diggers and music lovers to learn more about what they're jamming to. A better route into this data for R users should yield some nice results.
+I've been working on a new R package. [**`discogger`**](https://github.com/ewenme/discogger) is an open-source effort, at an experimental stage of development, providing straightforward tools to help out with Discogs' [API v2.0](https://www.discogs.com/developers/#). [Discogs](https://www.discogs.com) is a crowd-sourced music database and marketplace, a proper treasure trove for record diggers and music lovers to learn more about what they're jamming to. A better route into this data for R users should yield some nice results.
 
 ## `discogger` 101
 
@@ -75,20 +75,22 @@ dm_community_metrics <- tibble(
 dm_community_metrics
 ```
 
-With this output, a visualisation can be knocked up to explore which Dance Mania 12-inches Discogs users' want or own.
+With this output, a visualisation can be knocked up to explore which Dance Mania 12-inches Discogs users want or own.
 
 ```{r}
+# load viz helpers
 library(scico)
 library(hrbrthemes)
 library(ggrepel)
 
+# plot
 ggplot(dm_community_metrics, aes(x=have, y=want)) +
   geom_point(aes(colour=year)) +
-  geom_text_repel(aes(label=paste0(artist, " - ", title)), size=3,
+  geom_text_repel(aes(label=paste0(artist, " - ", title)), size=2,
                   data = subset(dm_community_metrics, have >= 800 | want >= 1000),
                   family = "IBM Plex Sans") +
   labs(title="Dance Mania 12\"s on Discogs", 
-       subtitle="How many Discogs user's have/want Dance Mania 12-inches (1985 - 2018).",
+       subtitle="How many Discogs user's own/want Dance Mania 12-inches (1985 - 2018).",
        x = "Have it", y = "Want it",
        caption="source: Discogs | made by @ewen_") +
   theme_ipsum_ps(grid = FALSE) +
