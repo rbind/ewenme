@@ -4,10 +4,10 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-<title>FPL Mythbusting with fplR | ewen</title>
+<title>FPL Mythbusting with fplr | ewen</title>
 
-<meta property='og:title' content='FPL Mythbusting with fplR - ewen'>
-<meta property='og:description' content='Dissecting some fantasy football falsehoods with my newest R package.'>
+<meta property='og:title' content='FPL Mythbusting with fplr - ewen'>
+<meta property='og:description' content='Dissecting fantasy football falsehoods with my first R package.'>
 <meta property='og:url' content='https://ewen.io/2017/06/25/fpl-mythbusting-with-fplr/'>
 <meta property='og:site_name' content='ewen'>
 <meta property='og:type' content='article'><meta property='article:published_time' content='2017-06-25T00:00:00Z'/><meta property='article:modified_time' content='2017-06-25T00:00:00Z'/><meta name='twitter:card' content='summary'><meta name='twitter:site' content='@ewen_'><meta name='twitter:creator' content='@ewen_'>
@@ -75,7 +75,7 @@
       
     </div>
     <h2 class="subtitle is-6">June 25, 2017</h2>
-    <h1 class="title">FPL Mythbusting with fplR</h1>
+    <h1 class="title">FPL Mythbusting with fplr</h1>
     
     <div class="content">
       <p>I recently authored my first R package (and definitely have the bug, now). It would be remiss of me to continue without a quick PSA for anyone out there thinking about dabbling in the package game - below is a shout-out of the invaluable resources I found along the way that kept me nice and sane.</p>
@@ -86,19 +86,11 @@ ease in <a href="https://t.co/NdRYGE1whA">https://t.co/NdRYGE1whA</a><br>more de
 — ewen (<span class="citation">@ewen_</span>) <a href="https://twitter.com/ewen_/status/872480326890795009">June 7, 2017</a>
 </blockquote>
 <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
-<p>In short, I set out on my package contribution journey by focusing on the development of something that I myself would find useful (that way, I could keep at least one user happy). Each year, I play an edition of fantasy sports called <a href="https://fantasy.premierleague.com/">Fantasy Premier League</a> (FPL), the official fantasy football game of England’s top football (or soccer for you stateside peeps) division. If you really want to know the in’s and out’s of FPL, there’s a <a href="https://fantasy.premierleague.com/a/help">section of the site</a> just for rules. TL;DR: for 38 rounds (called ‘gameweeks’), you pick a team of football players to do good things that score you points and help you finish as high up the leader-board as possible.<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a></p>
-<p>It just so happens that we’re in the off-season right now, and I figured I should use this down-time to explore how R could assist with FPL users’ exploits in the coming season.<a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a></p>
-<p><img src="https://raw.githubusercontent.com/ewenme/fplR/master/fplHex.png" width="75%" style="display: block; margin: auto;" /></p>
-<p>Introducing…<a href="https://ewenme.github.io/fplR/"><code>fplR</code></a> - a package for the strange intersection of FPL / R users like me (I hope it’s not just me) to explore the game’s data. In the rest of this post, I want to test drive the package by first pulling out some insights on my most recent season (2016/2017), and then do some exploring of the mythical quirks of FPL as a bit of fun.<a href="#fn3" class="footnoteRef" id="fnref3"><sup>3</sup></a></p>
-<div id="how-did-i-do-last-season" class="section level2">
-<h2>How did I do last season?</h2>
-<p>As the game updates each user’s scores following the day’s matches, the site helpfully tells you your ranking (overall, in your country, in any mini-leagues you are part of, etc.). Still, just knowing your performance at one point in time does not begin to capture the season’s journey (read: roller-coaster of emotions and deep suffering). Time to dive into <code>fplR</code> to see if it can help.</p>
-<pre class="r"><code># get my fpl season performance
-myPerformance &lt;- userPerformance(137633)</code></pre>
-<p><img src="/blog/fpl-mythbusting-with-fplr_files/figure-html/last%20season%20plot-1.svg" width="100%" /></p>
-<p>The sharp decline in my ranking around gameweek #5 looks striking, as is the fightback to something respectable in gameweeks 7-10. However, bigger variations in the earlier gameweeks are to be expected - the sample size is small, therefore the pack is close, so to speak (more on this, shortly). Nevertheless, my final rank was a personal best of 4,752nd in the world. (I hope that establishes my credentials, nice and early). Having spent so long invested in something, it’s really nice to just be able to reflect on it with this visual accompaniment.</p>
-<p>Next, I’ll take some time to examine some aspects of the game that the FPL community has debated on since the beginning of time. I won’t necessarily dispel/confirm all of these things here, but it’s a taster of what kinds of analyses can be spun up quickly using <code>fplR</code>.</p>
-</div>
+<p>I set out on my package contribution journey by focusing on the development of something that I myself would find useful (that way, I could keep at least one user happy). Each year, I play an edition of a fantasy sports game called <a href="https://fantasy.premierleague.com/">Fantasy Premier League</a> (FPL), the official fantasy football game of England’s top football division. If you really want to know the in’s and out’s of FPL, there’s a <a href="https://fantasy.premierleague.com/a/help">section of the site</a> just for rules.</p>
+<blockquote>
+<p>TL;DR: for 38 rounds (called ‘gameweeks’), you pick a team of football players to do good things that score you points and help you finish as high up the leader-board as possible.<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a></p>
+</blockquote>
+<p>Introducing…<a href="https://ewenme.github.io/fplr/"><code>fplr</code></a> - a package for the intersection of FPL players / R users like me (I hope it’s not just me) to explore the game’s data. In the rest of this post, I test drive the package by examining some aspects of the game that the community has long debated on. I won’t necessarily dispel/confirm all of these things here, but it’s a taster of what kinds of analyses can be spun up quickly using <code>fplr</code>.</p>
 <div id="the-early-season-rat-race" class="section level2">
 <h2>The early season rat race</h2>
 <p>Many users emphasise the importance of a good start, claiming that it is more difficult to do well in the latter stages of the season without a solid foundation built early on. To illustrate this, lets look at the average shift in overall rank by gameweek in one of my mini-leagues (a smaller league amongst a peer group) as the season progresses i.e. how much does a users rank change from week-to-week (N.B. in the current package version, I haven’t developed a function to help make this easier, yet. Soon come)?</p>
@@ -151,8 +143,6 @@ myPerformance &lt;- userPerformance(137633)</code></pre>
 <hr />
 <ol>
 <li id="fn1"><p>In this post I have referred to actual footballers as ‘players’, and players of the FPL game as ‘users’.<a href="#fnref1">↩</a></p></li>
-<li id="fn2"><p>At current, the FPL site only keeps detailed data for the <em>current</em> season. Therefore, some of the data used in this analysis will likely be unavailable once the new FPL season begins. For access to all data used in this analysis, please go <a href="https://github.com/rbind/ewenme/blob/master/content/data/">here</a>.<a href="#fnref2">↩</a></p></li>
-<li id="fn3"><p>To keep the post concise I don’t show all of the code, especially code that generates figures. But you can find the full code <a href="https://github.com/rbind/ewenme/blob/master/content/blog/fpl-mythbusting-with-fplr.Rmd">here</a>.<a href="#fnref3">↩</a></p></li>
 </ol>
 </div>
 

@@ -5,6 +5,7 @@ date: '2018-05-12'
 slug: deejae
 tags: ["deejae", "traktor", "r", "shiny"]
 cover: https://raw.githubusercontent.com/ewenme/deejae/master/example_screenshot.png
+draft: no
 ---
 
 > [this goes out to all the DJs...](https://genius.com/Artful-dodger-re-rewind-lyrics)

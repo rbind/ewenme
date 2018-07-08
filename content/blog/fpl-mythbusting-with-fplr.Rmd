@@ -3,6 +3,7 @@ title: "FPL Mythbusting with fplr"
 description: "Dissecting fantasy football falsehoods with my first R package."
 date: "2017-06-25"
 tags: ["r", "package", "fpl", "fplr"]
+draft: no
 ---
 
 ```{r setup, include=FALSE}

@@ -5,6 +5,7 @@ date: '2018-06-07'
 slug: discogger-day-one
 tags: ["discogger", "discogs", "r"]
 cover: https://raw.githubusercontent.com/rbind/ewenme/master/public/blog/2018-06-07-discogger-day-one_files/figure-html/unnamed-chunk-4-1.png
+draft: no
 ---
 
 ```{r setup, include=FALSE}

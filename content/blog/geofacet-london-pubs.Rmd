@@ -3,6 +3,7 @@ title: "Tracking London's Pub & Bar Landscape with geofacet"
 description: "Toying around with geofacet, a ggplot2 extension for geographic small multiples."
 date: "2017-05-30"
 tags: ["r", "ggplot2", "geofacet", "gis"]
+draft: no
 ---
 
 ```{r setup, include=FALSE}

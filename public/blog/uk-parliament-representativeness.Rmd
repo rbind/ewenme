@@ -3,6 +3,7 @@ title: "The Representativeness of UK Parliament"
 description: "Leveraging open data on politicians to learn more about representation and diversity within UK Parliament."
 date: "2017-04-23"
 tags: ["r", "politics", "everypolitician"]
+draft: no
 ---
 
 As a general election looms, a familiar UK media maelstrom has begun. The key difference here is that the public has been taken by surprise, somewhat - Theresa May's call for a snap election (we weren't actually due one until 2020) has left folk with little under two months to decide where their vote will go. 

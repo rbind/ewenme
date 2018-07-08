@@ -3,6 +3,7 @@ title: "Introducing geniusr"
 description: "I made an R interface to the Genius API."
 date: "2017-12-06"
 tags: ["r", "package", "genius", "geniusr"]
+draft: no
 ---
 
 ```{r setup, include=FALSE}
