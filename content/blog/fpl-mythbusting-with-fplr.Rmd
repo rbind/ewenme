@@ -1,6 +1,6 @@
 ---
-title: "FPL Mythbusting with fplR"
-description: "Dissecting some fantasy football falsehoods with my newest R package."
+title: "FPL Mythbusting with fplr"
+description: "Dissecting fantasy football falsehoods with my first R package."
 date: "2017-06-25"
 tags: ["r", "package", "fpl", "fplr"]
 ---
@@ -10,7 +10,7 @@ tags: ["r", "package", "fpl", "fplr"]
 knitr::opts_chunk$set(cache=TRUE, echo = TRUE, warning = FALSE, message = FALSE, out.width = '100%', dpi = 180, echo = FALSE, dev = 'svg')
 
 library(tidyverse)
-library(fplR)
+library(fplr)
 library(hrbrthemes)
 library(ggalt)
 library(forcats)
@@ -26,41 +26,11 @@ I recently authored my first R package (and definitely have the bug, now). It wo
 <blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">ease in <a href="https://t.co/NdRYGE1whA">https://t.co/NdRYGE1whA</a><br>more detail <a href="https://t.co/ypqotSAF46">https://t.co/ypqotSAF46</a><br>best practice <a href="https://t.co/qRMZDXBdfQ">https://t.co/qRMZDXBdfQ</a><br>travis 💀 <a href="https://t.co/dEvM3PWsVb">https://t.co/dEvM3PWsVb</a></p>&mdash; ewen (@ewen_) <a href="https://twitter.com/ewen_/status/872480326890795009">June 7, 2017</a></blockquote>
 <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
 
-In short, I set out on my package contribution journey by focusing on the development of something that I myself would find useful (that way, I could keep at least one user happy). Each year, I play an edition of fantasy sports called [Fantasy Premier League](https://fantasy.premierleague.com/) (FPL), the official fantasy football game of England's top football (or soccer for you stateside peeps) division. If you really want to know the in's and out's of FPL, there's a [section of the site](https://fantasy.premierleague.com/a/help) just for rules. TL;DR: for 38 rounds (called 'gameweeks'), you pick a team of football players to do good things that score you points and help you finish as high up the leader-board as possible.[^definitions]
+I set out on my package contribution journey by focusing on the development of something that I myself would find useful (that way, I could keep at least one user happy). Each year, I play an edition of a fantasy sports game called [Fantasy Premier League](https://fantasy.premierleague.com/) (FPL), the official fantasy football game of England's top football division. If you really want to know the in's and out's of FPL, there's a [section of the site](https://fantasy.premierleague.com/a/help) just for rules. 
 
-It just so happens that we're in the off-season right now, and I figured I should use this down-time to explore how R could assist with FPL users' exploits in the coming season.[^data]
+> TL;DR: for 38 rounds (called 'gameweeks'), you pick a team of football players to do good things that score you points and help you finish as high up the leader-board as possible.[^definitions]
 
-```{r hex, out.width = "75%", fig.align = "center"}
-knitr::include_graphics("https://raw.githubusercontent.com/ewenme/fplR/master/fplHex.png")
-```
-
-Introducing...[`fplR`](https://ewenme.github.io/fplR/) - a package for the strange intersection of FPL / R users like me (I hope it's not just me) to explore the game's data. In the rest of this post, I want to test drive the package by first pulling out some insights on my most recent season (2016/2017), and then do some exploring of the mythical quirks of FPL as a bit of fun.[^fullcode]
-
-## How did I do last season?
-
-As the game updates each user's scores following the day's matches, the site helpfully tells you your ranking (overall, in your country, in any mini-leagues you are part of, etc.). Still, just knowing your performance at one point in time does not begin to capture the season's journey (read: roller-coaster of emotions and deep suffering). Time to dive into `fplR` to see if it can help.
-
-```{r last season, eval=FALSE, echo=TRUE}
-# get my fpl season performance
-myPerformance <- userPerformance(137633)
-```
-
-```{r last season plot, echo=FALSE}
-# plot my overall rank by gameweek
-ggplot(data = myPerformance, aes(x=event, y=overall_rank, group=1)) +
-  geom_line(colour="#3A013B") +
-  scale_y_comma(trans="reverse", limits = c(1000000, 0)) +
-  scale_x_continuous(breaks = seq(0, 40, 5)) +
-  theme_ipsum(grid="XY", base_size = 14, axis_title_size = 14, caption_size = 12,
-              plot_title_size = 18, subtitle_size = 14) +
-  labs(title="My Overall Rank across the 2017/18 FPL Season",
-       x="Gameweek no.",
-       y="Overall Rank")
-```
-
-The sharp decline in my ranking around gameweek #5 looks striking, as is the fightback to something respectable in gameweeks 7-10. However, bigger variations in the earlier gameweeks are to be expected - the sample size is small, therefore the pack is close, so to speak (more on this, shortly). Nevertheless, my final rank was a personal best of 4,752nd in the world. (I hope that establishes my credentials, nice and early). Having spent so long invested in something, it's really nice to just be able to reflect on it with this visual accompaniment.
-
-Next, I'll take some time to examine some aspects of the game that the FPL community has debated on since the beginning of time. I won't necessarily dispel/confirm all of these things here, but it's a taster of what kinds of analyses can be spun up quickly using `fplR`.
+Introducing...[`fplr`](https://ewenme.github.io/fplr/) - a package for the intersection of FPL players / R users like me (I hope it's not just me) to explore the game's data. In the rest of this post, I test drive the package by examining some aspects of the game that the community has long debated on. I won't necessarily dispel/confirm all of these things here, but it's a taster of what kinds of analyses can be spun up quickly using `fplr`.
 
 ## The early season rat race
 
