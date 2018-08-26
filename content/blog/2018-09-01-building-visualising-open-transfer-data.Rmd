@@ -1,0 +1,18 @@
+---
+title: "Gathering & visualising open football transfer data"
+description: "Data on player transfers to and from football clubs in major European leagues, going back to 2000, with some exploratory visualisation thrown in for good measure."
+date: '2018-09-01'
+slug: building-visualising-open-transfer-data
+tags: ["open-data", "football", "r"]
+draft: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(cache = TRUE, warning = FALSE, message = FALSE, out.width = '100%', dev = 'svg')
+```
+
+Around this time last year I ran [a post on the European football transfers](https://ewen.io/2017/09/07/unravelling-the-european-football-transfer-window/) - a web-scraping, network analysis jolly taking in the 2017/18 season's summer window. I got a bit itchy to refresh a lot of this when the 2018/19 window hit, and duly got a nagging thought: *"I wonder what's different from last time round?"* This aforementioned itch naturally led me to scraping all major European league transfers going back to the year 2000. This post showcases some visualisation pieces all built on top of this open data effort, and hopefully encourages others to use it and share neat stuff.[^scrape]
+
+Last time, I eventually settled on using [the Guardian's Transfer Interactive](https://www.theguardian.com/football/ng-interactive/2017/jun/22/transfer-window-2017-every-deal-in-europes-top-five-leagues), which included transfer timestamps and allowed for some intra-window time series stuff (see post linked above for more of this). However, this data source wasn't well suited to 
+
+[^scrape]: For this post I chose to omit most code, as to not deter non-programmers (insights can be gleaned from the cleaned data w/o additional code). However, the code used to scrape, clean and analyse the data is publicly available within the `src` directory of the [footy-transfer-data GitHub repo](https://github.com/ewenme/footy-transfer-data).
