@@ -29,13 +29,14 @@ Here, I tell a short story about how this open data was built and showcases some
 
 I eventually settled on ~~scraping~~ using [the Guardian's Transfer Interactive](https://www.theguardian.com/football/ng-interactive/2017/jun/22/transfer-window-2017-every-deal-in-europes-top-five-leagues) to power my previous work. This source included transfer timestamps, which allowed for some intra-window time series stuff - it remains handily [hosted by Tom Worville in a public, flat-file format](https://github.com/Worville/guardian_transfers). However, it isn't really set up for investigating historical trends as the Guardian has only run this interactive since 2017, as far as I can tell.
 
-Enter [Transfermarkt](https://www.transfermarkt.co.uk/), a data goldmine of player transfers for a number of major european leagues (e.g. English Premier League, Spanish La Liga, Italian Serie A) and some other oddities (my personal favourite is [this list of father/son combos for national teams - glorious and appreciated](https://www.transfermarkt.co.uk/spieler/vatersohnnationalspieler/statistik)). Season-level stats like player transfers run back for quite a few seasons, joyously arranged in predictable html tables for bountiful scraping. I wrote a short scraping program[^scrape] to collect and clean up player transfers for these (and other) leagues, back to the 2000/01 season (N.B. this decision was entirely arbitrary).
+Enter [Transfermarkt](https://www.transfermarkt.co.uk/), a data goldmine of player transfers for a number of major European leagues (e.g. English Premier League, Spanish La Liga, Italian Serie A) and some other oddities (my personal favourite is [this list of father/son combos for national teams - glorious and appreciated](https://www.transfermarkt.co.uk/spieler/vatersohnnationalspieler/statistik)). Season-level stats like player transfers run back for quite a few seasons, joyously arranged in predictable html tables for bountiful scraping. I wrote a short scraping program[^scrape] to collect and clean up player transfers for these (and other) leagues, back to the 2000/01 season (N.B. this decision was entirely arbitrary).
 
 Et voila - the data is now freely available, [hosted on Github as flat .csv files](https://github.com/ewenme/footy-transfer-data/tree/master/data) (in accordance with Transfermarkt's [terms of use](https://www.transfermarkt.co.uk/intern/anb))[^legal]. Here's a preview, lovingly featuring the deal taking Mr. Igors Stepanovs to Arsenal.
 
 ```{r data-preview}
 kable(head(epl_transfers), format = "html") %>% 
-  kable_styling()
+  kable_styling(full_width = F) %>% 
+  scroll_box(width = "100%")
 ```
 
 Notice the duplicated player name field `r emo::ji("thinking")` if you find a fix, holler. For more on the variables included, visit the [repo's readme](https://github.com/ewenme/footy-transfer-data/blob/master/README.md).

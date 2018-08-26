@@ -2,292 +2,310 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on ewen</title>
-    <link>https://ewen.io/tags/</link>
+    <link>/tags/</link>
     <description>Recent content in Tags on ewen</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>&amp;copy; Ewen Henderson &lt;/a&gt; 2017-18</copyright>
     <lastBuildDate>Wed, 01 Mar 2017 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://ewen.io/tags/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Api</title>
-      <link>https://ewen.io/tags/api/</link>
+      <link>/tags/api/</link>
       <pubDate>Wed, 01 Mar 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://ewen.io/tags/api/</guid>
+      <guid>/tags/api/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Azure</title>
-      <link>https://ewen.io/tags/azure/</link>
+      <link>/tags/azure/</link>
       <pubDate>Wed, 11 Oct 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://ewen.io/tags/azure/</guid>
+      <guid>/tags/azure/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Bathing Tapes</title>
-      <link>https://ewen.io/tags/bathing-tapes/</link>
+      <link>/tags/bathing-tapes/</link>
       <pubDate>Fri, 11 May 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://ewen.io/tags/bathing-tapes/</guid>
+      <guid>/tags/bathing-tapes/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Data Viz</title>
+      <link>/tags/data-viz/</link>
+      <pubDate>Mon, 27 Aug 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/data-viz/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Deejae</title>
-      <link>https://ewen.io/tags/deejae/</link>
+      <link>/tags/deejae/</link>
       <pubDate>Sat, 12 May 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://ewen.io/tags/deejae/</guid>
+      <guid>/tags/deejae/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Discogger</title>
-      <link>https://ewen.io/tags/discogger/</link>
+      <link>/tags/discogger/</link>
       <pubDate>Thu, 07 Jun 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://ewen.io/tags/discogger/</guid>
+      <guid>/tags/discogger/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Discogs</title>
-      <link>https://ewen.io/tags/discogs/</link>
+      <link>/tags/discogs/</link>
       <pubDate>Thu, 07 Jun 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://ewen.io/tags/discogs/</guid>
+      <guid>/tags/discogs/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Everypolitician</title>
-      <link>https://ewen.io/tags/everypolitician/</link>
+      <link>/tags/everypolitician/</link>
       <pubDate>Sun, 23 Apr 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://ewen.io/tags/everypolitician/</guid>
+      <guid>/tags/everypolitician/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Football</title>
-      <link>https://ewen.io/tags/football/</link>
-      <pubDate>Thu, 07 Sep 2017 00:00:00 +0000</pubDate>
+      <link>/tags/football/</link>
+      <pubDate>Mon, 27 Aug 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://ewen.io/tags/football/</guid>
+      <guid>/tags/football/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Fpl</title>
-      <link>https://ewen.io/tags/fpl/</link>
+      <link>/tags/fpl/</link>
       <pubDate>Mon, 06 Nov 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://ewen.io/tags/fpl/</guid>
+      <guid>/tags/fpl/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Fplr</title>
-      <link>https://ewen.io/tags/fplr/</link>
+      <link>/tags/fplr/</link>
       <pubDate>Sun, 25 Jun 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://ewen.io/tags/fplr/</guid>
+      <guid>/tags/fplr/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Genius</title>
-      <link>https://ewen.io/tags/genius/</link>
+      <link>/tags/genius/</link>
       <pubDate>Wed, 06 Dec 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://ewen.io/tags/genius/</guid>
+      <guid>/tags/genius/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Geniusr</title>
-      <link>https://ewen.io/tags/geniusr/</link>
+      <link>/tags/geniusr/</link>
       <pubDate>Wed, 06 Dec 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://ewen.io/tags/geniusr/</guid>
+      <guid>/tags/geniusr/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Geofacet</title>
-      <link>https://ewen.io/tags/geofacet/</link>
+      <link>/tags/geofacet/</link>
       <pubDate>Tue, 30 May 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://ewen.io/tags/geofacet/</guid>
+      <guid>/tags/geofacet/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Ggplot2</title>
-      <link>https://ewen.io/tags/ggplot2/</link>
+      <link>/tags/ggplot2/</link>
       <pubDate>Tue, 30 May 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://ewen.io/tags/ggplot2/</guid>
+      <guid>/tags/ggplot2/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Gis</title>
-      <link>https://ewen.io/tags/gis/</link>
+      <link>/tags/gis/</link>
       <pubDate>Thu, 09 Nov 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://ewen.io/tags/gis/</guid>
+      <guid>/tags/gis/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Homelessness</title>
-      <link>https://ewen.io/tags/homelessness/</link>
+      <link>/tags/homelessness/</link>
       <pubDate>Thu, 09 Nov 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://ewen.io/tags/homelessness/</guid>
+      <guid>/tags/homelessness/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Kanye West</title>
-      <link>https://ewen.io/tags/kanye-west/</link>
+      <link>/tags/kanye-west/</link>
       <pubDate>Mon, 20 Mar 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://ewen.io/tags/kanye-west/</guid>
+      <guid>/tags/kanye-west/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Linear Programming</title>
-      <link>https://ewen.io/tags/linear-programming/</link>
+      <link>/tags/linear-programming/</link>
       <pubDate>Mon, 06 Nov 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://ewen.io/tags/linear-programming/</guid>
+      <guid>/tags/linear-programming/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Markov Chains</title>
-      <link>https://ewen.io/tags/markov-chains/</link>
+      <link>/tags/markov-chains/</link>
       <pubDate>Wed, 11 Oct 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://ewen.io/tags/markov-chains/</guid>
+      <guid>/tags/markov-chains/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Mixes</title>
-      <link>https://ewen.io/tags/mixes/</link>
+      <link>/tags/mixes/</link>
       <pubDate>Fri, 11 May 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://ewen.io/tags/mixes/</guid>
+      <guid>/tags/mixes/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Open Data</title>
+      <link>/tags/open-data/</link>
+      <pubDate>Mon, 27 Aug 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/open-data/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Package</title>
-      <link>https://ewen.io/tags/package/</link>
+      <link>/tags/package/</link>
       <pubDate>Wed, 06 Dec 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://ewen.io/tags/package/</guid>
+      <guid>/tags/package/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Pdf</title>
-      <link>https://ewen.io/tags/pdf/</link>
+      <link>/tags/pdf/</link>
       <pubDate>Thu, 09 Nov 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://ewen.io/tags/pdf/</guid>
+      <guid>/tags/pdf/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Politics</title>
-      <link>https://ewen.io/tags/politics/</link>
+      <link>/tags/politics/</link>
       <pubDate>Sun, 23 Apr 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://ewen.io/tags/politics/</guid>
+      <guid>/tags/politics/</guid>
       <description></description>
     </item>
     
     <item>
       <title>R</title>
-      <link>https://ewen.io/tags/r/</link>
-      <pubDate>Thu, 07 Jun 2018 00:00:00 +0000</pubDate>
+      <link>/tags/r/</link>
+      <pubDate>Mon, 27 Aug 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://ewen.io/tags/r/</guid>
+      <guid>/tags/r/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Sentiment Analysis</title>
-      <link>https://ewen.io/tags/sentiment-analysis/</link>
+      <link>/tags/sentiment-analysis/</link>
       <pubDate>Mon, 20 Mar 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://ewen.io/tags/sentiment-analysis/</guid>
+      <guid>/tags/sentiment-analysis/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Shiny</title>
-      <link>https://ewen.io/tags/shiny/</link>
+      <link>/tags/shiny/</link>
       <pubDate>Sat, 12 May 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://ewen.io/tags/shiny/</guid>
+      <guid>/tags/shiny/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Spark</title>
-      <link>https://ewen.io/tags/spark/</link>
+      <link>/tags/spark/</link>
       <pubDate>Thu, 27 Jul 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://ewen.io/tags/spark/</guid>
+      <guid>/tags/spark/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Sparklyr</title>
-      <link>https://ewen.io/tags/sparklyr/</link>
+      <link>/tags/sparklyr/</link>
       <pubDate>Thu, 27 Jul 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://ewen.io/tags/sparklyr/</guid>
+      <guid>/tags/sparklyr/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Traktor</title>
-      <link>https://ewen.io/tags/traktor/</link>
+      <link>/tags/traktor/</link>
       <pubDate>Sat, 12 May 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://ewen.io/tags/traktor/</guid>
+      <guid>/tags/traktor/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Tweetbot</title>
-      <link>https://ewen.io/tags/tweetbot/</link>
+      <link>/tags/tweetbot/</link>
       <pubDate>Wed, 11 Oct 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://ewen.io/tags/tweetbot/</guid>
+      <guid>/tags/tweetbot/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Web Scraping</title>
-      <link>https://ewen.io/tags/web-scraping/</link>
+      <link>/tags/web-scraping/</link>
       <pubDate>Thu, 07 Sep 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://ewen.io/tags/web-scraping/</guid>
+      <guid>/tags/web-scraping/</guid>
       <description></description>
     </item>
     
