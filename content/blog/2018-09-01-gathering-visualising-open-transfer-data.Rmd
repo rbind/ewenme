@@ -1,0 +1,57 @@
+---
+title: "Gathering & visualising open football transfer data"
+description: "Data on player transfers to and from football clubs in major European leagues, going back to 2000, with some exploratory visualisation thrown in for good measure."
+date: '2018-09-01'
+slug: gathering-visualising-open-transfer-data
+tags: ["open-data", "football", "r"]
+draft: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(cache = TRUE, warning = FALSE, message = FALSE, out.width = '100%', dev = 'svg')
+
+# load packages
+library(readr)
+library(dplyr)
+library(kableExtra)
+```
+
+Around this time last year I ran [a post on the European football transfers](https://ewen.io/2017/09/07/unravelling-the-european-football-transfer-window/) - a web-scraping, network analysis jolly taking in the 2017/18 season's summer window. I got a bit of an itch to refresh a lot of this when the 2018/19 window hit, and duly got a nagging thought: *"I wonder what's different from last time round?"* The aforementioned itch naturally led me to scraping all major European league transfers going back to the year 2000(!), of course. This post showcases some visualisation pieces made using this open data effort, and will hopefully encourages others to use it and share more neat stuff.[^scrape]
+
+## Opening up the data
+
+Last time, I eventually settled on ~~scraping~~ using [the Guardian's Transfer Interactive](https://www.theguardian.com/football/ng-interactive/2017/jun/22/transfer-window-2017-every-deal-in-europes-top-five-leagues) to power analysis, which included transfer timestamps allowing for some intra-window time series stuff (again, see the post linked to previously) and is handily [hosted by Tom Worville in a public, flat-file format](https://github.com/Worville/guardian_transfers). However, this data source isn't really set up for inter-window, historical trends as the Guardian has only run this interactive since 2017, as far as I can tell.
+
+Enter [Transfermarkt](https://www.transfermarkt.co.uk/), a goldmine of football data (my personal favourite oddity over there is [this list of father/son combos for national teams - glorious and appreciated](https://www.transfermarkt.co.uk/spieler/vatersohnnationalspieler/statistik)) including player transfers for a number of major european leagues (e.g. English Premier League, Spanish La Liga, Italian Serie A). Crucially, a lot of the season-level stats like player transfers run back for quite a few seasons, and are joyously arranged in predictable html tables for bountiful scraping. Afer some dabbling in [rvest](https://github.com/hadley/rvest) (web scraping for R) in conjunction with [purrr](https://github.com/tidyverse/purrr) (iteration tools for R), I wrote a short scraping program to collect and clean up player transfers for these (and other) leagues, back to the 2000/01 season (N.B. this decision was entirely arbitrary).
+
+This data is now freely available, [hosted on Github as flat .csv files](https://github.com/ewenme/footy-transfer-data/tree/master/data) in accordance with Transfermarkt's [terms of use](https://www.transfermarkt.co.uk/intern/anb)[^legal]. Here's a preview, lovingly featuring the deal taking Mr. Igors Stepanovs to Arsenal. For more on the variables included, visit the [repo's readme](https://github.com/ewenme/footy-transfer-data/blob/master/README.md).
+
+```{r data-preview}
+# get data
+epl_transfers <- read_csv(file="https://raw.githubusercontent.com/ewenme/footy-transfer-data/master/data/english-premier-league-transfers.csv")
+
+kable(head(epl_transfers)) %>% 
+  kable_styling()
+
+```
+
+Notice the duplicated player name field emo::ji("thinking") if you find a fix, holler.
+
+## Building visuals on top
+
+Below are a few things I've tried out using this dataset. 
+
+#### 
+
+To start with, I took a look at the value of player buys vs sales for Premier League clubs in the 2018/19 window, using a [Cleveland dot plot](https://uc-r.github.io/cleveland-dot-plots) (AKA the 'dumbbell' chart, made simple with [Bob Rudis'](https://rud.is/b/) charming [ggalt](https://github.com/hrbrmstr/ggalt)) variant. This type of visualisation is an elegant and simple way to show ranges of data (i.e. spend vs sales) across multiple categories (i.e. football clubs).
+
+![](https://github.com/ewenme/footy-transfer-data/raw/master/figures/premier-league-transfer-spend-2018-web.png)
+
+I did the initial sketch for this using my standard charting workflow in R (mostly [ggplot2](https://ggplot2.tidyverse.org/index.html) and it's many extensions), but *did* export into [Adobe Illustrator](https://www.adobe.com/products/illustrator.html) ([Inkscape](https://inkscape.org/en/) is a fine free alternative) to do good text annotations quicker. 
+
+
+
+![](https://github.com/ewenme/footy-transfer-data/raw/master/figures/chelsea-transfers-web.png)
+
+[^scrape]: For this post I chose to omit most code, as to not deter non-programmers (insights can be gleaned from the cleaned data w/o additional code). However, the code used to scrape, clean and analyse the data is publicly available within the `src` directory of the [footy-transfer-data GitHub repo](https://github.com/ewenme/footy-transfer-data).
+[^legal]: Web scraping is a legally/ethically grey area. All effort should be made to verify if scraping a webpage is in accordance with the parent domain's terms of use. A helpful permissions checker for R, [robotstxt](https://github.com/ropensci/robotstxt), is invaluable in this pursuit. Use this (or similar in other languages), or at least study the terms of use for the domain in question closely.
