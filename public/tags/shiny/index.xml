@@ -2,22 +2,22 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Shiny on ewen</title>
-    <link>/tags/shiny/</link>
+    <link>https://ewen.io/tags/shiny/</link>
     <description>Recent content in Shiny on ewen</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>&amp;copy; Ewen Henderson &lt;/a&gt; 2017-18</copyright>
     <lastBuildDate>Sat, 12 May 2018 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="/tags/shiny/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://ewen.io/tags/shiny/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>deejae</title>
-      <link>/2018/05/12/deejae/</link>
+      <link>https://ewen.io/2018/05/12/deejae/</link>
       <pubDate>Sat, 12 May 2018 00:00:00 +0000</pubDate>
       
-      <guid>/2018/05/12/deejae/</guid>
+      <guid>https://ewen.io/2018/05/12/deejae/</guid>
       <description>this goes out to all the DJs…
  I adore spinnin’ records really loud, and trying to evoke all manner of emotions and recontextualising sounds by blending tracks greater than the sum of their parts. I made a thing called deejae which intersects with some other nerd tendencies I have, like data viz.
 Digital DJ software like Native Instruments’ Traktor stores a user’s tarck library/play history in XML structures similar to popular audio library management software like iTunes.</description>
@@ -25,20 +25,20 @@ Digital DJ software like Native Instruments’ Traktor stores a user’s tarck l
     
     <item>
       <title>Advocating for Open Policing with sparklyr and Shiny</title>
-      <link>/2017/07/27/advocating-for-open-policing-with-sparklyr-and-shiny/</link>
+      <link>https://ewen.io/2017/07/27/advocating-for-open-policing-with-sparklyr-and-shiny/</link>
       <pubDate>Thu, 27 Jul 2017 00:00:00 +0000</pubDate>
       
-      <guid>/2017/07/27/advocating-for-open-policing-with-sparklyr-and-shiny/</guid>
+      <guid>https://ewen.io/2017/07/27/advocating-for-open-policing-with-sparklyr-and-shiny/</guid>
       <description>I don’t have much reason to dip in to big data processing tools in my current working capacity. Luckily for me, I have a (self-indulgent) blog now - perfect place to scratch these sorts of itches, and then share the resultant mishaps with the whole world.
 I’d recently been working on a Shiny app for increasing visibility and engagement with police violence data. It just so happened that I stumbled across Stanford’s Open Policing Project, with some hefty open data ripe for exploring with big data tools, right after the app’s first build was finished.</description>
     </item>
     
     <item>
       <title>Vinylspotting: A Discogs Fairytale</title>
-      <link>/2017/03/01/vinylspotting-a-discogs-fairytale/</link>
+      <link>https://ewen.io/2017/03/01/vinylspotting-a-discogs-fairytale/</link>
       <pubDate>Wed, 01 Mar 2017 00:00:00 +0000</pubDate>
       
-      <guid>/2017/03/01/vinylspotting-a-discogs-fairytale/</guid>
+      <guid>https://ewen.io/2017/03/01/vinylspotting-a-discogs-fairytale/</guid>
       <description>At a cursory glance, it’s almost impossible to get much of an understanding of vinyl record collections beyond their size (or perhaps their age, depending on the smell?). If you get up close, you might recognise some artist names or make out some titles on the spines of LPs, but your average collector is gonna have loads of bits that even they don’t recognise on sight. Now, while the unadulterated excitement of finding a white label on the shelve that even you can’t remember is the romance at the very heart of record digging, that thought of forgotten artifacts would send archivists and librarians bonkers.</description>
     </item>
     

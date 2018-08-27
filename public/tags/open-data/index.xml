@@ -2,22 +2,22 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Open Data on ewen</title>
-    <link>/tags/open-data/</link>
+    <link>https://ewen.io/tags/open-data/</link>
     <description>Recent content in Open Data on ewen</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>&amp;copy; Ewen Henderson &lt;/a&gt; 2017-18</copyright>
-    <lastBuildDate>Tue, 28 Aug 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 27 Aug 2018 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="/tags/open-data/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://ewen.io/tags/open-data/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Building open football player transfer data</title>
-      <link>/2018/08/28/building-open-football-player-transfer-data/</link>
-      <pubDate>Tue, 28 Aug 2018 00:00:00 +0000</pubDate>
+      <link>https://ewen.io/2018/08/27/building-open-football-player-transfer-data/</link>
+      <pubDate>Mon, 27 Aug 2018 00:00:00 +0000</pubDate>
       
-      <guid>/2018/08/28/building-open-football-player-transfer-data/</guid>
+      <guid>https://ewen.io/2018/08/27/building-open-football-player-transfer-data/</guid>
       <description>Around this time last year I ran a post on European football transfers, taking in the 2017/18 season’s summer window. I got a bit of an itch to refresh this work when the 2018/19 window hit. The aforementioned itch led to me getting in too deep and scraping all major European league transfers going back to the year 2000, naturally.
 Here, I tell a short story about how this open data was built and showcases some visualisation pieces that utilised that effort.</description>
     </item>
