@@ -2,32 +2,32 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Discogs on ewen</title>
-    <link>https://ewen.io/tags/discogs/</link>
+    <link>/tags/discogs/</link>
     <description>Recent content in Discogs on ewen</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>&amp;copy; Ewen Henderson &lt;/a&gt; 2017-18</copyright>
     <lastBuildDate>Thu, 07 Jun 2018 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://ewen.io/tags/discogs/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/tags/discogs/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>discogger (day one)</title>
-      <link>https://ewen.io/2018/06/07/discogger-day-one/</link>
+      <link>/2018/06/07/discogger-day-one/</link>
       <pubDate>Thu, 07 Jun 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://ewen.io/2018/06/07/discogger-day-one/</guid>
+      <guid>/2018/06/07/discogger-day-one/</guid>
       <description>I’ve been working on a new R package. discogger is an open-source effort, at an experimental stage of development, providing straightforward tools to help out with Discogs’ API v2.0. Discogs is a crowd-sourced music database and marketplace, a proper treasure trove for record diggers and music lovers to learn more about what they’re jamming to. A better route into this data for R users should yield some nice results.
 discogger 101 First up, you’ll need to register a Discogs application via https://www.</description>
     </item>
     
     <item>
       <title>Vinylspotting: A Discogs Fairytale</title>
-      <link>https://ewen.io/2017/03/01/vinylspotting-a-discogs-fairytale/</link>
+      <link>/2017/03/01/vinylspotting-a-discogs-fairytale/</link>
       <pubDate>Wed, 01 Mar 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://ewen.io/2017/03/01/vinylspotting-a-discogs-fairytale/</guid>
+      <guid>/2017/03/01/vinylspotting-a-discogs-fairytale/</guid>
       <description>At a cursory glance, it’s almost impossible to get much of an understanding of vinyl record collections beyond their size (or perhaps their age, depending on the smell?). If you get up close, you might recognise some artist names or make out some titles on the spines of LPs, but your average collector is gonna have loads of bits that even they don’t recognise on sight. Now, while the unadulterated excitement of finding a white label on the shelve that even you can’t remember is the romance at the very heart of record digging, that thought of forgotten artifacts would send archivists and librarians bonkers.</description>
     </item>
     

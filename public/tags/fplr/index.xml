@@ -2,22 +2,22 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Fplr on ewen</title>
-    <link>https://ewen.io/tags/fplr/</link>
+    <link>/tags/fplr/</link>
     <description>Recent content in Fplr on ewen</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>&amp;copy; Ewen Henderson &lt;/a&gt; 2017-18</copyright>
     <lastBuildDate>Sun, 25 Jun 2017 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://ewen.io/tags/fplr/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/tags/fplr/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>FPL Mythbusting with fplr</title>
-      <link>https://ewen.io/2017/06/25/fpl-mythbusting-with-fplr/</link>
+      <link>/2017/06/25/fpl-mythbusting-with-fplr/</link>
       <pubDate>Sun, 25 Jun 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://ewen.io/2017/06/25/fpl-mythbusting-with-fplr/</guid>
+      <guid>/2017/06/25/fpl-mythbusting-with-fplr/</guid>
       <description>I recently authored my first R package (and definitely have the bug, now). It would be remiss of me to continue without a quick PSA for anyone out there thinking about dabbling in the package game - below is a shout-out of the invaluable resources I found along the way that kept me nice and sane.
 ease in https://t.co/NdRYGE1whA
 more detail https://t.co/ypqotSAF46

@@ -2,32 +2,42 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Blogs on ewen</title>
-    <link>https://ewen.io/blog/</link>
+    <link>/blog/</link>
     <description>Recent content in Blogs on ewen</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>&amp;copy; Ewen Henderson &lt;/a&gt; 2017-18</copyright>
-    <lastBuildDate>Thu, 07 Jun 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 28 Aug 2018 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://ewen.io/blog/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/blog/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
+      <title>Building open football transfer data</title>
+      <link>/2018/08/28/building-open-transfer-data/</link>
+      <pubDate>Tue, 28 Aug 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/2018/08/28/building-open-transfer-data/</guid>
+      <description>Around this time last year I ran a post on European football transfers, taking in the 2017/18 season’s summer window. I got a bit of an itch to refresh this work when the 2018/19 window hit. The aforementioned itch led to me getting in too deep and scraping all major European league transfers going back to the year 2000, naturally.
+Here, I tell a short story about how this open data was built and showcases some visualisation pieces that utilised that effort.</description>
+    </item>
+    
+    <item>
       <title>discogger (day one)</title>
-      <link>https://ewen.io/2018/06/07/discogger-day-one/</link>
+      <link>/2018/06/07/discogger-day-one/</link>
       <pubDate>Thu, 07 Jun 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://ewen.io/2018/06/07/discogger-day-one/</guid>
+      <guid>/2018/06/07/discogger-day-one/</guid>
       <description>I’ve been working on a new R package. discogger is an open-source effort, at an experimental stage of development, providing straightforward tools to help out with Discogs’ API v2.0. Discogs is a crowd-sourced music database and marketplace, a proper treasure trove for record diggers and music lovers to learn more about what they’re jamming to. A better route into this data for R users should yield some nice results.
 discogger 101 First up, you’ll need to register a Discogs application via https://www.</description>
     </item>
     
     <item>
       <title>deejae</title>
-      <link>https://ewen.io/2018/05/12/deejae/</link>
+      <link>/2018/05/12/deejae/</link>
       <pubDate>Sat, 12 May 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://ewen.io/2018/05/12/deejae/</guid>
+      <guid>/2018/05/12/deejae/</guid>
       <description>this goes out to all the DJs…
  I adore spinnin’ records really loud, and trying to evoke all manner of emotions and recontextualising sounds by blending tracks greater than the sum of their parts. I made a thing called deejae which intersects with some other nerd tendencies I have, like data viz.
 Digital DJ software like Native Instruments’ Traktor stores a user’s tarck library/play history in XML structures similar to popular audio library management software like iTunes.</description>
@@ -35,28 +45,28 @@ Digital DJ software like Native Instruments’ Traktor stores a user’s tarck l
     
     <item>
       <title>bathing tapes vol. one</title>
-      <link>https://ewen.io/2018/05/11/bathing-tapes-vol-one/</link>
+      <link>/2018/05/11/bathing-tapes-vol-one/</link>
       <pubDate>Fri, 11 May 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://ewen.io/2018/05/11/bathing-tapes-vol-one/</guid>
+      <guid>/2018/05/11/bathing-tapes-vol-one/</guid>
       <description>Last month I recorded a studio mix at home on the 1210s, the first volume of an occasional series for me to share sounds I’m bumping heavy. I’m calling it bathing tapes (don’t @ me, Nigo), ’cos most of the jams won’t sound out of place during an extended exfoliation session. but you should enjoy the soothing vibes wherever you’re at. Find experimental techno diversions, Houston hip-hop, ethereal footwork waves, bleepy dancehall and more sweet infusions inside.</description>
     </item>
     
     <item>
       <title>Introducing geniusr</title>
-      <link>https://ewen.io/2017/12/06/introducing-geniusr/</link>
+      <link>/2017/12/06/introducing-geniusr/</link>
       <pubDate>Wed, 06 Dec 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://ewen.io/2017/12/06/introducing-geniusr/</guid>
+      <guid>/2017/12/06/introducing-geniusr/</guid>
       <description>I made a new R package (🔥📦🔥) this week. My sophomore post on this site (from way back in March) was a text-based analysis of Kanye West records, which exposed me to the Genius API1 once I wanted to get hold of some lyrical content. In the process, I wrote some functions for playing nicely with this API in R that I knew would probably be handy for others dabbling/wanting to dabble in similar matters.</description>
     </item>
     
     <item>
       <title>Hacking Homelessness &amp; PDF Prisons</title>
-      <link>https://ewen.io/2017/11/09/hacking-homelessness--pdf-prisons/</link>
+      <link>/2017/11/09/hacking-homelessness--pdf-prisons/</link>
       <pubDate>Thu, 09 Nov 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://ewen.io/2017/11/09/hacking-homelessness--pdf-prisons/</guid>
+      <guid>/2017/11/09/hacking-homelessness--pdf-prisons/</guid>
       <description>Shout-out to the Monday Morning Data Science mailout from John Hopkins. Making my way through this week’s (#41) edition, I hit upon quite the eulogy concerning a new R package:
  “The most compelling data visualization libraries I’ve seen in awhile…you have to see it to believe it”
  You had me at compelling (I’m not sure who had me exactly, this was the only entry w/o a name attached to it 🤔).</description>
@@ -64,20 +74,20 @@ Digital DJ software like Native Instruments’ Traktor stores a user’s tarck l
     
     <item>
       <title>My Linear(ish) Programming Fantasy</title>
-      <link>https://ewen.io/2017/11/06/my-linearish-programming-fantasy/</link>
+      <link>/2017/11/06/my-linearish-programming-fantasy/</link>
       <pubDate>Mon, 06 Nov 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://ewen.io/2017/11/06/my-linearish-programming-fantasy/</guid>
+      <guid>/2017/11/06/my-linearish-programming-fantasy/</guid>
       <description>Linear optimization (AKA linear programming) is all around us, even if we don’t really know it. For example, how did you come to pick your route to work today? This decision, lovingly known as “getting from A to B”, is (most of the time) objectively simple: which route is the quickest?
 There are known variables that we need to identify and use in solving this problem (known as decision variables), for example:</description>
     </item>
     
     <item>
       <title>Meet Dumb Hardwax</title>
-      <link>https://ewen.io/2017/10/11/meet-dumb-hardwax/</link>
+      <link>/2017/10/11/meet-dumb-hardwax/</link>
       <pubDate>Wed, 11 Oct 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://ewen.io/2017/10/11/meet-dumb-hardwax/</guid>
+      <guid>/2017/10/11/meet-dumb-hardwax/</guid>
       <description>Twitter bots have gotten a fairly bad rap, recently (often with good reason). When they’re done right, a genuinely quirky robot can cut through a feed full of humans with beautiful tidbits. God bless [@tinycarebot](https://twitter.com/tinycarebot).
 💟: please dont forget to text back your friends — here&#39;s your reminder (@tinycarebot) October 6, 2017   
 Another thing that gives me life is reading Hardwax, a hugely influential Berlin record store, get excited about their new stock.</description>
@@ -85,29 +95,29 @@ Another thing that gives me life is reading Hardwax, a hugely influential Berlin
     
     <item>
       <title>Unravelling the European Football Transfer Window</title>
-      <link>https://ewen.io/2017/09/07/unravelling-the-european-football-transfer-window/</link>
+      <link>/2017/09/07/unravelling-the-european-football-transfer-window/</link>
       <pubDate>Thu, 07 Sep 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://ewen.io/2017/09/07/unravelling-the-european-football-transfer-window/</guid>
+      <guid>/2017/09/07/unravelling-the-european-football-transfer-window/</guid>
       <description>Followers of European football will be familiar with the infamous transfer window system, which endears clubs to buy and sell players in a specified period - once in the off-season (summer), and once at the turn of each calendar year. This constraint has invited increasingly peculiar and precarious market activity over the years, as clubs vie to secure the hottest new talents with varying parts method and madness. Meanwhile, fans lap up newspaper gossip columns and tell friends “he looks quality on YouTube” as they frantically research the latest “wunderkind” their club has been linked with.</description>
     </item>
     
     <item>
       <title>Advocating for Open Policing with sparklyr and Shiny</title>
-      <link>https://ewen.io/2017/07/27/advocating-for-open-policing-with-sparklyr-and-shiny/</link>
+      <link>/2017/07/27/advocating-for-open-policing-with-sparklyr-and-shiny/</link>
       <pubDate>Thu, 27 Jul 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://ewen.io/2017/07/27/advocating-for-open-policing-with-sparklyr-and-shiny/</guid>
+      <guid>/2017/07/27/advocating-for-open-policing-with-sparklyr-and-shiny/</guid>
       <description>I don’t have much reason to dip in to big data processing tools in my current working capacity. Luckily for me, I have a (self-indulgent) blog now - perfect place to scratch these sorts of itches, and then share the resultant mishaps with the whole world.
 I’d recently been working on a Shiny app for increasing visibility and engagement with police violence data. It just so happened that I stumbled across Stanford’s Open Policing Project, with some hefty open data ripe for exploring with big data tools, right after the app’s first build was finished.</description>
     </item>
     
     <item>
       <title>FPL Mythbusting with fplr</title>
-      <link>https://ewen.io/2017/06/25/fpl-mythbusting-with-fplr/</link>
+      <link>/2017/06/25/fpl-mythbusting-with-fplr/</link>
       <pubDate>Sun, 25 Jun 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://ewen.io/2017/06/25/fpl-mythbusting-with-fplr/</guid>
+      <guid>/2017/06/25/fpl-mythbusting-with-fplr/</guid>
       <description>I recently authored my first R package (and definitely have the bug, now). It would be remiss of me to continue without a quick PSA for anyone out there thinking about dabbling in the package game - below is a shout-out of the invaluable resources I found along the way that kept me nice and sane.
 ease in https://t.co/NdRYGE1whA
 more detail https://t.co/ypqotSAF46
@@ -117,40 +127,40 @@ travis 💀 https://t.co/dEvM3PWsVb — ewen (@ewen_) June 7, 2017   I set out o
     
     <item>
       <title>Tracking London&#39;s Pub &amp; Bar Landscape with geofacet</title>
-      <link>https://ewen.io/2017/05/30/tracking-londons-pub--bar-landscape-with-geofacet/</link>
+      <link>/2017/05/30/tracking-londons-pub--bar-landscape-with-geofacet/</link>
       <pubDate>Tue, 30 May 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://ewen.io/2017/05/30/tracking-londons-pub--bar-landscape-with-geofacet/</guid>
+      <guid>/2017/05/30/tracking-londons-pub--bar-landscape-with-geofacet/</guid>
       <description>Introducing geofacet The geofacet package dropped recently (I want to say last week?), a ggplot2 extension allowing for the user to facet plots in a way that can retain an underlying geographical dimension. It perhaps goes a little bit further towards abstraction than tilegrams, but the visualizations we produce can be a bit more complex as well. This post documents my first foray into this packages functionality.1
  Getting to grips with grids If we think about faceting in ggplot2 (facet_wrap, facet_grid), we are already familiar with the idea of placing a sequence of plots into a number of panels, arranged according to a variable(s) of interest.</description>
     </item>
     
     <item>
       <title>The Representativeness of UK Parliament</title>
-      <link>https://ewen.io/2017/04/23/the-representativeness-of-uk-parliament/</link>
+      <link>/2017/04/23/the-representativeness-of-uk-parliament/</link>
       <pubDate>Sun, 23 Apr 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://ewen.io/2017/04/23/the-representativeness-of-uk-parliament/</guid>
+      <guid>/2017/04/23/the-representativeness-of-uk-parliament/</guid>
       <description>As a general election looms, a familiar UK media maelstrom has begun. The key difference here is that the public has been taken by surprise, somewhat - Theresa May’s call for a snap election (we weren’t actually due one until 2020) has left folk with little under two months to decide where their vote will go.
 For some, this may be the first election they are able to participate in. For many, the traditional delivery of party politics might not have kept them engaged all that well since the last election.</description>
     </item>
     
     <item>
       <title>A Sentiment Analysis of Kanye West Records</title>
-      <link>https://ewen.io/2017/03/20/a-sentiment-analysis-of-kanye-west-records/</link>
+      <link>/2017/03/20/a-sentiment-analysis-of-kanye-west-records/</link>
       <pubDate>Mon, 20 Mar 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://ewen.io/2017/03/20/a-sentiment-analysis-of-kanye-west-records/</guid>
+      <guid>/2017/03/20/a-sentiment-analysis-of-kanye-west-records/</guid>
       <description>PSA: This blog will cover other stuff besides music, I promise…this post is the fruits of a recent meander into the new ggalt, hrbrthemes and tidytext packages.1
 Intro Kanye West is responsible for some of the realest, funniest (“if you fall on the concrete thats your ass fault”…asphalt…anyone?) and inspiring lyrics in music. The strength of these words has had a profound effect on me and my generation. Can the application of sentiment analysis techniques help us understand more about his art?</description>
     </item>
     
     <item>
       <title>Vinylspotting: A Discogs Fairytale</title>
-      <link>https://ewen.io/2017/03/01/vinylspotting-a-discogs-fairytale/</link>
+      <link>/2017/03/01/vinylspotting-a-discogs-fairytale/</link>
       <pubDate>Wed, 01 Mar 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://ewen.io/2017/03/01/vinylspotting-a-discogs-fairytale/</guid>
+      <guid>/2017/03/01/vinylspotting-a-discogs-fairytale/</guid>
       <description>At a cursory glance, it’s almost impossible to get much of an understanding of vinyl record collections beyond their size (or perhaps their age, depending on the smell?). If you get up close, you might recognise some artist names or make out some titles on the spines of LPs, but your average collector is gonna have loads of bits that even they don’t recognise on sight. Now, while the unadulterated excitement of finding a white label on the shelve that even you can’t remember is the romance at the very heart of record digging, that thought of forgotten artifacts would send archivists and librarians bonkers.</description>
     </item>
     
