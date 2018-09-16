@@ -4,7 +4,7 @@ description: "A data-driven tribute to the art of the mixtape era glow-up."
 date: '2018-09-17'
 slug: legends-of-the-mixtape
 tags: ["lil-wayne", "d3"]
-cover: https://github.com/rbind/ewenme/blob/master/public/img/2018-09-16-legends-of-the-mixtape/datpiff-bubble.png
+cover: https://github.com/rbind/ewenme/blob/master/public/img/2018-09-17-legends-of-the-mixtape/datpiff-bubble.png
 draft: no
 ---
 
@@ -13,7 +13,7 @@ knitr::opts_chunk$set(cache = FALSE, warning = FALSE, message = FALSE, echo = FA
 ```
 
 ```{r out.width="75%"}
-knitr::include_graphics("/img/2018-09-16-legends-of-the-mixtape/xxx-art.jpg")
+knitr::include_graphics("/img/2018-09-17-legends-of-the-mixtape/xxx-art.jpg")
 ```
 
 The modern definition of the hip-hop mixtape originates in hip-hop circles of the 2000s, now talking to an artist's independently released projects that act as precursors to "official" full-lengths (albums). [In previous generations](https://www.billboard.com/articles/columns/hip-hop/7669073/history-dj-drama-mixtape-evolution), hip-hop mixtapes were more DJ-led and focused on ingenuity of "chops" and "blends", but the DIY ethos prevailed through the shift towards MCs as main attraction. The dawn of mainstream streaming services and outgoing physical formats has challenged the identity of the mixtape somewhat, but understanding how the artform has reinvented itself around the current climate helps alleviate these concerns somewhat.
@@ -23,7 +23,7 @@ Traditionally speaking, the mixtape format means a couple of things. They are us
 You can actually see how this cultural phenomenon intersects with software development. Take [Glitch's about page](https://glitch.com/about), specifically the use of the word "remix", hinting that the act of a developer re-working an app (that someone else built and shared) is a bit like [Frank Ocean flipping a Coldplay sample](https://www.youtube.com/watch?v=zD3lRLThVRY). (I'm aware that, beyond staring at computer screens in the dark, the developer-musician comparisons probably stop here).
 
 ```{r out.width="75%"}
-knitr::include_graphics("/img/2018-09-16-legends-of-the-mixtape/nostalgia-ultra-art.jpg")
+knitr::include_graphics("/img/2018-09-17-legends-of-the-mixtape/nostalgia-ultra-art.jpg")
 ```
 
 ## Mixtapes by the numbers
@@ -33,7 +33,7 @@ So, who was really putting [Numbers On The Boards](https://www.youtube.com/watch
 A good place to start is [DatPiff](http://www.datpiff.com/), probably the leading web service dedicated to hip-hop mixtapes. In the [celebrated section](http://www.datpiff.com/mixtapes/celebrated), you can see download figures mapped to pre-eminent mixtape projects.
 
 ```{r out.width="75%"}
-knitr::include_graphics("/img/2018-09-16-legends-of-the-mixtape/datpiff-screenshot.png")
+knitr::include_graphics("/img/2018-09-17-legends-of-the-mixtape/datpiff-screenshot.png")
 ```
 
 Through harvesting these figures comes a data-driven approach to uncovering who really runs the mixtape game.[^data] This comes with some caveats - mixtape streams are ignored (not readily obtainable for all listings), as are tapes not available on DatPiff (or those that have been taken down). Still, a good idea of the state of play is in reach (PS the next one is best explored on a desktop browser, if you have one handy)...[^bubbles]
@@ -92,4 +92,4 @@ Honorable mentions to a few of my personal favourites (with helpful pointers to 
 I could go on, but why not head back to the interactive and explore some new music yourself `r emo::ji("peace")`
 
 [^data]: All the code used to scrape DatPiff's download numbers, as well as the raw data itself, is stored in [this GitHub repo](https://github.com/ewenme/mixtapes). Check the `src` directory for code and `raw-data` for data in .csv format.
-[^bubbles]: The interactive visualisation of artist mixtape downloads was made with [D3.js](https://d3js.org/) (inspired by [Mike Bostock's D3 Bubble Chart](https://beta.observablehq.com/@mbostock/d3-bubble-chart). Original code can be found in [this Observable notebook](https://beta.observablehq.com/@ewenme/mixtape-kings/2). It's embedded inside the R markdown document used to generate this post (via [blogdown](https://bookdown.org/yihui/blogdown/)), which you can access [here](https://github.com/rbind/ewenme/blob/master/content/blog/2018-09-16-legends-of-the-mixtape.Rmd)
+[^bubbles]: The interactive visualisation of artist mixtape downloads was made with [D3.js](https://d3js.org/) (inspired by [Mike Bostock's D3 Bubble Chart](https://beta.observablehq.com/@mbostock/d3-bubble-chart). Original code can be found in [this Observable notebook](https://beta.observablehq.com/@ewenme/mixtape-kings/2). It's embedded inside the R markdown document used to generate this post (via [blogdown](https://bookdown.org/yihui/blogdown/)), which you can access [here](https://github.com/rbind/ewenme/blob/master/content/blog/2018-09-17-legends-of-the-mixtape.Rmd)
