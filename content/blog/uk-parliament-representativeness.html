@@ -9,7 +9,7 @@ draft: no
 
 
 <p>As a general election looms, a familiar UK media maelstrom has begun. The key difference here is that the public has been taken by surprise, somewhat - Theresa May’s call for a snap election (we weren’t actually due one until 2020) has left folk with little under two months to decide where their vote will go.</p>
-<p>For some, this may be the first election they are able to participate in. For many, the traditional delivery of party politics might not have kept them engaged all that well since the last election. Unfortunately, there isn’t too much time to get all cases like these as up to speed as we would like this time round. The good news is there are ambitious projects like <a href="http://everypolitician.org/uk/">EveryPolitician</a> looking to make governments around the world more transparent - perhaps we can leverage the data inside to empower voters, in some small way, ahead of 8th June.<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a></p>
+<p>For some, this may be the first election they are able to participate in. For many, the traditional delivery of party politics might not have kept them engaged all that well since the last election. Unfortunately, there isn’t too much time to get all cases like these as up to speed as we would like this time round. The good news is there are ambitious projects like <a href="http://everypolitician.org/uk/">EveryPolitician</a> looking to make governments around the world more transparent - perhaps we can leverage the data inside to empower voters, in some small way, ahead of 8th June.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p>
 <div id="inside-everypolicitian" class="section level2">
 <h2>Inside EveryPolicitian</h2>
 <p>EveryPolitician’s mission is simple: <em>“collect and share data about every politician in every country in the world, in a consistent, open format that anyone can use.”</em> They don’t provide an API to query, but we can download the whole lot (for the UK) in JSON format to work on:</p>
@@ -83,7 +83,7 @@ glimpse(members)</code></pre>
 </div>
 <div id="age" class="section level2">
 <h2>Age</h2>
-<p>Another important characteristic when considering the representativeness of government is member’s ages. Amongst parties, demonstrating the distribution of ages can illuminate whether a party reflects the public.<a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a></p>
+<p>Another important characteristic when considering the representativeness of government is member’s ages. Amongst parties, demonstrating the distribution of ages can illuminate whether a party reflects the public.<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a></p>
 <p><em>N.B. The below graphic only includes parties with 30 or more members across the last five Parliamentary terms.</em></p>
 <p><img src="/blog/uk-parliament-representativeness_files/figure-html/unnamed-chunk-1-1.svg" width="100%" /></p>
 <p>Looking across the previous five Parliamentary terms in the above plot, you can see that the Labour ‘bulge’ is higher than the Conservatives, hinting at an older pool of members. Has this always been the case?</p>
@@ -92,7 +92,7 @@ glimpse(members)</code></pre>
 </div>
 <div id="turnover" class="section level2">
 <h2>Turnover</h2>
-<p>We’ve explored how gender and age manifest in Parliament across time and parties, and perhaps now would be a good time to examine these factors in relation to how often MPs actually keep their seats.<a href="#fn3" class="footnoteRef" id="fnref3"><sup>3</sup></a></p>
+<p>We’ve explored how gender and age manifest in Parliament across time and parties, and perhaps now would be a good time to examine these factors in relation to how often MPs actually keep their seats.<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a></p>
 <p><img src="/blog/uk-parliament-representativeness_files/figure-html/unnamed-chunk-3-1.svg" width="100%" /></p>
 <p>The above chart gives a sense of the ‘turnover’ in Parliament between terms. We see a decline in the likelihood of an MP keeping their seat as their time in situ increases (beyond the first re-election). How does this stand up by gender?</p>
 <p><img src="/blog/uk-parliament-representativeness_files/figure-html/unnamed-chunk-4-1.svg" width="100%" /></p>
@@ -117,8 +117,8 @@ glimpse(members)</code></pre>
 <div class="footnotes">
 <hr />
 <ol>
-<li id="fn1"><p>To keep the post concise I don’t show all of the code, especially code that generates figures. But you can find the full code <a href="https://github.com/rbind/ewenme/blob/master/content/blog/uk-parliament-representativeness.Rmd">here</a>.<a href="#fnref1">↩</a></p></li>
-<li id="fn2"><p>Two MPs with missing ages were excluded from the parts of the analysis studying age, at the time of writing: Sarah Olney (Liberal Democrats) and Caroline Johnson (Conservative).<a href="#fnref2">↩</a></p></li>
-<li id="fn3"><p>I decided to exclude Speakers and Deputy Speakers from this part of the analysis. These are individuals performing roles in Parliament that are unaffiliated with any party, and are not publicly elected positions.<a href="#fnref3">↩</a></p></li>
+<li id="fn1"><p>To keep the post concise I don’t show all of the code, especially code that generates figures. But you can find the full code <a href="https://github.com/rbind/ewenme/blob/master/content/blog/uk-parliament-representativeness.Rmd">here</a>.<a href="#fnref1" class="footnote-back">↩</a></p></li>
+<li id="fn2"><p>Two MPs with missing ages were excluded from the parts of the analysis studying age, at the time of writing: Sarah Olney (Liberal Democrats) and Caroline Johnson (Conservative).<a href="#fnref2" class="footnote-back">↩</a></p></li>
+<li id="fn3"><p>I decided to exclude Speakers and Deputy Speakers from this part of the analysis. These are individuals performing roles in Parliament that are unaffiliated with any party, and are not publicly elected positions.<a href="#fnref3" class="footnote-back">↩</a></p></li>
 </ol>
 </div>

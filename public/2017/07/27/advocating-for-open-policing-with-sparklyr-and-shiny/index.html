@@ -79,7 +79,7 @@
     
     <div class="content">
       <p>I don’t have much reason to dip in to big data processing tools in my current working capacity. Luckily for me, I have a (self-indulgent) blog now - perfect place to scratch these sorts of itches, and then share the resultant mishaps with the whole world.</p>
-<p>I’d recently been working on a <a href="https://shiny.rstudio.com/">Shiny</a> app for increasing visibility and engagement with police violence data. It just so happened that I stumbled across <a href="https://openpolicing.stanford.edu/">Stanford’s Open Policing Project</a>, with some hefty open data ripe for exploring with big data tools, right after the app’s first build was finished.<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a> I figured introducing these things together should make for a smooth read.</p>
+<p>I’d recently been working on a <a href="https://shiny.rstudio.com/">Shiny</a> app for increasing visibility and engagement with police violence data. It just so happened that I stumbled across <a href="https://openpolicing.stanford.edu/">Stanford’s Open Policing Project</a>, with some hefty open data ripe for exploring with big data tools, right after the app’s first build was finished.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> I figured introducing these things together should make for a smooth read.</p>
 <div id="stanfords-open-policing-project" class="section level2">
 <h2>Stanford’s Open Policing Project</h2>
 <p>Stanford is, slowly but surely, compiling and standardizing data on vehicle and pedestrian stops from law enforcement departments across the U.S.</p>
@@ -96,7 +96,8 @@
 <h2>Introducing spark(lyr)</h2>
 <p><a href="http://spark.rstudio.com/">sparklyr</a> is R Studio’s interface to <a href="https://spark.apache.org/">Apache Spark</a>, a pre-eminent open-source cluster-computing framework. The coup de grâce for sparklyr is it’s complete <a href="https://github.com/hadley/dplyr">dplyr</a> back-end, meaning there isn’t too much unfamiliar code to see here.</p>
 <blockquote>
-<p>The what-does-Spark-do TL;DR: Spark makes programs run faster by utilising a distributed computing engine for expressive data processing. A useful analogy - now, you’re sending one person into a house to find something, whereas a distributed system sends someone into each room of the house and they communicate progress to each other.</p>
+<p>The what-does-Spark-do TL;DR:
+Spark makes programs run faster by utilising a distributed computing engine for expressive data processing. A useful analogy - now, you’re sending one person into a house to find something, whereas a distributed system sends someone into each room of the house and they communicate progress to each other.</p>
 </blockquote>
 <p>What happens now? First off, the usual CRAN install/load one-two:</p>
 <pre class="r"><code>install.packages(&quot;sparklyr&quot;)
@@ -113,7 +114,8 @@ config[[&quot;sparklyr.shell.driver-memory&quot;]] &lt;- &quot;2G&quot;</code></
 </div>
 <div id="back-to-the-data" class="section level2">
 <h2>Back to the Data</h2>
-<p>Stanford have made the police stops data available in a manageable way, as a series of <a href="https://openpolicing.stanford.edu/data/">data files</a> (one for each state). I decided to take a look at Washington, which had all common fields available and relatively few data quality issues.<a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a> There are two main methods for getting data up into a Spark instance.</p>
+<p>Stanford have made the police stops data available in a manageable way, as a series of <a href="https://openpolicing.stanford.edu/data/">data files</a> (one for each state). I decided to take a look at Washington, which had all common fields available and relatively few data quality issues.<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>
+There are two main methods for getting data up into a Spark instance.</p>
 <ul>
 <li>Read data into R as normal, and then use sparklyr’s <code>copy_to</code> function to copy the data over</li>
 <li>Read data directly into Spark Dataframes using <code>spark_read_csv</code> (or another of sparklyr’s ‘read’ functions)</li>
@@ -121,11 +123,11 @@ config[[&quot;sparklyr.shell.driver-memory&quot;]] &lt;- &quot;2G&quot;</code></
 <p>I will be adopting the latter approach. The dataset in question is a not-to-be-sniffed-at 8+ million rows, so I don’t want to be doing much with it in-memory in R. So, here we go…</p>
 <pre class="r"><code>spark_read_csv(sc, name = &quot;wa_stops&quot;,
                path = &quot;../data/WA-clean.csv&quot;)</code></pre>
-<p>…and, ~five minutes later, it’s showtime. The data has been copied into the Spark cluster, and I promise there’s no more session prep work.<a href="#fn3" class="footnoteRef" id="fnref3"><sup>3</sup></a></p>
+<p>…and, ~five minutes later, it’s showtime. The data has been copied into the Spark cluster, and I promise there’s no more session prep work.<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a></p>
 </div>
 <div id="hello-dplyr-my-old-friend" class="section level2">
 <h2><em>“Hello dplyr, my old friend”</em></h2>
-<p>We can use all of your favourite dplyr moves to manipulate the data<a href="#fn4" class="footnoteRef" id="fnref4"><sup>4</sup></a>, and these computations will take place over in the cluster.</p>
+<p>We can use all of your favourite dplyr moves to manipulate the data<a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a>, and these computations will take place over in the cluster.</p>
 <p>Here’s an example of a dplyr transformation that returns a summary of the data grouped on several demographic fields.</p>
 <pre class="r"><code># initiate spark data source
 demog_stats &lt;- tbl(sc, &quot;wa_stops&quot;) %&gt;%
@@ -186,10 +188,10 @@ demog_stats &lt;- tbl(sc, &quot;wa_stops&quot;) %&gt;%
 <div class="footnotes">
 <hr />
 <ol>
-<li id="fn1"><p>I hope to find time to incorporate Stanford’s police stops data into my app. At the time of writing, there’s still a lot of states missing from their data.<a href="#fnref1">↩</a></p></li>
-<li id="fn2"><p>On the d/l page, a table explains which fields are present in each data file. The GitHub repo’s <a href="https://github.com/5harad/openpolicing/blob/master/README.md">readme</a> has detailed data quality information about each state, which you should review before getting stuck in.<a href="#fnref2">↩</a></p></li>
-<li id="fn3"><p>Due to the sheer size of the data, I haven’t actually pushed it to GitHub. However, you can get it <a href="https://openpolicing.stanford.edu/data/">here</a> (it’s the one called Washington).<a href="#fnref3">↩</a></p></li>
-<li id="fn4"><p>I found that the extended tidyverse family of packages could be used with mixed results. For example, lubridate’s <code>year</code> function worked OK, but not <code>wday</code>. Therefore, some transformations may still need to be done in R. Keep up with updates over at the sparklyr <a href="https://github.com/rstudio/sparklyr">GitHub repo</a>.<a href="#fnref4">↩</a></p></li>
+<li id="fn1"><p>I hope to find time to incorporate Stanford’s police stops data into my app. At the time of writing, there’s still a lot of states missing from their data.<a href="#fnref1" class="footnote-back">↩</a></p></li>
+<li id="fn2"><p>On the d/l page, a table explains which fields are present in each data file. The GitHub repo’s <a href="https://github.com/5harad/openpolicing/blob/master/README.md">readme</a> has detailed data quality information about each state, which you should review before getting stuck in.<a href="#fnref2" class="footnote-back">↩</a></p></li>
+<li id="fn3"><p>Due to the sheer size of the data, I haven’t actually pushed it to GitHub. However, you can get it <a href="https://openpolicing.stanford.edu/data/">here</a> (it’s the one called Washington).<a href="#fnref3" class="footnote-back">↩</a></p></li>
+<li id="fn4"><p>I found that the extended tidyverse family of packages could be used with mixed results. For example, lubridate’s <code>year</code> function worked OK, but not <code>wday</code>. Therefore, some transformations may still need to be done in R. Keep up with updates over at the sparklyr <a href="https://github.com/rstudio/sparklyr">GitHub repo</a>.<a href="#fnref4" class="footnote-back">↩</a></p></li>
 </ol>
 </div>
 

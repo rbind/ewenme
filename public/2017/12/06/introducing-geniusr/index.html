@@ -78,8 +78,8 @@
     <h1 class="title">Introducing geniusr</h1>
     
     <div class="content">
-      <p>I made a new R package (🔥📦🔥) this week. My <a href="https://ewenme.rbind.io/blog/2017-03-20-kanye_sentiment_analysis/">sophomore post on this site</a> (from way back in March) was a text-based analysis of Kanye West records, which exposed me to the <a href="https://genius.com/">Genius</a> API<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a> once I wanted to get hold of some lyrical content. In the process, I wrote some functions for playing nicely with this API in R that I knew would probably be handy for others dabbling/wanting to dabble in similar matters.</p>
-<p>Since then, I’ve found a window of time to build on and consolidate this work into a well-rounded package. <code>geniusr</code> is now <a href="https://cran.r-project.org/web/packages/geniusr/index.html">available on CRAN</a>. This is the tour.<a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a></p>
+      <p>I made a new R package (🔥📦🔥) this week. My <a href="https://ewenme.rbind.io/blog/2017-03-20-kanye_sentiment_analysis/">sophomore post on this site</a> (from way back in March) was a text-based analysis of Kanye West records, which exposed me to the <a href="https://genius.com/">Genius</a> API<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> once I wanted to get hold of some lyrical content. In the process, I wrote some functions for playing nicely with this API in R that I knew would probably be handy for others dabbling/wanting to dabble in similar matters.</p>
+<p>Since then, I’ve found a window of time to build on and consolidate this work into a well-rounded package. <code>geniusr</code> is now <a href="https://cran.r-project.org/web/packages/geniusr/index.html">available on CRAN</a>. This is the tour.<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a></p>
 <div id="searchin" class="section level2">
 <h2>Searchin’</h2>
 <p>The Genius API’s search capabilities allows for users to scan all hosted content on the site (i.e. all songs). A couple of quick implementations exist in the package for retrieving artist (<code>search_artist()</code>) and song (<code>search_song()</code>) matches for search terms. Let’s start by looking for songs brought back by a simple search for “Versace”.</p>
@@ -119,7 +119,7 @@ knitr::include_graphics(path = artwork)</code></pre>
 </div>
 <div id="gettin-lyrical" class="section level2">
 <h2>Gettin’ Lyrical</h2>
-<p>The package allows you to grab lyrics for tracks real quick, using the <code>scrape_lyrics_id()</code> (or <code>scrape_lyrics_url()</code>) function.<a href="#fn3" class="footnoteRef" id="fnref3"><sup>3</sup></a> While we’re at it, let’s call on <code>tidytext</code> and answer a question for the people - <em>just how much were the Migos chatting about “Versace” in ‘Versace’?</em></p>
+<p>The package allows you to grab lyrics for tracks real quick, using the <code>scrape_lyrics_id()</code> (or <code>scrape_lyrics_url()</code>) function.<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a> While we’re at it, let’s call on <code>tidytext</code> and answer a question for the people - <em>just how much were the Migos chatting about “Versace” in ‘Versace’?</em></p>
 <pre class="r"><code># get words proportion representation
 versace_prop &lt;- scrape_lyrics_url(versace_meta$song_lyrics_url) %&gt;%
   unnest_tokens(word, line) %&gt;%
@@ -146,9 +146,9 @@ waffle(parts, rows = 8, size = 1, colors = c(&quot;#3C3A32&quot;, &quot;#E3BD08&
 <div class="footnotes">
 <hr />
 <ol>
-<li id="fn1"><p>Genius’ <a href="https://docs.genius.com/">documentation pages</a> are helpful if you want to know more about the API.<a href="#fnref1">↩</a></p></li>
-<li id="fn2"><p>For installation &amp; authentication guidance, head for the <a href="https://github.com/ewenme/geniusr">README</a>.<a href="#fnref2">↩</a></p></li>
-<li id="fn3"><p>As well as API helper functions, the package includes things that are scraping the Genius site (Genius’ API doesn’t include lyrics, for example). Be sure to read the <a href="https://genius.com/static/terms">terms of service</a> in case of any concerns.<a href="#fnref3">↩</a></p></li>
+<li id="fn1"><p>Genius’ <a href="https://docs.genius.com/">documentation pages</a> are helpful if you want to know more about the API.<a href="#fnref1" class="footnote-back">↩</a></p></li>
+<li id="fn2"><p>For installation &amp; authentication guidance, head for the <a href="https://github.com/ewenme/geniusr">README</a>.<a href="#fnref2" class="footnote-back">↩</a></p></li>
+<li id="fn3"><p>As well as API helper functions, the package includes things that are scraping the Genius site (Genius’ API doesn’t include lyrics, for example). Be sure to read the <a href="https://genius.com/static/terms">terms of service</a> in case of any concerns.<a href="#fnref3" class="footnote-back">↩</a></p></li>
 </ol>
 </div>
 

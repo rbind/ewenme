@@ -8,11 +8,11 @@ draft: no
 
 
 
-<p>PSA: This blog <em>will</em> cover other stuff besides music, I promise…this post is the fruits of a recent meander into the new <a href="https://cran.r-project.org/web/packages/ggalt/index.html"><code>ggalt</code></a>, <a href="https://cran.r-project.org/web/packages/hrbrthemes/index.html"><code>hrbrthemes</code></a> and <a href="https://cran.r-project.org/web/packages/tidytext/index.html"><code>tidytext</code></a> packages.<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a></p>
+<p>PSA: This blog <em>will</em> cover other stuff besides music, I promise…this post is the fruits of a recent meander into the new <a href="https://cran.r-project.org/web/packages/ggalt/index.html"><code>ggalt</code></a>, <a href="https://cran.r-project.org/web/packages/hrbrthemes/index.html"><code>hrbrthemes</code></a> and <a href="https://cran.r-project.org/web/packages/tidytext/index.html"><code>tidytext</code></a> packages.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p>
 <div id="intro" class="section level2">
 <h2>Intro</h2>
 <p>Kanye West is responsible for some of the realest, funniest (“<em>if you fall on the concrete thats your ass fault</em>”…asphalt…anyone?) and inspiring lyrics in music. The strength of these words has had a profound effect on me and my generation. Can the application of sentiment analysis techniques help us understand more about his art?</p>
-<p>I’m careful to state that this is <strong>not</strong> a sentiment analysis of the music per se - nothing in here about keys, tempo, melody or any other components of music that influence the emotional valence of the piece<a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a> - the analysis is reflective of the lyrical content only, while the sample is limited to Ye’s solo studio albums (album editions taken from Last.fm <a href="https://www.last.fm/music/Kanye+West/+albums">here</a>). Also, the analysis includes lyrics from artists featured on the records, so is representative of the body of work rather than the individual.</p>
+<p>I’m careful to state that this is <strong>not</strong> a sentiment analysis of the music per se - nothing in here about keys, tempo, melody or any other components of music that influence the emotional valence of the piece<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a> - the analysis is reflective of the lyrical content only, while the sample is limited to Ye’s solo studio albums (album editions taken from Last.fm <a href="https://www.last.fm/music/Kanye+West/+albums">here</a>). Also, the analysis includes lyrics from artists featured on the records, so is representative of the body of work rather than the individual.</p>
 <p><img src="/img/2017-03-20-Kanye_sentiment_analysis/808s_heart.jpg" width="75%" style="display: block; margin: auto;" /></p>
 </div>
 <div id="the-data" class="section level2">
@@ -153,7 +153,13 @@ by_track_sentiment %&gt;%
 <p><img src="/blog/kanye-records-sentiment-analysis_files/figure-html/unnamed-chunk-16-1.svg" width="100%" /></p>
 <p>It might be surprising to see ‘Amazing’ way out in front (n.b. I explain Love Lockdown’s perhaps false position in the conclusion). Remember, this is based on lyrics <em>only</em> - here’s a reminder of the hook…</p>
 <blockquote>
-<p><em>No matter what, you’ll never take that from me,</em> <em>My reign is as far as your eyes can see;</em> <em>It’s amazing, so amazing, so amazing, so amazing,</em> <em>It’s amazing, so amazing, so amazing, so amazing</em> <em>It’s amazing, so amazing, so amazing, so amazing</em> <em>It’s amazing, so amazing, so amazing, so amazing</em> <em>It’s amazing</em></p>
+<p><em>No matter what, you’ll never take that from me,</em>
+<em>My reign is as far as your eyes can see;</em>
+<em>It’s amazing, so amazing, so amazing, so amazing,</em>
+<em>It’s amazing, so amazing, so amazing, so amazing</em>
+<em>It’s amazing, so amazing, so amazing, so amazing</em>
+<em>It’s amazing, so amazing, so amazing, so amazing</em>
+<em>It’s amazing</em></p>
 </blockquote>
 </div>
 <div id="some-last-words" class="section level2">
@@ -166,7 +172,7 @@ by_track_sentiment %&gt;%
 <div class="footnotes">
 <hr />
 <ol>
-<li id="fn1"><p>To keep the post concise I don’t show all of the code, especially code that generates figures. But you can find the full code <a href="https://github.com/rbind/ewenme/blob/master/content/blog/kanye-records-sentiment-analysis.Rmd">here</a>.<a href="#fnref1">↩</a></p></li>
-<li id="fn2"><p>some of these factors are captured by Spotify, as explored in <a href="http://rcharlie.com/2017-02-16-fitteR-happieR/">this piece</a> (a big inspiration for this post). This data was not available for Kanye’s full studio discography through the Spotify API, at the time of this analysis.<a href="#fnref2">↩</a></p></li>
+<li id="fn1"><p>To keep the post concise I don’t show all of the code, especially code that generates figures. But you can find the full code <a href="https://github.com/rbind/ewenme/blob/master/content/blog/kanye-records-sentiment-analysis.Rmd">here</a>.<a href="#fnref1" class="footnote-back">↩</a></p></li>
+<li id="fn2"><p>some of these factors are captured by Spotify, as explored in <a href="http://rcharlie.com/2017-02-16-fitteR-happieR/">this piece</a> (a big inspiration for this post). This data was not available for Kanye’s full studio discography through the Spotify API, at the time of this analysis.<a href="#fnref2" class="footnote-back">↩</a></p></li>
 </ol>
 </div>

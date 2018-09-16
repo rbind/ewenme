@@ -23,7 +23,7 @@ draft: no
 </blockquote>
 <p>I could flick through this stuff all day, but as a Londoner I’m usually gonna pick up records from my local stores. This means I don’t get around to checking these as much as I should, which got me thinking - I wish I could have Hardwax reviews in my Twitter feed, or something. They even fit in to 140 characters most of the time…</p>
 <p>I’d <em>also</em> been meaning to have a go at generating pseudo random text with Markov chains, after coming across <a href="http://rmhogervorst.nl/cleancode/blog/2017/01/21/markov-chain.html">Roel’s post here</a>. For those that don’t know about this type of chain - <a href="http://setosa.io/ev/markov-chains/">here’s</a> a wicked visual intro - in short they are mathematical systems that describe the probabilities of moving from one “state” (or set of values) to another.</p>
-<p>Could there be potential to subvert this principle, knitting together words to form sentences, imitating this inimitable style? I’m envisaging a bot that spits out pseudo-Hardwax reviews, just for my sadistic enjoyment. Let’s get it.<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a></p>
+<p>Could there be potential to subvert this principle, knitting together words to form sentences, imitating this inimitable style? I’m envisaging a bot that spits out pseudo-Hardwax reviews, just for my sadistic enjoyment. Let’s get it.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p>
 <div id="gettin-in-to-a-scrape" class="section level2">
 <h2>Gettin’ in to a scrape</h2>
 <p>First up, I went straight to the Hardwax web shop to get hold of the review/description text accompanying releases on there. This would serve as the corpus of text from which we can build our Markov chain review generator. Here’s what the release pages look like:</p>
@@ -52,17 +52,17 @@ lapply(seq_along(1:2), hardwax_scrape, page=&quot;this-week&quot;) %&gt;% unlist
 ## [4] &quot;Beautiful Ambient atmospheres &amp; stepping House organics&quot;                                  
 ## [5] &quot;One sided 12\&quot; - blinding, raw Proto-House reminiscent cut &amp; noisy leftfield Electro trip&quot;
 ## [6] &quot;One sided 12\&quot; - blinding, raw Proto-House reminiscent cut &amp; noisy leftfield Electro trip&quot;</code></pre>
-<p>Once the various sections were scraped, some data cleaning procedures (remove releases with no reviews, reviews longer than 140 characters, or duplicate reviews) ensured the reviews were fit for purpose to head on to the next stage.<a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a></p>
+<p>Once the various sections were scraped, some data cleaning procedures (remove releases with no reviews, reviews longer than 140 characters, or duplicate reviews) ensured the reviews were fit for purpose to head on to the next stage.<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a></p>
 </div>
 <div id="preppin-the-text" class="section level2">
 <h2>Preppin’ the Text</h2>
-<p>Now we’re entering text mining territory, it’s time to call on the might of <code>tidytext</code> to bring our body of text into forms suitable for Markov Chain text generation. A couple of wise steps should see us through.<a href="#fn3" class="footnoteRef" id="fnref3"><sup>3</sup></a></p>
+<p>Now we’re entering text mining territory, it’s time to call on the might of <code>tidytext</code> to bring our body of text into forms suitable for Markov Chain text generation. A couple of wise steps should see us through.<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a></p>
 <ol style="list-style-type: decimal">
 <li><p><strong>Word counts:</strong> To aid the probabilistic elements of Markov chain text generation, we need an understanding of how many times words appear, in different contexts:</p>
 <ul>
-<li>No. times words appear in corpus (all webstite review text)</li>
-<li>No. times words appear at the beginning of a review (herein known as ‘openers’)</li>
-<li>No. times words precede commas</li>
+<li>No. times words appear in corpus (all webstite review text)</li>
+<li>No. times words appear at the beginning of a review (herein known as ‘openers’)</li>
+<li>No. times words precede commas</li>
 </ul></li>
 <li><p><strong>Ngrams:</strong></p>
 <ul>
@@ -196,8 +196,8 @@ post_tweet(status = dumb_hardwax(), token = twitter_token)</code></pre>
 <div class="footnotes">
 <hr />
 <ol>
-<li id="fn1"><p>To keep the post concise I don’t show all of the code, especially code that generates figures. But you can find the full code <a href="https://github.com/rbind/ewenme/blob/master/content/blog/meet-dumb-hardwax.Rmd">here</a>.<a href="#fnref1">↩</a></p></li>
-<li id="fn2"><p>Because the website isn’t static (i.e. the release pages change), the workflow is not entirely reproducible. While the code provided here will scrape, clean data etc., the end-to-end result may be different. Please refer to the <a href="https://github.com/ewenme/hardwax_bot/blob/master/review%20scrape.R">scrape</a>, <a href="https://github.com/ewenme/hardwax_bot/blob/master/review%20clean.R">clean</a> and <a href="https://github.com/ewenme/hardwax_bot/blob/master/hardwax_bot.R">bot</a> scripts hosted on GitHub for a full audit trail of the code used to create the current version of Dumb Hardwax.<a href="#fnref2">↩</a></p></li>
-<li id="fn3"><p>Given that <a href="(http://rmhogervorst.nl/cleancode/blog/2017/01/21/markov-chain.html)">Roel’s post</a> covers a lot of the same word count/bigram/trigram processing steps that I did, check that out if you wanted more commentary around the code used during the process.<a href="#fnref3">↩</a></p></li>
+<li id="fn1"><p>To keep the post concise I don’t show all of the code, especially code that generates figures. But you can find the full code <a href="https://github.com/rbind/ewenme/blob/master/content/blog/meet-dumb-hardwax.Rmd">here</a>.<a href="#fnref1" class="footnote-back">↩</a></p></li>
+<li id="fn2"><p>Because the website isn’t static (i.e. the release pages change), the workflow is not entirely reproducible. While the code provided here will scrape, clean data etc., the end-to-end result may be different. Please refer to the <a href="https://github.com/ewenme/hardwax_bot/blob/master/review%20scrape.R">scrape</a>, <a href="https://github.com/ewenme/hardwax_bot/blob/master/review%20clean.R">clean</a> and <a href="https://github.com/ewenme/hardwax_bot/blob/master/hardwax_bot.R">bot</a> scripts hosted on GitHub for a full audit trail of the code used to create the current version of Dumb Hardwax.<a href="#fnref2" class="footnote-back">↩</a></p></li>
+<li id="fn3"><p>Given that <a href="(http://rmhogervorst.nl/cleancode/blog/2017/01/21/markov-chain.html)">Roel’s post</a> covers a lot of the same word count/bigram/trigram processing steps that I did, check that out if you wanted more commentary around the code used during the process.<a href="#fnref3" class="footnote-back">↩</a></p></li>
 </ol>
 </div>

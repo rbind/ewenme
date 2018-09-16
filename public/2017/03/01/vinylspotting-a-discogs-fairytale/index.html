@@ -86,7 +86,7 @@
 <blockquote>
 <p>If I had put the work in to ammassing a couple thousand records, say, it would be cool to know more about my record collection than just how much it’s worth.</p>
 </blockquote>
-<p>The obvious next thought was, “R could probably help with that”.<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a></p>
+<p>The obvious next thought was, “R could probably help with that”.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p>
 <div id="getting-hot-n-heavy-with-the-discogs-api" class="section level2">
 <h2>Getting hot ‘n’ heavy with the Discogs API</h2>
 <p>Off the bat, I needed to develop a sensible pipeline for accessing and tidying the metadata of a user’s collection. The RESTful Discogs API would now be my good friend. A skim through the documentation <a href="https://www.discogs.com/developers/">here</a> gets us to the <a href="https://www.discogs.com/developers/#page:user-collection,header:user-collection-collection">user collection</a> section, showing you how to request to view a users collection with just their username (of course, there’s an app registration and OAuth key/token business to go through first). User collections are <a href="https://www.discogs.com/developers/#page:home,header:home-pagination">paginated</a>, too, but we can employ a loop to build up a simple request to the API endpoint and get sight of a whole collection:</p>
@@ -242,7 +242,7 @@ as_tibble(my_collection)</code></pre>
 <div class="footnotes">
 <hr />
 <ol>
-<li id="fn1"><p>To keep the post concise I don’t show all of the code, especially code that generates figures. But you can find the full code <a href="https://github.com/rbind/ewenme/blob/master/content/blog/vinylspotting-discogs-fairytale.Rmd">here</a>.<a href="#fnref1">↩</a></p></li>
+<li id="fn1"><p>To keep the post concise I don’t show all of the code, especially code that generates figures. But you can find the full code <a href="https://github.com/rbind/ewenme/blob/master/content/blog/vinylspotting-discogs-fairytale.Rmd">here</a>.<a href="#fnref1" class="footnote-back">↩</a></p></li>
 </ol>
 </div>
 
