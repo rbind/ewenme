@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>&amp;copy; Ewen Henderson &lt;/a&gt; 2017-18</copyright>
-    <lastBuildDate>Mon, 27 Aug 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 17 Sep 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://ewen.io/blog/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Legends of the mixtape</title>
+      <link>https://ewen.io/2018/09/17/legends-of-the-mixtape/</link>
+      <pubDate>Mon, 17 Sep 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://ewen.io/2018/09/17/legends-of-the-mixtape/</guid>
+      <description>The modern definition of the hip-hop mixtape originates in hip-hop circles of the 2000s, now talking to an artist’s independently released projects that act as precursors to “official” full-lengths (albums). In previous generations, hip-hop mixtapes were more DJ-led and focused on ingenuity of “chops” and “blends”, but the DIY ethos prevailed through the shift towards MCs as main attraction. The dawn of mainstream streaming services and outgoing physical formats has challenged the identity of the mixtape somewhat, but understanding how the art form has reinvented itself around the current climate helps alleviate these concerns somewhat.</description>
+    </item>
     
     <item>
       <title>Building open football player transfer data</title>
