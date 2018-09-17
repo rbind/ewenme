@@ -1,10 +1,10 @@
 ---
-title: "Legends of the mixtape"
-description: "A data-driven tribute to the art of the mixtape era glow-up."
+title: "In search of the mixtape GOAT"
+description: "A data-driven tribute to the best of the mixtape era glow-ups."
 date: '2018-09-17'
-slug: legends-of-the-mixtape
+slug: in-search-of-the-mixtape-goat
 tags: ["music", "d3", "r"]
-cover: https://github.com/rbind/ewenme/blob/master/public/img/2018-09-17-legends-of-the-mixtape/datpiff-bubble.png
+cover: https://github.com/rbind/ewenme/blob/master/public/img/2018-09-17-in-search-of-the-mixtape-goat/datpiff-bubble.png
 draft: no
 ---
 
@@ -13,7 +13,7 @@ knitr::opts_chunk$set(cache = FALSE, warning = FALSE, message = FALSE, echo = FA
 ```
 
 ```{r out.width="75%"}
-knitr::include_graphics("/img/2018-09-17-legends-of-the-mixtape/xxx-art.jpg")
+knitr::include_graphics("/img/2018-09-17-in-search-of-the-mixtape-goat/xxx-art.jpg")
 ```
 
 The modern definition of the hip-hop mixtape originates in hip-hop circles of the 2000s, speaking to an artist's independently released projects that act as precursors to "official" full-lengths. [In previous generations](https://www.billboard.com/articles/columns/hip-hop/7669073/history-dj-drama-mixtape-evolution), hip-hop mixtapes were more DJ-led and focused on the ingenuity of the edit, but a DIY ethos has prevailed with a shift towards MCs as main attraction. The rise of mainstream streaming services and fall of physical formats has challenged the identity of the mixtape somewhat, but understanding how this artform has reinvented itself around the current climate might help alleviate these concerns.
@@ -23,10 +23,10 @@ Traditionally speaking, mixtapes are usually free and subsequently avoid growing
 You can actually see how this cultural phenomenon intersects with software development. Take [Glitch's about page](https://glitch.com/about), specifically the use of the word "remix", hinting that the act of a developer re-working an app (that someone else built and shared) isn't that far removed from [Frank Ocean flipping a Coldplay sample](https://www.youtube.com/watch?v=zD3lRLThVRY). (I'm aware that, beyond staring at computer screens in the dark, the developer-musician comparisons probably stop here).
 
 ```{r out.width="75%"}
-knitr::include_graphics("/img/2018-09-17-legends-of-the-mixtape/nostalgia-ultra-art.jpg")
+knitr::include_graphics("/img/2018-09-17-in-search-of-the-mixtape-goat/nostalgia-ultra-art.jpg")
 ```
 
-I wanted to toast this crossover in philosophy by sharing some data-driven stories of the mixtape. This piece should be good ammo in heated mixtape G.O.A.T convos, at least...
+I wanted to toast this crossover in philosophy by sharing some data-driven stories of the mixtape. This piece should be good ammo in heated mixtape legend convos, at least...
 
 ## Mixtapes by the numbers
 
@@ -35,7 +35,7 @@ So, who was really putting [Numbers On The Boards](https://www.youtube.com/watch
 A good place to start is [DatPiff](http://www.datpiff.com/), maybe the leading dedicated website for hip-hop mixtape digging. In the [celebrated section](http://www.datpiff.com/mixtapes/celebrated), you can quickly spot download figures mapped to pre-eminent mixtape projects.
 
 ```{r out.width="75%"}
-knitr::include_graphics("/img/2018-09-17-legends-of-the-mixtape/datpiff-screenshot.png")
+knitr::include_graphics("/img/2018-09-17-in-search-of-the-mixtape-goat/datpiff-screenshot.png")
 ```
 
 Harvesting these figures and crunching the downloads for each artist can uncover who *really* runs the mixtape game.[^data] This comes with some caveats - mixtape streams are ignored (not readily obtainable for all listings), as are tapes not available on DatPiff (or those that have been taken down). Still, a good idea of the state of play is well within reach (PS the next bit is best enjoyed and explored on a desktop browser, if you have one handy)...[^bubbles]
@@ -94,5 +94,5 @@ Honorable mentions to a few of my favs (plus helpful pointers to some best-in-cl
 I could go on, but why not head back to the interactive and explore some of the music yourself `r emo::ji("peace")`
 
 [^data]: All the code used to scrape DatPiff's download numbers, as well as the raw data itself, is stored in [this GitHub repo](https://github.com/ewenme/mixtapes). Check the `src` directory for code and `raw-data` for data in .csv format.
-[^bubbles]: The interactive visualisation of artist mixtape downloads was made with [D3.js](https://d3js.org/) (inspired by [Mike Bostock's D3 Bubble Chart](https://beta.observablehq.com/@mbostock/d3-bubble-chart). Original code can be found in [this Observable notebook](https://beta.observablehq.com/@ewenme/mixtape-kings/2). It's embedded inside the R markdown document used to generate this post (via [blogdown](https://bookdown.org/yihui/blogdown/)), which you can access [here](https://github.com/rbind/ewenme/blob/master/content/blog/2018-09-17-legends-of-the-mixtape.Rmd)
+[^bubbles]: The interactive visualisation of artist mixtape downloads was made with [D3.js](https://d3js.org/) (inspired by [Mike Bostock's D3 Bubble Chart](https://beta.observablehq.com/@mbostock/d3-bubble-chart). Original code can be found in [this Observable notebook](https://beta.observablehq.com/@ewenme/mixtape-kings/2). It's embedded inside the R markdown document used to generate this post (via [blogdown](https://bookdown.org/yihui/blogdown/)), which you can access [here](https://github.com/rbind/ewenme/blob/master/content/blog/2018-09-17-in-search-of-the-mixtape-goat.Rmd)
 [^BRRR]: I can't leave without giving it up to Brooke for the [BRRR R package](https://github.com/brooke-watson/BRRR). No running of a slow function is complete without the East Atlanta Santa providing encouragement. 
