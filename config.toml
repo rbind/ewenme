@@ -1,5 +1,6 @@
 baseurl = "https://ewen.io/"
 title = "ewen"
+description = "ewen's personal site."
 languageCode = "en"
 theme = "kiss"
 copyright = "&copy; Ewen Henderson </a> 2017-18"
