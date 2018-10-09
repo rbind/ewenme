@@ -1,4 +1,5 @@
-@import url(https://fonts.googleapis.com/css?family=Work+Sans:400,500);
+@import url('https://fonts.googleapis.com/css?family=Spectral');
+@import url('https://fonts.googleapis.com/css?family=Cardo');
 
 h1,
 h2,
@@ -13,13 +14,17 @@ h6,
 .content h5,
 .content h6,
 .title {
-  font-family: 'Work Sans', sans-serif;
+  font-family: 'Cardo', serif;
   font-weight:500;
   color:#000000;
 }
 
-.subtitle,
+.subtitle {
+  font-family: 'Cardo', serif;
+  font-weight:400;
+}
+
 body {
-  font-family: 'Work Sans', sans-serif;
+  font-family: 'Spectral', sans-serif;
   font-weight:400;
 }
