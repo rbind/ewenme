@@ -12,6 +12,8 @@ Last month I recorded a studio mix at home on the 1210s, the first volume of an 
 
 <iframe width="100%" height="300" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/434633817&color=%231d191f&auto_play=true&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true"></iframe>
 
+**Stream above or D/L [here](https://dl.dropboxusercontent.com/s/fm2xp2d8hj6ths3/bathing_tapes_vol_one.mp3?dl=0)**
+
 All credit and thank you to the creators of these tracks. Full tracklist over on [soundcloud](https://soundcloud.com/3w3n/bathing-tapes-vol-one) `r emo::ji("eyes")` but some new artists in there you should go check for... [object blue](https://objectblue.carrd.co/), [Ciel](https://soundcloud.com/cl_lit), [DJ Python](https://soundcloud.com/wnkrs) to name a few.
 
 This is something of a break from the usual content I have posted here. In 2017, I started this blog to write about and share examples of my work in data science/data sci-adjacent areas. The work of [Yihui](https://yihui.name/) in creating [blogdown](https://github.com/rstudio/blogdown) made it fun to share technical posts and give back to the [R](https://www.r-project.org/) community, something I did with regularity last year.
