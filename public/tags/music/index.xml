@@ -21,5 +21,15 @@
       <description>The modern definition of the hip-hop mixtape originates in hip-hop circles of the 2000s, speaking to an artist’s independently released projects that act as precursors to “official” full-lengths. In previous generations, hip-hop mixtapes were more DJ-led and focused on the ingenuity of the edit, but a DIY ethos has prevailed with a shift towards MCs as main attraction. The rise of mainstream streaming services and fall of physical formats has challenged the identity of the mixtape somewhat, but understanding how this artform has reinvented itself around the current climate might help alleviate these concerns.</description>
     </item>
     
+    <item>
+      <title>discogger (day one)</title>
+      <link>https://ewen.io/2018/06/07/discogger-day-one/</link>
+      <pubDate>Thu, 07 Jun 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://ewen.io/2018/06/07/discogger-day-one/</guid>
+      <description>I’ve been working on a new R package. discogger is an open-source effort, at an experimental stage of development, providing straightforward tools to help out with Discogs’ API v2.0. Discogs is a crowd-sourced music database and marketplace, a proper treasure trove for record diggers and music lovers to learn more about what they’re jamming to. A better route into this data for R users should yield some nice results.
+discogger 101 First up, you’ll need to register a Discogs application via https://www.</description>
+    </item>
+    
   </channel>
 </rss>

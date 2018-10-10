@@ -114,25 +114,19 @@
   
   <url>
     <loc>https://ewen.io/tags/data-viz/</loc>
-    <lastmod>2018-08-27T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://ewen.io/tags/deejae/</loc>
-    <lastmod>2018-05-12T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://ewen.io/tags/discogger/</loc>
-    <lastmod>2018-06-07T00:00:00+00:00</lastmod>
+    <lastmod>2018-09-17T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://ewen.io/tags/discogs/</loc>
     <lastmod>2018-06-07T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://ewen.io/tags/djing/</loc>
+    <lastmod>2018-05-12T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -227,12 +221,6 @@
   </url>
   
   <url>
-    <loc>https://ewen.io/tags/open-data/</loc>
-    <lastmod>2018-08-27T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>https://ewen.io/tags/package/</loc>
     <lastmod>2017-12-06T00:00:00+00:00</lastmod>
     <priority>0</priority>
@@ -252,7 +240,7 @@
   
   <url>
     <loc>https://ewen.io/tags/r/</loc>
-    <lastmod>2018-09-17T00:00:00+00:00</lastmod>
+    <lastmod>2018-08-27T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   

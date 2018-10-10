@@ -51,27 +51,9 @@
     <item>
       <title>Data Viz</title>
       <link>https://ewen.io/tags/data-viz/</link>
-      <pubDate>Mon, 27 Aug 2018 00:00:00 +0000</pubDate>
+      <pubDate>Mon, 17 Sep 2018 00:00:00 +0000</pubDate>
       
       <guid>https://ewen.io/tags/data-viz/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Deejae</title>
-      <link>https://ewen.io/tags/deejae/</link>
-      <pubDate>Sat, 12 May 2018 00:00:00 +0000</pubDate>
-      
-      <guid>https://ewen.io/tags/deejae/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Discogger</title>
-      <link>https://ewen.io/tags/discogger/</link>
-      <pubDate>Thu, 07 Jun 2018 00:00:00 +0000</pubDate>
-      
-      <guid>https://ewen.io/tags/discogger/</guid>
       <description></description>
     </item>
     
@@ -81,6 +63,15 @@
       <pubDate>Thu, 07 Jun 2018 00:00:00 +0000</pubDate>
       
       <guid>https://ewen.io/tags/discogs/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Djing</title>
+      <link>https://ewen.io/tags/djing/</link>
+      <pubDate>Sat, 12 May 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://ewen.io/tags/djing/</guid>
       <description></description>
     </item>
     
@@ -220,15 +211,6 @@
     </item>
     
     <item>
-      <title>Open Data</title>
-      <link>https://ewen.io/tags/open-data/</link>
-      <pubDate>Mon, 27 Aug 2018 00:00:00 +0000</pubDate>
-      
-      <guid>https://ewen.io/tags/open-data/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>Package</title>
       <link>https://ewen.io/tags/package/</link>
       <pubDate>Wed, 06 Dec 2017 00:00:00 +0000</pubDate>
@@ -258,7 +240,7 @@
     <item>
       <title>R</title>
       <link>https://ewen.io/tags/r/</link>
-      <pubDate>Mon, 17 Sep 2018 00:00:00 +0000</pubDate>
+      <pubDate>Mon, 27 Aug 2018 00:00:00 +0000</pubDate>
       
       <guid>https://ewen.io/tags/r/</guid>
       <description></description>
