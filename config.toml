@@ -9,7 +9,6 @@ Paginate = 5
 enableRobotsTXT = true
 
 [params.rss]
-
 includeContent = true
 authorName = "ewen"
 authorEmail = "ewenhenderson@gmail.com"
@@ -28,7 +27,6 @@ related = false # Includes related articles
 email = "ewenhenderson@gmail.com"
 twitter = "ewen_"
 github = "ewenme"
-rss = "index.xml"
 
 [taxonomies]
 tag = "tags"
