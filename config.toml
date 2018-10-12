@@ -3,10 +3,16 @@ title = "ewen"
 description = "ewen's personal site."
 languageCode = "en"
 theme = "kiss"
-copyright = "&copy; Ewen Henderson </a> 2017-18"
+copyright = ""
 
 Paginate = 5
 enableRobotsTXT = true
+
+[params.rss]
+
+includeContent = true
+authorName = "ewen"
+authorEmail = "ewenhenderson@gmail.com"
 
 [params.assets]
 customCSS = ["css/custom.css"]
@@ -22,6 +28,7 @@ related = false # Includes related articles
 email = "ewenhenderson@gmail.com"
 twitter = "ewen_"
 github = "ewenme"
+rss = "index.xml"
 
 [taxonomies]
 tag = "tags"
