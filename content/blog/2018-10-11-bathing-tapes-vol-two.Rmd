@@ -3,7 +3,7 @@ title: "bathing tapes vol. two"
 description: "Next tape up."
 date: '2018-10-11'
 slug: bathing-tapes-vol-two
-tags: ["mixes", "bathing-tapes"]
+tags: ["mixes"]
 draft: no
 ---
 
