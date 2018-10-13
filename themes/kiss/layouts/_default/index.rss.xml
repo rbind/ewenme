@@ -3,6 +3,7 @@
     <title>{{ if eq  .Title  .Site.Title }}{{ .Site.Title }}{{ else }}{{ with .Title }}{{.}} on {{ end }}{{ .Site.Title }}{{ end }}</title>
     <link>{{ .Permalink }}</link>
     <description>Recent content {{ if ne  .Title  .Site.Title }}{{ with .Title }}in {{.}} {{ end }}{{ end }}on {{ .Site.Title }}</description>
+    <webfeeds:icon>https://avatars2.githubusercontent.com/u/10872821?s=400&u=fdf22f6e366dd8ccc3a48d536d1e1bf01f7e2071&v=4</webfeeds:icon>
     <generator>Hugo - gohugo.io</generator>
     <language>{{ .Site.Language }}</language>
     <contact>{{ $.Site.Params.rss.authorEmail }}</contact>
@@ -18,7 +19,6 @@
       <author>{{ $.Site.Params.rss.authorName }}</author>
       <guid>{{ .Permalink }}</guid>
       <description>{{ .Description | html }}</description>
-      <webfeeds:icon>https://avatars2.githubusercontent.com/u/10872821?s=400&u=fdf22f6e366dd8ccc3a48d536d1e1bf01f7e2071&v=4</webfeeds:icon>
       {{ if $.Site.Params.rss.includeContent }}
       <content>{{ .Content | html }}</content>
       {{ end }}

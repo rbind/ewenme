@@ -4,6 +4,7 @@
     <title>ewen</title>
     <link>https://ewen.io/</link>
     <description>Recent content on ewen</description>
+    <webfeeds:icon>https://avatars2.githubusercontent.com/u/10872821?s=400&u=fdf22f6e366dd8ccc3a48d536d1e1bf01f7e2071&v=4</webfeeds:icon>
     <generator>Hugo - gohugo.io</generator>
     <language>en</language>
     <contact>ewenhenderson@gmail.com</contact>
@@ -19,7 +20,6 @@
       <author>ewen</author>
       <guid>https://ewen.io/2018/10/11/bathing-tapes-vol-two/</guid>
       <description>Next tape up.</description>
-      <webfeeds:icon>https://avatars2.githubusercontent.com/u/10872821?s=400&u=fdf22f6e366dd8ccc3a48d536d1e1bf01f7e2071&v=4</webfeeds:icon>
       
       <content>&lt;p&gt;The latest edition of bathing tapes is out there, recorded at home on a Sunday a couple of months ago. The mix is mostly stuff that came out in the second half of this year that I’ve been bumping. There’s frenetic techno and grime combinations, deviant pop and electro runs, and euphoric breakbeats rubbing against lonely bassweight jams.&lt;/p&gt;
 &lt;iframe width=&#34;100%&#34; height=&#34;300&#34; scrolling=&#34;no&#34; frameborder=&#34;no&#34; allow=&#34;autoplay&#34; src=&#34;https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/487675539&amp;amp;color=%23100f0f&amp;amp;auto_play=false&amp;amp;hide_related=false&amp;amp;show_comments=true&amp;amp;show_user=true&amp;amp;show_reposts=false&amp;amp;show_teaser=true&amp;amp;visual=true&#34;&gt;
@@ -37,7 +37,6 @@
       <author>ewen</author>
       <guid>https://ewen.io/2018/09/17/in-search-of-the-mixtape-goat/</guid>
       <description>A data-driven tribute to the best of the mixtape era glow-ups.</description>
-      <webfeeds:icon>https://avatars2.githubusercontent.com/u/10872821?s=400&u=fdf22f6e366dd8ccc3a48d536d1e1bf01f7e2071&v=4</webfeeds:icon>
       
       <content>&lt;p&gt;&lt;img src=&#34;https://ewen.io/img/2018-09-17-in-search-of-the-mixtape-goat/xxx-art.jpg&#34; width=&#34;75%&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;The modern definition of the hip-hop mixtape originates in hip-hop circles of the 2000s, speaking to an artist’s independently released projects that act as precursors to “official” full-lengths. &lt;a href=&#34;https://www.billboard.com/articles/columns/hip-hop/7669073/history-dj-drama-mixtape-evolution&#34;&gt;In previous generations&lt;/a&gt;, hip-hop mixtapes were more DJ-led and focused on the ingenuity of the edit, but a DIY ethos has prevailed with a shift towards MCs as main attraction. The rise of mainstream streaming services and fall of physical formats has challenged the identity of the mixtape somewhat, but understanding how this artform has reinvented itself around the current climate might help alleviate these concerns.&lt;/p&gt;
@@ -99,7 +98,7 @@
 &lt;li&gt;Future (4.3 million): The master of twisted Bacchanalia rap, as prolific as Gucci. Start off with &lt;a href=&#34;https://www.youtube.com/watch?v=DXXZ3J_QIGw&#34;&gt;56 Nights&lt;/a&gt; (2015).&lt;/li&gt;
 &lt;li&gt;Chance the Rapper (2.8 million): &lt;a href=&#34;https://www.youtube.com/watch?v=e67Q-sTHVhc&#34;&gt;Acid Rap&lt;/a&gt; (2013) and &lt;a href=&#34;https://www.youtube.com/watch?v=H6C0dfq4ZWM&#34;&gt;Coloring Book&lt;/a&gt; (2016) are dope and up-ended many expectations that independent artists and mixtapes were facing extinction.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;I could go on, but why not head back to the interactive and explore some of the music yourself ✌️&lt;/p&gt;
+&lt;p&gt;I could go on, but why not head back to the interactive and explore some of the music yourself 🕊&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class=&#34;footnotes&#34;&gt;
 &lt;hr /&gt;
@@ -120,7 +119,6 @@
       <author>ewen</author>
       <guid>https://ewen.io/2018/08/27/building-open-football-player-transfer-data/</guid>
       <description>Collating player transfers to and from football clubs in major European leagues.</description>
-      <webfeeds:icon>https://avatars2.githubusercontent.com/u/10872821?s=400&u=fdf22f6e366dd8ccc3a48d536d1e1bf01f7e2071&v=4</webfeeds:icon>
       
       <content>&lt;script src=&#34;https://ewen.io/rmarkdown-libs/kePrint/kePrint.js&#34;&gt;&lt;/script&gt;
 
@@ -401,7 +399,6 @@ premier-league
       <author>ewen</author>
       <guid>https://ewen.io/2018/06/07/discogger-day-one/</guid>
       <description>Building an R interface to the Discogs API.</description>
-      <webfeeds:icon>https://avatars2.githubusercontent.com/u/10872821?s=400&u=fdf22f6e366dd8ccc3a48d536d1e1bf01f7e2071&v=4</webfeeds:icon>
       
       <content>&lt;p&gt;I’ve been working on a new R package. &lt;a href=&#34;https://github.com/ewenme/discogger&#34;&gt;&lt;strong&gt;&lt;code&gt;discogger&lt;/code&gt;&lt;/strong&gt;&lt;/a&gt; is an open-source effort, at an experimental stage of development, providing straightforward tools to help out with Discogs’ &lt;a href=&#34;https://www.discogs.com/developers/#&#34;&gt;API v2.0&lt;/a&gt;. &lt;a href=&#34;https://www.discogs.com&#34;&gt;Discogs&lt;/a&gt; is a crowd-sourced music database and marketplace, a proper treasure trove for record diggers and music lovers to learn more about what they’re jamming to. A better route into this data for R users should yield some nice results.&lt;/p&gt;
 &lt;div id=&#34;discogger-101&#34; class=&#34;section level2&#34;&gt;
@@ -582,7 +579,6 @@ Sun Ra&lt;/p&gt;
       <author>ewen</author>
       <guid>https://ewen.io/2018/05/12/deejae/</guid>
       <description>An app to help digital DJs explore and visualise their selections.</description>
-      <webfeeds:icon>https://avatars2.githubusercontent.com/u/10872821?s=400&u=fdf22f6e366dd8ccc3a48d536d1e1bf01f7e2071&v=4</webfeeds:icon>
       
       <content>&lt;blockquote&gt;
 &lt;p&gt;&lt;a href=&#34;https://genius.com/Artful-dodger-re-rewind-lyrics&#34;&gt;this goes out to all the DJs…&lt;/a&gt;&lt;/p&gt;
@@ -606,7 +602,6 @@ Sun Ra&lt;/p&gt;
       <author>ewen</author>
       <guid>https://ewen.io/2018/05/11/bathing-tapes-vol-one/</guid>
       <description>Debuting an infrequent mix series and reframing this site a bit.</description>
-      <webfeeds:icon>https://avatars2.githubusercontent.com/u/10872821?s=400&u=fdf22f6e366dd8ccc3a48d536d1e1bf01f7e2071&v=4</webfeeds:icon>
       
       <content>&lt;p&gt;Last month I recorded a studio mix at home on the 1210s, the first volume of an occasional series for me to share sounds I’m bumping heavy. I’m calling it &lt;em&gt;bathing tapes&lt;/em&gt; (don’t @ me, &lt;a href=&#34;https://en.wikipedia.org/wiki/Nigo&#34;&gt;Nigo&lt;/a&gt;), ’cos most of the jams won’t sound out of place during an extended exfoliation session. but you should enjoy the soothing vibes wherever you’re at. Find experimental techno diversions, Houston hip-hop, ethereal footwork waves, bleepy dancehall and more sweet infusions inside.&lt;/p&gt;
 &lt;iframe width=&#34;100%&#34; height=&#34;300&#34; scrolling=&#34;no&#34; frameborder=&#34;no&#34; allow=&#34;autoplay&#34; src=&#34;https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/434633817&amp;amp;color=%231d191f&amp;amp;auto_play=true&amp;amp;hide_related=false&amp;amp;show_comments=true&amp;amp;show_user=true&amp;amp;show_reposts=false&amp;amp;show_teaser=true&amp;amp;visual=true&#34;&gt;
@@ -626,7 +621,6 @@ Sun Ra&lt;/p&gt;
       <author>ewen</author>
       <guid>https://ewen.io/2017/12/06/introducing-geniusr/</guid>
       <description>I made an R interface to the Genius API.</description>
-      <webfeeds:icon>https://avatars2.githubusercontent.com/u/10872821?s=400&u=fdf22f6e366dd8ccc3a48d536d1e1bf01f7e2071&v=4</webfeeds:icon>
       
       <content>&lt;p&gt;I made a new R package (🔥📦🔥) this week. My &lt;a href=&#34;https://ewenme.rbind.io/blog/2017-03-20-kanye_sentiment_analysis/&#34;&gt;sophomore post on this site&lt;/a&gt; (from way back in March) was a text-based analysis of Kanye West records, which exposed me to the &lt;a href=&#34;https://genius.com/&#34;&gt;Genius&lt;/a&gt; API&lt;a href=&#34;#fn1&#34; class=&#34;footnote-ref&#34; id=&#34;fnref1&#34;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt; once I wanted to get hold of some lyrical content. In the process, I wrote some functions for playing nicely with this API in R that I knew would probably be handy for others dabbling/wanting to dabble in similar matters.&lt;/p&gt;
 &lt;p&gt;Since then, I’ve found a window of time to build on and consolidate this work into a well-rounded package. &lt;code&gt;geniusr&lt;/code&gt; is now &lt;a href=&#34;https://cran.r-project.org/web/packages/geniusr/index.html&#34;&gt;available on CRAN&lt;/a&gt;. This is the tour.&lt;a href=&#34;#fn2&#34; class=&#34;footnote-ref&#34; id=&#34;fnref2&#34;&gt;&lt;sup&gt;2&lt;/sup&gt;&lt;/a&gt;&lt;/p&gt;
@@ -712,7 +706,6 @@ waffle(parts, rows = 8, size = 1, colors = c(&amp;quot;#3C3A32&amp;quot;, &amp;q
       <author>ewen</author>
       <guid>https://ewen.io/2017/11/09/hacking-homelessness--pdf-prisons/</guid>
       <description>How to extract data from PDFs (in this case, homelessness figures in London), alongside a showcase of algorithmic tesselation of geospatial polygons.</description>
-      <webfeeds:icon>https://avatars2.githubusercontent.com/u/10872821?s=400&u=fdf22f6e366dd8ccc3a48d536d1e1bf01f7e2071&v=4</webfeeds:icon>
       
       <content>&lt;p&gt;Shout-out to the &lt;a href=&#34;http://us16.campaign-archive2.com/home/?u=5ea551600fcdf84334e5aa6b0&amp;amp;id=26c0b7221a&#34;&gt;Monday Morning Data Science&lt;/a&gt; mailout from John Hopkins. Making my way through this week’s (#41) edition, I hit upon quite the eulogy concerning a new R package:&lt;/p&gt;
 &lt;blockquote&gt;
@@ -907,7 +900,6 @@ ggplot(resulthex_sf) +
       <author>ewen</author>
       <guid>https://ewen.io/2017/11/06/my-linearish-programming-fantasy/</guid>
       <description>Applying linear programming principles to the selection of a fantasy football team.</description>
-      <webfeeds:icon>https://avatars2.githubusercontent.com/u/10872821?s=400&u=fdf22f6e366dd8ccc3a48d536d1e1bf01f7e2071&v=4</webfeeds:icon>
       
       <content>&lt;script src=&#34;https://ewen.io/rmarkdown-libs/htmlwidgets/htmlwidgets.js&#34;&gt;&lt;/script&gt;
 &lt;script src=&#34;https://ewen.io/rmarkdown-libs/jquery/jquery.min.js&#34;&gt;&lt;/script&gt;
@@ -1264,7 +1256,6 @@ Fabianski (Swansea) &amp;amp; Pope (Burnley)
       <author>ewen</author>
       <guid>https://ewen.io/2017/10/11/meet-dumb-hardwax/</guid>
       <description>The story of my first tweetbot, complete with forays into Azure and Markov Chains.</description>
-      <webfeeds:icon>https://avatars2.githubusercontent.com/u/10872821?s=400&u=fdf22f6e366dd8ccc3a48d536d1e1bf01f7e2071&v=4</webfeeds:icon>
       
       <content>&lt;p&gt;Twitter bots have gotten a fairly bad rap, recently &lt;a href=&#34;http://uk.businessinsider.com/twitter-russia-investigation-should-look-at-trump-interaction-with-bots-2017-10?r=US&amp;amp;IR=T&#34;&gt;(often with good reason)&lt;/a&gt;. When they’re done right, a genuinely quirky robot can cut through a feed full of humans with beautiful tidbits. God bless &lt;span class=&#34;citation&#34;&gt;[@tinycarebot]&lt;/span&gt;(&lt;a href=&#34;https://twitter.com/tinycarebot&#34; class=&#34;uri&#34;&gt;https://twitter.com/tinycarebot&lt;/a&gt;).&lt;/p&gt;
 &lt;blockquote class=&#34;twitter-tweet&#34; data-lang=&#34;en&#34;&gt;
@@ -1470,7 +1461,6 @@ post_tweet(status = dumb_hardwax(), token = twitter_token)&lt;/code&gt;&lt;/pre&
       <author>ewen</author>
       <guid>https://ewen.io/2017/09/07/unravelling-the-european-football-transfer-window/</guid>
       <description>Scraping data on 2017 football transfers and following the money trails.</description>
-      <webfeeds:icon>https://avatars2.githubusercontent.com/u/10872821?s=400&u=fdf22f6e366dd8ccc3a48d536d1e1bf01f7e2071&v=4</webfeeds:icon>
       
       <content>&lt;p&gt;Followers of European football will be familiar with the infamous transfer window system, which endears clubs to buy and sell players in a specified period - once in the off-season (summer), and once at the turn of each calendar year. This constraint has invited increasingly peculiar and precarious market activity over the years, as clubs vie to secure the hottest new talents with varying parts method and madness. Meanwhile, fans lap up newspaper gossip columns and tell friends “he looks quality on YouTube” as they frantically research the latest “wunderkind” their club has been linked with. It’s a truly beguiling collection of rituals and rhetoric (that I helplessly pander to each year).&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://ewen.io/img/2017-09-07-Dissecting_European_Football_Transfers/regulate.png&#34; width=&#34;75%&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
@@ -1532,7 +1522,6 @@ Premier league clubs&#39; summer transfer bizniz (as of today). Idea inspired by
       <author>ewen</author>
       <guid>https://ewen.io/2017/07/27/advocating-for-open-policing-with-sparklyr-and-shiny/</guid>
       <description>Better monitoring of police activity with implementations of Spark and Shiny.</description>
-      <webfeeds:icon>https://avatars2.githubusercontent.com/u/10872821?s=400&u=fdf22f6e366dd8ccc3a48d536d1e1bf01f7e2071&v=4</webfeeds:icon>
       
       <content>&lt;p&gt;I don’t have much reason to dip in to big data processing tools in my current working capacity. Luckily for me, I have a (self-indulgent) blog now - perfect place to scratch these sorts of itches, and then share the resultant mishaps with the whole world.&lt;/p&gt;
 &lt;p&gt;I’d recently been working on a &lt;a href=&#34;https://shiny.rstudio.com/&#34;&gt;Shiny&lt;/a&gt; app for increasing visibility and engagement with police violence data. It just so happened that I stumbled across &lt;a href=&#34;https://openpolicing.stanford.edu/&#34;&gt;Stanford’s Open Policing Project&lt;/a&gt;, with some hefty open data ripe for exploring with big data tools, right after the app’s first build was finished.&lt;a href=&#34;#fn1&#34; class=&#34;footnote-ref&#34; id=&#34;fnref1&#34;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt; I figured introducing these things together should make for a smooth read.&lt;/p&gt;
@@ -1661,7 +1650,6 @@ demog_stats &amp;lt;- tbl(sc, &amp;quot;wa_stops&amp;quot;) %&amp;gt;%
       <author>ewen</author>
       <guid>https://ewen.io/2017/06/25/fpl-mythbusting-with-fplr/</guid>
       <description>Dissecting fantasy football falsehoods with my first R package.</description>
-      <webfeeds:icon>https://avatars2.githubusercontent.com/u/10872821?s=400&u=fdf22f6e366dd8ccc3a48d536d1e1bf01f7e2071&v=4</webfeeds:icon>
       
       <content>&lt;p&gt;I recently authored my first R package (and definitely have the bug, now). It would be remiss of me to continue without a quick PSA for anyone out there thinking about dabbling in the package game - below is a shout-out of the invaluable resources I found along the way that kept me nice and sane.&lt;/p&gt;
 &lt;blockquote class=&#34;twitter-tweet&#34; data-lang=&#34;en&#34;&gt;
@@ -1741,7 +1729,6 @@ ease in &lt;a href=&#34;https://t.co/NdRYGE1whA&#34;&gt;https://t.co/NdRYGE1whA&
       <author>ewen</author>
       <guid>https://ewen.io/2017/05/30/tracking-londons-pub--bar-landscape-with-geofacet/</guid>
       <description>Toying around with geofacet, a ggplot2 extension for geographic small multiples.</description>
-      <webfeeds:icon>https://avatars2.githubusercontent.com/u/10872821?s=400&u=fdf22f6e366dd8ccc3a48d536d1e1bf01f7e2071&v=4</webfeeds:icon>
       
       <content>&lt;div id=&#34;introducing-geofacet&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Introducing geofacet&lt;/h2&gt;
@@ -1856,7 +1843,6 @@ ggplot(data = pubs, aes(x=year, y=yoy_chg, fill=yoy_chg)) +
       <author>ewen</author>
       <guid>https://ewen.io/2017/04/23/the-representativeness-of-uk-parliament/</guid>
       <description>Leveraging open data on politicians to learn more about representation and diversity within UK Parliament.</description>
-      <webfeeds:icon>https://avatars2.githubusercontent.com/u/10872821?s=400&u=fdf22f6e366dd8ccc3a48d536d1e1bf01f7e2071&v=4</webfeeds:icon>
       
       <content>&lt;p&gt;As a general election looms, a familiar UK media maelstrom has begun. The key difference here is that the public has been taken by surprise, somewhat - Theresa May’s call for a snap election (we weren’t actually due one until 2020) has left folk with little under two months to decide where their vote will go.&lt;/p&gt;
 &lt;p&gt;For some, this may be the first election they are able to participate in. For many, the traditional delivery of party politics might not have kept them engaged all that well since the last election. Unfortunately, there isn’t too much time to get all cases like these as up to speed as we would like this time round. The good news is there are ambitious projects like &lt;a href=&#34;http://everypolitician.org/uk/&#34;&gt;EveryPolitician&lt;/a&gt; looking to make governments around the world more transparent - perhaps we can leverage the data inside to empower voters, in some small way, ahead of 8th June.&lt;a href=&#34;#fn1&#34; class=&#34;footnote-ref&#34; id=&#34;fnref1&#34;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt;&lt;/p&gt;
@@ -1983,7 +1969,6 @@ glimpse(members)&lt;/code&gt;&lt;/pre&gt;
       <author>ewen</author>
       <guid>https://ewen.io/2017/03/20/a-sentiment-analysis-of-kanye-west-records/</guid>
       <description>Using the Genius API and sentiment analysis techniques to explore Ye&#39;s art.</description>
-      <webfeeds:icon>https://avatars2.githubusercontent.com/u/10872821?s=400&u=fdf22f6e366dd8ccc3a48d536d1e1bf01f7e2071&v=4</webfeeds:icon>
       
       <content>&lt;p&gt;PSA: This blog &lt;em&gt;will&lt;/em&gt; cover other stuff besides music, I promise…this post is the fruits of a recent meander into the new &lt;a href=&#34;https://cran.r-project.org/web/packages/ggalt/index.html&#34;&gt;&lt;code&gt;ggalt&lt;/code&gt;&lt;/a&gt;, &lt;a href=&#34;https://cran.r-project.org/web/packages/hrbrthemes/index.html&#34;&gt;&lt;code&gt;hrbrthemes&lt;/code&gt;&lt;/a&gt; and &lt;a href=&#34;https://cran.r-project.org/web/packages/tidytext/index.html&#34;&gt;&lt;code&gt;tidytext&lt;/code&gt;&lt;/a&gt; packages.&lt;a href=&#34;#fn1&#34; class=&#34;footnote-ref&#34; id=&#34;fnref1&#34;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;div id=&#34;intro&#34; class=&#34;section level2&#34;&gt;
@@ -2164,7 +2149,6 @@ by_track_sentiment %&amp;gt;%
       <author>ewen</author>
       <guid>https://ewen.io/2017/03/01/vinylspotting-a-discogs-fairytale/</guid>
       <description>Making a Shiny app for record diggers to explore and visualize their collections.</description>
-      <webfeeds:icon>https://avatars2.githubusercontent.com/u/10872821?s=400&u=fdf22f6e366dd8ccc3a48d536d1e1bf01f7e2071&v=4</webfeeds:icon>
       
       <content>&lt;p&gt;At a cursory glance, it’s almost impossible to get much of an understanding of vinyl record collections beyond their size (or perhaps their age, depending on the smell?). If you get up close, you might recognise some artist names or make out some titles on the spines of LPs, but your average collector is gonna have loads of bits that even &lt;em&gt;they&lt;/em&gt; don’t recognise on sight. Now, while the unadulterated excitement of finding a &lt;a href=&#34;https://en.wikipedia.org/wiki/White_label&#34;&gt;white label&lt;/a&gt; on the shelve that even &lt;em&gt;you&lt;/em&gt; can’t remember is the romance at the very heart of record digging, that thought of forgotten artifacts would send archivists and librarians bonkers.&lt;/p&gt;
 &lt;p&gt;Enter &lt;a href=&#34;http://www.discogs.com&#34;&gt;Discogs&lt;/a&gt; - the definitive recorded music database and marketplace, with over 8 million record entries and counting. Aside from catching themselves tumbling through all sorts of audio rabbit-holes, Discogs users are able to forensically catalog their own collection. Once you’re at more than a few hundred records, having a well-kept digital archive of your music to refer to is sometimes the only way of knowing “did I already buy that record?”, without having to leaf through the physical lot.&lt;/p&gt;
@@ -2344,7 +2328,6 @@ as_tibble(my_collection)&lt;/code&gt;&lt;/pre&gt;
       <author>ewen</author>
       <guid>https://ewen.io/1/01/01/</guid>
       <description></description>
-      <webfeeds:icon>https://avatars2.githubusercontent.com/u/10872821?s=400&u=fdf22f6e366dd8ccc3a48d536d1e1bf01f7e2071&v=4</webfeeds:icon>
       
       <content>&lt;!DOCTYPE html&gt;
 
