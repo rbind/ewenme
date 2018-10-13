@@ -7,9 +7,6 @@ copyright = ""
 Paginate = 5
 enableRobotsTXT = true
 
-[params]
-description = "ewen's blog and assorted projects."
-
 [params.rss]
 includeContent = true
 authorName = "ewen"
