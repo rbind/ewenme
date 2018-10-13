@@ -1,6 +1,5 @@
 baseurl = "https://ewen.io/"
 title = "ewen"
-description = "ewen's personal site."
 languageCode = "en"
 theme = "kiss"
 copyright = ""
@@ -8,8 +7,10 @@ copyright = ""
 Paginate = 5
 enableRobotsTXT = true
 
-[params.rss]
+[params]
+description = "ewen's personal site."
 
+[params.rss]
 includeContent = true
 authorName = "ewen"
 authorEmail = "ewenhenderson@gmail.com"
