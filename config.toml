@@ -7,6 +7,7 @@ googleAnalytics = "UA-127418779-1"
 Paginate = 5
 enableRobotsTXT = true
 description = "ewen's blog and assorted projects."
+rssLimit = 20
 
 [params.rss]
 includeContent = true
