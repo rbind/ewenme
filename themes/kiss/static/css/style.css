@@ -1,4 +1,4 @@
-.card,
+﻿.card,
 .highlight,
 .highlight pre,
 .textarea,
@@ -1149,6 +1149,9 @@ a.box:active {
   margin-right: 2em;
   margin-top: 1em;
 }
+.content p {
+	text-align: justify;
+}
 .content blockquote:not(:last-child),
 .content ol:not(:last-child),
 .content p:not(:last-child),
@@ -2053,6 +2056,7 @@ a.box:active {
 .subtitle,
 .title {
   font-weight: 300;
+  word-break: break-word;
 }
 .subtitle em,
 .subtitle span,
@@ -5528,7 +5532,7 @@ a.panel-block:hover {
 }
 .section {
   background-color: #fff;
-  padding: 40px 0px;
+  padding: 40px 20px;
 }
 @media screen and (min-width: 980px) {
   .section.is-medium {
@@ -5565,7 +5569,6 @@ html {
 .container {
   max-width: 800px;
   margin: 0 auto;
-  padding: 0px 20px;
 }
 .content h1:not(:first-child),
 .content h2:not(:first-child),
@@ -5711,4 +5714,8 @@ img[src$="#r"] {
 }
 .related ul {
   font-size: 17px;
+}
+
+div.subtitle.tags{
+  margin-bottom: 0px;
 }

@@ -9,6 +9,7 @@ Paginate = 5
 enableRobotsTXT = true
 
 [params.rss]
+
 includeContent = true
 authorName = "ewen"
 authorEmail = "ewenhenderson@gmail.com"
