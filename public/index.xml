@@ -3,7 +3,7 @@
   <channel>
     <title>ewen</title>
     <link>https://ewen.io/</link>
-    <description>Recent content on ewen</description>
+    <description>ewen&#39;s blog and assorted projects. Recent content on ewen</description>
     <generator>Hugo - gohugo.io</generator>
     <language>en</language>
     <contact>ewenhenderson@gmail.com</contact>
@@ -92,7 +92,7 @@
 &lt;li&gt;Future (4.3 million): The master of twisted Bacchanalia rap, as prolific as Gucci. Start off with &lt;a href=&#34;https://www.youtube.com/watch?v=DXXZ3J_QIGw&#34;&gt;56 Nights&lt;/a&gt; (2015).&lt;/li&gt;
 &lt;li&gt;Chance the Rapper (2.8 million): &lt;a href=&#34;https://www.youtube.com/watch?v=e67Q-sTHVhc&#34;&gt;Acid Rap&lt;/a&gt; (2013) and &lt;a href=&#34;https://www.youtube.com/watch?v=H6C0dfq4ZWM&#34;&gt;Coloring Book&lt;/a&gt; (2016) are dope and up-ended many expectations that independent artists and mixtapes were facing extinction.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;I could go on, but why not head back to the interactive and explore some of the music yourself ✌️&lt;/p&gt;
+&lt;p&gt;I could go on, but why not head back to the interactive and explore some of the music yourself 🕊&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class=&#34;footnotes&#34;&gt;
 &lt;hr /&gt;
@@ -2589,7 +2589,48 @@ $(document).ready(function () {
 &lt;/div&gt;
 
 
-
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr class=&#34;header&#34;&gt;
+&lt;th&gt;artist&lt;/th&gt;
+&lt;th&gt;record&lt;/th&gt;
+&lt;th&gt;rating&lt;/th&gt;
+&lt;th&gt;track on repeat&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td&gt;Against All Logic&lt;/td&gt;
+&lt;td&gt;2012-2017&lt;/td&gt;
+&lt;td&gt;★ ★ ★ ★ ☆&lt;/td&gt;
+&lt;td&gt;Flash in the Pan&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td&gt;Lil Wayne&lt;/td&gt;
+&lt;td&gt;Tha Carter V&lt;/td&gt;
+&lt;td&gt;★ ★ ★ ☆ ☆&lt;/td&gt;
+&lt;td&gt;Demons&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td&gt;young paint&lt;/td&gt;
+&lt;td&gt;young paint&lt;/td&gt;
+&lt;td&gt;★ ★ ★ ★ ☆&lt;/td&gt;
+&lt;td&gt;xxx&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td&gt;Overmono&lt;/td&gt;
+&lt;td&gt;Raft Living&lt;/td&gt;
+&lt;td&gt;★ ★ ★ ☆ ☆&lt;/td&gt;
+&lt;td&gt;xxx&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td&gt;Charli XCX&lt;/td&gt;
+&lt;td&gt;Taxi&lt;/td&gt;
+&lt;td&gt;★ ★ ★ ★ ★&lt;/td&gt;
+&lt;td&gt;Taxi&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
 
 
 
