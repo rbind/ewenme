@@ -4,7 +4,7 @@ description: "An app to help digital DJs explore and visualise their selections.
 date: '2018-05-12'
 slug: deejae
 tags: ["djing", "traktor", "shiny"]
-cover: https://raw.githubusercontent.com/ewenme/deejae/master/example_screenshot.png
+image: https://raw.githubusercontent.com/ewenme/deejae/master/example_screenshot.png
 draft: no
 ---
 

@@ -4,7 +4,7 @@ description: "Collating player transfers to and from football clubs in major Eur
 date: '2018-08-27'
 slug: building-open-football-player-transfer-data
 tags: ["football", "data-viz", "r"]
-cover: https://github.com/ewenme/footy-transfer-data/raw/master/figures/chelsea-transfers-web.png
+image: https://github.com/ewenme/footy-transfer-data/raw/master/figures/chelsea-transfers-web.png
 draft: no
 ---
 
