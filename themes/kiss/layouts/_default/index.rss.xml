@@ -18,6 +18,7 @@
       <author>{{ $.Site.Params.rss.authorName }}</author>
       <guid>{{ .Permalink }}</guid>
       <description>{{ .Description | html }}</description>
+      <webfeeds:icon>https://avatars2.githubusercontent.com/u/10872821?s=400&u=fdf22f6e366dd8ccc3a48d536d1e1bf01f7e2071&v=4</webfeeds:icon>
       {{ if $.Site.Params.rss.includeContent }}
       <content>{{ .Content | html }}</content>
       {{ end }}
