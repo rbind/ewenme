@@ -8,7 +8,7 @@ Paginate = 5
 enableRobotsTXT = true
 
 [params]
-description = "ewen's personal site."
+description = "ewen's blog, projects"
 
 [params.rss]
 includeContent = true
@@ -19,6 +19,7 @@ authorEmail = "ewenhenderson@gmail.com"
 customCSS = ["css/custom.css"]
 
 [params.info]
+description = "ewen's blog, projects"
 adsense = "" # Adsense ID (ID only, without ca-pub-)
 enableSocial = true # Adds OpenGraph and Twitter cards
 homeTitle = "ewen" # Title for home page
