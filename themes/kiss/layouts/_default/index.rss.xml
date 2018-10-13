@@ -3,7 +3,6 @@
     <title>{{ if eq  .Title  .Site.Title }}{{ .Site.Title }}{{ else }}{{ with .Title }}{{.}} on {{ end }}{{ .Site.Title }}{{ end }}</title>
     <link>{{ .Permalink }}</link>
     <description>Recent content {{ if ne  .Title  .Site.Title }}{{ with .Title }}in {{.}} {{ end }}{{ end }}on {{ .Site.Title }}</description>
-    <webfeeds:icon>https://img.buzzfeed.com/buzzfeed-static/static/2016-09/7/13/asset/buzzfeed-prod-web03/sub-buzz-17815-1473269426-1.jpg</webfeeds:icon>
     <generator>Hugo - gohugo.io</generator>
     <language>{{ .Site.Language }}</language>
     <contact>{{ $.Site.Params.rss.authorEmail }}</contact>
@@ -18,7 +17,10 @@
       <pubDate>{{ .Date.Format "Mon, 02 Jan 2006 15:04:05 -0700" | safeHTML }}</pubDate>
       <author>{{ $.Site.Params.rss.authorName }}</author>
       <guid>{{ .Permalink }}</guid>
+      <description>{{ .Description | html }}</description>
+      {{ if $.Site.Params.rss.includeContent }}
       <content>{{ .Content | html }}</content>
+      {{ end }}
     </item>
     {{ end }}
   </channel>

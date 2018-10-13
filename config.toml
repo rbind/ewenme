@@ -12,7 +12,6 @@ description = "ewen's blog and assorted projects."
 includeContent = true
 authorName = "ewen"
 authorEmail = "ewenhenderson@gmail.com"
-rssLimit: 20
 
 [params.assets]
 customCSS = ["css/custom.css"]
