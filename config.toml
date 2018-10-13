@@ -28,6 +28,7 @@ related = false # Includes related articles
 email = "ewenhenderson@gmail.com"
 twitter = "ewen_"
 github = "ewenme"
+rss = "index.xml"
 
 [taxonomies]
 tag = "tags"
