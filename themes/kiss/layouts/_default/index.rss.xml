@@ -2,7 +2,7 @@
   <channel>
     <title>{{ if eq  .Title  .Site.Title }}{{ .Site.Title }}{{ else }}{{ with .Title }}{{.}} on {{ end }}{{ .Site.Title }}{{ end }}</title>
     <link>{{ .Permalink }}</link>
-    <description>ewen's blog and assorted projects. Recent content {{ if ne  .Title  .Site.Title }}{{ with .Title }}in {{.}} {{ end }}{{ end }}on {{ .Site.Title }}</description>
+    <description>ewen's blog and assorted projects.</description>
     <generator>Hugo - gohugo.io</generator>
     <language>{{ .Site.Language }}</language>
     <contact>{{ $.Site.Params.rss.authorEmail }}</contact>
