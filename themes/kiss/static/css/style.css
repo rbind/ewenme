@@ -1,4 +1,4 @@
-﻿.card,
+.card,
 .highlight,
 .highlight pre,
 .textarea,
@@ -5532,7 +5532,7 @@ a.panel-block:hover {
 }
 .section {
   background-color: #fff;
-  padding: 40px 20px;
+  padding: 40px 0px;
 }
 @media screen and (min-width: 980px) {
   .section.is-medium {
@@ -5569,6 +5569,7 @@ html {
 .container {
   max-width: 800px;
   margin: 0 auto;
+  padding: 0px 20px;
 }
 .content h1:not(:first-child),
 .content h2:not(:first-child),
