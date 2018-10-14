@@ -1,0 +1,192 @@
+---
+title: "Hacking Homelessness & PDF Prisons"
+description: "How to extract data from PDFs (in this case, homelessness figures in London), alongside a showcase of algorithmic tesselation of geospatial polygons."
+date: "2017-11-09"
+tags: ["r", "gis", "pdf", "homelessness"]
+draft: no
+---
+
+
+
+<p>Shout-out to the <a href="http://us16.campaign-archive2.com/home/?u=5ea551600fcdf84334e5aa6b0&amp;id=26c0b7221a">Monday Morning Data Science</a> mailout from John Hopkins. Making my way through this week’s (#41) edition, I hit upon quite the eulogy concerning a new R package:</p>
+<blockquote>
+<p>“The most compelling data visualization libraries I’ve seen in awhile…you have to see it to believe it”</p>
+</blockquote>
+<p>You had me at compelling (I’m not sure <em>who</em> had me exactly, this was the only entry w/o a name attached to it 🤔).</p>
+<div id="hex-democratization" class="section level2">
+<h2>Hex Democratization</h2>
+<p>Enter <a href="https://github.com/jbaileyh/geogrid"><code>geogrid</code></a> and a solution to the perennial information communication problem of plotting polygons of different sizes, that’s equal parts functional and beautiful. In the link above the author, Joseph Bailey, eloquently explains the motivations behind this package for automatic transformations of geospatial polygons into regular and hexagonal grids. In short, a grid system ensures a fairer representation of spatial data (while retaining geography) and an automated implementation means this is suitable to use in less commonly studied places. On both counts, this is a wicked example of building tools that democratize good data science. ✋</p>
+<p>Next, I just needed a good reason to wheel it out (aside from sharing with y’all).<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p>
+</div>
+<div id="full-metal-data" class="section level2">
+<h2>Full Metal Data</h2>
+<p><a href="https://www.mungos.org/work-with-us/chain/">Combined Homelessness and Information Network (CHAIN)</a> is the foremost project collecting data about homelessness in London. Gaining direct access to the database is strictly limited to those working directly with rough sleepers. However, CHAIN reports are published on the Greater London Authority’s (GLA) <a href="https://data.london.gov.uk/dataset/chain-reports">London Datastore</a>. The full annual report does contain data on the spatial distribution of rough sleepers, but it’s only available in PDF format. 💀</p>
+<p><img src="/img/2017-11-09-Hacking_Homelessness_and_PDF_Prisons/file_extensions.png" width="75%" style="display: block; margin: auto;" /></p>
+<p>This xkcd cartoon is in good humour, but there’s a lot of truth in this - PDF’s have risen to represent a kind of absolute truth, embodied by their relative impenetrability from outside influence (this includes pesky data scientists). This all-but-closed system becomes a big problem when we want to extract the ‘open’ data holed up inside. (Enter next R package to save the day, stage left).</p>
+</div>
+<div id="introducing-tabulizer-aka-governments-lock-up-your-pdfs" class="section level2">
+<h2>Introducing tabulizer AKA Governments, Lock Up Your PDFs</h2>
+<p>Actual footage of <a href="https://github.com/ropensci/tabulizer">`tabulizer</a>, an rOpenSci project dreamed up by Thomas Leeper, encountering impervious PDF #478:</p>
+<p><img src="/img/2017-11-09-Hacking_Homelessness_and_PDF_Prisons/oreally.jpg" width="75%" style="display: block; margin: auto;" /></p>
+<p>As the <a href="https://ropensci.org/blog/2017/04/18/tabulizer/">rOpenSci release</a> tells, <code>tabulizer</code> gives us R mortals the power of the <a href="https://github.com/tabulapdf/tabula-java">tabula-java library</a> for extracting tables from PDF files (which, in turn, powers <a href="http://tabula.technology/">Tabula</a>, which you might have come across). You should dig in to that release blog (and associated GitHub repo) for the juicy inner workings, but I’ll show it off very shortly.</p>
+<p>I should say that I hit some snags trying to get this package fully operational (again, detailed in the package release), owing to the dependency on Java. I will just say that the help contained within the below links were able to get me on my way (as a Mac user) AND it was worth it:</p>
+<ul>
+<li><a href="https://stackoverflow.com/questions/35179151/cannot-load-r-xlsx-package-on-mac-os-10-11/36045290">Relinking Java &amp; rJava</a></li>
+<li><a href="https://stackoverflow.com/questions/30738974/rjava-load-error-in-rstudio-r-after-upgrading-to-osx-yosemite">rJava fix after OSX upgrade</a></li>
+<li><a href="https://github.com/ropensci/tabulizer/issues?utf8=%E2%9C%93&amp;q=is%3Aissue"><code>tabulizer</code> issues page</a></li>
+</ul>
+</div>
+<div id="where-the-magic-happens" class="section level2">
+<h2>Where the Magic Happens</h2>
+<p>With new friends in tow, it’s about to go down on this PDF. Here’s an idea of what we’re working with (Eeyore’s sad at PDFs courtesy of <a href="https://cran.r-project.org/web/packages/magick/vignettes/intro.html"><code>magick</code></a>, if you were wondering):</p>
+<p><img src="/img/2017-11-09-Hacking_Homelessness_and_PDF_Prisons/eeyore.png" width="75%" style="display: block; margin: auto;" /></p>
+<p>To get the data in this table out of it’s prison, we use <code>extract_tables()</code>:</p>
+<pre class="r"><code>library(tabulizer)
+
+homeless_spatial_tab &lt;- extract_tables(file = &quot;https://files.datapress.com/london/dataset/chain-reports/2017-06-30T09:03:07.84/Greater%20London%20full%202016-17.pdf&quot;, pages = 19)</code></pre>
+<p>We simply fed this two arguments - the file path of the report and the page number with our table of interest - and returned a list object of length one, containing a character matrix. The resultant object needs some light wrangling to get it just right:</p>
+<pre class="r"><code># specify table list item
+homeless_spatial_tab &lt;- homeless_spatial_tab[[1]]
+
+# remove unneeded rows and cols
+homeless_spatial_tab &lt;- homeless_spatial_tab[c(-2, -15, -37), -6:-7]
+
+# get col names
+col_names &lt;- homeless_spatial_tab[1, ]
+
+# create dataframe
+homeless_spatial_tab &lt;- data.frame(homeless_spatial_tab[-1, ])
+
+# set colnames
+colnames(homeless_spatial_tab) &lt;- col_names
+
+# set col types
+homeless_spatial_tab &lt;- mutate_at(homeless_spatial_tab, c(&quot;2013/14&quot;, &quot;2014/15&quot;, &quot;2015/16&quot;, &quot;2016/17&quot;), as.character)
+homeless_spatial_tab &lt;- mutate_at(homeless_spatial_tab, c(&quot;2013/14&quot;, &quot;2014/15&quot;, &quot;2015/16&quot;, &quot;2016/17&quot;), as.numeric)
+
+head(homeless_spatial_tab)</code></pre>
+<pre><code>##          Borough 2013/14 2014/15 2015/16 2016/17
+## 1    Westminster    2197    2570    2857    2767
+## 2         Camden     501     563     641     702
+## 3  Tower Hamlets     324     377     395     445
+## 4         Newham     202     221     260     396
+## 5 City of London     317     373     440     379
+## 6        Lambeth     427     468     445     355</code></pre>
+<p>Eeyore is joyful at this sight, mark my words. How effortless was that? This data is ripe for mapping. Speaking of which…</p>
+</div>
+<div id="bring-in-the-maps" class="section level2">
+<h2>Bring in the Maps</h2>
+<p>Back to <code>geogrid</code> stuff. For starters, let’s load in the shapefiles we need (note: the GitHub repo’s example is actually on London, too, so I won’t dwell on every similar detail):</p>
+<pre class="r"><code>library(geogrid)
+
+# get spatial polygons
+input_file &lt;- system.file(&#39;extdata&#39;, &#39;london_LA.json&#39;, package=&#39;geogrid&#39;)
+original_shapes &lt;- read_polygons(input_file)
+
+# get polygon details
+original_details &lt;- calculate_grid(original_shapes)</code></pre>
+<p>In the case of spatial joins, I’ve found [<code>sf</code>] (<a href="https://github.com/r-spatial/sf" class="uri">https://github.com/r-spatial/sf</a>)(simple features) incredibly intuitive and so I’ll employ this tactic now to merge the distinct datasets together. I did notice some differences in the names given to certain London Boroughs (mainly the use of ‘&amp;’/‘and’) which will need addressing as well.</p>
+<pre class="r"><code># rename homeless data boroughs strings not matching geogrid shp
+homeless_spatial_tab$Borough &lt;- str_replace(homeless_spatial_tab$Borough, pattern = &quot;Richmond&quot;,
+                                            replacement = &quot;Richmond upon Thames&quot;)
+homeless_spatial_tab$Borough &lt;- str_replace(homeless_spatial_tab$Borough, 
+                                            pattern = &quot;&amp;&quot;,
+                                            replacement = &quot;and&quot;)
+
+library(sf)
+
+# turn geogrid shapefile into sf format
+original_shapes_sf &lt;- st_as_sf(original_shapes)
+
+# join homeless data
+original_shapes_sf &lt;- left_join(original_shapes_sf, homeless_spatial_tab, by=c(&quot;NAME&quot;=&quot;Borough&quot;))</code></pre>
+<p>We’re about ready to put plot to paper. First, let’s take a look at a traditional, real space assignment of the area.</p>
+<pre class="r"><code># get coords
+coords &lt;- original_shapes_sf %&gt;%
+  # find polygon centroids (sf points object)
+  st_centroid %&gt;%
+  # extract the coordinates of these points as a matrix
+  st_coordinates
+
+# insert centroid long and lat fields as attributes of polygons
+original_shapes_sf$long &lt;- coords[,1]
+original_shapes_sf$lat &lt;- coords[,2]
+
+# get percentage change from baseline
+original_shapes_sf$pct_chg &lt;- (original_shapes_sf$`2016/17` - original_shapes_sf$`2013/14`) / original_shapes_sf$`2013/14` * 100
+
+# traditional map
+ggplot(original_shapes_sf) +
+  geom_sf(aes(fill = pct_chg)) +
+  geom_text(aes(long, lat, label=str_sub(NAME, 1, 4)), 
+            alpha = 0.75, size = 2.5, color = &#39;white&#39;) +
+  coord_sf() +
+  scale_fill_viridis_c() +
+  theme_void()</code></pre>
+<p><img src="/blog/hacking-homelessness-pdf-prisons_files/figure-html/traditional_map-1.svg" width="100%" /></p>
+<p>The metric used here represents % change in 2016/17 rough sleepers compared to 2013/14. Barking is highest (14 up to 49), but the eye and mind may be more drawn to some of it’s bigger neighbours (e.g. Havering).</p>
+<p>Algorithmic tessellation is used to generate possible grid layouts for the data (as explained in the GitHub repo - I’ll just be demo-ing the hexes, but the same can be done with regular grids):</p>
+<p><img src="/blog/hacking-homelessness-pdf-prisons_files/figure-html/seeds-1.svg" width="100%" /></p>
+<p>I’m quite partial to #3. Maneuvering from real space geography to this grid involves an implementation of the <a href="https://github.com/RcppCore/rcpp-gallery/blob/gh-pages/src/2013-09-24-minimal-assignment.cpp">hungarian algorithm</a>. All you have to do is <code>calculate_cell_size()</code> with the grid (seed) of choice and <code>assign_polygons()</code> to the shapefile containing the original geography. From there, the steps to visualisation are identical to previous ones:</p>
+<pre class="r"><code>new_cells_hex &lt;-  calculate_grid(original_shapes, 0.03, &#39;hexagonal&#39;, 3)
+resulthex &lt;- assign_polygons(original_shapes, new_cells_hex)
+
+# turn geogrid shapefile into sf format
+resulthex_sf &lt;- st_as_sf(resulthex)
+
+# join homeless data
+resulthex_sf &lt;- left_join(resulthex_sf, homeless_spatial_tab, by=c(&quot;NAME&quot;=&quot;Borough&quot;))
+
+# get coords
+coords &lt;- resulthex_sf %&gt;%
+  # find polygon centroids (sf points object)
+  st_centroid %&gt;%
+  # extract the coordinates of these points as a matrix
+  st_coordinates
+
+# insert centroid long and lat fields as attributes of polygons
+resulthex_sf$long &lt;- coords[,1]
+resulthex_sf$lat &lt;- coords[,2]
+
+# get percentage change from baseline
+resulthex_sf$pct_chg &lt;- (resulthex_sf$`2016/17`- resulthex_sf$`2013/14`) / resulthex_sf$`2013/14`
+
+# hex plot
+ggplot(resulthex_sf) +
+  geom_sf( aes(fill = pct_chg)) +
+  geom_text(aes(long, lat, label=str_sub(NAME, 1, 4)), size = 2.5, color = &#39;white&#39;) +
+  scale_fill_viridis_c(labels = percent) +
+  coord_sf() +
+  labs(title=&quot;Where are homeless sightings becoming more frequent in London?&quot;,
+       subtitle=&quot;People seen rough sleeping, % change 2013/14 to 2016/17 by borough&quot;,
+       caption=&quot;@ewen_&quot;) +
+  theme_void() +
+  theme(
+    text = element_text(size = 9),
+    plot.title = element_text(size = 12, face = &quot;bold&quot;), 
+    plot.subtitle = element_text(size = 9),
+    axis.ticks = element_blank(), 
+    legend.direction = &quot;vertical&quot;, 
+    legend.position = &quot;right&quot;,
+    legend.title=element_blank(),
+    plot.margin = margin(1, 1, 1, 1, &#39;cm&#39;),
+    legend.key.height = unit(1, &quot;cm&quot;), legend.key.width = unit(0.2, &quot;cm&quot;)
+  ) </code></pre>
+<p><img src="/blog/hacking-homelessness-pdf-prisons_files/figure-html/hex_map-1.svg" width="100%" /></p>
+<p>From PDF prison to 🔥 hex map with ease. May this inspire you to solve your own <a href="https://twitter.com/hashtag/otherpeoplesdata?src=hash">#otherpeoplesdata</a> horror stories.</p>
+</div>
+<div id="on-a-more-serious-note" class="section level2">
+<h2>On a More Serious Note</h2>
+<p>I also hope that the seriousness of the subject matter was not forgotten. The rise in homelessness sightings is really bad. A major reason why getting hold of this homelessness data was so difficult is that organisations like St Mungo’s suffer from chronic under-funding, and so machine-readable data is understandably not their top priority. They are amazing so please consider <a href="https://www.mungos.org/get-involved/donate/">donating to them</a> if you can, and others like them below:</p>
+<ul>
+<li><a href="https://www.salvationarmyappeals.org.uk/site/Donation2;jsessionid=00000000.app203a?idb=2000701064&amp;df_id=2425&amp;mfc_pref=T&amp;2425.donation=form1&amp;NONCE_TOKEN=DA7336ADD131AA3751E20B98219A74D7&amp;utm_campaign=GRANT&amp;utm_source=Google&amp;utm_content=Phrase&amp;utm_medium=PPC&amp;gclsrc=aw.ds&amp;utm_term=homeless&amp;gclid=Cj0KCQiA84rQBRDCARIsAPO8RFzawzfPkv1IMLJYy1LxToJvUthor11u6VKSmGbx2xOuRyD3ssUNm2YaAv9jEALw_wcB">The Salvation Army</a></li>
+<li><a href="https://donate.barnardos.org.uk/?ref=112326&amp;gclid=Cj0KCQiA84rQBRDCARIsAPO8RFz9vr7leNhxRGfSouzzwJ4eY55HBLGh5VAcyCNA7EctyTbM7UYmmrQaAotFEALw_wcB">Barnardo’s</a></li>
+<li><a href="https://centrepoint.org.uk/donate/">centre point</a></li>
+</ul>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>To keep the post concise I don’t show all of the code, especially code that generates figures. But you can find the full code <a href="https://github.com/rbind/ewenme/blob/master/content/blog/hacking-homelessness-pdf-prisons.Rmd">here</a>.<a href="#fnref1" class="footnote-back">↩</a></p></li>
+</ol>
+</div>

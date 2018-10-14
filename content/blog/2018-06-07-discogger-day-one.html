@@ -1,0 +1,180 @@
+---
+title: "discogger (day one)"
+description: "Building an R interface to the Discogs API."
+date: '2018-06-07'
+slug: discogger-day-one
+tags: ["discogs", "music", "r"]
+image: https://raw.githubusercontent.com/rbind/ewenme/master/public/blog/2018-06-07-discogger-day-one_files/figure-html/unnamed-chunk-4-1.png
+draft: no
+---
+
+
+
+<p>I’ve been working on a new R package. <a href="https://github.com/ewenme/discogger"><strong><code>discogger</code></strong></a> is an open-source effort, at an experimental stage of development, providing straightforward tools to help out with Discogs’ <a href="https://www.discogs.com/developers/#">API v2.0</a>. <a href="https://www.discogs.com">Discogs</a> is a crowd-sourced music database and marketplace, a proper treasure trove for record diggers and music lovers to learn more about what they’re jamming to. A better route into this data for R users should yield some nice results.</p>
+<div id="discogger-101" class="section level2">
+<h2>discogger 101</h2>
+<p>First up, you’ll need to register a Discogs application via <a href="https://www.discogs.com/settings/developers" class="uri">https://www.discogs.com/settings/developers</a>. Doing so will grant you a “personal access token” (accessible at the same link above) which you can store as an environment variable (<em>DISCOGS_API_TOKEN</em>) using the <code>discogs_api_token()</code> function. All functions in the <code>discogger</code> package will automatically look for your token and prompt entry if it isn’t found.</p>
+<p>The <code>discogger</code> interface to Discogs data currently spans <a href="https://www.discogs.com/developers/#page:database">Database</a> (releases, artists, labels) and <a href="https://www.discogs.com/developers/#page:user-collection">User Collection</a> API requests, with a view to growing functionality in these spaces and eventually expanding into <a href="https://www.discogs.com/developers/#page:marketplace">Marketplace</a> (inventory, orders). The next section will demo how these functions can be put in to use, and chained together for quietly impressive analyses.</p>
+</div>
+<div id="diggin-in-to-dance-mania" class="section level2">
+<h2>Diggin’ in to Dance Mania</h2>
+<p><a href="http://dancemaniarecords.com/">Dance Mania</a> is about as iconic as it gets when it comes to Chicago House record labels (you hopefully got a flavour by clicking on the name…). <code>discogger</code> is well equipped to retrieve record label information, with <code>discogs_label()</code> first up.</p>
+<pre class="r"><code># load packages
+library(discogger)
+library(tidyverse)
+
+# get DM label info
+discogs_label(label_id = 314)</code></pre>
+<pre><code>## &lt;Discogs labels/314&gt;
+## List of 11
+##  $ profile     : chr &quot;American house music label. \r\n\r\nChicago label, founded by [a=Jesse Saunders] in 1985. Started off as Dance &quot;| __truncated__
+##  $ releases_url: chr &quot;https://api.discogs.com/labels/314/releases&quot;
+##  $ name        : chr &quot;Dance Mania&quot;
+##  $ contact_info: chr &quot;Barney&#39;s One Stop Records \r\n3145 West Roosevelt Road \r\nChicago \r\nIllinois 60612 \r\nUSA \r\n\r\ntel: +1 7&quot;| __truncated__
+##  $ uri         : chr &quot;https://www.discogs.com/label/314-Dance-Mania&quot;
+##  $ sublabels   :List of 4
+##   ..$ :List of 3
+##   .. ..$ resource_url: chr &quot;https://api.discogs.com/labels/163742&quot;
+##   .. ..$ id          : int 163742
+##   .. ..$ name        : chr &quot;Dance Mania Digital&quot;
+##   ..$ :List of 3
+##   .. ..$ resource_url: chr &quot;https://api.discogs.com/labels/6507&quot;
+##   .. ..$ id          : int 6507
+##   .. ..$ name        : chr &quot;Freak Mode&quot;
+##   ..$ :List of 3
+##   .. ..$ resource_url: chr &quot;https://api.discogs.com/labels/211818&quot;
+##   .. ..$ id          : int 211818
+##   .. ..$ name        : chr &quot;Subterranean Playhouse LLC.&quot;
+##   ..$ :List of 3
+##   .. ..$ resource_url: chr &quot;https://api.discogs.com/labels/5868&quot;
+##   .. ..$ id          : int 5868
+##   .. ..$ name        : chr &quot;Subterranean Playhouse Series&quot;
+##  $ urls        :List of 3
+##   ..$ : chr &quot;http://dancemaniarecords.com&quot;
+##   ..$ : chr &quot;http://www.facebook.com/DanceManiaRecords&quot;
+##   ..$ : chr &quot;http://www.myspace.com/dance_mania_records&quot;
+##  $ images      :List of 4
+##   ..$ :List of 6
+##   .. ..$ uri         : chr &quot;https://img.discogs.com/8PGEb_C6As0EN_OHd4Pu1MlcUQw=/fit-in/175x49/filters:strip_icc():format(jpeg):mode_rgb():&quot;| __truncated__
+##   .. ..$ height      : int 49
+##   .. ..$ width       : int 175
+##   .. ..$ resource_url: chr &quot;https://img.discogs.com/8PGEb_C6As0EN_OHd4Pu1MlcUQw=/fit-in/175x49/filters:strip_icc():format(jpeg):mode_rgb():&quot;| __truncated__
+##   .. ..$ type        : chr &quot;primary&quot;
+##   .. ..$ uri150      : chr &quot;https://img.discogs.com/KxBBy6laZLchayYbKLD79hdDeVQ=/fit-in/150x150/filters:strip_icc():format(jpeg):mode_rgb()&quot;| __truncated__
+##   ..$ :List of 6
+##   .. ..$ uri         : chr &quot;https://img.discogs.com/vMlkxiCuOQClKfkSkbmTw_ZqUmg=/fit-in/428x183/filters:strip_icc():format(jpeg):mode_rgb()&quot;| __truncated__
+##   .. ..$ height      : int 183
+##   .. ..$ width       : int 428
+##   .. ..$ resource_url: chr &quot;https://img.discogs.com/vMlkxiCuOQClKfkSkbmTw_ZqUmg=/fit-in/428x183/filters:strip_icc():format(jpeg):mode_rgb()&quot;| __truncated__
+##   .. ..$ type        : chr &quot;secondary&quot;
+##   .. ..$ uri150      : chr &quot;https://img.discogs.com/aVpJTY8XlnvI_HEWE5NEv09Jxd4=/fit-in/150x150/filters:strip_icc():format(jpeg):mode_rgb()&quot;| __truncated__
+##   ..$ :List of 6
+##   .. ..$ uri         : chr &quot;https://img.discogs.com/2GtH1TZaxGaGTfHrudDk6LOiURA=/fit-in/326x86/filters:strip_icc():format(jpeg):mode_rgb():&quot;| __truncated__
+##   .. ..$ height      : int 86
+##   .. ..$ width       : int 326
+##   .. ..$ resource_url: chr &quot;https://img.discogs.com/2GtH1TZaxGaGTfHrudDk6LOiURA=/fit-in/326x86/filters:strip_icc():format(jpeg):mode_rgb():&quot;| __truncated__
+##   .. ..$ type        : chr &quot;secondary&quot;
+##   .. ..$ uri150      : chr &quot;https://img.discogs.com/2YB6vAViUfMMtBMfcVEGCMIIGck=/fit-in/150x150/filters:strip_icc():format(jpeg):mode_rgb()&quot;| __truncated__
+##   ..$ :List of 6
+##   .. ..$ uri         : chr &quot;https://img.discogs.com/EbovJSq-DmlEbQStSDYjUTkUk-o=/fit-in/175x49/filters:strip_icc():format(jpeg):mode_rgb():&quot;| __truncated__
+##   .. ..$ height      : int 49
+##   .. ..$ width       : int 175
+##   .. ..$ resource_url: chr &quot;https://img.discogs.com/EbovJSq-DmlEbQStSDYjUTkUk-o=/fit-in/175x49/filters:strip_icc():format(jpeg):mode_rgb():&quot;| __truncated__
+##   .. ..$ type        : chr &quot;secondary&quot;
+##   .. ..$ uri150      : chr &quot;https://img.discogs.com/kLTNU4xpYKI-bOg60VXiW-2BKUk=/fit-in/150x150/filters:strip_icc():format(jpeg):mode_rgb()&quot;| __truncated__
+##  $ resource_url: chr &quot;https://api.discogs.com/labels/314&quot;
+##  $ id          : int 314
+##  $ data_quality: chr &quot;Correct&quot;</code></pre>
+<p>Hopefully you learnt something new from that output, but it’s not particularly ready for any analysis. I’m quite interested in getting more detailed metadata around Dance Mania’s 12&quot; releases, which can be done with <code>discogs_label_releases()</code>.</p>
+<pre class="r"><code># get DM releases
+dm_releases &lt;- discogs_label_releases(label_id = 314)
+  
+# extract request content
+dm_releases_df &lt;- dm_releases$content %&gt;%
+  # return 12&quot; releases only
+  filter(grepl(&#39;12&quot;&#39;, format))
+
+dm_releases_df</code></pre>
+<pre><code>## # A tibble: 581 x 10
+##    status  thumb     format  title catno  year resource_url artist      id
+##    &lt;chr&gt;   &lt;chr&gt;     &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt; &lt;int&gt; &lt;chr&gt;        &lt;chr&gt;    &lt;int&gt;
+##  1 Accept… https://… &quot;12\&quot;&quot;  Hous… 14040  1987 https://api… The Ho… 6.40e4
+##  2 Accept… https://… &quot;12\&quot;&quot;  What… 5100…  1985 https://api… The Br… 1.09e6
+##  3 Accept… https://… &quot;12\&quot;&quot;  Hous… B.C.…  1987 https://api… The Ho… 4.21e5
+##  4 Accept… https://… &quot;12\&quot;&quot;  Hous… B.C.…  1987 https://api… The Ho… 1.97e5
+##  5 Accept… https://… &quot;12\&quot;&quot;  Frea… D.J.…  1996 https://api… D.J. F… 6.75e4
+##  6 Accept… https://… &quot;12\&quot;,… This… D.M.…  1988 https://api… Mello … 5.17e6
+##  7 Accept… https://… &quot;12\&quot;&quot;  This… D.M.…  1988 https://api… Mello … 4.27e5
+##  8 Accept… https://… &quot;12\&quot;&quot;  Hous… DM 0…  1986 https://api… The Ho… 7.30e3
+##  9 Accept… https://… &quot;12\&quot;&quot;  Hard… DM 0…  1987 https://api… Duane … 1.40e3
+## 10 Accept… https://… &quot;12\&quot;,… Hard… DM 0…  1987 https://api… Duane … 6.52e6
+## # ... with 571 more rows, and 1 more variable: label_id &lt;dbl&gt;</code></pre>
+<p>The tidy tibble format returned is much better suited to analysis in R, but the content I’m after is not quite there. Turns out community metrics, such as the number of users who own or have marked a record as one they “want”, are available from a records release page (not it’s label release listing). <code>discogs_release()</code> can be used, in conjunction with <code>map()</code> (from the <a href="https://purrr.tidyverse.org/"><code>purrr</code></a> package), to iterate through releases and collect this information.</p>
+<pre class="r"><code># get DM release info
+dm_releases_info &lt;- map(dm_releases_df$id, discogs_release)
+
+# extract release content
+dm_releases_content &lt;- map(dm_releases_info, &quot;content&quot;)
+  
+# extract fields relevant for community metrics analysis
+dm_community_metrics &lt;- tibble(
+  title = map_chr(dm_releases_content, &quot;title&quot;),
+  artist = map_chr(dm_releases_content, &quot;artists_sort&quot;),
+  year = map_int(dm_releases_content, &quot;year&quot;),
+  have = map_int(dm_releases_content, c(&quot;community&quot;, &quot;have&quot;)),
+  want = map_int(dm_releases_content, c(&quot;community&quot;, &quot;want&quot;))
+  ) %&gt;%
+  # for each record...
+  group_by(title, artist) %&gt;%
+  # keep the one most users have...
+  filter(have == max(have),
+         # ...and rm releases with missing release year
+         year &gt;= 1985)
+
+dm_community_metrics</code></pre>
+<pre><code>## # A tibble: 317 x 5
+## # Groups:   title, artist [317]
+##    title                      artist                      year  have  want
+##    &lt;chr&gt;                      &lt;chr&gt;                      &lt;int&gt; &lt;int&gt; &lt;int&gt;
+##  1 Freaky Style Take: 2       DJ Funk                     1996   170   168
+##  2 This X-Mas Rap             Mello D.                    1988     3    23
+##  3 This Christmas (Rap)       Mello D.                    1988    30    72
+##  4 House Nation               Housemaster Boyz, The And…  1986   967  1113
+##  5 Hard Core (On The One)     Duane &amp; Co.                 1987   401   261
+##  6 Jack My Body               Yellow House                1987   321   297
+##  7 Frequency (Out Of Control) Lil&#39; Louis                  1987     3   379
+##  8 Insane                     Suburban Boyz               1988   253   480
+##  9 The Original Video Clash   Lil&#39; Louis                  1988   893  1275
+## 10 I Want Your Love           Victor Romeo &amp; The Move F…  1988   280   210
+## # ... with 307 more rows</code></pre>
+<p>With this output, a visualisation can be knocked up to explore which Dance Mania 12-inches Discogs users want or own.</p>
+<pre class="r"><code># load viz helpers
+library(scico)
+library(hrbrthemes)
+library(ggrepel)
+
+# plot
+ggplot(dm_community_metrics, aes(x=have, y=want)) +
+  geom_point(aes(colour=year)) +
+  geom_text_repel(aes(label=paste0(artist, &quot; - &quot;, title)), size=2,
+                  data = subset(dm_community_metrics, have &gt;= 800 | want &gt;= 1000),
+                  family = &quot;IBM Plex Sans&quot;) +
+  labs(title=&quot;Dance Mania 12\&quot;s on Discogs&quot;, 
+       subtitle=&quot;How many Discogs user&#39;s own/want Dance Mania 12-inches (1985 - 2018).&quot;,
+       x = &quot;Own it&quot;, y = &quot;Want it&quot;,
+       caption=&quot;source: Discogs | made by @ewen_&quot;) +
+  theme_ipsum_ps(grid = FALSE) +
+  scico::scale_colour_scico(palette = &quot;lajolla&quot;) +
+  guides(col = guide_colourbar(direction = &quot;horizontal&quot;, title = &quot;Release year&quot;,
+                               barheight = 0.5, barwidth = 10, title.vjust = 1)) +
+  theme(legend.position = &quot;bottom&quot;)</code></pre>
+<p><img src="/blog/2018-06-07-discogger-day-one_files/figure-html/unnamed-chunk-4-1.svg" width="100%" /></p>
+</div>
+<div id="close" class="section level2">
+<h2>Close</h2>
+<p>For more on installation, development status and for (very welcome) contributions or issues, check in at the <a href="https://github.com/ewenme/discogger">Github repo</a>. I’ll look to list features I intend to introduce there - feel free to beat me to the punch on any of those.</p>
+<blockquote>
+<p>Music is a language, you see, a universal language.
+Sun Ra</p>
+</blockquote>
+</div>

@@ -1,0 +1,203 @@
+---
+title: "Meet Dumb Hardwax"
+description: "The story of my first tweetbot, complete with forays into Azure and Markov Chains."
+date: "2017-10-11"
+tags: ["r", "tweetbot", "azure", "markov-chains"]
+draft: no
+---
+
+
+
+<p>Twitter bots have gotten a fairly bad rap, recently <a href="http://uk.businessinsider.com/twitter-russia-investigation-should-look-at-trump-interaction-with-bots-2017-10?r=US&amp;IR=T">(often with good reason)</a>. When they’re done right, a genuinely quirky robot can cut through a feed full of humans with beautiful tidbits. God bless <span class="citation">[@tinycarebot]</span>(<a href="https://twitter.com/tinycarebot" class="uri">https://twitter.com/tinycarebot</a>).</p>
+<blockquote class="twitter-tweet" data-lang="en">
+<p lang="en" dir="ltr">
+💟: please dont forget to text back your friends
+</p>
+— here's your reminder (<span class="citation">@tinycarebot</span>) <a href="https://twitter.com/tinycarebot/status/916319972112175105?ref_src=twsrc%5Etfw">October 6, 2017</a>
+</blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+<p><br></p>
+<p>Another thing that gives me life is reading <a href="https://hardwax.com/">Hardwax</a>, a hugely influential Berlin record store, get excited about their new stock. Their snappy, idiosyncratic descriptions of new music is steeped in electronic music folklore. Gems like this are peppered all over:</p>
+<blockquote>
+<p>“Dancehall from cyberspace - awesomely fresh &amp; fearless &amp; full of Grime affinities”</p>
+</blockquote>
+<p>I could flick through this stuff all day, but as a Londoner I’m usually gonna pick up records from my local stores. This means I don’t get around to checking these as much as I should, which got me thinking - I wish I could have Hardwax reviews in my Twitter feed, or something. They even fit in to 140 characters most of the time…</p>
+<p>I’d <em>also</em> been meaning to have a go at generating pseudo random text with Markov chains, after coming across <a href="http://rmhogervorst.nl/cleancode/blog/2017/01/21/markov-chain.html">Roel’s post here</a>. For those that don’t know about this type of chain - <a href="http://setosa.io/ev/markov-chains/">here’s</a> a wicked visual intro - in short they are mathematical systems that describe the probabilities of moving from one “state” (or set of values) to another.</p>
+<p>Could there be potential to subvert this principle, knitting together words to form sentences, imitating this inimitable style? I’m envisaging a bot that spits out pseudo-Hardwax reviews, just for my sadistic enjoyment. Let’s get it.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p>
+<div id="gettin-in-to-a-scrape" class="section level2">
+<h2>Gettin’ in to a scrape</h2>
+<p>First up, I went straight to the Hardwax web shop to get hold of the review/description text accompanying releases on there. This would serve as the corpus of text from which we can build our Markov chain review generator. Here’s what the release pages look like:</p>
+<p><img src="/img/2017-10-11-Meet_Dumb_Hardwax/hardwax_site.png" width="75%" style="display: block; margin: auto;" /></p>
+<p>Those bits circled in red? <em>Those</em> are the Hardwax reviews. I was able to put together a fairly simple function (leaning heavily on <code>rvest</code>) to scrape them.</p>
+<pre class="r"><code># web scraper for hardwax reviews
+hardwax_scrape &lt;- function(page, no) {
+  
+  # construct url
+  x &lt;- paste0(&quot;https://hardwax.com/&quot;, page, &quot;/?page=&quot;, no, &quot;&amp;paginate_by=50&quot;)
+  
+  # scrape reviews
+  reviews &lt;- x %&gt;%
+    read_html() %&gt;%
+    html_nodes(&quot;p&quot;) %&gt;%
+    html_text()
+  
+  return(reviews)
+}</code></pre>
+<p>This simple URL structure meant the function could be easily applied for each section/genre on the site, like pulling the latest weeks new ish:</p>
+<pre class="r"><code># scrape news
+lapply(seq_along(1:2), hardwax_scrape, page=&quot;this-week&quot;) %&gt;% unlist() %&gt;% head()</code></pre>
+<pre><code>## [1] &quot;Flawless Acid Electro science by the truly professional grand master Carl Finlow&quot;         
+## [2] &quot;Driving Electro Bass&quot;                                                                     
+## [3] &quot;Stunning rhythm tracks somewhere in between leftfield Techno &amp; Grime&quot;                     
+## [4] &quot;Beautiful Ambient atmospheres &amp; stepping House organics&quot;                                  
+## [5] &quot;One sided 12\&quot; - blinding, raw Proto-House reminiscent cut &amp; noisy leftfield Electro trip&quot;
+## [6] &quot;One sided 12\&quot; - blinding, raw Proto-House reminiscent cut &amp; noisy leftfield Electro trip&quot;</code></pre>
+<p>Once the various sections were scraped, some data cleaning procedures (remove releases with no reviews, reviews longer than 140 characters, or duplicate reviews) ensured the reviews were fit for purpose to head on to the next stage.<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a></p>
+</div>
+<div id="preppin-the-text" class="section level2">
+<h2>Preppin’ the Text</h2>
+<p>Now we’re entering text mining territory, it’s time to call on the might of <code>tidytext</code> to bring our body of text into forms suitable for Markov Chain text generation. A couple of wise steps should see us through.<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a></p>
+<ol style="list-style-type: decimal">
+<li><p><strong>Word counts:</strong> To aid the probabilistic elements of Markov chain text generation, we need an understanding of how many times words appear, in different contexts:</p>
+<ul>
+<li>No. times words appear in corpus (all webstite review text)</li>
+<li>No. times words appear at the beginning of a review (herein known as ‘openers’)</li>
+<li>No. times words precede commas</li>
+</ul></li>
+<li><p><strong>Ngrams:</strong></p>
+<ul>
+<li>Bigram counts (pairs of consecutive words)</li>
+<li>Trigram counts (groups of three consecutive words)</li>
+</ul></li>
+</ol>
+<p>With the above tasks done, the ‘fun’ can really begin - crafting our first Hardwax review.</p>
+</div>
+<div id="my-bots-first-words" class="section level2">
+<h2>My Bot’s First Words</h2>
+<p>In short, my tactic here is to add a word on to the end of two existing words opening a pseudo-review (with words that usually follow that bigram being weighted more highly), this process continuing until a sentence is formed (of a specified length).</p>
+<p>Here’s a function that essentially performs a look-up on the trigram counts dataframe, filtering (non-standardly) based on a couple of inputs (the sentence ‘openers’) and returning the trigrams final word if possible. Otherwise, the bigram counts are filtered on the sentences current most recent word, and returns the final word again.</p>
+<pre class="r"><code># function to return third word
+return_third_word &lt;- function(woord1, woord2){
+  
+  # sample a word to add to first two words
+  woord &lt;- trigram_counts %&gt;%
+    filter_(~word1 == woord1, ~word2 == woord2)
+  
+  if(nrow(woord) &gt; 0) {
+    woord &lt;- sample_n(woord, 1, weight = n) %&gt;%
+      .[[&quot;word3&quot;]]
+    
+  } else {
+    woord &lt;- filter_(bigram_counts, ~word1 == woord2) %&gt;%
+      sample_n(1, weight = n) %&gt;%
+      .[[&quot;word2&quot;]]
+  }
+  
+  # print
+  woord
+}</code></pre>
+<p>The above word generator function takes place iteratively as part of the below function to construct our review. Here, we again take two words in turn as inputs, along with an argument representing sentence length which will determine the no. of times we cycle through much of the function. Note, there is also the chance for commas to enter the review, based on the probability for words to precede them.</p>
+<pre class="r"><code># capitalise first letter
+firstup &lt;- function(x) {
+  substr(x, 1, 1) &lt;- toupper(substr(x, 1, 1))
+  x
+}
+
+generate_sentence &lt;- function(word1, word2, sentencelength){
+  
+  # comma chance sample
+  commas &lt;- sample(0:100, 1)
+  
+  # choosing to add a comma based on probabilities
+  if(commas &lt;= as.numeric(word1$comma_prob)) {
+    sentence &lt;- paste(word1$word, &quot;, &quot;, word2$word, sep=&quot;&quot;)
+  } else {
+    sentence &lt;- c(word1$word, word2$word)
+  }
+  
+  # starting to add words
+  woord1 &lt;- word1$word
+  woord2 &lt;- word2$word
+  for(i in seq_len(sentencelength)){
+    
+    commas &lt;- sample(0:100, 1)
+    
+    word &lt;- return_third_word( woord1, woord2)
+    
+    word &lt;- left_join(as_data_frame(word), word_counts, by=c(&quot;value&quot;=&quot;word&quot;))
+    
+    if(commas &lt;= as.numeric(word$comma_prob)) {
+      sentence &lt;- c(sentence, &quot;, &quot;, word$value[1])
+    } else {
+      sentence &lt;- c(sentence, word$value[1])
+    }
+    
+    woord1 &lt;- woord2
+    woord2 &lt;- word$value[1]
+  }
+  
+  # paste sentence together
+  output &lt;- paste(sentence, collapse = &quot; &quot;)
+  output &lt;- str_replace_all(output, &quot; ,&quot;, &quot;,&quot;)
+  output &lt;- str_replace_all(output, &quot;  &quot;, &quot; &quot;)
+  
+  # add suffix sometimes
+  tip_n &lt;- sample(1:20, 1)
+  if(tip_n %in% c(1, 2)){
+    output &lt;- paste(output, &quot;- TIP!&quot;)
+  } else if(tip_n %in% c(3, 4)){
+    output &lt;- paste(output, &quot;(one per customer)&quot;)
+  } else if(tip_n %in% c(5)){
+    output &lt;- paste(output, &quot;- Killer!&quot;)
+  } else if(tip_n %in% c(6, 7)){
+    output &lt;- paste(output, &quot;- Warmly Recommended!&quot;)
+  } else if(tip_n %in% c(8, 9)){
+    output &lt;- paste(output, &quot;- Highly Recommended!&quot;)
+  } else if(tip_n %in% c(10, 11)){
+    output &lt;- paste(output, &quot;(w/ download code)&quot;)
+  }
+  
+  # print
+  firstup(output)
+}</code></pre>
+<p>The penultimate part of this function appears odd - this is my final artistic flourish in the process. Hardwax infamously ended reviews with the phrase “TIP!” to indicate strong positive feelings about a piece of music (until this phenomena was later parodied in an artist’s track title, after which Hardwax went through the site to remove almost all traces). I’m bringing it back, along with some other of the shop’s favourite ways to end a review.</p>
+<p>Finally, we create a wrapper function for the word/sentence generator to be called at will - enter the (imaginatively titled) review generator!</p>
+<pre class="r"><code># generate review
+dumb_hardwax &lt;- function(x) {
+  a &lt;- sample_n(opener_counts, size=1, weight = n)
+  b &lt;- sample_n(word_counts, size=1, weight = n)
+  len &lt;- sample(5:12, 1)
+  
+  generate_sentence(word1=a, word2=b, sentencelength=len)
+}
+
+dumb_hardwax()</code></pre>
+<pre><code>## [1] &quot;Industrial, dense big room techno album in gatefold cover dubbed out dj&quot;</code></pre>
+<p>Look at that - the bot made it’s first review. Lets share it with the world…</p>
+</div>
+<div id="twittering" class="section level2">
+<h2>TwitteRing</h2>
+<p>At this point, we can freely generate a simulated Hardwax review, but it’s still just lurking in the R console. To bridge the Twitter-shaped gap, <code>rtweet</code> gets us there. I won’t go into authentication/set-up details here - you should visit the packages <a href="http://rtweet.info/">dedicated site</a> for all that (or check the footnotes for the GitHub repo and dig there). Once we’ve made a twitter app and authenticated R to post on our behalf, we’re tweeting in one line yo’:</p>
+<pre class="r"><code># post tweet
+post_tweet(status = dumb_hardwax(), token = twitter_token)</code></pre>
+<p>Nice. I can generate pseudo-Hardwax reviews and share them with anyone who cares. Still, I need to actually press ‘go’, which is a bit of a problem. I have to eat, sleep, work, all that stuff, unfortunately - which means this bot is only tweeting when I get around to making one happen myself. There’s always <code>cronR</code>, which is a great way to schedule tasks on my machine, but what if my machine is dead? The people need their reviews, and I don’t want this burden on my shoulders. There’s gotta be a way…</p>
+</div>
+<div id="up-in-the-clouds" class="section level2">
+<h2>Up in the Clouds</h2>
+<p>After some ambling around the hottest cloud providers (namely - AWS, Google Cloud and Azure), I settled on a particular branch of the latter known as <a href="https://azure.microsoft.com/en-us/services/functions/">Azure Functions</a>. While R isn’t natively supported, it offers an array of ‘triggers’, including timer (executes a Function on a schedule), which perfectly fit my needs for a simple tweetbot. By using GitHub as the deployment source, a continuous deployment workflow is possible so I can update the corpus later on, with the tweets adjusting accordingly. Dope!</p>
+<p>I stumbled across an impeccable tutorial <a href="https://github.com/thdeltei/azure-function-r">here</a> to guide me through the steps to deployment. Like with <code>rtweet</code>, I’m not going to spend time repeating what someone else has covered with aplomb - just read that guide (and check the ins and outs of my repo if you really have to), you’ll be fine. I would just say that when it comes to running the script for the first time, during which you’ll need to install any packages used, the free plan does struggle to get done in five minutes (the default calculation time allowed on the consumption plan) - you can up this to ten minutes by following the <a href="https://docs.microsoft.com/en-us/azure/azure-functions/functions-scale">hosting plans documentation</a>.</p>
+</div>
+<div id="meet-dumb-hardwax" class="section level2">
+<h2>Meet Dumb Hardwax</h2>
+<p>My work is done - introducing <span class="citation">[@dumb_hardwax]</span>(<a href="https://twitter.com/dumb_hardwax" class="uri">https://twitter.com/dumb_hardwax</a>). Trying it’s hardest to make Hardwax gold once an hour.</p>
+<p><img src="/img/2017-10-11-Meet_Dumb_Hardwax/dumb_hardwax.png" width="75%" style="display: block; margin: auto;" /></p>
+<p>Well, the result is incredibly niche, but if you’ve made it this far, I’m sure you already have great plans for a uniquely useless bot (made with love).</p>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>To keep the post concise I don’t show all of the code, especially code that generates figures. But you can find the full code <a href="https://github.com/rbind/ewenme/blob/master/content/blog/meet-dumb-hardwax.Rmd">here</a>.<a href="#fnref1" class="footnote-back">↩</a></p></li>
+<li id="fn2"><p>Because the website isn’t static (i.e. the release pages change), the workflow is not entirely reproducible. While the code provided here will scrape, clean data etc., the end-to-end result may be different. Please refer to the <a href="https://github.com/ewenme/hardwax_bot/blob/master/review%20scrape.R">scrape</a>, <a href="https://github.com/ewenme/hardwax_bot/blob/master/review%20clean.R">clean</a> and <a href="https://github.com/ewenme/hardwax_bot/blob/master/hardwax_bot.R">bot</a> scripts hosted on GitHub for a full audit trail of the code used to create the current version of Dumb Hardwax.<a href="#fnref2" class="footnote-back">↩</a></p></li>
+<li id="fn3"><p>Given that <a href="(http://rmhogervorst.nl/cleancode/blog/2017/01/21/markov-chain.html)">Roel’s post</a> covers a lot of the same word count/bigram/trigram processing steps that I did, check that out if you wanted more commentary around the code used during the process.<a href="#fnref3" class="footnote-back">↩</a></p></li>
+</ol>
+</div>
