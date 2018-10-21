@@ -31,9 +31,6 @@ twitter = "ewen_"
 github = "ewenme"
 rss = "index.xml"
 
-[params.sections_right]
-"https://ewen.io/tags/mixes/" = "mixes"
-
 [taxonomies]
 tag = "tags"
 
