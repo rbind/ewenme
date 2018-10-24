@@ -4,7 +4,8 @@ description: "Records I gripped // dances I caught // mixes I was bumpin' this m
 date: '2018-10-26'
 slug: listening-oct-18
 tags: ["listening"]
-draft: yes
+image: "/img/listening/arthur.jpg"
+draft: no
 ---
 
 ## $hit and $hine, Very High EP *(Diagonal)*
