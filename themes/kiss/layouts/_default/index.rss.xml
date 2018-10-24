@@ -4,8 +4,8 @@
     <link>{{ .Permalink }}</link>
     <description>ewen's blog and assorted projects.</description>
     <generator>Hugo - gohugo.io</generator>
-    <language>{{ .Site.Language }}</language>
-    <managingEditor>{{ $.Site.Params.rss.authorEmail }}</managingEditor>
+    <language>{{ .Site.Language }}</language>{{ with .Site.Params.rss.authorEmail }}
+    <managingEditor>{{.}}{{ with $.Site.Params.rss.authorName }} ({{.}}){{end}}</managingEditor>{{end}}
     <copyright>{{ .Site.Copyright | safeHTML}}</copyright>
     {{ with .OutputFormats.Get "RSS" }}
         {{ printf "<atom:link href=%q rel=\"self\" type=%q />" .Permalink .MediaType | safeHTML }}
