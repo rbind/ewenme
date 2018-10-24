@@ -1,5 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Spectral');
-@import url('https://fonts.googleapis.com/css?family=Work+Sans');
+@import url('https://fonts.googleapis.com/css?family=Work+Sans:300,400,700');
  
 h1,
 h2,
@@ -14,15 +13,17 @@ h6,
 .content h5,
 .content h6,
 .title {
-  font-family: 'Work Sans', sans-serif;
-  font-weight:500;
-  color:#000000;
+  font-family: 'Work Sans Bold', sans-serif;
+  font-weight: 700;
+  color:#4C4C4C;
 }
 
 .subtitle {
-  font-family: 'Work Sans', sans-serif;
+  font-family: 'Work Sans Light', sans-serif;
+  font-weight: 300;
 }
 
 body {
-  font-family: 'Spectral', sans-serif;
+  font-family: 'Work Sans', sans-serif;
+  font-weight: 400;
 }

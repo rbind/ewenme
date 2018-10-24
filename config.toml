@@ -7,10 +7,8 @@ googleAnalytics = "UA-127418779-1"
 Paginate = 5
 enableRobotsTXT = true
 description = "ewen's blog and assorted projects."
-rssLimit = 20
 
 [params.rss]
-includeContent = true
 authorName = "ewen"
 authorEmail = "ewenhenderson@gmail.com"
 
@@ -19,11 +17,10 @@ customCSS = ["css/custom.css"]
 
 [params.info]
 description = "ewen's blog and assorted projects."
-adsense = "" # Adsense ID (ID only, without ca-pub-)
-enableSocial = true # Adds OpenGraph and Twitter cards
-homeTitle = "ewen" # Title for home page
-poweredby = false # Adds powered by Hugo and Kiss below Copyright section
-related = false # Includes related articles
+enableSocial = true
+homeTitle = "ewen"
+poweredby = false
+related = false
 
 [params.social]
 email = "ewenhenderson@gmail.com"

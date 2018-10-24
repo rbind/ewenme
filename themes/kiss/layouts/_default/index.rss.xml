@@ -5,7 +5,7 @@
     <description>ewen's blog and assorted projects.</description>
     <generator>Hugo - gohugo.io</generator>
     <language>{{ .Site.Language }}</language>
-    <contact>{{ $.Site.Params.rss.authorEmail }}</contact>
+    <managingEditor>{{ $.Site.Params.rss.authorEmail }}</managingEditor>
     <copyright>{{ .Site.Copyright | safeHTML}}</copyright>
     {{ with .OutputFormats.Get "RSS" }}
         {{ printf "<atom:link href=%q rel=\"self\" type=%q />" .Permalink .MediaType | safeHTML }}
@@ -15,12 +15,9 @@
       <title>{{ .Title }}</title>
       <link>{{ .Permalink }}</link>
       <pubDate>{{ .Date.Format "Mon, 02 Jan 2006 15:04:05 -0700" | safeHTML }}</pubDate>
-      <author>{{ $.Site.Params.rss.authorName }}</author>
+      {{ with .Site.Params.rss.authorEmail  }}<author>{{.}}{{ with $.Site.Params.rss.authorName  }} ({{.}}){{end}}</author>{{end}}
       <guid>{{ .Permalink }}</guid>
       <description>{{ .Description | html }}</description>
-      {{ if $.Site.Params.rss.includeContent }}
-      <content>{{ .Content | html }}</content>
-      {{ end }}
     </item>
     {{ end }}
   </channel>
