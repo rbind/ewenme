@@ -1,0 +1,22 @@
+---
+title: "ggplot + website zen"
+description: "Get ggplot2 in harmony with your site. One for the typeface obessives."
+date: '2018-10-25'
+slug: ggplot-website-zen
+tags: ["r", "ggplot2", "typography"]
+draft: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(cache = FALSE, warning = FALSE, message = FALSE, echo = FALSE, out.width = '75%', dev = 'svg', fig.align='center')
+```
+
+Yihui Xie's [blogdown](https://bookdown.org/yihui/blogdown/) package makes it relatively straightforward for people to build static websites with [R markdown](https://rmarkdown.rstudio.com/). It's also trivial to apply any number of [Hugo themes](https://themes.gohugo.io/) to these sites (shouts to Emir Ribić for [kiss](https://github.com/ribice/kiss)) and generate legitimately good-looking surroundings for R syntax. 
+
+## Typeface 
+
+## ggplot
+
+Why not give your `ggplot2` outputs the same treatment?
+
+## 
