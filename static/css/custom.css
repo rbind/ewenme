@@ -1,11 +1,5 @@
-@import url('https://fonts.googleapis.com/css?family=Work+Sans:300,400,700');
+@import url('https://fonts.googleapis.com/css?family=Work+Sans:300,400,700&subset=latin-ext');
  
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
 .content h1,
 .content h2,
 .content h3,

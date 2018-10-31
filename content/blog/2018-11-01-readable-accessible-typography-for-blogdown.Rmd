@@ -1,0 +1,96 @@
+---
+title: "readable, accessible typography (for blogdown)"
+description: "Ensure your site is nice to read, for a diverse audience."
+date: '2018-11-01'
+slug: readable-accessible-typography-blogdown
+tags: ["r", "blogdown", "typography"]
+image: "/img/graphic-design-passion.jpg"
+draft: no
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(cache = FALSE, warning = FALSE, message = FALSE, echo = FALSE, out.width = '75%', dev = 'svg', fig.align='center')
+```
+
+Yihui Xie's [blogdown](https://github.com/rstudio/blogdown) makes building static websites with [R markdown](https://rmarkdown.rstudio.com/) and [Hugo](https://gohugo.io/) very approachable. It's also trivial to lift [Hugo themes](https://themes.gohugo.io/) on to these sites (shouts to Emir Ribić for [Kiss](https://github.com/ribice/kiss), which this page is built with), and in turn create legitimately good-looking surroundings for R (or other) syntax.
+
+Themes are mostly forces of good for technical blogs, given that beautiful web design is not a common trait of data sci types, but I must admit to modding the themes I like almost immediately. This is predominantly to avoid landing on a site that is indistinguishable from my own (which I imagine sparks a feeling of horror like realising your mate has the exact same brand new pencil case on the first day back at school). The first thing I usually hit upon is the **typography**.
+
+![](/img/graphic-design-passion.jpg#c)
+
+If you, like me (prior enlightenment)...
+
+1. enjoy (or would enjoy) tweaking your Hugo site's type
+2. do #1 despite not *really* knowing what you're meddling with when in and around `.css` files
+3. do #1 despite also not *really* knowing what "good" UX is 
+
+...then, this short post might help out. I mostly share some things I have found, written by people with actual credibility in these matters, to help my type tinkering avoid doing any damage (and possibly some good) for the folks reading at home.
+
+## what's your type(face)?
+
+The difference between a *typeface* and a *font* is a bit muddy, as far as I can tell ([blame Microsoft Word](https://www.fastcompany.com/3028971/whats-the-difference-between-a-font-and-a-typeface), obviously). In short, the typeface name describes the shared design of a collection of characters. These characters can come in different sizes and/or weights (i.e. thickness) - such characteristics determine the font. 
+
+Before deciding on the typeface(s) for your site, stop what you're doing and read Matthew Butterick's [Practical Typography](https://practicaltypography.com/) (or, at the very least, [Typography in ten minutes](https://practicaltypography.com/typography-in-ten-minutes.html) and [Summary of key rules](https://practicaltypography.com/summary-of-key-rules.html)). As good a foundation (or deep study) of type as you make it. Be prepared to develop disdain for over-stylised hyperlinks and other things you were blissfully ignorant of before.
+
+Pieces like Matthew's tend to sit next to closed-source font families. You may not yet be into type enough to to part with $ for the promise of typesetting zen, especially if you're coming from an open-source-software (OSS) first ethos. As far as open-source collections go, [Google Fonts](https://fonts.google.com/) is a common choice. Read [Choosing Web Fonts: A Beginner’s Guide](https://design.google/library/choosing-web-fonts-beginners-guide/), too, which asks some fundamental questions (e.g. how much text are you presenting on the page) to help you make a good type choice. It's a bit self-selecting, as all of the typefaces are conveniently hosted on Google Fonts (and the article does a fine job of cramming in as many of them as possible). If you want to explore beyond Google, I will again refer you to some [Butterick](https://practicaltypography.com/free-fonts.html). 
+
+## work, work, work, work, work
+
+What did I go for? Quick plug for [Work Sans](http://weiweihuanghuang.github.io/Work-Sans/) by Wei Huang. Why?
+
+- contains "Extended Latin" characters (used in specific European languages)
+- optimised for on-screen, long-form text (a property of [sans serif](https://en.wikipedia.org/wiki/Sans-serif) types)
+- includes a variety of font weights to handle different situations
+- made and maintained by an independent designer
+- is open-source 
+
+As for font size, the body-text of my site is 16px. From *Typography in ten minutes*:
+
+> In print, the most comfortable range for body text is 10–12 point. On the web, 15–25 pixels. Not every font appears equally large at a given point size, so be prepared to adjust as needed.
+
+P.S. [don't go using monospaced fonts for body text](https://practicaltypography.com/monospaced-fonts.html)...
+
+I also use a grey (rather than black) body-text colour, which is okay on the web (but isn't recommended for print) as screens have a greater contrast than paper and can be more tiring to read if this contrast is emphasised (i.e. black on white). Hope your eyes are appreciating this.
+
+## the blogdown lowdown
+
+If you use `blogdown` and have been inspired to get creative with type, but you're not web development savvy, read the [Website Basics](https://bookdown.org/yihui/blogdown/website-basics.html) section of Yihui, Amber and Alison's [blogdown: Creating Websites with R Markdown](https://bookdown.org/yihui/blogdown/). This will provide you with the basics of web dev and show you how to use this knowledge to customise Hugo themes.
+
+To tamper with type, we mostly care about [Cascading Stylesheets](https://bookdown.org/yihui/blogdown/css.html) (CSS). For more on CSS, I will again direct you to Yihui et al's wicked book instead of regurgitating the same messages less coherently. Among other things, you'll learn that your Hugo theme (found in the `/themes` folder of your site's repository) usually stores CSS files in a `/static/css` sub-folder, where you can freely edit the complete look and feel of your site. 
+
+If you're lucky (like me), your theme may have a dedicated custom CSS file for "entry-level" edits (e.g. header text colour) - make sure to read your theme's documentation to find out. This is what mine looks like (source [here](https://github.com/rbind/ewenme/blob/master/static/css/custom.css)).
+
+```css
+@import url('https://fonts.googleapis.com/css?family=Work+Sans:300,400,700&subset=latin-ext');
+ 
+.content h1,
+.content h2,
+.content h3,
+.content h4,
+.content h5,
+.content h6,
+.title {
+  font-family: 'Work Sans Bold', sans-serif;
+  font-weight: 700;
+  color:#222324;
+}
+
+.subtitle {
+  font-family: 'Work Sans Light', sans-serif;
+  font-weight: 300;
+}
+
+body {
+  font-family: 'Work Sans', sans-serif;
+  font-weight: 400;
+}
+```
+
+Quick breakdown of what's going on:
+
+- Work Sans is [imported from Google Fonts](https://fonts.google.com/specimen/Work+Sans?selection.family=Work+Sans:300,400,700) (note that the font load time will change if you import more/less font weights)
+- Headers and titles are given a heavier weight (bold) and darker colour
+- Subtitles are given a lighter weight
+- Body text is straight down the middle
+
+That's all - please don't come for me, actual typography types.
