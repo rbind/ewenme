@@ -1,8 +1,8 @@
 ---
-title: "ggplot + website zen"
-description: "Get ggplot2 in harmony with your site. One for the typeface obessives."
-date: '2018-10-25'
-slug: ggplot-website-zen
+title: "ewenthemes (AKA modding hrbrthemes)"
+description: "Achieve ggplot + website zen."
+date: '2018-11-05'
+slug: ewenthemes-aka-modding-hrbrthemes
 tags: ["r", "ggplot2", "typography"]
 draft: yes
 ---
@@ -11,12 +11,42 @@ draft: yes
 knitr::opts_chunk$set(cache = FALSE, warning = FALSE, message = FALSE, echo = FALSE, out.width = '75%', dev = 'svg', fig.align='center')
 ```
 
-Yihui Xie's [blogdown](https://bookdown.org/yihui/blogdown/) package makes it relatively straightforward for people to build static websites with [R markdown](https://rmarkdown.rstudio.com/). It's also trivial to apply any number of [Hugo themes](https://themes.gohugo.io/) to these sites (shouts to Emir Ribić for [kiss](https://github.com/ribice/kiss)) and generate legitimately good-looking surroundings for R syntax. 
+This post is a short one, (partly) accompanying the last one on [typography for blogodown](https://ewen.io/2018/11/01/readable-accessible-typography-blogdown/). 
 
-## Typeface 
+If you use [ggplot2](https://ggplot2.tidyverse.org/), you might want to make sure your site's typeface(s) are mirrored in your featured plotting handywork. You could also take this opportunity to develop some custom `ggplot2` theme fluorishes, helping your plots and posts make a charming fit.
 
-## ggplot
+[Bob Rudis](https://rud.is/b/) (AKA [hrbrmstr](https://twitter.com/hrbrmstr)) made perhaps *the* seminal ggplot2 themes package so far, [hrbrthemes](https://hrbrmstr.github.io/hrbrthemes/). [Bob nicely explains](https://hrbrmstr.github.io/hrbrthemes/articles/why_hrbrthemes.html) the opinions that form "what's in the box", chiefly a desire for good typography and minimal chart junk. It's really nice.
 
-Why not give your `ggplot2` outputs the same treatment?
+```{r, out.width="100%"}
+library(ggplot2)
+library(hrbrthemes)
 
-## 
+ggplot(mtcars, aes(mpg, wt)) +
+  geom_point() +
+  labs(x="Fuel efficiency (mpg)", y="Weight (tons)",
+       title="Seminal ggplot2 scatterplot example",
+       subtitle="A plot that is only useful for demonstration purposes",
+       caption="Brought to you by the letter 'g'") + 
+  # apply theme
+  theme_ipsum()
+```
+
+So, I made my own twist of a classic - introducing [ewenthemes](https://github.com/ewenme/ewenthemes). I plan to use/maintain the package to create charts that sit beautifully within posts on the site.
+
+```{r, out.width="100%"}
+library(ggplot2)
+library(ewenthemes)
+
+ggplot(mtcars, aes(mpg, wt)) +
+  geom_point() +
+  labs(x="Fuel efficiency (mpg)", y="Weight (tons)",
+       title="Seminal ggplot2 scatterplot example",
+       subtitle="A plot that is only useful for demonstration purposes",
+       caption="Brought to you by the letter 'g'") + 
+  # apply theme
+  theme_ewen_ws()
+```
+
+Following Bob's lead, I ship [Work Sans](https://github.com/weiweihuanghuang/Work-Sans) inside the software and include functions to install it on your system with help from `extrafont`. Font handling is surprisingly tricksy in R and this seems to be the best option right now.
+
+The current core themes, `theme_ewen` (Arial Narrow-based) and `theme_ewen_ws` (Work Sans-based) draw heavily from `hrbrthemes`' `theme_ipsum` with some modifications - the chart grid runs on major horizontal lines only, and a thick x-axis line is used by default. Some text properties, notably size and colour, are also modified for better 

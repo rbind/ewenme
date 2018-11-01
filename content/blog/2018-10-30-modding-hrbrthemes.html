@@ -1,22 +1,19 @@
 ---
-title: "ggplot + website zen"
-description: "Get ggplot2 in harmony with your site. One for the typeface obessives."
-date: '2018-10-25'
-slug: ggplot-website-zen
+title: "ewenthemes (AKA modding hrbrthemes)"
+description: "Achieve ggplot + website zen."
+date: '2018-11-05'
+slug: ewenthemes-aka-modding-hrbrthemes
 tags: ["r", "ggplot2", "typography"]
 draft: yes
 ---
 
 
 
-<p>Yihui Xie’s <a href="https://bookdown.org/yihui/blogdown/">blogdown</a> package makes it relatively straightforward for people to build static websites with <a href="https://rmarkdown.rstudio.com/">R markdown</a>. It’s also trivial to apply any number of <a href="https://themes.gohugo.io/">Hugo themes</a> to these sites (shouts to Emir Ribić for <a href="https://github.com/ribice/kiss">kiss</a>) and generate legitimately good-looking surroundings for R syntax.</p>
-<div id="typeface" class="section level2">
-<h2>Typeface</h2>
-</div>
-<div id="ggplot" class="section level2">
-<h2>ggplot</h2>
-<p>Why not give your <code>ggplot2</code> outputs the same treatment?</p>
-</div>
-<div id="section" class="section level2">
-<h2></h2>
-</div>
+<p>This post is a short one, (partly) accompanying the last one on <a href="https://ewen.io/2018/11/01/readable-accessible-typography-blogdown/">typography for blogodown</a>.</p>
+<p>If you use <a href="https://ggplot2.tidyverse.org/">ggplot2</a>, you might want to make sure your site’s typeface(s) are mirrored in your featured plotting handywork. You could also take this opportunity to develop some custom <code>ggplot2</code> theme fluorishes, helping your plots and posts make a charming fit.</p>
+<p><a href="https://rud.is/b/">Bob Rudis</a> (AKA <a href="https://twitter.com/hrbrmstr">hrbrmstr</a>) made perhaps <em>the</em> seminal ggplot2 themes package so far, <a href="https://hrbrmstr.github.io/hrbrthemes/">hrbrthemes</a>. <a href="https://hrbrmstr.github.io/hrbrthemes/articles/why_hrbrthemes.html">Bob nicely explains</a> the opinions that form “what’s in the box”, chiefly a desire for good typography and minimal chart junk. It’s really nice.</p>
+<p><img src="/blog/2018-10-30-modding-hrbrthemes_files/figure-html/unnamed-chunk-1-1.svg" width="100%" style="display: block; margin: auto;" /></p>
+<p>So, I made my own twist of a classic - introducing <a href="https://github.com/ewenme/ewenthemes">ewenthemes</a>. I plan to use/maintain the package to create charts that sit beautifully within posts on the site.</p>
+<p><img src="/blog/2018-10-30-modding-hrbrthemes_files/figure-html/unnamed-chunk-2-1.svg" width="100%" style="display: block; margin: auto;" /></p>
+<p>Following Bob’s lead, I ship <a href="https://github.com/weiweihuanghuang/Work-Sans">Work Sans</a> inside the software and include functions to install it on your system with help from <code>extrafont</code>. Font handling is surprisingly tricksy in R and this seems to be the best option right now.</p>
+<p>The current core themes, <code>theme_ewen</code> (Arial Narrow-based) and <code>theme_ewen_ws</code> (Work Sans-based) draw heavily from <code>hrbrthemes</code>’ <code>theme_ipsum</code> with some modifications - the chart grid runs on major horizontal lines only, and a thick x-axis line is used by default. Some text properties, notably size and colour, are also modified for better</p>
