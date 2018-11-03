@@ -4,6 +4,7 @@ description: "Achieve ggplot + website zen."
 date: '2018-11-03'
 slug: ewenthemes
 tags: ["r", "ggplot2", "typography"]
+image: "/blog/2018-11-03-ewenthemes_files/figure-html/ewenthemes-eg-1.png"
 draft: no
 ---
 
@@ -12,8 +13,8 @@ draft: no
 <p>This post is a short one, (partly) accompanying the last one on <a href="https://ewen.io/2018/11/01/readable-accessible-typography-blogdown/">typography for blogodown</a>.</p>
 <p>If you use <a href="https://ggplot2.tidyverse.org/">ggplot2</a>, you might want to make sure your site’s typeface(s) are mirrored in your featured plotting handy-work. You could also take this opportunity to develop some custom <code>ggplot2</code> theme flourishes, helping your plots and posts make a charming fit.</p>
 <p><a href="https://rud.is/b/">Bob Rudis</a> (AKA <a href="https://twitter.com/hrbrmstr">hrbrmstr</a>) made perhaps <em>the</em> seminal ggplot2 themes package so far, <a href="https://hrbrmstr.github.io/hrbrthemes/">hrbrthemes</a>. <a href="https://hrbrmstr.github.io/hrbrthemes/articles/why_hrbrthemes.html">Bob nicely explains</a> the opinions that form “what’s in the box”, chiefly a desire for good typography and minimal chart junk. It’s really nice.</p>
-<p><img src="/blog/2018-11-03-ewenthemes_files/figure-html/unnamed-chunk-1-1.svg" width="100%" style="display: block; margin: auto;" /></p>
+<p><img src="/blog/2018-11-03-ewenthemes_files/figure-html/hrbrthemes-eg-1.svg" width="100%" style="display: block; margin: auto;" /></p>
 <p>So, I made my own twist of a classic - introducing <a href="https://github.com/ewenme/ewenthemes">ewenthemes</a>. I plan to use/maintain the package to create charts that sit pretty within posts on the site, by adopting similar design decisions.</p>
-<p><img src="/blog/2018-11-03-ewenthemes_files/figure-html/unnamed-chunk-2-1.svg" width="100%" style="display: block; margin: auto;" /></p>
+<p><img src="/blog/2018-11-03-ewenthemes_files/figure-html/ewenthemes-eg-1.svg" width="100%" style="display: block; margin: auto;" /></p>
 <p>Following Bob’s lead, I chose to ship <a href="https://github.com/weiweihuanghuang/Work-Sans">Work Sans</a> inside the software and include functions to install it on your system with help from <code>extrafont</code>. Font handling is surprisingly tricksy in R and this seems to be the best option right now.</p>
 <p>The current core themes, <code>theme_ewen</code> (Arial Narrow-based) and <code>theme_ewen_ws</code> (Work Sans-based) draw heavily from <code>hrbrthemes</code>’ <code>theme_ipsum</code> with some modifications - the chart grid runs on major horizontal lines only, and a thick x-axis line is used by default. Some text properties, notably size and colour, are also modified for readability on mobile devices. Take a look at the <a href="https://github.com/ewenme/ewenthemes/commits/master">commit history</a> of <code>ewenthemes</code> to see, in detail, what changed from the original package.</p>

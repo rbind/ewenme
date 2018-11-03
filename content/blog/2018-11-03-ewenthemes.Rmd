@@ -4,11 +4,12 @@ description: "Achieve ggplot + website zen."
 date: '2018-11-03'
 slug: ewenthemes
 tags: ["r", "ggplot2", "typography"]
+image: "/blog/2018-11-03-ewenthemes_files/figure-html/ewenthemes-eg-1.png"
 draft: no
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(cache = FALSE, warning = FALSE, message = FALSE, echo = FALSE, out.width = '75%', dev = 'svg', fig.align='center')
+knitr::opts_chunk$set(cache = FALSE, warning = FALSE, message = FALSE, echo = FALSE, out.width = '75%', dev = c('svg', 'png'), fig.align='center')
 ```
 
 This post is a short one, (partly) accompanying the last one on [typography for blogodown](https://ewen.io/2018/11/01/readable-accessible-typography-blogdown/). 
@@ -17,7 +18,7 @@ If you use [ggplot2](https://ggplot2.tidyverse.org/), you might want to make sur
 
 [Bob Rudis](https://rud.is/b/) (AKA [hrbrmstr](https://twitter.com/hrbrmstr)) made perhaps *the* seminal ggplot2 themes package so far, [hrbrthemes](https://hrbrmstr.github.io/hrbrthemes/). [Bob nicely explains](https://hrbrmstr.github.io/hrbrthemes/articles/why_hrbrthemes.html) the opinions that form "what's in the box", chiefly a desire for good typography and minimal chart junk. It's really nice.
 
-```{r, out.width="100%"}
+```{r hrbrthemes-eg, out.width="100%"}
 library(ggplot2)
 library(hrbrthemes)
 
@@ -33,7 +34,7 @@ ggplot(mtcars, aes(mpg, wt)) +
 
 So, I made my own twist of a classic - introducing [ewenthemes](https://github.com/ewenme/ewenthemes). I plan to use/maintain the package to create charts that sit pretty within posts on the site, by adopting similar design decisions.
 
-```{r, out.width="100%"}
+```{r ewenthemes-eg, out.width="100%"}
 library(ggplot2)
 library(ewenthemes)
 
