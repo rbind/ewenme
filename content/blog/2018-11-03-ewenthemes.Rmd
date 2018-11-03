@@ -1,5 +1,5 @@
 ---
-title: "ewenthemes (AKA modding hrbrthemes)"
+title: "ewenthemes (AKA how to mod hrbrthemes)"
 description: "Achieve ggplot + website zen."
 date: '2018-11-03'
 slug: ewenthemes
