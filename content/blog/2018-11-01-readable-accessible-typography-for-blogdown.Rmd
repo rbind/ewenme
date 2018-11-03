@@ -52,7 +52,7 @@ P.S. [don't go using monospaced fonts for body text](https://practicaltypography
 
 I also use a grey (rather than black) body-text colour, which is okay on the web (but isn't recommended for print) as screens have a greater contrast than paper and can be more tiring to read if this contrast is emphasised (i.e. black on white). Hope your eyes are appreciating this.
 
-## the blogdown lowdown
+## the blogdown low-down
 
 If you use `blogdown` and have been inspired to get creative with type, but you're not web development savvy, read the [Website Basics](https://bookdown.org/yihui/blogdown/website-basics.html) section of Yihui, Amber and Alison's [blogdown: Creating Websites with R Markdown](https://bookdown.org/yihui/blogdown/). This will provide you with the basics of web dev and show you how to use this knowledge to customise Hugo themes.
 
