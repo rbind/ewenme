@@ -1,0 +1,68 @@
+---
+title: understatr
+date: '2018-12-10'
+tags:
+  - football
+  - r
+description: An understated (*cough*) project to help folks get hold of tidy football data.
+slug: understatr
+image: /blog/2018-12-10-understatr_files/figure-html/dortmund-plot-1.png
+draft: no
+---
+
+
+
+<p><a href="https://understat.com/">understat</a> is a treasure trove of football statistics and advanced metrics. All of your <del>“old man yells at cloud” conjuring</del> household favourites are here. Democratized access to xG for casuals everywhere, so we can do unholy things like this.</p>
+<blockquote class="twitter-tweet" data-lang="en">
+<p lang="und" dir="ltr">
+<a href="https://t.co/cNiXEsfAms">pic.twitter.com/cNiXEsfAms</a>
+</p>
+— Ryan O'Hanlon (<span class="citation">@rwohan</span>) <a href="https://twitter.com/rwohan/status/1071159056096579585?ref_src=twsrc%5Etfw">December 7, 2018</a>
+</blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<p>While the site itself is easy to navigate and features nice off-the-shelf exploratory viz tools (à la the above radar), many (myself included) can get a bit fidgety without access to all this stuff in a structured format for analysis.</p>
+<p>So, I made a thing to grab understat data and tidy it up, so you can get on with the interesting stuff. Say 👋 to <a href="https://github.com/ewenme/understatr">understatr</a>, an <a href="https://www.r-project.org/">R</a> package that makes pulling xG numbers as easy as 🥧</p>
+<pre class="r"><code># load package
+library(understatr)
+
+# get dortmund playing squad data for this season
+dortmund &lt;- get_team_squad_stats(team_name = &quot;Borussia Dortmund&quot;, year = 2018)
+
+dortmund</code></pre>
+<pre><code>## # A tibble: 23 x 19
+##    team_name  year player_name player_id games  time goals     xG assists
+##  * &lt;chr&gt;     &lt;int&gt; &lt;chr&gt;           &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;  &lt;dbl&gt;   &lt;int&gt;
+##  1 Borussia…  2018 Paco Alcác…      2380     9   354    10 4.11         0
+##  2 Borussia…  2018 Marco Reus        319    14  1215     9 7.72         5
+##  3 Borussia…  2018 Jadon Sanc…      6345    14   810     5 2.72         6
+##  4 Borussia…  2018 Jacob Bruu…      5355    11   775     2 2.34         1
+##  5 Borussia…  2018 Mahmoud Da…       205     7   501     1 0.972        0
+##  6 Borussia…  2018 Lukasz Pis…       310    10   900     1 0.297        3
+##  7 Borussia…  2018 Julian Wei…       372     3   154     1 0.0980       0
+##  8 Borussia…  2018 Mario Götze       422     7   320     1 1.09         1
+##  9 Borussia…  2018 Christian …      2662     9   393     1 0.787        2
+## 10 Borussia…  2018 Marius Wolf      2693     4   260     1 0.234        0
+## # ... with 13 more rows, and 10 more variables: xA &lt;dbl&gt;, shots &lt;int&gt;,
+## #   key_passes &lt;int&gt;, yellow_cards &lt;int&gt;, red_cards &lt;int&gt;, position &lt;chr&gt;,
+## #   npg &lt;int&gt;, npxG &lt;dbl&gt;, xGChain &lt;dbl&gt;, xGBuildup &lt;dbl&gt;</code></pre>
+<p>You can use this in conjunction with the <a href="https://www.tidyverse.org/">tidyverse</a> to get from data to viz lighting-quick.</p>
+<pre class="r"><code>library(tidyverse)
+library(ewenthemes) # (a personal chart themes pkg)
+
+dortmund %&gt;% 
+  # remove players w/ zero xG
+  filter(xG &gt; 0) %&gt;% 
+  # chart xG in desc order
+  ggplot(aes(x = reorder(player_name, xG), y = xG)) +
+  # make it a bar chart
+  geom_col() +
+  # flip the bars
+  coord_flip() +
+  # add some labels (making sure to credit understat!)
+  labs(title = &quot;Expected goals contributions&quot;, subtitle = &quot;Borussia Dortmund, 2018/19&quot;,
+       x = NULL, caption = &quot;source: understat.com | @ewen_&quot;) +
+  # add my personal chart theme
+  theme_ewen_ws(grid = &quot;X&quot;, axis = FALSE, axis_text_size = 9) +
+  theme(axis.text.y = element_text(family = &quot;Work Sans Light&quot;))</code></pre>
+<p><img src="/blog/2018-12-10-understatr_files/figure-html/dortmund-plot-1.svg" width="100%" style="display: block; margin: auto;" /></p>
+<p>Peep the project’s GitHub page for updates, for now at least. As noted in the <a href="https://github.com/ewenme/understatr/blob/master/README.md">readme</a>, while non-commercial use of the data is fine for now, I don’t own it and similarly don’t control changes to the website. I say this to say that <code>understatr</code> may break (or become illegal) in future, so enjoy it while you can 🎈 I’d be psyched to hear about people using it, or even contributing to it. Esp. here for the hottest of hot take Messi radar trolls, please cite the proj in all of those.</p>
