@@ -28,7 +28,7 @@ So, I made a thing to grab understat data and tidy it up, so you can get on with
 library(understatr)
 
 # get dortmund playing squad data for this season
-dortmund <- get_team_squad_stats(team_name = "Borussia Dortmund", year = 2018)
+dortmund <- get_team_players_stats(team_name = "Borussia Dortmund", year = 2018)
 
 dortmund
 ```

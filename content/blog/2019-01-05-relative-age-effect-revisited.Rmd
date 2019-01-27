@@ -14,6 +14,7 @@ knitr::opts_chunk$set(cache = FALSE, warning = FALSE, message = FALSE, echo = FA
 library(tidyverse)
 library(lubridate)
 library(ggridges)
+library(ggbeeswarm)
 library(ewenthemes)
 
 # age function
@@ -67,19 +68,21 @@ To this end, what other stories about English footballer birthdays are there? Se
 
 ## Is RAE diminishing (or mutating) over time?
 
-I came across [a Guardian article](https://www.theguardian.com/football/2011/jun/19/fa-plans-age-group-football) which describes an FA plan to move the English football club age selection to run January to December (like much of the rest of Europe), rather than the existing September to August age selection. This was from 2011, quoting a *"hope to implement the changes for the 2013-14 season"*. I couldn't find *anything* since to confirm whether or not this actually happened. The data might provide some clues.
+I came across [a Guardian article](https://www.theguardian.com/football/2011/jun/19/fa-plans-age-group-football) which describes an FA plan to move the English football club age selection to run January to December (like much of the rest of Europe), rather than the existing September to August age selection. This was from 2011, quoting a *"hope to implement the changes for the 2013-14 season"*. I couldn't find *anything* in print since to confirm whether or not this actually happened. The data might provide some clues.
 
 
 ```{r}
 eng_birthdays %>% 
   group_by(age) %>% 
   filter(n() >= 30, position != "Goalkeeper") %>% 
-  ggplot(aes(x = age, y = as.numeric(cutoff_bday_interval), group = age)) +
-  geom_boxplot(outlier.colour = "hotpink") +
-  geom_jitter(position = position_jitter(width = 0.1, height = 0), alpha = 1/4) +
-  # geom_hline(yintercept = yday("2018-09-01")) +
-  scale_y_reverse() +
+  group_by(age) %>% 
+  summarise(mean_day = mean(as.numeric(cutoff_bday_interval))) %>% 
+  ggplot(aes(x = age, y = mean_day)) +
+  geom_line() +
+  geom_point() +
+  scale_y_reverse(limits = c(365, 0)) +
   scale_x_reverse() +
+  labs(title = "", x = "Player age", y = "# days") +
   theme_ewen_ws()
 ```
 

@@ -1,0 +1,8 @@
+---
+title: 'xPoints: Translating probabilistic metrics into fantasy football decisions'
+description: ""
+date: '2019-01-26'
+slug: xpoints-translating-probabilistic-metrics-into-fantasy-football-decisions
+tags: ["football", "fpl"]
+draft: yes
+---
