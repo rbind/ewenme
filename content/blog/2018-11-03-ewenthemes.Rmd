@@ -3,7 +3,7 @@ title: "ewenthemes (AKA how to mod hrbrthemes)"
 description: "Achieve ggplot + website zen."
 date: '2018-11-03'
 slug: ewenthemes
-tags: ["r", "ggplot2", "typography"]
+tags: ["r", "ggplot2"]
 image: "/blog/2018-11-03-ewenthemes_files/figure-html/ewenthemes-eg-1.png"
 draft: no
 ---

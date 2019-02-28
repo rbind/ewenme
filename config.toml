@@ -3,12 +3,12 @@ title = "ewen"
 languageCode = "en"
 theme = "kiss"
 copyright = ""
-googleAnalytics = "UA-127418779-1"
 Paginate = 5
 enableRobotsTXT = true
 description = "ewen's blog and assorted projects."
 
 [params.rss]
+includeContent = true
 authorName = "ewen"
 authorEmail = "ewenhenderson@gmail.com"
 

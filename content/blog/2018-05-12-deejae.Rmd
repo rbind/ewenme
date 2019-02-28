@@ -3,7 +3,7 @@ title: "deejae"
 description: "An app to help digital DJs explore and visualise their selections."
 date: '2018-05-12'
 slug: deejae
-tags: ["djing", "traktor", "shiny"]
+tags: ["music", "shiny"]
 image: https://raw.githubusercontent.com/ewenme/deejae/master/example_screenshot.png
 draft: no
 ---
