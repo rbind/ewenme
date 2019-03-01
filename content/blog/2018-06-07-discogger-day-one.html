@@ -3,7 +3,7 @@ title: "discogger (day one)"
 description: "Building an R interface to the Discogs API."
 date: '2018-06-07'
 slug: discogger-day-one
-tags: ["discogs", "music", "r"]
+tags: ["music", "R"]
 image: https://raw.githubusercontent.com/rbind/ewenme/master/public/blog/2018-06-07-discogger-day-one_files/figure-html/unnamed-chunk-4-1.png
 draft: no
 ---
@@ -13,7 +13,7 @@ draft: no
 <p>I’ve been working on a new R package. <a href="https://github.com/ewenme/discogger"><strong><code>discogger</code></strong></a> is an open-source effort, at an experimental stage of development, providing straightforward tools to help out with Discogs’ <a href="https://www.discogs.com/developers/#">API v2.0</a>. <a href="https://www.discogs.com">Discogs</a> is a crowd-sourced music database and marketplace, a proper treasure trove for record diggers and music lovers to learn more about what they’re jamming to. A better route into this data for R users should yield some nice results.</p>
 <div id="discogger-101" class="section level2">
 <h2>discogger 101</h2>
-<p>First up, you’ll need to register a Discogs application via <a href="https://www.discogs.com/settings/developers" class="uri">https://www.discogs.com/settings/developers</a>. Doing so will grant you a “personal access token” (accessible at the same link above) which you can store as an environment variable (<em>DISCOGS_API_TOKEN</em>) using the <code>discogs_api_token()</code> function. All functions in the <code>discogger</code> package will automatically look for your token and prompt entry if it isn’t found.</p>
+<p>First up, you’ll need to register a Discogs application via <a href="https://www.discogs.com/settings/developers">https://www.discogs.com/settings/developers</a>. Doing so will grant you a “personal access token” (accessible at the same link above) which you can store as an environment variable (<em>DISCOGS_API_TOKEN</em>) using the <code>discogs_api_token()</code> function. All functions in the <code>discogger</code> package will automatically look for your token and prompt entry if it isn’t found.</p>
 <p>The <code>discogger</code> interface to Discogs data currently spans <a href="https://www.discogs.com/developers/#page:database">Database</a> (releases, artists, labels) and <a href="https://www.discogs.com/developers/#page:user-collection">User Collection</a> API requests, with a view to growing functionality in these spaces and eventually expanding into <a href="https://www.discogs.com/developers/#page:marketplace">Marketplace</a> (inventory, orders). The next section will demo how these functions can be put in to use, and chained together for quietly impressive analyses.</p>
 </div>
 <div id="diggin-in-to-dance-mania" class="section level2">

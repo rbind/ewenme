@@ -26,25 +26,25 @@ draft: no
 library(understatr)
 
 # get dortmund playing squad data for this season
-dortmund &lt;- get_team_squad_stats(team_name = &quot;Borussia Dortmund&quot;, year = 2018)
+dortmund &lt;- get_team_players_stats(team_name = &quot;Borussia Dortmund&quot;, year = 2018)
 
 dortmund</code></pre>
 <pre><code>## # A tibble: 23 x 19
-##    team_name  year player_name player_id games  time goals     xG assists
-##  * &lt;chr&gt;     &lt;int&gt; &lt;chr&gt;           &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;  &lt;dbl&gt;   &lt;int&gt;
-##  1 Borussia…  2018 Paco Alcác…      2380     9   354    10 4.11         0
-##  2 Borussia…  2018 Marco Reus        319    14  1215     9 7.72         5
-##  3 Borussia…  2018 Jadon Sanc…      6345    14   810     5 2.72         6
-##  4 Borussia…  2018 Jacob Bruu…      5355    11   775     2 2.34         1
-##  5 Borussia…  2018 Mahmoud Da…       205     7   501     1 0.972        0
-##  6 Borussia…  2018 Lukasz Pis…       310    10   900     1 0.297        3
-##  7 Borussia…  2018 Julian Wei…       372     3   154     1 0.0980       0
-##  8 Borussia…  2018 Mario Götze       422     7   320     1 1.09         1
-##  9 Borussia…  2018 Christian …      2662     9   393     1 0.787        2
-## 10 Borussia…  2018 Marius Wolf      2693     4   260     1 0.234        0
-## # ... with 13 more rows, and 10 more variables: xA &lt;dbl&gt;, shots &lt;int&gt;,
-## #   key_passes &lt;int&gt;, yellow_cards &lt;int&gt;, red_cards &lt;int&gt;, position &lt;chr&gt;,
-## #   npg &lt;int&gt;, npxG &lt;dbl&gt;, xGChain &lt;dbl&gt;, xGBuildup &lt;dbl&gt;</code></pre>
+##    player_id player_name games  time goals     xG assists    xA shots
+##        &lt;int&gt; &lt;chr&gt;       &lt;int&gt; &lt;int&gt; &lt;int&gt;  &lt;dbl&gt;   &lt;int&gt; &lt;dbl&gt; &lt;int&gt;
+##  1       319 Marco Reus     19  1665    13 12.4         6 4.56     52
+##  2      2380 Paco Alcác…    18   750    12  6.39        0 1.30     36
+##  3      6345 Jadon Sanc…    23  1536     8  4.08       10 5.74     23
+##  4       422 Mario Götze    16   894     4  2.93        4 3.10     16
+##  5      3059 Axel Witsel    23  1973     3  1.95        1 1.84     29
+##  6      3455 Raphael Gu…    14   908     2  2.37        5 2.60     20
+##  7      5197 Achraf Hak…    17  1524     2  1.56        4 2.33     17
+##  8      5355 Jacob Bruu…    16   864     2  2.26        1 1.77     15
+##  9       205 Mahmoud Da…    10   604     1  0.972       0 0.896    10
+## 10       310 Lukasz Pis…    17  1513     1  0.382       6 3.00     10
+## # … with 13 more rows, and 10 more variables: key_passes &lt;int&gt;,
+## #   yellow_cards &lt;int&gt;, red_cards &lt;int&gt;, position &lt;chr&gt;, team_name &lt;chr&gt;,
+## #   npg &lt;int&gt;, npxG &lt;dbl&gt;, xGChain &lt;dbl&gt;, xGBuildup &lt;dbl&gt;, year &lt;int&gt;</code></pre>
 <p>You can use this in conjunction with the <a href="https://www.tidyverse.org/">tidyverse</a> to get from data to viz lighting-quick.</p>
 <pre class="r"><code>library(tidyverse)
 library(ewenthemes) # (a personal chart themes pkg)

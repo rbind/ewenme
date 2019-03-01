@@ -28,6 +28,9 @@ twitter = "ewen_"
 github = "ewenme"
 rss = "index.xml"
 
+[params.social.config]
+platforms = ["email", "twitter", "github", "rss"]
+
 [taxonomies]
 tag = "tags"
 
