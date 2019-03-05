@@ -69,15 +69,12 @@ library(stringr)
 library(fuzzyjoin)
 
 # club name disparities
-club_names <- c("Man City"="Manchester City", "Man Utd"=" Manchester United", 
-                "Wolves"=" Wolverhampton Wanderers", "Newcastle"=" Newcastle United",
-                "Spurs"="Tottenham")
+club_names <- c("Manchester City"="Man City", "Manchester United"="Man Utd", 
+                "Wolverhampton Wanderers"="Wolves", "Newcastle United"="Newcastle",
+                "Tottenham"="Spurs")
 
 # replace club name aliases
-fpl_data$team_name <- str_replace_all(fpl_data$team_name, pattern = club_names)
-
-# create full player names
-fpl_data$player_name <- paste(fpl_data$first_name, fpl_data$second_name)
+epl_player_stats$team_name <- str_replace_all(epl_player_stats$team_name, pattern = club_names)
 
 # create web name equivalent
 epl_player_stats$web_name <- sub(".*? (.+)", "\\1", epl_player_stats$player_name)
@@ -87,17 +84,21 @@ epl_player_stats$web_name[epl_player_stats$player_name == "David Silva"] <- "Dav
 epl_player_stats$web_name[epl_player_stats$player_name == "Bernardo Silva"] <- "Bernardo Silva"
 epl_player_stats$web_name[epl_player_stats$player_name == "Felipe Anderson"] <- "Felipe Anderson"
 epl_player_stats$web_name[epl_player_stats$player_name == "Son Heung-Min"] <- "Son"
-
-# select fields
-epl_player_stats <- select(epl_player_stats, -year, -yellow_cards:-position)
-fpl_data <- select(fpl_data, -photo, -team_code:-news, 
-                      -news_added:-value_season, -in_dreamteam, -dreamteam_count,
-                      -form:-loaned_out, -ep_this:-special, -own_goals:-team)
+epl_player_stats$web_name[epl_player_stats$player_name == "Lucas Moura"] <- "Lucas Moura"
+epl_player_stats$web_name[epl_player_stats$player_name == "Miguel Almirón"] <- "Almirón"
+epl_player_stats$web_name[epl_player_stats$player_name == "Salomón Rondón"] <- "Rondón"
+epl_player_stats$web_name[epl_player_stats$player_name == "Ayoze Pérez"] <- "Pérez"
+epl_player_stats$web_name[epl_player_stats$player_name == "Johann Berg Gudmundsson
+"] <- "Gudmundsson"
 
 # fuzzy join understat/fpl player data
-player_stats <- stringdist_left_join(fpl_data, epl_player_stats,
-                                     by = c("web_name", "team_name"),
-                                     max_dist = 2)
+player_stats <- stringdist_left_join(
+  select(fpl_data, -photo, -team_code:-news, -news_added:-value_season,
+         -in_dreamteam, -dreamteam_count, -form:-loaned_out, 
+         -ep_this:-special, -own_goals:-team), 
+  select(epl_player_stats, -year, -yellow_cards:-position), 
+  by = c("web_name", "team_name"), max_dist = 2
+  )
 
 # check missing players
 missing <- filter(player_stats, is.na(player_id))
