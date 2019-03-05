@@ -1,0 +1,22 @@
+---
+title: '...xPoints?'
+description: "Translating advanced player performance metrics into fantasy football points potential."
+date: '2019-03-04'
+slug: xPoints
+tags: ["football", "fpl"]
+draft: yes
+---
+
+To anyone paying attention over the last couple of years, some "advanced" football metrics (or expected goals, at least) seem to have successfully navigated the five stages of grief within the media charged with upholding the "magic" of the game. Imagine peak Lawrenson and Hansen in this scene:
+
+<blockquote class="twitter-tweet" data-lang="en-gb"><p lang="en" dir="ltr">The stats don&#39;t look great but <a href="https://twitter.com/jjenas8?ref_src=twsrc%5Etfw">@jjenas8</a> says Brighton will be fine. <a href="https://twitter.com/hashtag/motd2?src=hash&amp;ref_src=twsrc%5Etfw">#motd2</a> <a href="https://t.co/JrXglJEy96">pic.twitter.com/JrXglJEy96</a></p>&mdash; Match of the Day (@BBCMOTD) <a href="https://twitter.com/BBCMOTD/status/1094731648178913280?ref_src=twsrc%5Etfw">10 February 2019</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+Back in August 2017, StatsBomb's Ted Knutson [predicted](https://statsbomb.com/2017/08/xg-is-on-tv-now-what/), among other things, that the xG circus would:
+
+> Create an entire new generation of highly educated fans and coaches who view the game itself in a more knowledgeable light.
+
+[Fantasy Premier League](https://fantasy.premierleague.com/) (FPL) is the official fantasy football game of the [Premier League](https://en.wikipedia.org/wiki/Premier_League), with more than five million players (plus many thousands of passive agressive workplace league rivalries) and counting. FPL players, particularly those taking it seriously/semi-seriously, probably represent an early adopter population in Ted's above prophecy - fans with a vested interest in gaining competitive advantage. It definitely shows...Michael Caley [chatting to the FML FPL podcast](http://fmlfpl.libsyn.com/ep-161-fireside-chat-with-michael-caley) recently, for one.
+
+## 
+
