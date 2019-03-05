@@ -27,6 +27,93 @@ Therefore, a useful FPL evaluation of attacking players could be made using metr
 
 These can subsequently be combined to form an **expected goals contributions** measure, and thus a shorthand for understanding which attacking FPL assets to consider. So, what's the hold-up?
 
+## Some things I made earlier
+
+Turns out that getting at the data should be quite simple - I've already authored a pair of R packages ready for the job. 
+
+Both can be installed from GitHub using another library, [remotes](https://github.com/r-lib/remotes):
+
+```{r install}
+remotes::install_github(c("ewenme/fplr", "ewenme/understatr"))
+```
+
+[fplr](https://ewenme.github.io/fplr/) helps get data on FPL players...
+
+```{r get-fpl-data}
+library(fplr)
+
+fpl_data <- fpl_get_players()
+
+fpl_data
+```
+
+...and [understatr](https://github.com/ewenme/understatr) can help fetch [understat](https://understat.com/) data:
+
+```{r get-understat-data}
+library(understatr)
+
+# get EPL team data
+epl_team_stats <- get_league_teams_stats(league_name = "EPL", year = 2018)
+
+# get EPL player data
+epl_player_stats <- purrr::map_dfr(unique(epl_team_stats$team_name), get_team_players_stats, year = 2018)
+
+epl_player_stats
+```
+
+A bit of cleaning is required to be able to join the datasets (e.g. standardising team/player names), but otherwise we're good to get numbers on the board.
+
+```{r data-cleaning}
+library(dplyr)
+library(stringr)
+library(fuzzyjoin)
+
+# club name disparities
+club_names <- c("Man City"="Manchester City", "Man Utd"=" Manchester United", 
+                "Wolves"=" Wolverhampton Wanderers", "Newcastle"=" Newcastle United",
+                "Spurs"="Tottenham")
+
+# replace club name aliases
+fpl_data$team_name <- str_replace_all(fpl_data$team_name, pattern = club_names)
+
+# create full player names
+fpl_data$player_name <- paste(fpl_data$first_name, fpl_data$second_name)
+
+# create web name equivalent
+epl_player_stats$web_name <- sub(".*? (.+)", "\\1", epl_player_stats$player_name)
+
+# fix known differences
+epl_player_stats$web_name[epl_player_stats$player_name == "David Silva"] <- "David Silva"
+epl_player_stats$web_name[epl_player_stats$player_name == "Bernardo Silva"] <- "Bernardo Silva"
+epl_player_stats$web_name[epl_player_stats$player_name == "Felipe Anderson"] <- "Felipe Anderson"
+epl_player_stats$web_name[epl_player_stats$player_name == "Son Heung-Min"] <- "Son"
+
+# select fields
+epl_player_stats <- select(epl_player_stats, -year, -yellow_cards:-position)
+fpl_data <- select(fpl_data, -photo, -team_code:-news, 
+                      -news_added:-value_season, -in_dreamteam, -dreamteam_count,
+                      -form:-loaned_out, -ep_this:-special, -own_goals:-team)
+
+# fuzzy join understat/fpl player data
+player_stats <- stringdist_left_join(fpl_data, epl_player_stats,
+                                     by = c("web_name", "team_name"),
+                                     max_dist = 2)
+
+# check missing players
+missing <- filter(player_stats, is.na(player_id))
+
+# remove extra fields
+player_stats <- player_stats %>% 
+  select(-team_name.y, -player_name.y, -web_name.y) %>% 
+  rename(team_name=team_name.x, player_name=player_name.x, web_name=web_name.x)
+```
+
+
+
 ## Speaking different languages
 
 
+
+- expressing expected goal contributions as points
+- understanding value
+- normalising for minutes
