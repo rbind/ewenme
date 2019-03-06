@@ -127,17 +127,23 @@ Let's get some of these numbers on the board, already. (PS - the chart styles co
 
 library(ggplot2)
 library(ewenthemes)
+library(scico)
 library(ggrepel)
 
 ggplot(player_stats, aes(x = xG_90, y = xA_90)) +
-  geom_point() +
-  # add some labels (making sure to credit understat!)
-  labs(title = "Expected goals contributions",
-       x = "xG per 90", y = "xA per 90", caption = "source: understat.com | @ewen_") +
-  # add my chart theme
-  theme_ewen_ws(grid = FALSE) +
+  geom_point(aes(colour = position)) +
+  # add chart labels
+  labs(title = "Expected goals contributions, midfielders vs. forwards",
+       subtitle = "Expected goals (xG) and expected assists (xA) per 90 mins.\nPositions as defined in Fantasy Premier League (FPL).\nPlayers with less than 900 minutes removed.",
+       x = "xG per 90", y = "xA per 90", caption = "source: understat.com, fantasy.premierleague.com | @ewen_") +
+  # add data labels
   geom_text_repel(aes(label = web_name), 
-                  data = filter(player_stats, ntile(xG_90, 10) == 10 | ntile(xA_90, 10) == 10))
+                  data = filter(player_stats, ntile(xG_90, 10) == 10 | ntile(xA_90, 10) == 10)) +
+  # set colours
+  scale_colour_scico_d(palette = "acton") +
+  # add my chart theme
+  theme_ewen_ws(grid = FALSE, subtitle_size = 10) +
+  theme(legend.position = "top", legend.title = element_blank())
 
 ```
 
