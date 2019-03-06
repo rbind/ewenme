@@ -7,6 +7,10 @@ tags: ["football", "fpl"]
 draft: yes
 ---
 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(cache = FALSE, warning = FALSE, message = FALSE, echo = TRUE, out.width = '75%', dev = c('svg', 'png'), fig.align='center')
+```
+
 To anyone paying attention over the last couple of years, some "advanced" football metrics (or expected goals, at least) seem to have successfully navigated the five stages of ~~grief~~ haranguing from the media charged with upholding the "magic" of the game. Imagine peak Lawrenson and Hansen placed in this scene:
 
 <blockquote class="twitter-tweet" data-lang="en-gb"><p lang="en" dir="ltr">The stats don&#39;t look great but <a href="https://twitter.com/jjenas8?ref_src=twsrc%5Etfw">@jjenas8</a> says Brighton will be fine. <a href="https://twitter.com/hashtag/motd2?src=hash&amp;ref_src=twsrc%5Etfw">#motd2</a> <a href="https://t.co/JrXglJEy96">pic.twitter.com/JrXglJEy96</a></p>&mdash; Match of the Day (@BBCMOTD) <a href="https://twitter.com/BBCMOTD/status/1094731648178913280?ref_src=twsrc%5Etfw">10 February 2019</a></blockquote>
@@ -27,13 +31,13 @@ Therefore, a useful FPL evaluation of attacking players could be made using metr
 
 These can subsequently be combined to form an **expected goals contributions** measure, and thus a shorthand for understanding which attacking FPL assets to consider. So, what's the hold-up?
 
-## Some things I made earlier
+## Some data helpers I made earlier
 
 Turns out that getting at the data should be quite simple - I've already authored a pair of R packages ready for the job. 
 
 Both can be installed from GitHub using another library, [remotes](https://github.com/r-lib/remotes):
 
-```{r install}
+```{r install, eval=FALSE}
 remotes::install_github(c("ewenme/fplr", "ewenme/understatr"))
 ```
 
@@ -47,7 +51,7 @@ fpl_data <- fpl_get_players()
 fpl_data
 ```
 
-...and [understatr](https://github.com/ewenme/understatr) can help fetch [understat](https://understat.com/) data:
+...and [understatr](https://github.com/ewenme/understatr) can help fetch [understat](https://understat.com/) data.
 
 ```{r get-understat-data}
 library(understatr)
@@ -61,54 +65,81 @@ epl_player_stats <- purrr::map_dfr(unique(epl_team_stats$team_name), get_team_pl
 epl_player_stats
 ```
 
-A bit of cleaning is required to be able to join the datasets (e.g. standardising team/player names), but otherwise we're good to get numbers on the board.
+There isn't a common identifier for joining across datasets, so a bit of prep is required to help join the datasets (e.g. standardising team/player names). Names are annoying, so I missed off some recoding of non-descript (read: little minutes) attacking players. Sorry.
 
-```{r data-cleaning}
+```{r data-cleaning, echo=FALSE}
 library(dplyr)
 library(stringr)
-library(fuzzyjoin)
 
 # club name disparities
-club_names <- c("Manchester City"="Man City", "Manchester United"="Man Utd", 
-                "Wolverhampton Wanderers"="Wolves", "Newcastle United"="Newcastle",
-                "Tottenham"="Spurs")
+club_aliases <- c("Manchester City"="Man City", "Manchester United"="Man Utd",
+                  "Wolverhampton Wanderers"="Wolves", "Newcastle United"="Newcastle",
+                  "Tottenham"="Spurs")
 
 # replace club name aliases
-epl_player_stats$team_name <- str_replace_all(epl_player_stats$team_name, pattern = club_names)
+epl_player_stats$team_name <- str_replace_all(epl_player_stats$team_name, pattern = club_aliases)
 
-# create web name equivalent
+# create fpl web name equivalent
 epl_player_stats$web_name <- sub(".*? (.+)", "\\1", epl_player_stats$player_name)
 
 # fix known differences
-epl_player_stats$web_name[epl_player_stats$player_name == "David Silva"] <- "David Silva"
-epl_player_stats$web_name[epl_player_stats$player_name == "Bernardo Silva"] <- "Bernardo Silva"
-epl_player_stats$web_name[epl_player_stats$player_name == "Felipe Anderson"] <- "Felipe Anderson"
-epl_player_stats$web_name[epl_player_stats$player_name == "Son Heung-Min"] <- "Son"
-epl_player_stats$web_name[epl_player_stats$player_name == "Lucas Moura"] <- "Lucas Moura"
-epl_player_stats$web_name[epl_player_stats$player_name == "Miguel Almirón"] <- "Almirón"
-epl_player_stats$web_name[epl_player_stats$player_name == "Salomón Rondón"] <- "Rondón"
-epl_player_stats$web_name[epl_player_stats$player_name == "Ayoze Pérez"] <- "Pérez"
-epl_player_stats$web_name[epl_player_stats$player_name == "Johann Berg Gudmundsson
-"] <- "Gudmundsson"
+epl_player_stats <- mutate(epl_player_stats, web_name = case_when(
+  player_id == 617 ~ "David Silva",
+  player_id == 3635 ~ "Bernardo Silva",
+  player_id == 1208 ~ "Felipe Anderson",
+  player_id == 453 ~ "Son",
+  player_id == 3293 ~ "Lucas Moura",
+  player_id == 7420 ~ "Almirón",
+  player_id == 813 ~ "Rondón",
+  player_id == 770 ~ "Pérez",
+  player_id == 1663 ~ "Gudmundsson",
+  player_id == 1700 ~ "Lucas",
+  player_id == 2383 ~ "André Gomes",
+  TRUE ~ web_name
+  ))
 
-# fuzzy join understat/fpl player data
-player_stats <- stringdist_left_join(
-  select(fpl_data, -photo, -team_code:-news, -news_added:-value_season,
-         -in_dreamteam, -dreamteam_count, -form:-loaned_out, 
-         -ep_this:-special, -own_goals:-team), 
-  select(epl_player_stats, -year, -yellow_cards:-position), 
-  by = c("web_name", "team_name"), max_dist = 2
-  )
-
-# check missing players
-missing <- filter(player_stats, is.na(player_id))
-
-# remove extra fields
-player_stats <- player_stats %>% 
-  select(-team_name.y, -player_name.y, -web_name.y) %>% 
-  rename(team_name=team_name.x, player_name=player_name.x, web_name=web_name.x)
 ```
 
+Once that's down, the data can be merged and the attackers with reasonable minutes (at least 900) isolated. At the same time, we can put together the metrics of interest discussed above.
+
+```{r data-merge}
+# join understat/fpl data
+player_stats <- left_join(
+  select(fpl_data, id, web_name, status, now_cost, cost_change_start, 
+         total_points, minutes, team_name, position), 
+  select(epl_player_stats, -year, -yellow_cards:-position), 
+  by = c("web_name", "team_name") 
+  ) %>%
+  # select midfielders/forwards w/ good mins
+  filter(position %in% c("Midfielder", "Forward"), minutes >= 900, 
+         status != "Unavailable") %>% 
+  # metric calculations
+  mutate_at(c("goals", "xG", "assists", "xA", "shots", "npg", "npxG"),
+            list(`90` = ~(./minutes)*90)) %>% 
+  mutate(xGA_90 = xG_90 + xA_90)
+
+player_stats
+```
+
+Let's get some of these numbers on the board, already. (PS - the chart styles come courtesy of another personal pkg, [ewenthemes](https://github.com/ewenme/ewenthemes)).
+
+```{r simple-xGA, out.width="100%", echo=FALSE}
+
+library(ggplot2)
+library(ewenthemes)
+library(ggrepel)
+
+ggplot(player_stats, aes(x = xG_90, y = xA_90)) +
+  geom_point() +
+  # add some labels (making sure to credit understat!)
+  labs(title = "Expected goals contributions",
+       x = "xG per 90", y = "xA per 90", caption = "source: understat.com | @ewen_") +
+  # add my chart theme
+  theme_ewen_ws(grid = FALSE) +
+  geom_text_repel(aes(label = web_name), 
+                  data = filter(player_stats, ntile(xG_90, 10) == 10 | ntile(xA_90, 10) == 10))
+
+```
 
 
 ## Speaking different languages
