@@ -16,22 +16,22 @@ To anyone paying attention over the last couple of years, some "advanced" footba
 <blockquote class="twitter-tweet" data-lang="en-gb"><p lang="en" dir="ltr">The stats don&#39;t look great but <a href="https://twitter.com/jjenas8?ref_src=twsrc%5Etfw">@jjenas8</a> says Brighton will be fine. <a href="https://twitter.com/hashtag/motd2?src=hash&amp;ref_src=twsrc%5Etfw">#motd2</a> <a href="https://t.co/JrXglJEy96">pic.twitter.com/JrXglJEy96</a></p>&mdash; Match of the Day (@BBCMOTD) <a href="https://twitter.com/BBCMOTD/status/1094731648178913280?ref_src=twsrc%5Etfw">10 February 2019</a></blockquote>
 <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
-Back in August 2017, StatsBomb's Ted Knutson [predicted](https://statsbomb.com/2017/08/xg-is-on-tv-now-what/), among other things, that the relentless xG circus would:
+Back in August 2017, [StatsBomb's Ted Knutson predicted](https://statsbomb.com/2017/08/xg-is-on-tv-now-what/) that the relentless xG circus would:
 
 > Create an entire new generation of highly educated fans and coaches who view the game itself in a more knowledgeable light.
 
-[Fantasy Premier League](https://fantasy.premierleague.com/) (FPL) is the official fantasy football game of the [Premier League](https://en.wikipedia.org/wiki/Premier_League), with more than five million "managers" (plus many thousands of passive agressive workplace league rivalries) and counting. FPL managers, particularly those taking it seriously/semi-seriously, probably represent an early adopter population in Ted's above prophecy - fans with a vested interest in gaining competitive advantage. It definitely shows...Michael Caley [chatting to the FML FPL podcast](http://fmlfpl.libsyn.com/ep-161-fireside-chat-with-michael-caley) recently, for one.
+[Fantasy Premier League](https://fantasy.premierleague.com/) (FPL) is the official fantasy football game of the [Premier League](https://en.wikipedia.org/wiki/Premier_League), with more than five million "managers" (plus many thousands of passive agressive workplace league rivalries) and counting. FPL managers, particularly those taking it seriously/semi-seriously, probably represent an early adopter population in Ted's above prophecy - fans with a vested interest in gaining competitive advantage. It definitely shows... [Michael Caley chatting to the FML FPL podcast](http://fmlfpl.libsyn.com/ep-161-fireside-chat-with-michael-caley) recently, for one.
 
 I think there's some appetite around for this stuff. What's also interesting to me is that, as an application of metrics like expected goals (xG), fantasy football player evaluation is a far simpler optimisation problem than the real thing. Especially for attacking players, FPL player evaluation is predominantly about *individual goal contributions* (goals and assists) because they result in *points* (three for an assist, while grabbing a goal equals four or five points for midfielders and forwards respectively). Other contributions to general play can be glossed over for the most part, even the "pre-assist", hence why the original FPL valuation for N'Golo Kanté (£5.0m) was so much lower than Sadio Mané's (£9.5m) in the current (2018/19) season.
 
-Therefore, a useful FPL evaluation of attacking players could be made using metrics that quantify activity at the very sharp end of attacking moves, namely a combination of:
+Therefore, a useful FPL evaluation of attacking players could be made using metrics that quantify activity at the very sharp end of attacking moves, namely variations of:
 
 - **xG:** How many goals should a player have scored on average, given the shots they took?
 - **xA:** How many assists should a player have provided on average, given the passes they made?
 
 These can subsequently be combined to form an **expected goals contributions** measure, and thus a shorthand for understanding which attacking FPL assets to consider. So, what's the hold-up?
 
-## Some data helpers I made earlier
+## Some helpers I made earlier
 
 Turns out that getting at the data should be quite simple - I've already authored a pair of R packages ready for the job. 
 
@@ -121,7 +121,7 @@ player_stats <- left_join(
 player_stats
 ```
 
-Let's get some of these numbers on the board, already. (PS - the chart styles come courtesy of another personal pkg, [ewenthemes](https://github.com/ewenme/ewenthemes)).
+Let's get some of these numbers on the board, already. I'll start with a simple scatterplot of xG90 vs xA90, and also mark out players' FPL positions (PS - the chart styles come courtesy of another personal pkg, [ewenthemes](https://github.com/ewenme/ewenthemes)).
 
 ```{r simple-xGA, out.width="100%", echo=FALSE}
 
@@ -133,25 +133,70 @@ library(ggrepel)
 ggplot(player_stats, aes(x = xG_90, y = xA_90)) +
   geom_point(aes(colour = position)) +
   # add chart labels
-  labs(title = "Expected goals contributions, midfielders vs. forwards",
-       subtitle = "Expected goals (xG) and expected assists (xA) per 90 mins.\nPositions as defined in Fantasy Premier League (FPL).\nPlayers with less than 900 minutes removed.",
+  labs(title = "Expected goals contributions, 2018/19",
+       subtitle = "Expected goals (xG) and expected assists (xA) per 90 minutes. Positions as defined in Fantasy Premier League (FPL).\nPlayers with less than 900 minutes removed.",
        x = "xG per 90", y = "xA per 90", caption = "source: understat.com, fantasy.premierleague.com | @ewen_") +
   # add data labels
   geom_text_repel(aes(label = web_name), 
                   data = filter(player_stats, ntile(xG_90, 10) == 10 | ntile(xA_90, 10) == 10)) +
   # set colours
-  scale_colour_scico_d(palette = "acton") +
+  scale_colour_scico_d(palette = "hawaii") +
   # add my chart theme
   theme_ewen_ws(grid = FALSE, subtitle_size = 10) +
   theme(legend.position = "top", legend.title = element_blank())
 
 ```
 
+This is *starting* to look useful for an FPL manager. It's possible to spot players who are regularly creating and getting goalscoring opportunities. A bit more work is needed to identify who the best picks are.
 
-## Speaking different languages
+## Speaking the same language
+
+First, it's probably more helpful to express these expected contributions in terms that are familiar to FPL managers, and take account of the different rewards based on player position. 
+
+```{r xPoints-calc, echo=FALSE}
+library(ghibli)
+
+player_stats <- player_stats %>% 
+  left_join(tribble(
+    ~position, ~goal_scored_points, ~assist_points,
+    "Midfielder", 5, 3,
+    "Forward", 4, 3),
+    by = "position") %>% 
+  # metric calculations
+  mutate_at(c("xG_90", "npxG_90"),
+            list(`points` = ~(.*goal_scored_points))) %>% 
+  mutate(xA_90_points = xA_90*assist_points,
+         xGA_90_points = xG_90_points + xA_90_points)
+
+player_stats %>% 
+  top_n(20, xGA_90_points) %>% 
+  ggplot(aes(x = reorder(web_name, xGA_90_points), y = xGA_90_points)) +
+  geom_col(fill = ghibli_palettes$SpiritedMedium[4]) +
+  coord_flip() +
+  # add chart labels
+  labs(title = "Points from expected goals contributions, 2018/19",
+       subtitle = "Top 20 expected FPL points (xP) from goals and assists per 90 minutes. Players with less than 900 minutes removed.",
+       x = NULL, y = "xP per 90", caption = "source: understat.com, fantasy.premierleague.com | @ewen_") +
+  # add my chart theme
+  theme_ewen_ws(grid = "X", axis = FALSE, axis_text_size = 9, subtitle_size = 10) +
+  theme(axis.text.y = element_text(family = "Work Sans Light"))
+
+```
 
 
 
-- expressing expected goal contributions as points
-- understanding value
-- normalising for minutes
+```{r value-calc, echo=FALSE}
+player_stats %>% 
+  top_n(20, xGA_90_points/now_cost) %>% 
+  ggplot(aes(x = reorder(web_name, xGA_90_points/now_cost), y = xGA_90_points/now_cost)) +
+  geom_col(fill = ghibli_palettes$SpiritedMedium[4]) +
+  coord_flip() +
+  # add chart labels
+  labs(title = "Points per £m from expected goals contributions, 2018/19",
+       subtitle = "Top 20 expected FPL points per £m (xPm) from goals and assists per 90 mins. Players with less than 900 minutes removed.",
+       x = NULL, y = "xPm per 90", caption = "source: understat.com, fantasy.premierleague.com | @ewen_") +
+  # add my chart theme
+  theme_ewen_ws(grid = "X", axis = FALSE, axis_text_size = 9, subtitle_size = 10) +
+  theme(axis.text.y = element_text(family = "Work Sans Light"))
+```
+
