@@ -1,0 +1,170 @@
+---
+title: '...xPoints?'
+description: "Translating advanced player performance metrics into fantasy football points potential."
+date: '2019-03-08'
+slug: xPoints
+tags: ["football", "fpl"]
+image: "/blog/2019-03-08-xPoints_files/figure-html/simple-xGA-1.png"
+draft: no
+---
+
+
+
+<p>To anyone paying attention over the last couple of years, some “advanced” football metrics (or expected goals, at least) seem to have successfully navigated the five stages of <del>grief</del> haranguing from the media charged with upholding the “magic” of the game. Imagine peak Lawrenson and Hansen in this scene:</p>
+<blockquote class="twitter-tweet" data-lang="en-gb">
+<p lang="en" dir="ltr">
+The stats don't look great but <a href="https://twitter.com/jjenas8?ref_src=twsrc%5Etfw"><span class="citation">@jjenas8</span></a> says Brighton will be fine. <a href="https://twitter.com/hashtag/motd2?src=hash&amp;ref_src=twsrc%5Etfw">#motd2</a> <a href="https://t.co/JrXglJEy96">pic.twitter.com/JrXglJEy96</a>
+</p>
+— Match of the Day (<span class="citation">@BBCMOTD</span>) <a href="https://twitter.com/BBCMOTD/status/1094731648178913280?ref_src=twsrc%5Etfw">10 February 2019</a>
+</blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<p>Back in August 2017, <a href="https://statsbomb.com/2017/08/xg-is-on-tv-now-what/">StatsBomb’s Ted Knutson predicted</a> that the relentless xG circus would:</p>
+<blockquote>
+<p>Create an entire new generation of highly educated fans and coaches who view the game itself in a more knowledgeable light.</p>
+</blockquote>
+<p><a href="https://fantasy.premierleague.com/">Fantasy Premier League</a> (FPL) is the official fantasy football game of the <a href="https://en.wikipedia.org/wiki/Premier_League">Premier League</a>, with more than five million “managers” (plus many thousands of passive aggressive workplace league rivalries) and counting. FPL managers, particularly those taking it seriously/semi-seriously, probably represent an early adopter population in Ted’s above prophecy - fans with a vested interest in gaining competitive advantage. It definitely shows… <a href="http://fmlfpl.libsyn.com/ep-161-fireside-chat-with-michael-caley">Michael Caley chatting to the FML FPL podcast</a> recently, for one.</p>
+<p>I think there’s some appetite around for this stuff. What’s also interesting to me is that, as an application of metrics like expected goals (xG), fantasy football player evaluation is a far simpler optimisation problem than the real thing. Especially for attacking players, FPL player evaluation is predominantly about <em>individual goal contributions</em> (goals and assists) because they result in <em>points</em> (three for an assist, while grabbing a goal equals four or five points for midfielders and forwards respectively). Other contributions to general play can be glossed over for the most part, even the “pre-assist”, hence why the original FPL valuation for N’Golo Kanté (£5.0m) was so much lower than Sadio Mané’s (£9.5m) in the current (2018/19) season.</p>
+<p>Therefore, a useful FPL evaluation of attacking players could be made using metrics that quantify activity at the very sharp end of attacking moves, namely variations of:</p>
+<ul>
+<li><strong>xG:</strong> How many goals should a player have scored on average, given the shots they took?</li>
+<li><strong>xA:</strong> How many assists should a player have provided on average, given the passes they made?</li>
+</ul>
+<p>These can subsequently be combined to form an <strong>expected goals contributions</strong> measure, and thus a shorthand for understanding which attacking FPL assets to consider. So, what’s the hold-up?</p>
+<div id="some-helpers-i-made-earlier" class="section level2">
+<h2>Some helpers I made earlier 💁</h2>
+<p>Turns out that getting at the data should be quite simple - I’ve already authored a pair of R packages ready for the job.</p>
+<p>Both can be installed from GitHub using another library, <a href="https://github.com/r-lib/remotes">remotes</a>:</p>
+<pre class="r"><code>remotes::install_github(c(&quot;ewenme/fplr&quot;, &quot;ewenme/understatr&quot;))</code></pre>
+<p><a href="https://ewenme.github.io/fplr/">fplr</a> helps get data on FPL players…</p>
+<pre class="r"><code>library(fplr)
+
+fpl_data &lt;- fpl_get_players()
+
+fpl_data</code></pre>
+<pre><code>## # A tibble: 606 x 60
+##       id photo web_name team_code status   code first_name second_name
+##    &lt;int&gt; &lt;chr&gt; &lt;chr&gt;        &lt;int&gt; &lt;chr&gt;   &lt;int&gt; &lt;chr&gt;      &lt;chr&gt;      
+##  1     1 1133… Cech             3 Avail…  11334 Petr       Cech       
+##  2     2 8020… Leno             3 Avail…  80201 Bernd      Leno       
+##  3     3 5150… Kosciel…         3 Avail…  51507 Laurent    Koscielny  
+##  4     4 9874… Bellerín         3 Injur…  98745 Héctor     Bellerín   
+##  5     5 3841… Monreal          3 Avail…  38411 Nacho      Monreal    
+##  6     6 1560… Holding          3 Injur… 156074 Rob        Holding    
+##  7     7 6914… Mustafi          3 Avail…  69140 Shkodran   Mustafi    
+##  8     8 1114… Kolasin…         3 Avail… 111457 Sead       Kolasinac  
+##  9    10 2339… Mavropa…         3 Avail… 233963 Konstanti… Mavropanos 
+## 10    11 2733… Lichtst…         3 Avail…  27335 Stephan    Lichtstein…
+## # … with 596 more rows, and 52 more variables: squad_number &lt;int&gt;,
+## #   news &lt;chr&gt;, now_cost &lt;dbl&gt;, news_added &lt;chr&gt;,
+## #   chance_of_playing_this_round &lt;int&gt;,
+## #   chance_of_playing_next_round &lt;int&gt;, value_form &lt;dbl&gt;,
+## #   value_season &lt;dbl&gt;, cost_change_start &lt;dbl&gt;, cost_change_event &lt;dbl&gt;,
+## #   cost_change_start_fall &lt;int&gt;, cost_change_event_fall &lt;int&gt;,
+## #   in_dreamteam &lt;lgl&gt;, dreamteam_count &lt;int&gt;, selected_by_percent &lt;dbl&gt;,
+## #   form &lt;dbl&gt;, transfers_out &lt;int&gt;, transfers_in &lt;int&gt;,
+## #   transfers_out_event &lt;int&gt;, transfers_in_event &lt;int&gt;, loans_in &lt;int&gt;,
+## #   loans_out &lt;int&gt;, loaned_in &lt;int&gt;, loaned_out &lt;int&gt;,
+## #   total_points &lt;int&gt;, event_points &lt;int&gt;, points_per_game &lt;dbl&gt;,
+## #   ep_this &lt;dbl&gt;, ep_next &lt;dbl&gt;, special &lt;lgl&gt;, minutes &lt;int&gt;,
+## #   goals_scored &lt;int&gt;, assists &lt;int&gt;, clean_sheets &lt;int&gt;,
+## #   goals_conceded &lt;int&gt;, own_goals &lt;int&gt;, penalties_saved &lt;int&gt;,
+## #   penalties_missed &lt;int&gt;, yellow_cards &lt;int&gt;, red_cards &lt;int&gt;,
+## #   saves &lt;int&gt;, bonus &lt;int&gt;, bps &lt;int&gt;, influence &lt;dbl&gt;,
+## #   creativity &lt;dbl&gt;, threat &lt;dbl&gt;, ict_index &lt;dbl&gt;, ea_index &lt;int&gt;,
+## #   element_type &lt;int&gt;, team &lt;int&gt;, team_name &lt;chr&gt;, position &lt;chr&gt;</code></pre>
+<p>…and <a href="https://github.com/ewenme/understatr">understatr</a> can help fetch <a href="https://understat.com/">understat</a> data.</p>
+<pre class="r"><code>library(understatr)
+
+# get EPL team data
+epl_team_stats &lt;- get_league_teams_stats(league_name = &quot;EPL&quot;, year = 2018)
+
+# get EPL player data
+epl_player_stats &lt;- purrr::map_dfr(unique(epl_team_stats$team_name), get_team_players_stats, year = 2018)
+
+epl_player_stats</code></pre>
+<pre><code>## # A tibble: 493 x 19
+##    player_id player_name games  time goals    xG assists    xA shots
+##        &lt;int&gt; &lt;chr&gt;       &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;dbl&gt;   &lt;int&gt; &lt;dbl&gt; &lt;int&gt;
+##  1       714 Gylfi Sigu…    29  2364    11 8.68        3 4.43     65
+##  2      6026 Richarlison    27  2084    10 8.12        1 1.03     58
+##  3      5555 Dominic Ca…    27  1060     5 3.40        1 0.660    26
+##  4       503 Theo Walco…    28  1932     3 5.19        2 2.78     33
+##  5      1823 Lucas Digne    26  2160     3 0.931       3 6.30     26
+##  6      6477 Cenk Tosun     21   925     2 3.67        3 0.438    31
+##  7       585 Seamus Col…    22  1934     1 0.536       1 2.11     10
+##  8       935 Kurt Zouma     24  1893     1 0.880       2 0.443    14
+##  9      1653 Michael Ke…    26  2340     1 1.77        2 1.18     25
+## 10      2383 André Gomes    21  1548     1 1.14        1 0.553    14
+## # … with 483 more rows, and 10 more variables: key_passes &lt;int&gt;,
+## #   yellow_cards &lt;int&gt;, red_cards &lt;int&gt;, position &lt;chr&gt;, team_name &lt;chr&gt;,
+## #   npg &lt;int&gt;, npxG &lt;dbl&gt;, xGChain &lt;dbl&gt;, xGBuildup &lt;dbl&gt;, year &lt;int&gt;</code></pre>
+<p>There isn’t a common identifier for joining across datasets, so a bit of prep is required to help join the datasets (e.g. standardising team/player names). Names are annoying, so I missed off some recoding of non-descript (read: little minutes) attacking players.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> Sorry.</p>
+<p>Once that’s down, the data can be merged and the attackers with reasonable minutes (at least 900) isolated. At the same time, we can put together the metrics of interest discussed above.</p>
+<pre class="r"><code># join understat/fpl data
+player_stats &lt;- left_join(
+  select(fpl_data, id, web_name, status, now_cost, cost_change_start, 
+         total_points, minutes, team_name, position), 
+  select(epl_player_stats, -year, -yellow_cards:-position), 
+  by = c(&quot;web_name&quot;, &quot;team_name&quot;) 
+  ) %&gt;%
+  # select midfielders/forwards w/ good mins
+  filter(position %in% c(&quot;Midfielder&quot;, &quot;Forward&quot;), minutes &gt;= 900, 
+         status != &quot;Unavailable&quot;) %&gt;% 
+  # metric calculations
+  mutate_at(c(&quot;goals&quot;, &quot;xG&quot;, &quot;assists&quot;, &quot;xA&quot;, &quot;shots&quot;, &quot;npg&quot;, &quot;npxG&quot;),
+            list(`90` = ~(./minutes)*90)) %&gt;% 
+  mutate(xGA_90 = xG_90 + xA_90)
+
+player_stats</code></pre>
+<pre><code>## # A tibble: 149 x 31
+##       id web_name status now_cost cost_change_sta… total_points minutes
+##    &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;     &lt;dbl&gt;            &lt;dbl&gt;        &lt;int&gt;   &lt;int&gt;
+##  1    13 Özil     Avail…      7.9             -0.6           70    1185
+##  2    14 Ramsey   Avail…      7.1             -0.4           73    1051
+##  3    15 Iwobi    Avail…      5.4             -0.1           76    1519
+##  4    17 Xhaka    Avail…      5.2             -0.3           69    2062
+##  5    18 Mkhitar… Avail…      6.8             -0.2           85    1156
+##  6    22 Lacazet… Avail…      9.5              0            138    1884
+##  7    23 Aubamey… Avail…     10.9             -0.1          157    2119
+##  8   450 Torreira Suspe…      4.8             -0.2           72    2072
+##  9   451 Guendou… Avail…      4.4             -0.1           38    1688
+## 10    35 Surman   Avail…      4.6             -0.4           33    1348
+## # … with 139 more rows, and 24 more variables: team_name &lt;chr&gt;,
+## #   position &lt;chr&gt;, player_id &lt;int&gt;, player_name &lt;chr&gt;, games &lt;int&gt;,
+## #   time &lt;int&gt;, goals &lt;int&gt;, xG &lt;dbl&gt;, assists &lt;int&gt;, xA &lt;dbl&gt;,
+## #   shots &lt;int&gt;, key_passes &lt;int&gt;, npg &lt;int&gt;, npxG &lt;dbl&gt;, xGChain &lt;dbl&gt;,
+## #   xGBuildup &lt;dbl&gt;, goals_90 &lt;dbl&gt;, xG_90 &lt;dbl&gt;, assists_90 &lt;dbl&gt;,
+## #   xA_90 &lt;dbl&gt;, shots_90 &lt;dbl&gt;, npg_90 &lt;dbl&gt;, npxG_90 &lt;dbl&gt;, xGA_90 &lt;dbl&gt;</code></pre>
+<p>Let’s get some of these numbers on the board, already. I’ll start with a simple scatter plot of xG90 vs xA90, and also mark out players’ FPL positions (PS - the chart styles come courtesy of another personal pkg, <a href="https://github.com/ewenme/ewenthemes">ewenthemes</a>).</p>
+<p><img src="/blog/2019-03-08-xPoints_files/figure-html/simple-xGA-1.svg" width="100%" style="display: block; margin: auto;" /></p>
+<p>This is <em>starting</em> to look useful for an FPL manager. It’s possible to spot players who are regularly creating and getting goalscoring opportunities. A bit more work is needed to actually identify who the best picks are, based on these metrics.</p>
+</div>
+<div id="speaking-the-same-language" class="section level2">
+<h2>Speaking the same language 💬</h2>
+<p>First, it’s probably more helpful to express these expected contributions in terms that are familiar to FPL managers, and take account of the different rewards based on player position. Remember, goals turn into different points for midfielders (5) and forwards (4). Expected assists can similarly be expressed as a rate of FPL points. How does the rate of attacking points scoring stack up?</p>
+<p><img src="/blog/2019-03-08-xPoints_files/figure-html/xPoints-calc-1.svg" width="100%" style="display: block; margin: auto;" /></p>
+<p>Now it’s easier to differentiate a Mo’ and a Kun, for example. Still, crucial information has been left out thus far - <strong>player price</strong>. Each FPL player is attributed a cost in £millions. By adjusting for this, players who represent the best value can be unearthed.</p>
+<p><img src="/blog/2019-03-08-xPoints_files/figure-html/value-calc-1.svg" width="100%" style="display: block; margin: auto;" /></p>
+<p>Ashley Barnes and Danny Ings, Turf Moor behemoths present and past, top the charts here.</p>
+</div>
+<div id="reprise" class="section level2">
+<h2>Reprise 🔮</h2>
+<p>This was a fairly quick run-through of how advanced football metrics can be expressed in fantasy football terms, using some bits of kit I’ve built and shared that I felt guilty about not using much. There are things I think could be explored to make this better:</p>
+<ul>
+<li>A linearly optimized fantasy team (h/t <a href="https://github.com/martineastwood/penalty/tree/master/fantasy_football_optimiser">Martin Eastwood</a>), but an expected points variant.</li>
+<li>Predicting expected clean sheet rate
+<ul>
+<li>Clean sheets are v important in FPL. Modelling teams’ expected clean sheet rate would allow for an expected points linear optimization for an entire squad.</li>
+</ul></li>
+<li>Account for penalties
+<ul>
+<li>The xG figures in here include penalties. Preferable would be non-penalty goals with pens captured differently.</li>
+</ul></li>
+</ul>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>To keep the post concise I don’t show all of the code, especially code that generates figures. But you can find all the code <a href="https://github.com/rbind/ewenme/blob/master/content/blog/2019-01-26-xPoints.Rmd">here</a>.<a href="#fnref1" class="footnote-back">↩</a></p></li>
+</ol>
+</div>
