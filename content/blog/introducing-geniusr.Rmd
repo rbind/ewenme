@@ -12,7 +12,7 @@ knitr::opts_chunk$set(cache=TRUE, echo = TRUE, warning = FALSE, message = FALSE,
 
 # load pkgs
 library(geniusr)
-library(tidyverse)
+library(dplyr)
 library(tidytext)
 library(ggplot2)
 library(waffle)
@@ -36,7 +36,11 @@ versace_search <- search_song(search_term = "Versace") %>% glimpse
 Wanna bring back some fuller information about a particular song (`get_song_meta()`), artist (`get_artist_meta()`) or album (`get_album_meta()`)? Well, now you can. Let's test one out - how about investigating a classic Versace-themed track from our last search, 'Versace' by Migos.
 
 ```{r song_meta}
-versace_meta <- get_song_meta(song_id = versace_search$song_id[4]) %>% glimpse
+versace_meta <- versace_search %>% 
+  filter(artist_name == "Migos", song_name == "Versace") %>% 
+  pull(song_id) %>% 
+  get_song_meta() %>% 
+  glimpse
 ```
 
 With this metadata, we can easily pull up the song's artwork, for example. Why not.
@@ -67,7 +71,7 @@ parts <- c("Not Versace" = versace_prop$proportion[[1]],
            "Versace" = versace_prop$proportion[[2]])
 
 waffle(parts, rows = 8, size = 1, colors = c("#3C3A32", "#E3BD08"), use_glyph = "volume-up", 
-       glyph_size = 10, title = "How much Versace is in Migos - 'Versace'?") +
+       glyph_size = 10, title = "How much of the Migos - 'Versace' lyrics are, indeed, Versace?") +
   labs(caption="@ewen_") +
   theme_void(base_family = "Work Sans", base_size = 12) +
   theme(legend.position = "bottom")
