@@ -1,0 +1,7 @@
+<!DOCTYPE html>
+    <div class="media-player audio-player light">
+      {{ with .Get "mp3" }}<audio data-role="audio" class="" data-src="https://www.dropbox.com/s/{{ . }}.mp3?raw=1" type="audio/mpeg" controls style="width: 100%; margin-bottom: 20px" data-show-loop="false" data-show-stop="false" data-show-volume="false" data-show-info="false" preload="none" src="https://www.dropbox.com/s/{{ . }}.mp3?raw=1" data-role-audio="true">{{ end }}
+    Your browser does not support the audio element.
+</audio>
+<a href="https://www.dropbox.com/s/{{ . }}.mp3?dl=1">Download audio </a>
+</div>
