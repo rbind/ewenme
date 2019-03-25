@@ -5,7 +5,7 @@ theme = "kiss"
 copyright = ""
 Paginate = 5
 enableRobotsTXT = true
-description = "ewen's blog and assorted projects."
+description = "ewen's writing and projects."
 
 [params.rss]
 includeContent = true
@@ -16,7 +16,7 @@ authorEmail = "ewenhenderson@gmail.com"
 customCSS = ["css/custom.css"]
 
 [params.info]
-description = "ewen's blog and assorted projects."
+description = "ewen's writing and projects."
 enableSocial = true
 homeTitle = "ewen"
 poweredby = false
