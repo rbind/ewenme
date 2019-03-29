@@ -10,11 +10,9 @@ draft: no
 
 The latest edition of bathing tapes is out there, recorded at home on a Sunday a couple of months ago. The mix is mostly stuff that came out in the second half of this year that I've been bumping. There's frenetic techno and grime combinations, deviant pop and electro runs, and euphoric breakbeats rubbing against lonely bassweight jams. As always, credit and love to the makers of all this music, filled me up all autumn and beyond.
 
-<iframe width="100%" height="300" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/487675539&color=%23100f0f&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true"></iframe>
-
-**or D/L the mix [here](https://dl.dropboxusercontent.com/s/qgi3kyuuwfn4p23/bathing_tapes_vol_two.mp3?dl=1) and take it outside...**
-
-*tracklist*
+```{r echo=FALSE}
+blogdown::shortcode('player', 'https://www.dropbox.com/s/qgi3kyuuwfn4p23/bathing_tapes_vol_two.mp3')
+```
 
 Pariah, *Rain Soup* [Houndstooth, 2018]  
 Scratcha DVA - *Ikonika Type Beat* [Allyall Records, 2018]  

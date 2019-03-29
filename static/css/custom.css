@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Work+Sans:300,400,700&subset=latin-ext');
- 
+
 .content h1,
 .content h2,
 .content h3,
@@ -31,4 +31,62 @@ body {
   max-width: 800px;
   margin: 0 auto;
   padding: 0px 20px;
+}
+
+#wrapper{
+	margin: 0;
+	padding: 0;
+	border: 0;
+	display: flex;
+  position: relative;
+  align-items: center;
+  font-family: 'Work Sans', sans-serif;
+}
+
+#audioplayer{
+	height: 60px;
+}
+
+#pButton{
+    height:60px;
+    border: none;
+    background-size: 50% 50%;
+    background-repeat: no-repeat;
+    background-position: center;
+		background:transparent;
+    float:left;
+    outline:none;
+}
+
+.play::before {
+  font-family: 'FontAwesome';
+	font-size: 3em;
+	color: black;
+  top: 0;
+  left: 0;
+  content: "\f144";
+	border-radius: 50%;
+}
+
+.pause::before {
+  font-family: 'FontAwesome';
+	font-size: 3em;
+	color: black;
+  top: 0;
+  left: 0;
+  content: "\f28b";
+	border-radius: 50%;
+}
+
+.dl::before {
+	height: 60px;
+	width: 60px;
+  font-family: 'FontAwesome';
+	font-size: 2em;
+	color: black;
+	top: 0;
+  left: 0;
+  margin-left: 10px;
+  content: "\f0c7";
+	border-radius: 50%;
 }
