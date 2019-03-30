@@ -24,13 +24,13 @@ body {
 
 .section {
   background-color: #fff;
-  padding: 20px 0px;
+  padding: 20px 0;
 }
 
 .container {
   max-width: 800px;
   margin: 0 auto;
-  padding: 0px 20px;
+  padding: 0 20px;
 }
 
 #wrapper{
@@ -55,12 +55,12 @@ body {
     background-position: center;
 		background:transparent;
     float:left;
-    outline:none;
 }
 
 .play::before {
   font-family: 'FontAwesome';
 	font-size: 3em;
+	font-weight: 900;
 	color: black;
   top: 0;
   left: 0;
@@ -69,24 +69,27 @@ body {
 }
 
 .pause::before {
+  content: "\f28b";
   font-family: 'FontAwesome';
 	font-size: 3em;
+	font-weight: 900;
 	color: black;
   top: 0;
   left: 0;
-  content: "\f28b";
 	border-radius: 50%;
 }
 
 .dl::before {
 	height: 60px;
-	width: 60px;
+	content: "\f0c7";
   font-family: 'FontAwesome';
 	font-size: 2em;
+	font-weight: 900;
 	color: black;
 	top: 0;
   left: 0;
   margin-left: 10px;
-  content: "\f0c7";
 	border-radius: 50%;
+	text-decoration:none;
+	border-bottom-style: none;
 }

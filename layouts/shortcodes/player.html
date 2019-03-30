@@ -1,8 +1,11 @@
+<!DOCTYPE html>
+<html>
+
 {{ $file := .Get 0}}
 
+  
 <!--HTML5 audio-->
 	<audio id="track" preload="metadata">
-		<source src="{{$file}}?raw=1">
 		<source src="{{$file}}?raw=1">
 	</audio>
 
@@ -42,18 +45,16 @@ function play() {
     }
 }
 
+// duration
 function runWhenLoaded() { 
-  // duration
   duration.innerHTML = formatTime(track.duration); 
   
 }
 
-if (!track.readyState) { // or $audio[0].readyState
+if (!track.readyState) { 
     track.addEventListener("loadedmetadata", runWhenLoaded);
-    // or $audio.on("loadedmetadata", runWhenLoaded);
 } else {
     runWhenLoaded.call(track);
-    // or runWhenLoaded.call($audio[0]);
 }
 
 // current time elapsed
@@ -77,3 +78,5 @@ function getPosition(el) {
     return el.getBoundingClientRect().left;
 }
 </script>
+
+</html>
