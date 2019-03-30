@@ -12,12 +12,14 @@
 	<div id="wrapper">
 		<!--Audio Player Interface-->
 		<div id="audioplayer">
-			<button id="pButton" class="play"></button>
+			<button id="pButton" class="fa fa-play-circle-o fa-2x"></button>
 		</div>
 		<span id="timeElapsed"></span>
 		<span>&nbsp;/&nbsp;</span>
 		<span id="duration"></span>
-		<a href="{{$file}}?dl=1" class="dl" style="text-decoration:none;border-bottom-style: none;"></a>
+		<a href="{{$file}}?dl=1" id="dl" style="text-decoration:none;border-bottom-style: none;">
+		  <i class="fa fa-floppy-o fa-2x" aria-hidden="true"></i>
+		</a>
 	</div>
 
 <script type="text/javascript">
@@ -36,12 +38,12 @@ function play() {
         track.play();
         // remove play, add pause
         pButton.className = "";
-        pButton.className = "pause";
+        pButton.className = "fa fa-pause-circle-o fa-2x";
     } else { // pause music
         track.pause();
         // remove pause, add play
         pButton.className = "";
-        pButton.className = "play";
+        pButton.className = "fa fa-play-circle-o fa-2x";
     }
 }
 

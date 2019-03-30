@@ -44,11 +44,11 @@ body {
 }
 
 #audioplayer{
-	height: 60px;
+	height: 40px;
 }
 
 #pButton{
-    height:60px;
+    height:40px;
     border: none;
     background-size: 50% 50%;
     background-repeat: no-repeat;
@@ -57,39 +57,15 @@ body {
     float:left;
 }
 
-.play::before {
-  font-family: 'FontAwesome';
-	font-size: 3em;
-	font-weight: 900;
-	color: black;
-  top: 0;
-  left: 0;
-  content: "\f144";
-	border-radius: 50%;
+.fa-play-circle-o, .fa-pause-circle-o {
+  color: #42464c;
 }
 
-.pause::before {
-  content: "\f28b";
-  font-family: 'FontAwesome';
-	font-size: 3em;
-	font-weight: 900;
-	color: black;
-  top: 0;
-  left: 0;
-	border-radius: 50%;
-}
-
-.dl::before {
-	height: 60px;
-	content: "\f0c7";
-  font-family: 'FontAwesome';
-	font-size: 2em;
-	font-weight: 900;
-	color: black;
-	top: 0;
-  left: 0;
+.fa-floppy-o {
   margin-left: 10px;
-	border-radius: 50%;
-	text-decoration:none;
+  color: #42464c;
+  text-decoration:none;
 	border-bottom-style: none;
-}
+  }
+  
+  
