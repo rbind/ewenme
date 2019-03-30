@@ -1,11 +1,9 @@
-<link rel="stylesheet" type="text/css" href="css/custom.css">
-<link href="https://fonts.googleapis.com/css?family=Work+Sans" rel="stylesheet">
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+{{ $file := .Get 0}}
 
 <!--HTML5 audio-->
 	<audio id="track" preload="metadata">
-		<source src="{{ .Get 0 }}?raw=1">
-		<source src="{{ .Get 0 }}?raw=1">
+		<source src="{{$file}}?raw=1">
+		<source src="{{$file}}?raw=1">
 	</audio>
 
 	<div id="wrapper">
@@ -16,11 +14,11 @@
 		<span id="timeElapsed"></span>
 		<span>&nbsp;/&nbsp;</span>
 		<span id="duration"></span>
-		<a href="{{ .Get 0 }}?dl=1" class="dl" style="text-decoration:none;border-bottom-style: none;"></a>
+		<a href="{{$file}}?dl=1" class="dl" style="text-decoration:none;border-bottom-style: none;"></a>
 	</div>
 
 <script type="text/javascript">
-  var track = document.getElementById('track'); // id for audio element
+var track = document.getElementById('track'); // id for audio element
 var pButton = document.getElementById('pButton'); // play button
 var timeElapsed = document.getElementById('timeElapsed'); // elapsed time
 var duration = document.getElementById('duration'); // track duration
@@ -44,13 +42,24 @@ function play() {
     }
 }
 
+function runWhenLoaded() { 
+  // duration
+  duration.innerHTML = formatTime(track.duration); 
+  
+}
+
+if (!track.readyState) { // or $audio[0].readyState
+    track.addEventListener("loadedmetadata", runWhenLoaded);
+    // or $audio.on("loadedmetadata", runWhenLoaded);
+} else {
+    runWhenLoaded.call(track);
+    // or runWhenLoaded.call($audio[0]);
+}
+
 // current time elapsed
 setInterval(function() {
     timeElapsed.textContent = formatTime(track.currentTime);
 }, 100);
-
-// duration
-duration.innerHTML = formatTime(track.duration);
 
 // nicer time formating
 function formatTime(s, m) {
