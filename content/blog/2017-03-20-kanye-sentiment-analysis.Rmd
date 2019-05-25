@@ -11,17 +11,20 @@ draft: no
 
 knitr::opts_chunk$set(cache = TRUE, echo = TRUE, warning = FALSE, message = FALSE, out.width = '100%', dpi = 180)
 
+# remotes::install_github("ewenme/ewenthemes")
+
+# load packages
 library(tidyverse)
-library(hrbrthemes)
+library(ewenthemes)
 library(tidytext)
-library(forcats)
 library(ggalt)
 library(broom)
+library(ghibli)
 
 # load data
 df <- readRDS("../data/kanye.Rda")
 
-# remove track part cues
+# remove track part cues from lyrics
 df$lyrics <- gsub("\\[[^\\]]*\\]", "", df$lyrics, perl=TRUE)
 
 df$duration <- as.numeric(df$duration)
@@ -29,28 +32,24 @@ df$duration <- as.numeric(df$duration)
 #make album an ordered factor
 df$album <- fct_inorder(as.factor(df$album))
 
-#turn the data into one row, one word, and remove stop words
+# transform data into one row per word
 tidy_df <- df %>%
   unnest_tokens(word, lyrics) %>%
+  # remove common ad-libs
   filter(!word %in% c("la", "uh"))
 
 #censor some things
-tidy_df$word[tidy_df$word == "nigga"] <- "n**ga"
-tidy_df$word[tidy_df$word == "niggas"] <- "n**gas"
-tidy_df$word[tidy_df$word == "shit"] <- "s**t"
-tidy_df$word[tidy_df$word == "fuck"] <- "f**k"
+tidy_df$word <- str_replace_all(
+  tidy_df$word, c("nigga" = "n**ga", "niggas" = "n**gas",
+                  "shit" = "s**t", "fuck" = "f**k")
+  )
 
 #sentiment_df
-sentiment_df <- df %>%
-  unnest_tokens(word, lyrics) %>%
-  anti_join(stop_words) %>%
-  filter(!word %in% c("la", "uh"))
+sentiment_df <- tidy_df %>%
+  anti_join(stop_words)
 
-#censor some things
-sentiment_df$word[sentiment_df$word == "nigga"] <- "n**ga"
-sentiment_df$word[sentiment_df$word == "niggas"] <- "n**gas"
-sentiment_df$word[sentiment_df$word == "shit"] <- "s**t"
-sentiment_df$word[sentiment_df$word == "fuck"] <- "f**k"
+# chart caption
+chart_caption <- "lyric data from genius.com | @ewen_"
 ```
 
 Kanye West is responsible for some of the realest, funniest (*"if you fall on the concrete thats your ass fault"*...ass fault...asphalt...anyone?) and inspiring lyrics in music, period. Can the application of sentiment analysis techniques help us understand more about his art?[^fullcode]
@@ -69,16 +68,16 @@ To begin with, a simple look at Ye's lyric count by album:
 
 tidy_df %>%
   count(n(), album) %>%
-  ggplot(aes(x=n, y=fct_rev(album))) +
-  geom_lollipop(point.colour="firebrick", point.size=2, horizontal=TRUE) +
-  scale_x_comma(breaks = seq(0, 15000, by=2500), limits = c(0, 15000)) +
-  theme_ipsum(grid="X", base_size = 14, axis_title_size = 14, caption_size = 12,
-              plot_title_size = 18, subtitle_size = 14) +
-  labs(title="How many words are in Kanye West albums?",
-       x=NULL,
-       y=NULL,
-       subtitle="Records in chronological order",
-       caption="Lyric data from genius.com")
+  ggplot(aes(x = n, y = fct_rev(album))) +
+  geom_lollipop(point.colour = ghibli_palettes$SpiritedMedium[4], point.size = 3, horizontal = TRUE) +
+  scale_x_comma(breaks = seq(0, 15000, by=2500), limits = c(0, 15000), expand = c(0, 0)) +
+  scale_y_discrete(labels = function(x) str_wrap(x, width = 20)) +
+  theme_ewen_ws(axis = "y", base_size = 11, plot_title_size = 16) +
+  theme(axis.text.y = element_text(margin = margin(r = 10), size = 10)) +
+  labs(title = "How many words are in Kanye West albums?",
+       x = NULL, y = NULL,
+       subtitle = "Records in chronological order",
+       caption = chart_caption)
 ```
 
 *The College Dropout* is clearly the album with biggest (lyrical) bang for your buck, registering **13,679 words**. *808s & Heartbreak* and *Yeezus* lag the farthest behind (below five-thousand a piece, and around one-third of *College Dropout*), and with good reason - *808s* is memorably less lyrically dense than the others, while the latter has the smallest number of tracks. 
@@ -86,24 +85,25 @@ tidy_df %>%
 We can normalise by track length and give a measure of 'lyrical density' (words-per-second) across time:
 
 ```{r}
-album_df <- tidy_df %>%
+album_word_counts <- tidy_df %>%
   count(n(), album) 
 
-album_df_b <- df %>%
+album_data <- df %>%
   group_by(album) %>%
   summarise(duration=sum(duration)) %>%
-  left_join(album_df, by="album") %>%
+  left_join(album_word_counts, by="album") %>%
   mutate(count_per_sec=n/duration)
 
-ggplot(album_df_b, aes(x=count_per_sec, y=fct_rev(album))) +
-  geom_lollipop(point.colour="firebrick", point.size=2, horizontal=TRUE) +
-  theme_ipsum(grid="X", base_size = 14, axis_title_size = 14, caption_size = 12,
-              plot_title_size = 18, subtitle_size = 14) +
-  labs(title="Words-per-second in Kanye West albums",
-       x=NULL,
-       y=NULL,
-       subtitle="Records in chronological order",
-       caption="Lyric data from genius.com")
+ggplot(album_data, aes(x = count_per_sec, y = fct_rev(album))) +
+  geom_lollipop(point.colour = ghibli_palettes$SpiritedMedium[4], point.size = 3, horizontal = TRUE) +
+  scale_x_continuous(limits = c(0, 3), expand = expand_scale(mult = c(0, .1))) +
+  scale_y_discrete(labels = function(x) str_wrap(x, width = 20)) +
+  theme_ewen_ws(axis = "y", base_size = 11, plot_title_size = 16) +
+  theme(axis.text.y = element_text(margin = margin(r = 10), size = 10)) +
+  labs(title = "Words-per-second in Kanye West albums",
+       x = NULL, y = NULL,
+       subtitle = "Records in chronological order",
+       caption = chart_caption)
 ```
 
 Again, as expected, *808s* hangs back in the words-per-second stakes. *The Life Of Pablo* (TLOP) exhibits a lyrical pace more comparable to Kanye's earlier albums (*College Dropout* stays top, still). It's trickier to say for sure if his flow/delivery is a throwback from this metric alone (would be more optimal if tempo was incorporated into this equation, and remember that this figure includes breakdowns, outros, etc.) but maybe someone's been listening...
@@ -119,15 +119,13 @@ It's worth taking a look at how some of this looks across tracks, too.
 tidy_df %>%
   count(n(), name) %>%
   ggplot() +
-  geom_histogram(aes(n), fill="firebrick") +
-  scale_x_comma(breaks = seq(0, 3000, by=500), limits = c(0, 3000)) +
-  theme_ipsum(base_size = 14, axis_title_size = 14, caption_size = 12,
-              plot_title_size = 18, subtitle_size = 14) +
+  geom_histogram(aes(n), fill = ghibli_palettes$SpiritedMedium[4]) +
+  scale_y_continuous(expand = expand_scale(mult = c(0, 0.1))) +
+  theme_ewen_ws(base_size = 11, plot_title_size = 16) +
   annotate("text", label = "'Last Call'", x = 2800, y = 2) +
-  labs(title="Distribution of word counts in Kanye West album tracks",
-       x="Word count",
-       y="No. of tracks",
-       caption="Lyric data from genius.com")
+  labs(title = "Distribution of word counts in Kanye West album tracks",
+       x = "Word count", y = "No. of tracks",
+       caption = chart_caption)
 ```
 
 'Last Call' stands lone and tall at **2,745** words, with most in and around the 500-mark. However, 'Last Call' is also the *longest* Kanye album track (12:40(!!)). As before, what happens if we normalise by track length?
@@ -136,18 +134,17 @@ tidy_df %>%
 
 tidy_df %>%
   group_by(name) %>%
-  summarise(word_count=n()) %>%
-  left_join(df, by="name") %>%
-  mutate(count_per_sec=word_count/duration) %>%
+  summarise(word_count = n()) %>%
+  left_join(df, by = "name") %>%
+  mutate(count_per_sec = word_count / duration) %>%
   ggplot() +
-  geom_histogram(aes(count_per_sec), fill="firebrick") +
-  theme_ipsum(base_size = 14, axis_title_size = 14, caption_size = 12,
-              plot_title_size = 18, subtitle_size = 14) +
+  geom_histogram(aes(count_per_sec), fill = ghibli_palettes$SpiritedMedium[4]) +
+  theme_ewen_ws(base_size = 11, plot_title_size = 15) +
+  scale_y_continuous(expand = expand_scale(mult = c(0, 0.1))) +
   annotate("text", label = "'Freestyle 4'", x = 8.3, y = 2) +
-  labs(title="Words-per-second distribution of Kanye West album tracks",
-       x="Words per Second",
-       y="No. of tracks",
-       caption="Lyric data from genius.com")
+  labs(title = "Words-per-second distribution of Kanye West album tracks",
+       x = "Words per Second", y = "No. of tracks",
+       caption = chart_caption)
 ```
 
 Now, 'Freestyle 4' off of *TLOP* is highest - remember, this metric of lyrical density is inclusive of breakdowns and such. If you listen to this track which is just over two-minutes long, you'll see there is literally no let-up from the big man.
@@ -157,16 +154,17 @@ For good measure, let's end this section with a quick look at the range of lyric
 ```{r echo=FALSE}
 df %>%
   group_by(album) %>%
-  summarise(min=min(duration), max=max(duration)) %>%
-  ggplot(aes(y=fct_rev(album), x=min, xend=max)) + 
-  geom_dumbbell(size=3, color="#e3e2e1", 
-                colour_x = "firebrick", colour_xend = "firebrick",
-                dot_guide=TRUE, dot_guide_size=0.25) +
-  scale_x_continuous(breaks = seq(0, 800, by=200)) +
-  labs(x="Seconds", y=NULL, title="Range of track lengths in Kanye West albums",
-       caption="Lyric data from genius.com") +
-  theme_ipsum(base_size = 14, axis_title_size = 14, caption_size = 12,
-              plot_title_size = 18, subtitle_size = 14)
+  summarise(min = min(duration), max = max(duration)) %>%
+  ggplot(aes(y = fct_rev(album), x = min, xend = max)) + 
+  geom_dumbbell(size = 3, color = "#e3e2e1", 
+                colour_x = ghibli_palettes$SpiritedMedium[3], 
+                colour_xend = ghibli_palettes$SpiritedMedium[4],
+                dot_guide = FALSE) +
+  scale_x_continuous(breaks = seq(0, 800, by = 200)) +
+  scale_y_discrete(labels = function(x) str_wrap(x, width = 20)) +
+  labs(x = "Track length (seconds)", y = NULL, title = "Range of track lengths in Kanye West albums",
+       caption = chart_caption) +
+  theme_ewen_ws(base_size = 11, plot_title_size = 16)
 ```
 
 How similar are *Graduation*, *808s* and *Yeezus*?
@@ -180,17 +178,17 @@ We've touched on things like the word count and lyrical density of Kanye's recor
 ```{r echo=FALSE}
 sentiment_df %>%
   group_by(word) %>%
-  summarise(count=n()) %>%
-  top_n(n=10, wt=count) %>%
-  ggplot(aes(x=reorder(str_to_upper(word), -count), y=count)) +
-  geom_lollipop(point.colour="firebrick", point.size=2) +
-  theme_ipsum(base_size = 14, axis_title_size = 14, caption_size = 12,
-              plot_title_size = 18, subtitle_size = 14) +
-  labs(title="Most common lyrics in Kanye West albums",
-       x=NULL,
-       y=NULL,
-       subtitle="Ranked by word count",
-       caption="Lyric data from genius.com")
+  summarise(count = n()) %>%
+  top_n(n = 10, wt=count) %>%
+  ggplot(aes(x = reorder(str_to_upper(word), -count), y=count)) +
+  geom_lollipop(point.colour = ghibli_palettes$SpiritedMedium[4], point.size=3) +
+  scale_y_continuous(expand = expand_scale(mult = c(0, 0.1))) +
+  theme_ewen_ws(base_size = 11, plot_title_size = 16) +
+  theme(axis.text.x = element_text(margin = margin(t = 5))) +
+  labs(title = "Most common lyrics in Kanye West albums",
+       x = NULL, y = NULL,
+       subtitle = "Ranked by word count",
+       caption = chart_caption)
 
 ```
 
@@ -226,18 +224,15 @@ by_album_sentiment <- sentiment_df %>%
 
 by_album_sentiment %>%
   filter(!sentiment %in% c("negative", "positive", "trust", "fear")) %>%
-  ggplot(aes(x=album, y=album_prop, group=sentiment, colour=sentiment)) +
-  geom_line(size=1.5) +
-  theme_ipsum(base_size = 14, axis_title_size = 14, grid="Y", caption_size = 11,
-              plot_title_size = 18, subtitle_size = 14, axis_text_size = 8) +
-  scale_color_ipsum() +
-  scale_y_percent(limits = c(0, 0.1), breaks = seq(0, 0.1, by=0.02)) +
+  ggplot(aes(x = album, y = album_prop, group = sentiment, colour = sentiment)) +
+  geom_line(size = 1.1) +
+  scale_color_ghibli_d(name = "PonyoMedium") +
+  scale_y_percent(limits = c(0, 0.1), breaks = seq(0, 0.1, by=0.02), 
+                  labels = scales::percent_format(accuracy = 1L)) +
   scale_x_discrete(labels = function(x) str_wrap(x, width = 20)) +
-  labs(title="Sentiment in Kanye West albums",
-       x=NULL,
-       y="% lyrics",
-       subtitle="Powered by the NRC lexicon",
-       caption="Lyric data from genius.com") +
+  labs(title = "Sentiment in Kanye West albums",
+       x = NULL, y = "% lyrics", caption = chart_caption) +
+  theme_ewen_ws(base_size = 11, plot_title_size = 16) +
   theme(axis.text.x=element_text(angle=45, hjust = 1, size=8)) +
   theme(legend.position="top")
 
@@ -283,14 +278,11 @@ by_track_sentiment <- sentiment_df %>%
 by_track_sentiment %>%
   filter(album == "My Beautiful Dark Twisted Fantasy") %>%
   ggplot(aes(x=sentiment, y=reorder(str_to_title(name), -track_no))) +
-  geom_lollipop(point.colour="firebrick", point.size=2, horizontal=TRUE) +
-  theme_ipsum(base_size = 14, axis_title_size = 14,  grid="Y", caption_size = 12,
-              plot_title_size = 18, subtitle_size = 14) +
+  geom_lollipop(point.colour = ghibli_palettes$SpiritedMedium[4], point.size=3, horizontal=TRUE) +
+  theme_ewen_ws(base_size = 11, plot_title_size = 16) +
   labs(title="Ratio of negative/positive sentiment in \nMy Beautiful Dark Twisted Fantasy",
-       x="Sentiment ratio (negative-positive)",
-       y=NULL,
-       subtitle="Powered by the Bing lexicon",
-       caption="Lyric data from genius.com")
+       x="Sentiment ratio (negative-positive)", y=NULL,
+       caption=chart_caption)
 ```
 
 The above uses the [Bing lexicon](https://www.cs.uic.edu/~liub/FBS/sentiment-analysis.html#lexicon) to examine how positive/negative sentiment manifests by track in *My Beautiful Dark Twisted Fantasy*. 'Monster' is furthest to the left with the highest ratio of negative to positive sentiment in it's lyrics, followed closely by 'So Appalled'. In fact, 'All of the Lights' would appear to be the only real respite for 'positive' lyrical sentiment.
@@ -302,14 +294,11 @@ by_track_sentiment %>%
   arrange(desc(sentiment)) %>%
   filter(row_number()<=10 | row_number()>=n()-10) %>%
   ggplot(aes(x=sentiment, y=reorder(str_to_title(name), sentiment))) +
-  geom_lollipop(point.colour="firebrick", point.size=2, horizontal=TRUE) +
-  theme_ipsum(base_size = 14, axis_title_size = 14,  grid="Y", caption_size = 12,
-              plot_title_size = 18, subtitle_size = 14) +
+  geom_lollipop(point.colour=ghibli_palettes$SpiritedMedium[4], point.size=2, horizontal=TRUE) +
+  theme_ewen_ws(base_size = 11, plot_title_size = 16, axis_text_size = 8) +
   labs(title="Highest ratios of positive and negative sentiment in \nKanye West's album cuts",
-       x="Sentiment ratio (negative-positive)",
-       y=NULL,
-       subtitle=" Powered by the Bing lexicon",
-       caption="Lyric data from genius.com")
+       x="Sentiment ratio (negative-positive)", y=NULL,
+       caption=chart_caption)
 ```
 
 It might be surprising to see 'Amazing' way out in front (n.b. I explain Love Lockdown's perhaps false position in the conclusion). Remember, this is based on lyrics *only* - here's a reminder of the hook...

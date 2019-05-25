@@ -18,24 +18,25 @@ draft: no
 <p><img src="/blog/2017-03-20-kanye-sentiment-analysis_files/figure-html/unnamed-chunk-2-1.png" width="100%" /></p>
 <p><em>The College Dropout</em> is clearly the album with biggest (lyrical) bang for your buck, registering <strong>13,679 words</strong>. <em>808s &amp; Heartbreak</em> and <em>Yeezus</em> lag the farthest behind (below five-thousand a piece, and around one-third of <em>College Dropout</em>), and with good reason - <em>808s</em> is memorably less lyrically dense than the others, while the latter has the smallest number of tracks.</p>
 <p>We can normalise by track length and give a measure of ‘lyrical density’ (words-per-second) across time:</p>
-<pre class="r"><code>album_df &lt;- tidy_df %&gt;%
+<pre class="r"><code>album_word_counts &lt;- tidy_df %&gt;%
   count(n(), album) 
 
-album_df_b &lt;- df %&gt;%
+album_data &lt;- df %&gt;%
   group_by(album) %&gt;%
   summarise(duration=sum(duration)) %&gt;%
-  left_join(album_df, by=&quot;album&quot;) %&gt;%
+  left_join(album_word_counts, by=&quot;album&quot;) %&gt;%
   mutate(count_per_sec=n/duration)
 
-ggplot(album_df_b, aes(x=count_per_sec, y=fct_rev(album))) +
-  geom_lollipop(point.colour=&quot;firebrick&quot;, point.size=2, horizontal=TRUE) +
-  theme_ipsum(grid=&quot;X&quot;, base_size = 14, axis_title_size = 14, caption_size = 12,
-              plot_title_size = 18, subtitle_size = 14) +
-  labs(title=&quot;Words-per-second in Kanye West albums&quot;,
-       x=NULL,
-       y=NULL,
-       subtitle=&quot;Records in chronological order&quot;,
-       caption=&quot;Lyric data from genius.com&quot;)</code></pre>
+ggplot(album_data, aes(x = count_per_sec, y = fct_rev(album))) +
+  geom_lollipop(point.colour = ghibli_palettes$SpiritedMedium[4], point.size = 3, horizontal = TRUE) +
+  scale_x_continuous(limits = c(0, 3), expand = expand_scale(mult = c(0, .1))) +
+  scale_y_discrete(labels = function(x) str_wrap(x, width = 20)) +
+  theme_ewen_ws(axis = &quot;y&quot;, base_size = 11, plot_title_size = 16) +
+  theme(axis.text.y = element_text(margin = margin(r = 10), size = 10)) +
+  labs(title = &quot;Words-per-second in Kanye West albums&quot;,
+       x = NULL, y = NULL,
+       subtitle = &quot;Records in chronological order&quot;,
+       caption = chart_caption)</code></pre>
 <p><img src="/blog/2017-03-20-kanye-sentiment-analysis_files/figure-html/unnamed-chunk-3-1.png" width="100%" /></p>
 <p>Again, as expected, <em>808s</em> hangs back in the words-per-second stakes. <em>The Life Of Pablo</em> (TLOP) exhibits a lyrical pace more comparable to Kanye’s earlier albums (<em>College Dropout</em> stays top, still). It’s trickier to say for sure if his flow/delivery is a throwback from this metric alone (would be more optimal if tempo was incorporated into this equation, and remember that this figure includes breakdowns, outros, etc.) but maybe someone’s been listening…</p>
 <p><img src="/img/2017-03-20-Kanye_sentiment_analysis/kanye_tweets.png" width="75%" style="display: block; margin: auto;" /></p>
