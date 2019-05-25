@@ -2,13 +2,14 @@
 title: "Introducing geniusr"
 description: "I made an R interface to the Genius API."
 date: "2017-12-06"
-tags: ["r", "package", "genius", "geniusr"]
+tags: ["r", "music"]
+slug: introducing-geniusr
 draft: no
 ---
 
 ```{r setup, include=FALSE}
 # markdown setup
-knitr::opts_chunk$set(cache=TRUE, echo = TRUE, warning = FALSE, message = FALSE, dev = 'svg')
+knitr::opts_chunk$set(cache=TRUE, echo = TRUE, warning = FALSE, message = FALSE)
 
 # load pkgs
 library(geniusr)
@@ -70,8 +71,8 @@ versace_prop <- scrape_lyrics_url(versace_meta$song_lyrics_url) %>%
 parts <- c("Not Versace" = versace_prop$proportion[[1]],
            "Versace" = versace_prop$proportion[[2]])
 
-waffle(parts, rows = 8, size = 1, colors = c("#3C3A32", "#E3BD08"), use_glyph = "volume-up", 
-       glyph_size = 10, title = "How much of the Migos - 'Versace' lyrics are, indeed, Versace?") +
+waffle(parts, rows = 8, size = 1, colors = c("#3C3A32", "#E3BD08"), 
+       title = "How much of the Migos - 'Versace' lyrics are, indeed, Versace?") +
   labs(caption="@ewen_") +
   theme_void(base_family = "Work Sans", base_size = 12) +
   theme(legend.position = "bottom")

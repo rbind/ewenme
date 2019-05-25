@@ -1,15 +1,16 @@
 ---
-title: "My Linear(ish) Programming Fantasy"
+title: "My Linear(ish) programming fantasy"
 description: "Applying linear programming principles to the selection of a fantasy football team."
 date: "2017-11-06"
 tags: ["r", "linear-programming", "fpl"]
+slug: my-linear-programming-fantasy
 draft: no
 ---
 
 ```{r setup, include=FALSE}
 
 # markdown setup
-knitr::opts_chunk$set(cache=TRUE, echo = FALSE, warning = FALSE, message = FALSE, out.width = '100%', dev = 'svg')
+knitr::opts_chunk$set(cache=TRUE, echo = FALSE, warning = FALSE, message = FALSE, out.width = '100%')
 
 # load pkgs
 library(tidyverse)
@@ -26,10 +27,10 @@ library(captioner)
 # LOAD  ----------------------------------------------
 
 # load funcs
-source('~/Documents/Github/fplinear/lp_funcs.R')
+source('https://raw.githubusercontent.com/ewenme/fplinear/master/lp_funcs.R')
 
 # data load
-player_data <- read_csv("~/Documents/Github/fplinear/player_data.csv")
+player_data <- read_csv("https://raw.githubusercontent.com/ewenme/fplinear/master/player_data.csv")
 
 # set captioner
 prefix <- captioner(prefix = "")

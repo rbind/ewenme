@@ -2,7 +2,8 @@
 title: "Meet Dumb Hardwax"
 description: "The story of my first tweetbot, complete with forays into Azure and Markov Chains."
 date: "2017-10-11"
-tags: ["r", "tweetbot", "azure", "markov-chains"]
+tags: ["r", "bots", "cloud", "markov-chains"]
+slug: meet-dumb-hardwax
 draft: no
 ---
 

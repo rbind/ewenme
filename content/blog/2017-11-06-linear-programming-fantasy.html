@@ -1,8 +1,9 @@
 ---
-title: "My Linear(ish) Programming Fantasy"
+title: "My Linear(ish) programming fantasy"
 description: "Applying linear programming principles to the selection of a fantasy football team."
 date: "2017-11-06"
 tags: ["r", "linear-programming", "fpl"]
+slug: my-linear-programming-fantasy
 draft: no
 ---
 
@@ -15,6 +16,7 @@ draft: no
 <script src="/rmarkdown-libs/dt-core/js/jquery.dataTables.min.js"></script>
 <link href="/rmarkdown-libs/crosstalk/css/crosstalk.css" rel="stylesheet" />
 <script src="/rmarkdown-libs/crosstalk/js/crosstalk.min.js"></script>
+<script src="/rmarkdown-libs/kePrint/kePrint.js"></script>
 
 
 <p><a href="https://en.wikipedia.org/wiki/Linear_programming">Linear optimization</a> (AKA linear programming) is all around us, even if we don’t really know it. For example, how did you come to pick your route to work today? This decision, lovingly known as “getting from A to B”, is (most of the time) objectively simple: <strong>which route is the quickest?</strong></p>
@@ -47,7 +49,7 @@ draft: no
 <div id="objective-function" class="section level2">
 <h2>Objective Function</h2>
 <p>The <strong>objective function</strong> summarizes the objective of making decisions (i.e. picking goalkeepers). Ultimately, we want to score as many points as possible per unit cost (we’ll leave the value aspect of this function, for now). First, it’s necessary to identify point-scoring patterns at a weekly level, so lets examine an example goalkeeping pair’s points.</p>
-<p><img src="/blog/linear-programming-fantasy_files/figure-html/goalies_plot-1.svg" width="100%" /></p>
+<p><img src="/blog/2017-11-06-linear-programming-fantasy_files/figure-html/goalies_plot-1.png" width="100%" /></p>
 <p>There are a few things at play in the above plot, which shows the points scored by week for Chelsea’s Courtois and Arsenal’s Cech. Not only can we identify the level of points these players score individually, but how well the patterns of point-scoring complement each other (i.e. do they score well in alternate weeks).</p>
 </div>
 <div id="constraints" class="section level2">

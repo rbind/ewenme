@@ -1,15 +1,16 @@
 ---
-title: "Hacking Homelessness & PDF Prisons"
+title: "Hacking homelessness & PDF prisons"
 description: "How to extract data from PDFs (in this case, homelessness figures in London), alongside a showcase of algorithmic tesselation of geospatial polygons."
 date: "2017-11-09"
-tags: ["r", "gis", "pdf", "homelessness"]
+tags: ["r", "gis", "homelessness"]
+slug: meet-dumb-hardwax
 draft: no
 ---
 
 ```{r setup, include=FALSE}
 
 # markdown setup
-knitr::opts_chunk$set(cache=TRUE, echo = FALSE, warning = FALSE, message = FALSE, out.width = '100%', dpi = 180, dev = 'svg')
+knitr::opts_chunk$set(cache=TRUE, echo = FALSE, warning = FALSE, message = FALSE, out.width = '100%', dpi = 180)
 
 # load pkgs
 library(plyr)

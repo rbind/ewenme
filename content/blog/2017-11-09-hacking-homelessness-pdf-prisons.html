@@ -1,8 +1,9 @@
 ---
-title: "Hacking Homelessness & PDF Prisons"
+title: "Hacking homelessness & PDF prisons"
 description: "How to extract data from PDFs (in this case, homelessness figures in London), alongside a showcase of algorithmic tesselation of geospatial polygons."
 date: "2017-11-09"
-tags: ["r", "gis", "pdf", "homelessness"]
+tags: ["r", "gis", "homelessness"]
+slug: meet-dumb-hardwax
 draft: no
 ---
 
@@ -123,10 +124,10 @@ ggplot(original_shapes_sf) +
   coord_sf() +
   scale_fill_viridis_c() +
   theme_void()</code></pre>
-<p><img src="/blog/hacking-homelessness-pdf-prisons_files/figure-html/traditional_map-1.svg" width="100%" /></p>
+<p><img src="/blog/2017-11-09-hacking-homelessness-pdf-prisons_files/figure-html/traditional_map-1.png" width="100%" /></p>
 <p>The metric used here represents % change in 2016/17 rough sleepers compared to 2013/14. Barking is highest (14 up to 49), but the eye and mind may be more drawn to some of it’s bigger neighbours (e.g. Havering).</p>
 <p>Algorithmic tessellation is used to generate possible grid layouts for the data (as explained in the GitHub repo - I’ll just be demo-ing the hexes, but the same can be done with regular grids):</p>
-<p><img src="/blog/hacking-homelessness-pdf-prisons_files/figure-html/seeds-1.svg" width="100%" /></p>
+<p><img src="/blog/2017-11-09-hacking-homelessness-pdf-prisons_files/figure-html/seeds-1.png" width="100%" /></p>
 <p>I’m quite partial to #3. Maneuvering from real space geography to this grid involves an implementation of the <a href="https://github.com/RcppCore/rcpp-gallery/blob/gh-pages/src/2013-09-24-minimal-assignment.cpp">hungarian algorithm</a>. All you have to do is <code>calculate_cell_size()</code> with the grid (seed) of choice and <code>assign_polygons()</code> to the shapefile containing the original geography. From there, the steps to visualisation are identical to previous ones:</p>
 <pre class="r"><code>new_cells_hex &lt;-  calculate_grid(original_shapes, 0.03, &#39;hexagonal&#39;, 3)
 resulthex &lt;- assign_polygons(original_shapes, new_cells_hex)
@@ -172,7 +173,7 @@ ggplot(resulthex_sf) +
     plot.margin = margin(1, 1, 1, 1, &#39;cm&#39;),
     legend.key.height = unit(1, &quot;cm&quot;), legend.key.width = unit(0.2, &quot;cm&quot;)
   ) </code></pre>
-<p><img src="/blog/hacking-homelessness-pdf-prisons_files/figure-html/hex_map-1.svg" width="100%" /></p>
+<p><img src="/blog/2017-11-09-hacking-homelessness-pdf-prisons_files/figure-html/hex_map-1.png" width="100%" /></p>
 <p>From PDF prison to 🔥 hex map with ease. May this inspire you to solve your own <a href="https://twitter.com/hashtag/otherpeoplesdata?src=hash">#otherpeoplesdata</a> horror stories.</p>
 </div>
 <div id="on-a-more-serious-note" class="section level2">

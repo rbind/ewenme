@@ -1,18 +1,16 @@
 ---
-title: "Unravelling the European Football Transfer Window"
+title: "Unravelling the European football transfer window"
 description: "Scraping data on 2017 football transfers and following the money trails."
 date: "2017-09-07"
-tags: ["r", "football", "web-scraping"]
+tags: ["r", "football", "scraping"]
+slug: unravelling-euro-football-transfer-window
 draft: no
 ---
 
 ```{r setup, include=FALSE}
 
 # markdown setup
-knitr::opts_chunk$set(cache=TRUE, echo = TRUE, warning = FALSE, message = FALSE, out.width = '100%', dev = 'svg')
-
-# install latest ggplot2 version
-# remotes::install_github("tidyverse/ggplot2", force=TRUE)
+knitr::opts_chunk$set(cache=TRUE, echo = TRUE, warning = FALSE, message = FALSE, out.width = '100%')
 
 # load pkgs for session
 library(jsonlite)

@@ -2,7 +2,8 @@
 title: "Meet Dumb Hardwax"
 description: "The story of my first tweetbot, complete with forays into Azure and Markov Chains."
 date: "2017-10-11"
-tags: ["r", "tweetbot", "azure", "markov-chains"]
+tags: ["r", "bots", "cloud", "markov-chains"]
+slug: meet-dumb-hardwax
 draft: no
 ---
 
@@ -46,12 +47,12 @@ hardwax_scrape &lt;- function(page, no) {
 <p>This simple URL structure meant the function could be easily applied for each section/genre on the site, like pulling the latest weeks new ish:</p>
 <pre class="r"><code># scrape news
 lapply(seq_along(1:2), hardwax_scrape, page=&quot;this-week&quot;) %&gt;% unlist() %&gt;% head()</code></pre>
-<pre><code>## [1] &quot;Flawless Acid Electro science by the truly professional grand master Carl Finlow&quot;         
-## [2] &quot;Driving Electro Bass&quot;                                                                     
-## [3] &quot;Stunning rhythm tracks somewhere in between leftfield Techno &amp; Grime&quot;                     
-## [4] &quot;Beautiful Ambient atmospheres &amp; stepping House organics&quot;                                  
-## [5] &quot;One sided 12\&quot; - blinding, raw Proto-House reminiscent cut &amp; noisy leftfield Electro trip&quot;
-## [6] &quot;One sided 12\&quot; - blinding, raw Proto-House reminiscent cut &amp; noisy leftfield Electro trip&quot;</code></pre>
+<pre><code>## [1] &quot;Heavy, EBM tinged Techno grinders&quot;                               
+## [2] &quot;Mesmerizing, deep, vibrant Techno trips (download card included)&quot;
+## [3] &quot;Fine, warmly dubbed out House drifters&quot;                          
+## [4] &quot;Expertly excuted, playful Electro bangers&quot;                       
+## [5] &quot;Previously unreleased, far-out mid-90s UK Jungle gems&quot;           
+## [6] &quot;Ace, reduced Drum &amp; Bass rollers&quot;</code></pre>
 <p>Once the various sections were scraped, some data cleaning procedures (remove releases with no reviews, reviews longer than 140 characters, or duplicate reviews) ensured the reviews were fit for purpose to head on to the next stage.<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a></p>
 </div>
 <div id="preppin-the-text" class="section level2">
@@ -172,7 +173,7 @@ dumb_hardwax &lt;- function(x) {
 }
 
 dumb_hardwax()</code></pre>
-<pre><code>## [1] &quot;Industrial, dense big room techno album in gatefold cover dubbed out dj&quot;</code></pre>
+<pre><code>## [1] &quot;Pulsating, dub techno house tunes killer dubstep (w/ download code)&quot;</code></pre>
 <p>Look at that - the bot made it’s first review. Lets share it with the world…</p>
 </div>
 <div id="twittering" class="section level2">

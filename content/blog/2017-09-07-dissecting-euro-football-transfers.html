@@ -1,8 +1,9 @@
 ---
-title: "Unravelling the European Football Transfer Window"
+title: "Unravelling the European football transfer window"
 description: "Scraping data on 2017 football transfers and following the money trails."
 date: "2017-09-07"
-tags: ["r", "football", "web-scraping"]
+tags: ["r", "football", "scraping"]
+slug: unravelling-euro-football-transfer-window
 draft: no
 ---
 
@@ -31,23 +32,23 @@ Premier league clubs' summer transfer bizniz (as of today). Idea inspired by <a 
 <div id="watching-the-window-go-by" class="section level2">
 <h2>Watching the window go by</h2>
 <p>As mentioned earlier, there is a perceived high-stakes end to the window here in England, possibly fuelled by sensationalist third-parties in the media (among other factors). Given that the other major European leagues find their opportunities for business cut off at the same time, is there a widespread spike in business as the deadline approaches?</p>
-<p><img src="/blog/dissecting-euro-football-transfers_files/figure-html/league%20joyplot-1.svg" width="100%" /></p>
+<p><img src="/blog/2017-09-07-dissecting-euro-football-transfers_files/figure-html/league%20joyplot-1.png" width="100%" /></p>
 <p>We see the biggest peak in player buys, across all leagues, comes around the start of July (coinciding with the 1st July opening of the window). Business is done earlier than this date, as players agree moves prior to officially jumping ship. It appears that the quickest clubs to start moving are in Germany (Bundesliga), while the biggest spike near to the deadline is clearly in England (Premier League) as their clubs continue to do business later, relative to the others. It is hard to tell haw much media furore influences this late activity (a self-fulfilling prophecy, perhaps), and there are other factors to consider - even an executive’s hard negotiating style can make a club’s business likely to drag on.</p>
 <p>Another component is that of the loan market, which is a different beast - essentially, club’s (usually those less esteemed) borrowing players from another club, usually for a season. It may be that a league’s behaviour in this market differs from full transfers.</p>
-<p><img src="/blog/dissecting-euro-football-transfers_files/figure-html/loans-1.svg" width="100%" /></p>
+<p><img src="/blog/2017-09-07-dissecting-euro-football-transfers_files/figure-html/loans-1.png" width="100%" /></p>
 <p>Ah - now we see what the other leagues were up to, closer to the deadline. It’s noticeable that permanent transfers are mostly done earlier, peaking in July as already mentioned, while loan business is more often than not left until the last knockings.</p>
 </div>
 <div id="following-the-money" class="section level2">
 <h2>Following the money</h2>
 <p>We have an idea of the deadline day effect in transfer activity terms, but haven’t yet delved into the finances. I’m dying to know just how much business is left until those final hours.<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a></p>
-<p><img src="/blog/dissecting-euro-football-transfers_files/figure-html/deadline%20prop-1.svg" width="100%" /></p>
+<p><img src="/blog/2017-09-07-dissecting-euro-football-transfers_files/figure-html/deadline%20prop-1.png" width="100%" /></p>
 <p>Huh. While over 13% of all transfer spend by the Premier League is done on the final day, it turns out that <em>nothing</em> was spent on La Liga’s extra day (remember, this is disclosed fees only, and doesn’t include player loan deals). A failed experiment, perhaps, with the rest of the big leagues shutting up shop by then? Too soon to tell, but I’ll be patiently waiting to see if the same thing happens next year…</p>
 <p>There are usually some headline-grabbing moves made each summer, and this one got a bit silly. Neymar moved to Paris Saint Germain for £197 million, with fears about inequality in spending power reaching fever pitch.</p>
-<p><img src="/blog/dissecting-euro-football-transfers_files/figure-html/league%20prop-1.svg" width="100%" /></p>
+<p><img src="/blog/2017-09-07-dissecting-euro-football-transfers_files/figure-html/league%20prop-1.png" width="100%" /></p>
 <p>That deal I mentioned helped PSG on their way to sinking over 40% of the entire leagues business, in financial terms. If anyone from the Financial Fair Play (FFP - a real thing, promise) committee is reading - get at me.</p>
 <p>This doesn’t tell the full story - Neymar actually moved from Barca to PSG, so a lot of their spending was triggered by that whole palava, and clubs did business the other way of course. You can refer to my tweets at the start if you’re interested in how different clubs fared with their “in’s and out’s”.</p>
 <p>Speaking of in’s and out’s, working with flow data lends itself nicely to some network visualisation. I’ve banged on about who’s spending money, but what does this web of business look like?</p>
-<p><img src="/blog/dissecting-euro-football-transfers_files/figure-html/flows-1.svg" width="100%" /></p>
+<p><img src="/blog/2017-09-07-dissecting-euro-football-transfers_files/figure-html/flows-1.png" width="100%" /></p>
 <p>Notice how little other leagues choose to plunder the Premier League…I’ll leave that can of worms for another day.</p>
 </div>
 <div class="footnotes">
