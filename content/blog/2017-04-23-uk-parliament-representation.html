@@ -1,8 +1,9 @@
 ---
-title: "The Representativeness of UK Parliament"
-description: "Leveraging open data on politicians to learn more about representation and diversity within UK Parliament."
+title: "Representation within UK parliament"
+description: "Leveraging open politicians data to learn more about representation and diversity within UK Parliament."
 date: "2017-04-23"
-tags: ["r", "politics", "everypolitician"]
+tags: ["r", "politics"]
+slug: uk-parliament-representation
 draft: no
 ---
 
@@ -53,56 +54,56 @@ members &lt;- as.data.frame(data$persons) %&gt;%
 glimpse(members)</code></pre>
 <pre><code>## Observations: 3,374
 ## Variables: 9
-## $ name                    &lt;chr&gt; &quot;Ron Davies&quot;, &quot;George Osborne&quot;, &quot;Georg...
-## $ birth_date              &lt;date&gt; 1946-08-06, 1971-05-23, 1971-05-23, 1...
-## $ gender                  &lt;chr&gt; &quot;male&quot;, &quot;male&quot;, &quot;male&quot;, &quot;male&quot;, &quot;male&quot;...
-## $ on_behalf_of_id_recoded &lt;fct&gt; Labour, Conservative, Conservative, Co...
-## $ role                    &lt;chr&gt; &quot;member&quot;, &quot;member&quot;, &quot;member&quot;, &quot;member&quot;...
+## $ name                    &lt;chr&gt; &quot;Ron Davies&quot;, &quot;George Osborne&quot;, &quot;George …
+## $ birth_date              &lt;date&gt; 1946-08-06, 1971-05-23, 1971-05-23, 197…
+## $ gender                  &lt;chr&gt; &quot;male&quot;, &quot;male&quot;, &quot;male&quot;, &quot;male&quot;, &quot;male&quot;, …
+## $ on_behalf_of_id_recoded &lt;fct&gt; Labour, Conservative, Conservative, Cons…
+## $ role                    &lt;chr&gt; &quot;member&quot;, &quot;member&quot;, &quot;member&quot;, &quot;member&quot;, …
 ## $ legislative_period_id   &lt;fct&gt; Term 52
 ## (1997-2001), Term 53
-## (2001-200...
-## $ term_start              &lt;date&gt; 1997-05-01, 2001-06-07, 2005-05-05, 2...
-## $ age_at_term_start       &lt;dbl&gt; 50, 30, 33, 38, 43, 53, 57, 61, 48, 52...
-## $ id                      &lt;chr&gt; &quot;007f7ffe-65df-4166-afad-f3c8934afd8d&quot;...</code></pre>
+## (2001-2005)…
+## $ term_start              &lt;date&gt; 1997-05-01, 2001-06-07, 2005-05-05, 201…
+## $ age_at_term_start       &lt;dbl&gt; 50, 30, 33, 38, 43, 53, 57, 61, 48, 52, …
+## $ id                      &lt;chr&gt; &quot;007f7ffe-65df-4166-afad-f3c8934afd8d&quot;, …</code></pre>
 <p>We now have biographic and demographic data for all members of Parliament across the last five legislative periods, or terms. With this information, it may be possible to start demonstrating how representativeness manifests itself in Parliament.</p>
 </div>
 <div id="gender-balance" class="section level2">
 <h2>Gender Balance</h2>
 <p>Something which demands immediate attention (not just in this domain) is understanding member’s proportional representation by gender. A big problem for many voters is finding members to identify with, given the historic barriers to women entering a male-dominated parliamentary system. How does female representation look over time?</p>
-<p><img src="/blog/uk-parliament-representativeness_files/figure-html/female_rep-1.svg" width="100%" /></p>
+<p><img src="/blog/2017-04-23-uk-parliament-representation_files/figure-html/female_rep-1.png" width="100%" /></p>
 <p>There has been sustained improvements in gender balance since the mid-00s, however it’s still some way short of equality.</p>
 <p>Of course, the 30% representation we see in the current term is an aggregate of different political parties. What does this percentage look like by party?</p>
 <blockquote>
 <p>N.B. The below graphic only includes the three parties with the largest count of members in the latest Parliament. Each of the other parties had fewer than ten representatives.</p>
 </blockquote>
-<p><img src="/blog/uk-parliament-representativeness_files/figure-html/party_genders-1.svg" width="100%" /></p>
+<p><img src="/blog/2017-04-23-uk-parliament-representation_files/figure-html/party_genders-1.png" width="100%" /></p>
 <p>Labour, currently the second largest party by no. of MPs (238), has double the proportionate amount of female MPs in comparison with the biggest, the Conservatives (333).</p>
 <p>It must be remembered that these figures represent <em>elected</em> officials, and so possible gender biases may stem from voters as well as the parties themselves. An in-depth analysis of historical party candidate gender proportions and subsequent voting patterns could start to unpick this. For the purposes of this analysis, we are interested in sharing information to help the uninformed understand what parties and parliament look like, and this is a good start - perhaps identifying trends over time in the biggest parties would be a good next step.</p>
-<p><img src="/blog/uk-parliament-representativeness_files/figure-html/female_trend-1.svg" width="100%" /></p>
+<p><img src="/blog/2017-04-23-uk-parliament-representation_files/figure-html/female_trend-1.png" width="100%" /></p>
 <p>It appears that Labour was first to demonstrate growth in female representation during the mid-00s, with the Conservatives following this example in Term 55. What is most apparent is that Labour now appears close to an equal gender split, while the Conservative party is still lower than Labour has ever been over the considered period.</p>
 </div>
 <div id="age" class="section level2">
 <h2>Age</h2>
 <p>Another important characteristic when considering the representativeness of government is member’s ages. Amongst parties, demonstrating the distribution of ages can illuminate whether a party reflects the public.<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a></p>
 <p><em>N.B. The below graphic only includes parties with 30 or more members across the last five Parliamentary terms.</em></p>
-<p><img src="/blog/uk-parliament-representativeness_files/figure-html/unnamed-chunk-1-1.svg" width="100%" /></p>
+<p><img src="/blog/2017-04-23-uk-parliament-representation_files/figure-html/unnamed-chunk-1-1.png" width="100%" /></p>
 <p>Looking across the previous five Parliamentary terms in the above plot, you can see that the Labour ‘bulge’ is higher than the Conservatives, hinting at an older pool of members. Has this always been the case?</p>
-<p><img src="/blog/uk-parliament-representativeness_files/figure-html/unnamed-chunk-2-1.svg" width="100%" /></p>
+<p><img src="/blog/2017-04-23-uk-parliament-representation_files/figure-html/unnamed-chunk-2-1.png" width="100%" /></p>
 <p>This divergence in MP ages across the Labour and Conservative parties came into being after commencement of the 54th term, which was the last Labour victory. The gap has been maintained ever since.</p>
 </div>
 <div id="turnover" class="section level2">
 <h2>Turnover</h2>
 <p>We’ve explored how gender and age manifest in Parliament across time and parties, and perhaps now would be a good time to examine these factors in relation to how often MPs actually keep their seats.<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a></p>
-<p><img src="/blog/uk-parliament-representativeness_files/figure-html/unnamed-chunk-3-1.svg" width="100%" /></p>
+<p><img src="/blog/2017-04-23-uk-parliament-representation_files/figure-html/unnamed-chunk-3-1.png" width="100%" /></p>
 <p>The above chart gives a sense of the ‘turnover’ in Parliament between terms. We see a decline in the likelihood of an MP keeping their seat as their time in situ increases (beyond the first re-election). How does this stand up by gender?</p>
-<p><img src="/blog/uk-parliament-representativeness_files/figure-html/unnamed-chunk-4-1.svg" width="100%" /></p>
+<p><img src="/blog/2017-04-23-uk-parliament-representation_files/figure-html/unnamed-chunk-4-1.png" width="100%" /></p>
 <p>This is revealing as to why the Conservative party has seen limited growth in female representation - their female MPs are most likely to not be re-elected at all.</p>
 </div>
 <div id="an-international-peek" class="section level2">
 <h2>An International Peek</h2>
 <p>It might be useful to provide some international context to proceedings. By returning to the <em>EveryPolitician</em> data store, we can extract similar data for other countries and see how they stack up on some of the hot topics discussed above.</p>
 <p><em>N.B. At the time of writing, there aren’t an abundance of nations with politician data beyond the most recent government term. The below selection represents those countries with data enough to look at trends over time.</em></p>
-<p><img src="/blog/uk-parliament-representativeness_files/figure-html/unnamed-chunk-5-1.svg" width="100%" /></p>
+<p><img src="/blog/2017-04-23-uk-parliament-representation_files/figure-html/unnamed-chunk-5-1.png" width="100%" /></p>
 <p>Now, the range of data still varies quite a lot here (for the U.S. we have data back to 1983, compared with 2001 for the UK), so the above trends should be treated as indicative timelines of a countries record in this area. Still, we can certainly compare recent performance and see some obvious worries - both Germany and the U.S. have experienced big drop-offs in female representation in their elected governments, and have shown little signs of recovery since. Big-ups must be given to Sweden, with mid-40% female representation across their previous six terms.</p>
 </div>
 <div id="some-last-words" class="section level2">

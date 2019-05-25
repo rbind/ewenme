@@ -1,19 +1,10 @@
 ---
-title: "vinylSpotting: A Discogs Fairytale"
+title: "vinylSpotting, a Discogs fairytale"
 description: "A web app for record diggers to explore and visualize their collections."
 date: "2017-03-01"
 tags: ["r", "shiny", "music"]
 draft: no
 ---
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(cache=TRUE, echo = TRUE, warning = FALSE, message = FALSE, out.width = '100%', dpi = 180, dev = 'svg')
-
-library(RCurl)
-library(jsonlite)
-library(httr)
-library(tidyverse)
-```
 
 At a cursory glance, it's almost impossible to get much of an understanding of vinyl record collections beyond their size (or perhaps their age, depending on the smell?). If you get up close, you might recognise some artist names or make out some titles on the spines of LPs, but your average collector is gonna have loads of bits that even *they* don't recognise on sight. Now, while the unadulterated excitement of finding a [white label](https://en.wikipedia.org/wiki/White_label) on the shelve that even *you* can't remember is the romance at the very heart of record digging, that thought of forgotten artifacts would send archivists and librarians bonkers. 
 

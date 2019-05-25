@@ -1,8 +1,9 @@
 ---
-title: "The Representativeness of UK Parliament"
-description: "Leveraging open data on politicians to learn more about representation and diversity within UK Parliament."
+title: "Representation within UK parliament"
+description: "Leveraging open politicians data to learn more about representation and diversity within UK Parliament."
 date: "2017-04-23"
-tags: ["r", "politics", "everypolitician"]
+tags: ["r", "politics"]
+slug: uk-parliament-representation
 draft: no
 ---
 
@@ -12,7 +13,7 @@ For some, this may be the first election they are able to participate in. For ma
 
 ```{r setup, include=FALSE}
 
-knitr::opts_chunk$set(cache=TRUE, echo = TRUE, warning = FALSE, message = FALSE, out.width = '100%', dpi = 180, dev = 'svg')
+knitr::opts_chunk$set(cache=TRUE, echo = TRUE, warning = FALSE, message = FALSE, out.width = '100%', dpi = 180)
 
 require(jsonlite)
 require(tidyverse)
