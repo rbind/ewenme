@@ -1,16 +1,15 @@
 ---
-title: "Tracking London's Pub & Bar Landscape with geofacet"
+title: "Mapping London's pubs & bars"
 description: "Toying around with geofacet, a ggplot2 extension for geographic small multiples."
 date: "2017-05-30"
-tags: ["r", "ggplot2", "geofacet", "gis"]
+tags: ["r", "london", "gis"]
+slug: mapping-london-pubs
 draft: no
 ---
 
 ```{r setup, include=FALSE}
 
-knitr::opts_chunk$set(cache=TRUE, echo = TRUE, warning = FALSE, message = FALSE, out.width = '100%', dpi = 180)
-
-# devtools::install_github("hafen/geofacet")
+knitr::opts_chunk$set(cache = TRUE, echo = TRUE, warning = FALSE, message = FALSE, out.width = '100%', dpi = 180)
 
 ```
 

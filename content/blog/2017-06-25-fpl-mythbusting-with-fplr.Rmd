@@ -1,14 +1,17 @@
 ---
-title: "FPL Mythbusting with fplr"
-description: "Dissecting fantasy football falsehoods with my first R package."
+title: "FPL mythbusting with fplr"
+description: "Dissecting fantasy football falsehoods with my very first R package."
 date: "2017-06-25"
-tags: ["r", "package", "fpl", "fplr"]
+tags: ["r", "fpl"]
+slug: fpl-mythbusting
 draft: no
 ---
 
 ```{r setup, include=FALSE}
 
-knitr::opts_chunk$set(cache=TRUE, echo = TRUE, warning = FALSE, message = FALSE, out.width = '100%', dpi = 180, echo = FALSE, dev = 'svg')
+knitr::opts_chunk$set(cache=TRUE, echo = TRUE, warning = FALSE, message = FALSE, out.width = '100%', dpi = 180, echo = FALSE)
+
+# devtools::install_github("ewenme/fplr")
 
 library(tidyverse)
 library(fplr)
@@ -18,7 +21,7 @@ library(forcats)
 library(zoo)
 
 # RData file for this script. Note that functions that created data are not evaluated in this rmd
-load("../data/fplR.Rda")
+load("../data/fpl_2017.rda")
 
 ```
 
