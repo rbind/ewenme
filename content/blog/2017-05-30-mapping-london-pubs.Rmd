@@ -15,19 +15,19 @@ knitr::opts_chunk$set(cache = TRUE, echo = TRUE, warning = FALSE, message = FALS
 
 ## Introducing geofacet
 
-The [`geofacet`](https://github.com/hafen/geofacet) package dropped recently (I want to say last week?), a `ggplot2` extension allowing for the user to facet plots in a way that can retain an underlying geographical dimension. It perhaps goes a little bit further towards abstraction than [tilegrams](https://pitchinteractiveinc.github.io/tilegrams/), but the visualizations we produce can be a bit more complex as well. This post documents my first foray into this packages functionality.[^fullcode]
+The [`geofacet`](https://github.com/hafen/geofacet) package dropped recently, a `ggplot2` extension for faceting plots in a way that retains some underlying geographical dimension. It's perhaps a little bit more abstract than [tilegrams](https://pitchinteractiveinc.github.io/tilegrams/), but the visualizations we produce can be a bit more complex as well. This post basically documents my first foray into `geofacet` functionality, while learning some more about the geographic evolution of London's nightlife in the process.[^fullcode]
 
 ## Getting to grips with grids
 
-If we think about faceting in `ggplot2` (`facet_wrap`, `facet_grid`), we are already familiar with the idea of placing a sequence of plots into a number of panels, arranged according to a variable(s) of interest.
+Via [faceting in `ggplot2`](https://ggplot2.tidyverse.org/reference/facet_wrap.html), we are already familiar with the idea of placing a sequence of plots into a number of panels, possibly arranged according to a variable(s) of interest.
 
-`geofacet` is based on the assumption that we want to arrange our sequence of plots into a grid that preserves some known geographical orientation. These known geographical orientations are stored as **grids**, which provide us with row and column values corresponding to a panel's position in a faceted plot. Take this US states example, providing grid positions for US states:
+`geofacet` lets you arrange a sequence of plots to preserve some known geographical orientation. These known geographical orientations are stored as **grids**, which provide us with row and column values corresponding to a panel's position in a faceted plot. Take this US states example, providing grid positions for US states:
 
 ```{r grid eg}
 head(geofacet::us_state_grid1)
 ```
 
-This grid also contains geographical data (state codes/names). We can simply join our data, that sits nicely within this geographical framework, to this grid and start 'geofaceting'.
+This grid also contains geographical data (state codes/names). We can simply join data (that sits nicely within this geographical framework) to this grid and start 'geofaceting'.
 
 There is a function in the package, `submit_grid`, which allows users to submit their own grids (as a dataframe, like in the above example) as a github issue and hopefully get them incorporated into the package proper. Having kicked off with just the US states, there's now grids for EU countries, South African provinces, Australian states and London boroughs. Nice - my business is with the latter...
 
@@ -41,7 +41,7 @@ Below is a map of London's boroughs, in case you aren't familiar.
 knitr::include_graphics("/img/2017-05-30-geofacet_ldn_pubs/boroughs.png")
 ```
 
-With that cleared up, let's load up this data and get it into shape.
+With that cleared up, let's load the data and get it into shape.
 
 ```{r setup n load}
 
@@ -51,7 +51,7 @@ library(gdata)
 library(stringr)
 library(viridis)
 library(scales)
-library(hrbrthemes)
+library(ewenthemes)
 
 #read/clean pubs data
 pubs <- read.xls("http://files.datapress.com/london/dataset/the-number-of-public-houses-and-bars-in-london-2001-2016/2017-04-13T14:37:50.73/numberofpublichousesandbarsinlondon2001to2016.xls",
@@ -106,11 +106,11 @@ ggplot(data = pubs, aes(x=year, y=yoy_chg, fill=yoy_chg)) +
   scale_y_percent(limits=c(-0.35,0.25), breaks=c(-0.3, 0, 0.25), labels = NULL) +
   labs(title = "The Evolution of London's Pubs & Bars",
        subtitle = "No. of Public Houses and Bars by London borough, 2001-2016",
-       caption = "Source: data.london.gov.uk", x = "", y = "") +
-  theme_minimal(base_family = "Arial Narrow", base_size = 14) +
+       caption = "Source: data.london.gov.uk | @ewen_", x = NULL, y = NULL) +
+  theme_ewen_ws(grid = FALSE, axis = FALSE) +
   scale_fill_viridis(option="D",limits=c(-0.35,0.25), name="Year-on-year\n% change",
                      labels=percent) +
-  theme(legend.position=c(.9, .95))
+  theme(legend.position=c(.9, .95), strip.text = element_text(size = 8))
 
 ```
 
