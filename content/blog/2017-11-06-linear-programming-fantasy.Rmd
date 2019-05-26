@@ -15,16 +15,13 @@ knitr::opts_chunk$set(cache=TRUE, echo = FALSE, warning = FALSE, message = FALSE
 # load pkgs
 library(tidyverse)
 library(glue)
-library(hrbrthemes)
+library(ewenthemes)
 library(extrafont)
 library(knitr)
 library(kableExtra)
 library(formattable)
 library(DT)
 library(captioner)
-
-
-# LOAD  ----------------------------------------------
 
 # load funcs
 source('https://raw.githubusercontent.com/ewenme/fplinear/master/lp_funcs.R')
@@ -35,11 +32,8 @@ player_data <- read_csv("https://raw.githubusercontent.com/ewenme/fplinear/maste
 # set captioner
 prefix <- captioner(prefix = "")
 
-
-# CLEAN -------------------------------------------------------------------
-
 # create goalies df
-goalie_data <- filter(player_data, position=="Goalkeeper") %>%
+goalie_data <- filter(player_data, position=="Goalkeeper", round <= 10) %>%
   # add 'start price' col
   group_by(player_id) %>%
   mutate(start_price=first(price)) %>%
@@ -115,7 +109,7 @@ goalie_data %>%
   scale_fill_viridis_c(option = "A", 
                        guide = guide_colourbar(title = "Points", direction = "horizontal")) +
   coord_equal() +
-  theme_ipsum() +
+  theme_ewen_ws(grid = FALSE, axis = FALSE) +
   theme(legend.position = "bottom",
         plot.margin = unit(c(0.35, 0.2, 0.3, 0.35), "cm"),
         plot.title = element_text(hjust = 1, size = 16),
