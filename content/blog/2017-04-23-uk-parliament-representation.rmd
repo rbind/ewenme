@@ -21,9 +21,11 @@ require(forcats)
 require(hrbrthemes)
 require(ggalt)
 require(waffle)
-require(extrafont)
+library(ewenthemes)
+library(ghibli)
 
-loadfonts()
+chart_caption = "source: everypolitician.org | @ewen_"
+
 ```
 
 ## Inside EveryPolicitian
@@ -88,12 +90,11 @@ members %>%
   ggplot(aes(x=legislative_period_id, y=prop, group=1)) +
   geom_line(size=1.1) +
   geom_point(size=2) +
-  theme_ipsum(base_size = 14, axis_title_size = 14, caption_size = 12,
-              plot_title_size = 18, subtitle_size = 14, grid="xY") +
+  theme_ewen_ws() +
   labs(title="Female representation in UK Parliament",
        x="Term", y="% of female seats",
        subtitle="Around 30% of seats in the latest term are held by women",
-       caption="Data from everypolitician.org") +
+       caption=chart_caption) +
   scale_y_percent(limits = c(0, 0.6)) +
   geom_hline(yintercept = 0.5, colour="firebrick", linetype="dashed")
 ```
@@ -115,30 +116,24 @@ gender_split <- members %>%
 gender_split <- data.frame(names = gender_split$gender, vals = gender_split$prop)
 
 iron(
-  waffle(c(Female=gender_split[1,2], Male=gender_split[2,2]), rows=5,
+  waffle(c(Female=gender_split[1,2], Male=gender_split[2,2]), rows = 5,
          title="Party Gender Split in the Latest UK Parliament", xlab = "Labour") +
-    # theme_ipsum(base_size = 14, axis_title_size = 14, caption_size = 12,
-    #           plot_title_size = 18, subtitle_size = 14, axis = FALSE, ticks = FALSE) +
+    theme_ewen_ws(axis = FALSE) +
     theme(axis.text.y=element_blank(), axis.text.x=element_blank(),
-          legend.title=element_blank(),
-          text=element_text(family="Arial Narrow")) +
-    scale_fill_ipsum(),
+          legend.title=element_blank()) +
+    scale_fill_ghibli_d(name = "MarnieMedium1"),
   waffle(c(Female=gender_split[5,2], Male=gender_split[6,2]), rows=5,
          xlab ="SNP", title = NULL) +
-    # theme_ipsum(base_size = 14, axis_title_size = 14, caption_size = 12,
-    #           plot_title_size = 18, subtitle_size = 14, axis = FALSE, ticks = FALSE) +
+    theme_ewen_ws(axis = FALSE) +
     theme(axis.text.y=element_blank(), axis.text.x=element_blank(),
-          legend.title=element_blank(),
-          text=element_text(family="Arial Narrow")) +
-    scale_fill_ipsum(),
+          legend.title=element_blank()) +
+    scale_fill_ghibli_d(name = "MarnieMedium1"),
   waffle(c(Female=gender_split[3,2], Male=gender_split[4,2]), rows=5,
          xlab="Conservatives", title = NULL) +
-    # theme_ipsum(base_size = 14, axis_title_size = 14, caption_size = 12,
-    #           plot_title_size = 18, subtitle_size = 14, axis = FALSE, ticks = FALSE) +
+    theme_ewen_ws(axis = FALSE) +
     theme(axis.text.y=element_blank(), axis.text.x=element_blank(),
-          legend.title=element_blank(),
-          text=element_text(family="Arial Narrow")) +
-    scale_fill_ipsum())
+          legend.title=element_blank()) +
+    scale_fill_ghibli_d(name = "MarnieMedium1"))
   
 ```
 
@@ -158,13 +153,12 @@ members %>%
              colour=on_behalf_of_id_recoded)) +
   geom_line(size=1.1) +
   geom_point(size=2) +
-  theme_ipsum(base_size = 14, axis_title_size = 14, caption_size = 12,
-              plot_title_size = 18, subtitle_size = 14, grid="xY") +
+  theme_ewen_ws() +
   scale_color_manual(values = c("#d50000", "#0087dc")) +
   labs(title="Female MP representation in Parliament",
        x="Term", y="% of seats",
        subtitle="Both Labour and Conservative parties demonstrate their highest proportional\nfemale representation in the latest term",
-       caption="Data from everypolitician.org") +
+       caption=chart_caption) +
   scale_y_percent(limits = c(0, 0.6)) +
   geom_hline(yintercept = 0.5, colour="firebrick", linetype="dashed") +
   theme(legend.position="top", legend.title=element_blank())
@@ -185,12 +179,11 @@ members %>%
   filter(n() >= 30) %>%
   ggplot(aes(x=on_behalf_of_id_recoded, y=age_at_term_start)) +
   geom_violin() +
-  theme_ipsum(base_size = 14, axis_title_size = 14, caption_size = 12,
-              plot_title_size = 18, subtitle_size = 14, grid = "Y") +
+  theme_ewen_ws() +
   labs(title="Party MP Ages across the last five terms",
        x="Party", y="Age",
        subtitle="Independent candidates have the highest median age and Labour MPs go\non the longest",
-       caption="Data from everypolitician.org")
+       caption=chart_caption)
 ```
 
 Looking across the previous five Parliamentary terms in the above plot, you can see that the Labour 'bulge' is higher than the Conservatives, hinting at an older pool of members. Has this always been the case?
@@ -205,14 +198,13 @@ members %>%
              colour=on_behalf_of_id_recoded)) +
   geom_line(size=1.1) +
   geom_point(size=2) +
-  theme_ipsum(base_size = 16, axis_title_size = 16, caption_size = 12,
-              plot_title_size = 20, subtitle_size = 16, grid = "Y") +
+  theme_ewen_ws() +
   scale_color_manual(values = c("#d50000", "#0087dc")) +
   ylim(c(40, 55)) +
   labs(title="Party MP Ages",
        x="Term", y="Median age",
        subtitle="The median Labour member age is 5 years older than for Conservatives\nacross each of the last three Parliamentary terms",
-       caption="Data from everypolitician.org") +
+       caption=chart_caption) +
   theme(legend.position="top", legend.title=element_blank())
 ```
 
@@ -234,13 +226,12 @@ members %>%
   mutate(prop=count/sum(count)) %>%
   ggplot(aes(x=terms, y=prop)) +
   geom_lollipop(stat = "identity", size=1.1) +
-  theme_ipsum(base_size = 14, axis_title_size = 14, caption_size = 12,
-              plot_title_size = 18, subtitle_size = 14, grid = "Y") +
-  scale_y_percent(limits = c(0, 0.3), breaks = seq(0, 0.3, 0.1)) +
+  theme_ewen_ws() +
+  scale_y_percent(limits = c(0, 0.3), breaks = seq(0, 0.3, 0.1), expand = c(0, 0)) +
   labs(title="How many terms did elected MPs get, across the last five\nterms?",
        x="No. of terms", y="% of MPs",
        subtitle="MPs got re-elected a single time marginally more often than losing their seat",
-       caption="Data from everypolitician.org")
+       caption=chart_caption)
 ```
 
 The above chart gives a sense of the 'turnover' in Parliament between terms. We see a decline in the likelihood of an MP keeping their seat as their time in situ increases (beyond the first re-election). How does this stand up by gender?
@@ -259,14 +250,14 @@ members %>%
   ggplot(aes(x=terms, y=prop, colour=gender)) +
   geom_line(size=1.1) +
   geom_point(size=2) +
-  theme_ipsum(base_size = 14, axis_title_size = 14, caption_size = 12,
-              plot_title_size = 18, subtitle_size = 14, grid = "Y") +
-  scale_color_ipsum() +
-  scale_y_percent(limits = c(0, 0.5), breaks = seq(0, 0.5, 0.1)) +
+  theme_ewen_ws() +
+  scale_colour_ghibli_d(name = "MarnieMedium1") +
+  scale_y_percent(limits = c(0, 0.5), breaks = seq(0, 0.5, 0.1), 
+                  labels = scales::percent_format(accuracy = 1L)) +
   labs(title="How many terms did elected MPs get, across the last five\nterms?",
        x="No. of terms", y="% of MPs",
        subtitle="Women are historically less likely than men to be re-elected two or more times,\nacross both the Labour and Conservative parties",
-       caption="Data from everypolitician.org") +
+       caption=chart_caption) +
   facet_wrap( ~ on_behalf_of_id_recoded) +
   theme(legend.position="top", legend.title=element_blank())
 ```
@@ -334,13 +325,12 @@ int_members %>%
   ggplot(aes(x=factor(legislative_period_id), y=prop, group=1)) +
   geom_line(size=1) +
   geom_point(size=2) +
-  theme_ipsum(base_size = 14, axis_title_size = 14, caption_size = 12,
-              plot_title_size = 18, subtitle_size = 14, grid="xY") +
+  theme_ewen_ws() +
   labs(title="Female representation in elected politicians",
        x=NULL, y="% of female seats",
        subtitle="Elected government terms, in chronological order (most recent on the right)",
-       caption="Data from everypolitician.org") +
-  scale_y_percent(limits = c(0, 0.6)) +
+       caption=chart_caption) +
+  scale_y_percent(limits = c(0, 0.6), labels = scales::percent_format(accuracy = 1L)) +
   geom_hline(yintercept = 0.5, colour="firebrick", linetype="dashed") +
   facet_wrap( ~ country, scales = "free_x") +
   theme(axis.text.x=element_blank())
