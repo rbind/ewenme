@@ -9,7 +9,7 @@ draft: no
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(cache = FALSE, warning = FALSE, message = FALSE, echo = FALSE, out.width = '75%', dev = c('svg', 'png'), fig.align='center')
+knitr::opts_chunk$set(cache = FALSE, warning = FALSE, message = FALSE, echo = FALSE, out.width = '75%', fig.align='center')
 ```
 
 This post is a short one, (partly) accompanying the last one on [typography for blogodown](https://ewen.io/2018/11/01/readable-accessible-typography-blogdown/). 

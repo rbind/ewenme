@@ -1,11 +1,13 @@
 baseurl = "https://ewen.io/"
 title = "ewen"
+description = "ewen's writing and projects."
+copyright = ""
 languageCode = "en"
 theme = "kiss"
-copyright = ""
 Paginate = 5
+enableEmoji = true
 enableRobotsTXT = true
-description = "ewen's writing and projects."
+ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
 
 [params.rss]
 includeContent = true
@@ -16,9 +18,9 @@ authorEmail = "ewenhenderson@gmail.com"
 customCSS = ["css/custom.css"]
 
 [params.info]
+homeTitle = "ewen"
 description = "ewen's writing and projects."
 enableSocial = true
-homeTitle = "ewen"
 poweredby = false
 related = false
 
@@ -36,5 +38,3 @@ tag = "tags"
 
 [permalinks]
 blog = "/:year/:month/:day/:slug/"
-
-ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
