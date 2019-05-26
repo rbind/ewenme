@@ -17,7 +17,7 @@ library(jsonlite)
 library(tidyverse)
 library(lubridate)
 library(forcats)
-library(hrbrthemes)
+library(ewenthemes)
 library(scales)
 library(ggjoy)
 library(ggraph)
@@ -98,10 +98,10 @@ transfers %>%
   geom_joy(fill="#85144B", alpha=0.8) +
   # thematic elements
   labs(title="When did teams in the big five leagues buy new players?",
-       subtitle= "Distribution of European football transfer window activity in 2017 (permanent transfers only).",
+       subtitle= "Distribution of European football transfer window activity in 2017\n(permanent transfers only).",
        x=NULL, y=NULL,
        caption="Source: the Guardian   |   Made by @ewen_") +
-  theme_ipsum(grid = "X") +
+  theme_ewen_ws(plot_title_size = 14, subtitle_size = 11) +
   scale_x_date(date_breaks = "1 month", date_labels = "%b") +
   theme(axis.text.x = element_text(size=10),
         plot.margin = unit(c(0.35, 0.2, 0.3, 0.35), "cm"))
@@ -122,7 +122,7 @@ transfers %>%
   labs(title="How did the loan market differ from permanent transfers?",
        x=NULL, y=NULL,
        caption="Source: the Guardian   |   Made by @ewen_") +
-  theme_ipsum(grid = "X") +
+  theme_ewen_ws(plot_title_size = 13) +
   scale_x_date(date_breaks = "1 month", date_labels = "%b") +
   theme(axis.text.x = element_text(size=10),
         plot.margin = unit(c(0.35, 0.2, 0.3, 0.35), "cm"),
@@ -156,8 +156,8 @@ transfers %>%
   ggplot(aes(x=reorder(new_league, prop), y=prop)) +
   geom_col(fill="#85144B", alpha=0.8) +
   # thematic elements
-  scale_y_percent() +
-  theme_ipsum(grid = "X") +
+  scale_y_percent(labels = scales::percent_format(accuracy = 1L)) +
+  theme_ewen_ws(grid = FALSE, axis = FALSE, subtitle_size = 11) +
   geom_hline(yintercept = seq(from=0.05, to=0.15, by=0.05), colour="white") +
   coord_flip() +
   theme(axis.text.x = element_text(size=10),
@@ -187,15 +187,15 @@ transfers %>%
   ggplot(aes(x=reorder(new_club, price_prop) , y=price_prop)) +
   geom_col(fill="#85144B", alpha=0.8) +
   coord_flip() +
-  scale_y_percent() +
+  scale_y_percent(labels = scales::percent_format(accuracy = 1L)) +
   # thematic elements
   labs(title="Intra-league inequity in transfer spend",
-       subtitle="Club transfer spend as a proportion of their home league's total window spend.",
+       subtitle="Club transfer spend as a proportion of their home league's total window\nspend.",
        x=NULL, y="% of home league's total spend ",
        caption="Source: the Guardian   |   Made by @ewen_") +
   theme(axis.text.x = element_text(size=10),
         plot.margin = unit(c(0.35, 0.2, 0.3, 0.35), "cm")) +
-  theme_ipsum(grid = "X") +
+  theme_ewen_ws(grid = FALSE, axis = FALSE, subtitle_size = 11) +
   geom_hline(yintercept = seq(from=0.1, to=0.4, by=0.1), colour="white")
 
 ```
@@ -228,7 +228,8 @@ ggraph(flows, layout = 'kk') +
                 start_cap = circle(3, 'mm'),
                 end_cap = circle(3, 'mm')) + 
   geom_node_point(size = 2, show.legend = FALSE) + 
-  theme_graph() +
+  theme_ewen_ws(grid = FALSE, axis = FALSE) +
+  theme(axis.title = element_blank(), axis.text = element_blank()) +
   geom_node_text(aes(label=name), size=4, repel = TRUE, nudge_y = 0.3) +
   labs(title="Transfer business between European leagues",
        subtitle="Flows (£ millions) in disclosed transfer fees between the big five leagues in 2017.",
