@@ -1,5 +1,41 @@
 @import url('https://fonts.googleapis.com/css?family=Work+Sans:300,400,700&subset=latin-ext');
 
+@font-face {
+    font-family: 'charterbold_italic';
+    src: url('webfonts/charter_bold_italic-webfont.eot');
+    src: url('webfonts/charter_bold_italic-webfont.eot?#iefix') format('embedded-opentype'),
+         url('webfonts/charter_bold_italic-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'charterbold';
+    src: url('webfonts/charter_bold-webfont.eot');
+    src: url('webfonts/charter_bold-webfont.eot?#iefix') format('embedded-opentype'),
+         url('webfonts/charter_bold-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'charteritalic';
+    src: url('webfonts/charter_italic-webfont.eot');
+    src: url('webfonts/charter_italic-webfont.eot?#iefix') format('embedded-opentype'),
+         url('webfonts/charter_italic-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'charterregular';
+    src: url('webfonts/charter_regular-webfont.eot');
+    src: url('webfonts/charter_regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('webfonts/charter_regular-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
 .content h1,
 .content h2,
 .content h3,
@@ -9,7 +45,7 @@
 .title {
   font-family: 'Work Sans Bold', sans-serif;
   font-weight: 700;
-  color:#222324;
+  color: #222324;
 }
 
 .subtitle {
@@ -18,8 +54,21 @@
 }
 
 body {
-  font-family: 'Work Sans', sans-serif;
+  font-family: 'charterregular', sans-serif;
   font-weight: 400;
+	background-color: #dcdcdc;
+}
+
+strong {
+  font-family: 'charterbold';
+  font-weight: normal;
+  font-style: normal;
+}
+
+em {
+  font-family: 'charteritalic';
+  font-weight: normal;
+  font-style: normal;
 }
 
 .section {
