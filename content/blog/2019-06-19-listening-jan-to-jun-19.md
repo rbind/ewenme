@@ -5,7 +5,7 @@ date: '2019-06-19'
 slug: listening-jan-to-jun-19
 tags: ["listening"]
 image: "/img/listening/arthur.jpg"
-draft: no
+draft: yes
 ---
 
 ## Logic1000, LOGIC1000 *[SUMAC]*
@@ -29,6 +29,8 @@ draft: no
 ## Belter, Off The Meds *[Studio Barnhus]*
 
 ## Anz, Invitation 2 Dance *[2 B Real]*
+
+## Afrikan Sciences, & The Kick Drum is Default *[Deepblak]*
 
 ## Tujiko Noriko, Kuro (OST) *[PAN]*
 
