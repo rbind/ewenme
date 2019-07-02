@@ -8,7 +8,7 @@ image: "/img/listening/arthur.jpg"
 draft: no
 ---
 
-Some of the records I have really appreeciated in "H1" 2019 are here. There's a [Buy Music Club](https://buymusic.club/) list at the bottom to go buy the ones you like and support the artists behind them, too!
+Some of the records I have really appreciated in "H1" 2019 are here. There's a [Buy Music Club](https://buymusic.club/) list at the bottom to go buy the ones you like and support the artists behind them, too!
 
 **Logic1000, LOGIC1000** *[SUMAC]* - Punchy and vibrant Aussie twists on UK funky rhythms, also featuring a slammin' [Niche](https://www.youtube.com/watch?v=uwO16Eg5NOc) rework.
 
@@ -37,7 +37,7 @@ Some of the records I have really appreeciated in "H1" 2019 are here. There's a 
 **Afrikan Sciences, & The Kick Drum is Default** *[Deepblak]* - Eric rewiring your little brain, as ever. 
 
 **Tujiko Noriko, Kuro (OST)** *[ENTOPIA]* - Tense, atmospheric soundscapes on *PANs* new soundtrack offshoot. 
-**Gila, Trench Tones** *[Self-released]* - Runs through hip-hop, techno and ambient wonder. Had to cop the wax for that [Eric Hu](www.erichu.info) artwork!
+**Gila, Trench Tones** *[Lex Records]* - Runs through hip-hop, techno and ambient wonder. Had to cop the wax for that [Eric Hu](www.erichu.info) artwork!
 
 **Tierra Whack, All the singles** *[Self-released]* - The Dr Seuss type spitter paints fully-formed tracks this year with as much colour as 2018's *Whack World* vignettes. I stan.
 

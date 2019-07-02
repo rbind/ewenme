@@ -53,6 +53,10 @@
   font-weight: 300;
 }
 
+.content {
+  font-size: 20px;
+}
+
 body {
   font-family: 'charterregular', sans-serif;
   font-weight: 400;
