@@ -1,0 +1,124 @@
+---
+title: "Diggin' into Hardwax & Honest Jon's reviews"
+description: "A quantitative appreciation of the inimitable wordplay over at two of my favourite record stores. TIP!"
+date: '2019-07-09'
+slug: diggin-into-hardwax-honest-jons-reviews
+tags: ["music", "R"]
+draft: yes
+---
+
+```{r set-up}
+knitr::opts_chunk$set(cache = FALSE, warning = FALSE, message = FALSE, echo = FALSE, out.width = '75%', dev = 'png', fig.align = 'center')
+
+if (!require("pacman")) install.packages("pacman")
+
+# load github pkgs
+pacman::p_load_current_gh("juliasilge/tidylo", "hadley/emo", "ewenme/ewenthemes")
+
+# load cran pkgs
+pacman::p_load("tidyverse", "tidytext", "ghibli", "see", "ggforce")
+
+```
+
+[Honest Jon's](https://honestjons.com) of London and [Hardwax](https://hardwax.com/) of Berlin are record store royalty. Both have maintained a fiercely independent and unapolagetic representation of music in their city and beyond. This rep extends to their online presence and, infamously, the unique style in which staff break down new records hitting the shop. 
+
+Here's something from Honest Jon's, on a Salik and DJ Sotofett [outing on Wania](https://www.discogs.com/Salik-DJ-Sotofett-Inna-Brixton-Acid-Site-Mix/release/11213973):
+
+> ‘A strictly-rockers intermingling of dubstep and d&b, with heavy bass and darkly atmospheric strings. DJ Sotofett falls out of line on the flip, heading off into acidic and 3D soundscapes.’
+
+Let that one soak in. Then, try out Hardwax's take on Metrist's [Pollen Part I](https://www.discogs.com/Metrist-Pollen-Pt-I/release/13786196):
+
+> 'Crisp IDM & Grime trained, Electro affine, modern UK Techno / Tech House adventures.'
+
+Here, I dig into the shop's record reviews at scale. A "quantitative toast" to the best to ever do it `r emo::ji("wine_glass")`
+
+## Scrapin' in the crates
+
+I'm collating these (and others, soon come) record store's listings data over at [crates](https://github.com/ewenme/crates), a GitHub repo with data + code as u like. Here's a preview of Honest Jon's listings, to give u a flavour.
+
+```{r get-honest-data}
+
+# get honest jons data
+honest_jons_recs <- read_csv("https://raw.githubusercontent.com/ewenme/crates/master/data/honest-jons/honest-jons-listings.csv") %>% 
+  filter(!is.na(review))
+
+honest_jons_recs
+```
+
+Similar listings data are available in `crates` for Hardwax. Here's what's in there to work with (at time of writing).
+
+```{r merge-data}
+
+# get hardwax data
+hardwax_recs <- read_csv("https://raw.githubusercontent.com/ewenme/crates/master/data/hardwax/hardwax-listings.csv") %>% 
+  mutate(store = "Hardwax")
+
+# bind store data
+records <- bind_rows(mutate(honest_jons_recs, store = "Honest Jons"), 
+                  select(hardwax_recs, artist:label, review, store)) %>% 
+  # add ID field
+  group_by(store) %>% 
+  mutate(id = row_number())
+
+# count reviews x store
+ggplot(data = records, aes(x = store)) +
+  geom_bar(fill = ghibli_palettes$KikiMedium[7]) +
+  scale_y_continuous(expand = c(0, 0), limits = c(0, 20000)) +
+  theme_ewen_ws() +
+  labs(title = "Record store review counts", x = NULL, y = "Review count",
+       caption = "@ewen_")
+```
+
+## Characterising store reviews
+
+Even if you're not familiar with Hardwax or Honest Jon's review style, you may have noticed some immediate differences in the examples at the start of this post. 
+
+```{r review-lengths}
+
+# create word-level data
+review_words <- records %>% 
+  unnest_tokens(word, review, token = "words") 
+
+# summarise word counts
+word_counts <- review_words %>% 
+  group_by(store, id) %>% 
+  summarise(word_count = n()) %>% 
+  ungroup()
+  
+# viz word count distro
+ggplot(word_counts) + 
+  geom_density(aes(x = word_count, fill = store)) + 
+  facet_zoom(xlim = c(0, 50), ylim = c(0, 0.175), horizontal = FALSE) +
+  theme_ewen_ws()
+
+ggplot(word_counts, aes(x = store, y = word_count)) +
+  geom_sina(alpha = 0.025) +
+  theme_ewen_ws()
+
+```
+
+
+```{r}
+review_words <- records %>% 
+  unnest_tokens(word, review, token = "words") %>% 
+  anti_join(stop_words)
+
+word_counts <- review_words %>%
+  count(store, word, sort = TRUE)
+
+word_lo <- word_counts %>% 
+  bind_log_odds(store, word, n) %>%
+  arrange(-log_odds)
+
+word_lo %>%
+  group_by(store) %>%
+  top_n(10) %>%
+  ungroup %>%
+  mutate(word = reorder(word, log_odds)) %>%
+  ggplot(aes(word, log_odds, fill = store)) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~store, scales = "free") +
+  coord_flip() +
+  labs(x = NULL)  
+```
+
