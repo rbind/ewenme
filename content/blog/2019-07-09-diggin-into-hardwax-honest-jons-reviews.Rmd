@@ -16,7 +16,7 @@ if (!require("pacman")) install.packages("pacman")
 pacman::p_load_current_gh("juliasilge/tidylo", "hadley/emo", "ewenme/ewenthemes")
 
 # load cran pkgs
-pacman::p_load("tidyverse", "tidytext", "ghibli", "see", "ggforce")
+pacman::p_load("tidyverse", "tidytext", "ghibli", "see", "ggforce", "ggrepel")
 
 ```
 
@@ -30,7 +30,7 @@ Let that one soak in. Then, try out Hardwax's take on Metrist's [Pollen Part I](
 
 > 'Crisp IDM & Grime trained, Electro affine, modern UK Techno / Tech House adventures.'
 
-Here, I dig into the shop's record reviews at scale. A "quantitative toast" to the best to ever do it `r emo::ji("wine_glass")`
+Now, a little dig into the shop's record reviews at scale.[^fullcode] A "quantitative toast" to the best to ever do it `r emo::ji("wine_glass")`
 
 ## Scrapin' in the crates
 
@@ -64,14 +64,16 @@ records <- bind_rows(mutate(honest_jons_recs, store = "Honest Jons"),
 ggplot(data = records, aes(x = store)) +
   geom_bar(fill = ghibli_palettes$KikiMedium[7]) +
   scale_y_continuous(expand = c(0, 0), limits = c(0, 20000)) +
-  theme_ewen_ws() +
-  labs(title = "Record store review counts", x = NULL, y = "Review count",
+  theme_ewen_ws(plot_title_size = 18, subtitle_size = 14, base_size = 14) +
+  labs(title = "Record review counts",
+       subtitle = "# of Harwax and Honest Jon's reviews of records present in the data.",
+       x = NULL, y = "Review count",
        caption = "@ewen_")
 ```
 
-## Characterising store reviews
+## Characterising a store's chat
 
-Even if you're not familiar with Hardwax or Honest Jon's review style, you may have noticed some immediate differences in the examples at the start of this post. 
+Even if you're not familiar with Hardwax or Honest Jon's review style, you may have noticed some immediate differences in the examples at the start of this post. Off the bat, Hardwax's reviews tend to be of the "short and sweet" variety.
 
 ```{r review-lengths}
 
@@ -86,39 +88,110 @@ word_counts <- review_words %>%
   ungroup()
   
 # viz word count distro
-ggplot(word_counts) + 
-  geom_density(aes(x = word_count, fill = store)) + 
-  facet_zoom(xlim = c(0, 50), ylim = c(0, 0.175), horizontal = FALSE) +
-  theme_ewen_ws()
-
-ggplot(word_counts, aes(x = store, y = word_count)) +
-  geom_sina(alpha = 0.025) +
-  theme_ewen_ws()
+ggplot(word_counts, aes(x = word_count, fill = store, colour = store)) + 
+  geom_density(alpha = 0.5) +
+  scale_fill_ghibli_d(name = "KikiMedium", direction = -1) +
+  scale_colour_ghibli_d(name = "KikiMedium", direction = -1) +
+  scale_y_continuous(expand = c(0, 0)) +
+  theme_ewen_ws(plot_title_size = 18, subtitle_size = 14, base_size = 14) +
+  theme(legend.position = "top", legend.title = element_blank()) +
+  labs(title = "Record review lengths",
+       subtitle = "The distribution of record review lengths (word counts) by store",
+       x = "Word count", y = "Density", caption = "@ewen_")
 
 ```
 
+In actual fact, Hardwax reviews hover around the seven word mark, with [the longest hitting 38 words](https://hardwax.com/61214/patrick-pulsinger/impassive-skies/). Honest Jon's, on the other hand, dish out 27 words on average, but vary considerably - they penned a whole 416 words about [Horace Tapscott With The Pan-Afrikan People's Arkestra](https://www.discogs.com/Horace-Tapscott-With-The-Pan-Afrikan-Peoples-Arkestra-Live-At-IUCC/master/256086). Here's a snippet:
+
+> The pianist was an organiser, and instead of chasing a successful recording career, he wanted to build a community band that would act as “a cultural safe house for the music.” “I wanted to say, This is your music. This is black music, and I want to present a panorama of the whole thing right here.” “We would preserve the music on our ark, the mothership…”
+
+Beyond review length, analysing the actual review content will help paint a better picture of what makes reading listings on each site such a unique experience. For starters, examining which words are most common in each store's writing (after excluding common stop words e.g. "and").
 
 ```{r}
+# create word-level df
 review_words <- records %>% 
   unnest_tokens(word, review, token = "words") %>% 
   anti_join(stop_words)
 
+# calc word count metrics
 word_counts <- review_words %>%
-  count(store, word, sort = TRUE)
+  group_by(store) %>% 
+  mutate(review_count = n_distinct(id)) %>% 
+  group_by(store, word) %>% 
+  summarise(count = n(),
+            count_per_review = round(count / unique(review_count), digits = 3)) %>% 
+  ungroup()
+  
+# plot common words x store
+word_counts %>% 
+  group_by(store) %>% 
+  top_n(10, count_per_review) %>% 
+  ungroup() %>% 
+  mutate(word = reorder_within(word, count, store)) %>% 
+  ggplot(aes(x = word, y = count_per_review)) +
+  geom_point2(size = 4, colour = ghibli_palettes$KikiMedium[7]) +
+  coord_flip() +
+  facet_wrap(~ store, scales = "free") +
+  scale_x_reordered() +
+  theme_ewen_ws(axis = FALSE, plot_title_size = 18, subtitle_size = 14, 
+                base_size = 12, axis_title_just = "c") +
+  labs(title = "High-frequency record review words",
+       subtitle = "The most common words featured in reviews of records, by store",
+       x = NULL, y = "Words per review", caption = "@ewen_")
+```
 
-word_lo <- word_counts %>% 
-  bind_log_odds(store, word, n) %>%
+Yeah, Hardwax talk techno quite a bit. Interestingly, "classic" is the only word that features in the top ten across both shops.
+
+A weighted log odds statistic[^lo] can be helpful to measure how the usage of words differs across groups (in this case, record stores), accounting for sampling variability. In short, which words are most representative of that store when compared to the other?
+
+```{r}
+
+# calc log odds
+word_log_odds <- word_counts %>% 
+  bind_log_odds(store, word, count) %>%
   arrange(-log_odds)
 
-word_lo %>%
+# plot highest log odds x store
+word_log_odds %>%
   group_by(store) %>%
   top_n(10) %>%
   ungroup %>%
   mutate(word = reorder(word, log_odds)) %>%
-  ggplot(aes(word, log_odds, fill = store)) +
-  geom_col(show.legend = FALSE) +
+  ggplot(aes(word, log_odds)) +
+  geom_point2(size = 4, colour = ghibli_palettes$KikiMedium[7]) +
   facet_wrap(~store, scales = "free") +
   coord_flip() +
-  labs(x = NULL)  
+  theme_ewen_ws(axis = FALSE, plot_title_size = 18, subtitle_size = 14, 
+                base_size = 12, axis_title_just = "c") +
+  labs(title = "Store-specific record review words",
+       subtitle = "The words featured in reviews of records that are most specific to that record store.",
+       x = NULL, y = "Log odds ratio, weighted by uninformative Dirichlet prior", caption = "@ewen_") 
 ```
 
+It's conclusive - techno is Hardwax and Hardwax is techno.
+
+## Going deep on HJ's
+
+
+
+```{r}
+word_log_odds %>% 
+  filter(store == "Honest Jons") %>% 
+  top_n(50, count) %>%
+  ggplot(aes(count, log_odds, label = word)) +
+  geom_hline(yintercept = 0, lty = 2, 
+               color = "#222324", alpha = 0.6) +
+  geom_text_repel(family = "Work Sans Light", size = 3) +
+  geom_point2(colour = ghibli_palettes$KikiMedium[7], size = 2) + 
+  scale_x_log10() +
+  theme_ewen_ws(axis = FALSE, grid = "XY", plot_title_size = 16, subtitle_size = 11, 
+                base_size = 12) +
+  labs(title = "Honest Jon's specific and most common review words",
+       subtitle = "The most frequently occuring and most characteristic words in Honest Jon's record reviews",
+       x = "Word count", y = "Weighted log odds ratio", caption = "@ewen_") 
+```
+
+
+
+[^fullcode]: To keep the post concise and pretty for non-coders, I don't show all of the code, but you can find all the code [here](https://github.com/rbind/ewenme/blob/master/content/blog/.Rmd).
+[^lo]: 
