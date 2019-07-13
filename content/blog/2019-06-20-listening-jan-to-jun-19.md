@@ -37,6 +37,7 @@ Some of the records I have really appreciated in "H1" 2019 are here. There's a [
 **Afrikan Sciences, & The Kick Drum is Default** *[Deepblak]* - Eric rewiring your little brain, as ever. 
 
 **Tujiko Noriko, Kuro (OST)** *[ENTOPIA]* - Tense, atmospheric soundscapes on *PANs* new soundtrack offshoot. 
+
 **Gila, Trench Tones** *[Lex Records]* - Runs through hip-hop, techno and ambient wonder. Had to cop the wax for that [Eric Hu](www.erichu.info) artwork!
 
 **Tierra Whack, All the singles** *[Self-released]* - The Dr Seuss type spitter paints fully-formed tracks this year with as much colour as 2018's *Whack World* vignettes. I stan.
