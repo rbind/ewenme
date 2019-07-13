@@ -23,7 +23,7 @@ pacman::p_load("tidyverse", "tidytext", "ghibli", "see", "ggforce", "ggrepel")
 
 ```
 
-[Honest Jons](https://honestjons.com) of London and [Hardwax](https://hardwax.com/) of Berlin are undisputed record store royalty. Both are 30+ years in the game but maintain a fiercely independent and unapolagetic representation of music in their city, and beyond. This rep extends to their online presence, most infamously through the unique style in which each store's staff break down the new stuff hitting the shelves. 
+[Honest Jons](https://honestjons.com) of London and [Hardwax](https://hardwax.com/) of Berlin are undisputed record store royalty. Both are 30+ years in the game but maintain a fiercely independent and unapologetic representation of music in their city, and beyond. This rep extends to their on-line presence, most infamously through the unique style in which each store's staff break down the new stuff hitting the shelves. 
 
 Here's something from Honest Jons, on a Salik and DJ Sotofett [outing on Wania](https://www.discogs.com/Salik-DJ-Sotofett-Inna-Brixton-Acid-Site-Mix/release/11213973):
 
@@ -69,7 +69,7 @@ ggplot(data = records, aes(x = store)) +
   scale_y_continuous(expand = c(0, 0), limits = c(0, 20000)) +
   theme_ewen_ws(plot_title_size = 18, subtitle_size = 12, base_size = 14) +
   labs(title = "Record store review counts",
-       subtitle = "# of Harwax and Honest Jons reviews of records present in the data.",
+       subtitle = "# of Hardwax and Honest Jons reviews of records present in the data.",
        x = NULL, y = "Review count",
        caption = "@ewen_")
 ```
@@ -193,7 +193,7 @@ word_log_odds %>%
   theme_ewen_ws(axis = FALSE, grid = "XY", plot_title_size = 16, subtitle_size = 12, 
                 base_size = 12) +
   labs(title = "Honest Jons specific / common review words",
-       subtitle = "The most frequently occuring and most characteristic words in Honest Jons\nrecord reviews.",
+       subtitle = "The most frequently occurring and most characteristic words in Honest Jons\nrecord reviews.",
        x = "Words per review", y = "Weighted log odds ratio", caption = "@ewen_") 
 ```
 

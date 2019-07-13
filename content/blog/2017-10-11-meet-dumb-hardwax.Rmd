@@ -124,7 +124,7 @@ Now we're entering text mining territory, it's time to call on the might of `tid
     - No. times words precede commas
     
 ```{r counts, echo=FALSE}
-reviews <- read.csv("https://raw.github.com/ewenme/hardwax_bot/master/Data/reviews.csv",
+reviews <- read.csv("https://raw.github.com/ewenme/dumb-hardwax/master/Data/reviews.csv",
                     stringsAsFactors = FALSE)
 
 # get unique words
@@ -205,19 +205,19 @@ With the above tasks done, the 'fun' can really begin - crafting our first Hardw
 
 ```{r, echo=FALSE}
 # load data
-word_counts <- read.csv("https://raw.github.com/ewenme/hardwax_bot/master/Data/words.csv",
+word_counts <- read.csv("https://raw.github.com/ewenme/dumb-hardwax/master/Data/words.csv",
                         stringsAsFactors = FALSE)
 
-opener_counts <- read.csv("https://raw.github.com/ewenme/hardwax_bot/master/Data/openers.csv",
+opener_counts <- read.csv("https://raw.github.com/ewenme/dumb-hardwax/master/Data/openers.csv",
                           stringsAsFactors = FALSE)
 
-bigram_counts <- read.csv("https://raw.github.com/ewenme/hardwax_bot/master/Data/bigrams.csv",
+bigram_counts <- read.csv("https://raw.github.com/ewenme/dumb-hardwax/master/Data/bigrams.csv",
                           stringsAsFactors = FALSE)
 
-trigram_counts <- read.csv("https://raw.github.com/ewenme/hardwax_bot/master/Data/trigrams.csv", stringsAsFactors = FALSE)
+trigram_counts <- read.csv("https://raw.github.com/ewenme/dumb-hardwax/master/Data/trigrams.csv", stringsAsFactors = FALSE)
 
 # set twitter token
-twitter_token <- readRDS(gzcon(url("https://raw.github.com/ewenme/hardwax_bot/master/twitter_token.rds")))
+twitter_token <- readRDS(gzcon(url("https://raw.github.com/ewenme/dumb-hardwax/master/twitter_token.rds")))
 
 ```
 
@@ -355,7 +355,7 @@ I stumbled across an impeccable tutorial [here](https://github.com/thdeltei/azur
 
 ## Meet Dumb Hardwax
 
-My work is done - introducing [@dumb_hardwax](https://twitter.com/dumb_hardwax). Trying it's hardest to make Hardwax gold once an hour. 
+My work is done - say hi to [Dumb Hardwax](https://twitter.com/dumb_hardwax). Trying it's hardest to make Hardwax gold once an hour. 
 
 ```{r bot pic, out.width = "75%", fig.align = "center", echo=FALSE}
 knitr::include_graphics("/img/2017-10-11-Meet_Dumb_Hardwax/dumb_hardwax.png")
@@ -364,5 +364,5 @@ knitr::include_graphics("/img/2017-10-11-Meet_Dumb_Hardwax/dumb_hardwax.png")
 Well, the result is incredibly niche, but if you've made it this far, I'm sure you already have great plans for a uniquely useless bot (made with love).  
 
 [^fullcode]: To keep the post concise I don't show all of the code, especially code that generates figures. But you can find the full code [here](https://github.com/rbind/ewenme/blob/master/content/blog/meet-dumb-hardwax.Rmd).
-[^reproducibility]: Because the website isn't static (i.e. the release pages change), the workflow is not entirely reproducible. While the code provided here will scrape, clean data etc., the end-to-end result may be different. Please refer to the [scrape](https://github.com/ewenme/hardwax_bot/blob/master/review%20scrape.R), [clean](https://github.com/ewenme/hardwax_bot/blob/master/review%20clean.R) and [bot](https://github.com/ewenme/hardwax_bot/blob/master/hardwax_bot.R) scripts hosted on GitHub for a full audit trail of the code used to create the current version of Dumb Hardwax.
+[^reproducibility]: Because the website isn't static (i.e. the release pages change), the workflow is not entirely reproducible. While the code provided here will scrape, clean data etc., the end-to-end result may be different. Please refer to the [scrape](https://github.com/ewenme/dumb-hardwax/blob/master/review%20scrape.R), [clean](https://github.com/ewenme/dumb-hardwax/blob/master/review%20clean.R) and [bot](https://github.com/ewenme/dumb-hardwax/blob/master/hardwax_bot.R) scripts hosted on GitHub for a full audit trail of the code used to create the current version of Dumb Hardwax.
 [^tidytext]: Given that [Roel's post]((http://rmhogervorst.nl/cleancode/blog/2017/01/21/markov-chain.html)) covers a lot of the same word count/bigram/trigram processing steps that I did, check that out if you wanted more commentary around the code used during the process.
