@@ -1,0 +1,81 @@
+---
+title: "Diggin' into Hardwax & Honest Jons' reviews"
+description: "A quantitative appreciation of the inimitable wordplay over at two of my favourite record stores' sites. TIP!"
+date: '2019-07-09'
+slug: diggin-into-hardwax-honest-jons-reviews
+tags: ["music", "R"]
+draft: yes
+---
+
+
+
+<p><a href="https://honestjons.com">Honest Jons</a> of London and <a href="https://hardwax.com/">Hardwax</a> of Berlin are record store royalty. Both have maintained a fiercely independent and unapolagetic representation of music in their city and beyond. This rep extends to their online presence and, infamously, the unique style in which staff break down new records hitting the shop.</p>
+<p>Here’s something from Honest Jons, on a Salik and DJ Sotofett <a href="https://www.discogs.com/Salik-DJ-Sotofett-Inna-Brixton-Acid-Site-Mix/release/11213973">outing on Wania</a>:</p>
+<blockquote>
+<p>‘A strictly-rockers intermingling of dubstep and d&amp;b, with heavy bass and darkly atmospheric strings. DJ Sotofett falls out of line on the flip, heading off into acidic and 3D soundscapes.’</p>
+</blockquote>
+<p>Let that one soak in. Then, try out Hardwax’s take on Metrist’s <a href="https://www.discogs.com/Metrist-Pollen-Pt-I/release/13786196">Pollen Part I</a>:</p>
+<blockquote>
+<p>‘Crisp IDM &amp; Grime trained, Electro affine, modern UK Techno / Tech House adventures.’</p>
+</blockquote>
+<p>Now, a little dig into the shop’s record reviews at scale.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> A “quantitative toast” to the best to ever do it 🍷</p>
+<div id="scrapin-up-the-crates" class="section level2">
+<h2>Scrapin’ up the crates ⛏</h2>
+<p>I’m collating these (and hopefully others, soon come) record store’s listings data<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a> over at <a href="https://github.com/ewenme/crates">crates</a>, a GitHub repo with data + code as u like. Here’s a preview of Honest Jons’ listings, to give u a flavour.</p>
+<pre><code>## # A tibble: 4,820 x 5
+##    artist        release         label       review                category
+##    &lt;chr&gt;         &lt;chr&gt;           &lt;chr&gt;       &lt;chr&gt;                 &lt;chr&gt;   
+##  1 Ain&#39;t No Gra… The Life And L… Dust To Di… The flaming Appalach… Blues   
+##  2 AMC TEST ART… &lt;NA&gt;            Ace         Thsi is a test produ… Blues   
+##  3 Anthology Of… &lt;NA&gt;            Smithsonia… Harry Smith’s monume… Blues   
+##  4 Lavern Baker  La Vern         Rumble      Her 1956 Atlantic de… Blues   
+##  5 Bandera Doo … &lt;NA&gt;            Ace         For Your Precious Lo… Blues   
+##  6 Pastor T.L. … Like A Ship...… Numero      Gospel soul classic … Blues   
+##  7 The Big Beat  The Dave Barth… Ace         Hats off every time … Blues   
+##  8 Big Bill Bro… Do That Guitar… Yazoo       Thoroughly entertain… Blues   
+##  9 Black Cat Tr… &lt;NA&gt;            Mamlish     Roars out of the tra… Blues   
+## 10 Bobby Bland   Two Steps From… Duke        The 1960 review of h… Blues   
+## # … with 4,810 more rows</code></pre>
+<p>Similar listings data are available in <code>crates</code> for Hardwax. Here’s what’s in there to work with (at time of writing).</p>
+<p><img src="/blog/2019-07-09-diggin-into-hardwax-honest-jons-reviews_files/figure-html/merge-data-1.png" width="100%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="characterising-store-chat" class="section level2">
+<h2>Characterising store chat 💬</h2>
+<p>Even if you’re not familiar with Hardwax’s or Honest Jons’ review style, you may have noticed some immediate differences in the examples shared at the start of this post. Off the bat, Hardwax’s reviews tend to be of the “short and sweet” variety.</p>
+<p><img src="/blog/2019-07-09-diggin-into-hardwax-honest-jons-reviews_files/figure-html/review-lengths-1.png" width="100%" style="display: block; margin: auto;" /></p>
+<p>In actual fact, Hardwax reviews hover around the seven word mark, with <a href="https://hardwax.com/61214/patrick-pulsinger/impassive-skies/">the longest hitting 38 words</a>. Honest Jons, on the other hand, dish out 27 words on average, but vary considerably - they penned a whole 416 words about <a href="https://www.discogs.com/Horace-Tapscott-With-The-Pan-Afrikan-Peoples-Arkestra-Live-At-IUCC/master/256086">Horace Tapscott With The Pan-Afrikan People’s Arkestra</a>. Here’s a snippet:</p>
+<blockquote>
+<p>The pianist was an organiser, and instead of chasing a successful recording career, he wanted to build a community band that would act as “a cultural safe house for the music.” “I wanted to say, This is your music. This is black music, and I want to present a panorama of the whole thing right here.” “We would preserve the music on our ark, the mothership…”</p>
+</blockquote>
+<p>Beyond review length, analysing the actual review content should help to describe makes reading listings on each site such a unique experience. For starters, examining which words are most common in each store’s writing (after excluding common stop words e.g. “and”).</p>
+<p><img src="/blog/2019-07-09-diggin-into-hardwax-honest-jons-reviews_files/figure-html/unnamed-chunk-1-1.png" width="100%" style="display: block; margin: auto;" /></p>
+<p>Yeah, Hardwax talk techno quite a bit. Interestingly, “classic” is the only word that features in the top ten across both shops.</p>
+<p>A weighted log odds statistic<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a> can be helpful to measure how the usage of words differs across groups (in this case, record stores), accounting for sampling variability. In short, which words are most representative of that store when compared to the other?</p>
+<p><img src="/blog/2019-07-09-diggin-into-hardwax-honest-jons-reviews_files/figure-html/unnamed-chunk-2-1.png" width="100%" style="display: block; margin: auto;" /></p>
+<p>It’s conclusive - techno is Hardwax and Hardwax is techno.</p>
+</div>
+<div id="going-deeper-with-hjs" class="section level2">
+<h2>Going deeper with HJ’s 🔍</h2>
+<p>Sticking with Honest Jons’ reviews for a bit - the most common and specific words have been explored above, but examining these concepts in tandem can help paint a better picture of what makes an HJ review.<a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a></p>
+<p><img src="/blog/2019-07-09-diggin-into-hardwax-honest-jons-reviews_files/figure-html/unnamed-chunk-3-1.png" width="100%" style="display: block; margin: auto;" /></p>
+<p>“Music” features heavy in a record store reviews text, shock horror. It should be noted that some of the genre-based words placements in these graphics are skewed by an unequal no. of reviews by genre on the site.
+Honest Jons lists records under one or more “category”, which provides a decent proxy for genre. It’s therefore possible to see how many words the shop tends to write about a record, depending on the category it’s listed under.</p>
+<p><img src="/blog/2019-07-09-diggin-into-hardwax-honest-jons-reviews_files/figure-html/unnamed-chunk-4-1.png" width="100%" style="display: block; margin: auto;" /></p>
+<p>There’s not much in it, but reviews in the <em>Jazz</em> category tend to be longer than others. <em>Reggae</em> and <em>Dance</em> records are usually quite diddy.</p>
+<p>Much like weighted log odds were used previously to understand store-to-store review differences, a similar approach can educate on review word uniqueness across these categories.</p>
+<p><img src="/blog/2019-07-09-diggin-into-hardwax-honest-jons-reviews_files/figure-html/unnamed-chunk-5-1.png" width="100%" style="display: block; margin: auto;" /></p>
+<p>Unsurprisingly, the actual category name heads up many of the category-specific words. The results are intuitive elsewhere, too - “Mississippi” high up on the <em>Blues</em> list, “Nashville” on the <em>Folk</em> one.</p>
+</div>
+<div id="fin" class="section level2">
+<h2>Fin</h2>
+<p>That’s all for now. As a reminder, the data is freely available to play with <a href="https://github.com/ewenme/crates">here</a>, so holla if you do anything with it 🙏</p>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>To keep the post concise and pretty for non-coders, I don’t show all of the code, but you can find all the code <a href="https://github.com/rbind/ewenme/blob/master/content/blog/.Rmd">here</a>.<a href="#fnref1" class="footnote-back">↩</a></p></li>
+<li id="fn2"><p>At time of writing, both record store’s permit the gathering of their site’s listings data (in accordance with respective <code>robots.txt</code>).<a href="#fnref2" class="footnote-back">↩</a></p></li>
+<li id="fn3"><p>The weighted log odds statistics used here is of the variety described in a <a href="https://doi.org/10.1093/pan/mpn018">Monroe, Colaresi, and Quinn (2008) paper</a>, applied using Julia Silge’s really neat <a href="https://github.com/juliasilge/tidylo">tidylo R package</a>. Related, a lot of the text manipulation was made easier by ANOTHER of Julia’s ventures, <a href="https://www.tidytextmining.com/">tidytext</a>.<a href="#fnref3" class="footnote-back">↩</a></p></li>
+<li id="fn4"><p>Thomas Pedersen’s <a href="https://github.com/thomasp85/ggforce">ggforce</a> was instrumental in this, and other, visualisations expressed in the post.<a href="#fnref4" class="footnote-back">↩</a></p></li>
+</ol>
+</div>
