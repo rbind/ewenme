@@ -6,7 +6,7 @@ tags:
   - r
 description: "A quantitative appreciation of the inimitable wordplay over at two of my favourite record stores' sites. TIP!"
 slug: diggin-into-hardwax-honest-jons-reviews
-image: "/blog/2019-07-15-diggin-into-hardwax-honest-jons-reviews_files/figure-html/hj-specific-common-1.png"
+image: "/blog/2019-07-15-diggin-into-hardwax-honest-jons-reviews_files/figure-html/reggae-cat-odds-1.png"
 draft: no
 ---
 
@@ -19,7 +19,9 @@ if (!require("pacman")) install.packages("pacman")
 pacman::p_load_gh("juliasilge/tidylo", "hadley/emo", "ewenme/ewenthemes")
 
 # load cran pkgs
-pacman::p_load("tidyverse", "tidytext", "ghibli", "see", "ggforce", "ggrepel")
+pacman::p_load("tidyverse", "tidytext", "ghibli", "see", "ggforce", "ggrepel", "scales")
+
+update_geom_font_defaults(family = "Work Sans Light")
 
 ```
 
@@ -66,12 +68,13 @@ records <- bind_rows(mutate(honest_jons_recs, store = "Honest Jons"),
 # count reviews x store
 ggplot(data = records, aes(x = store)) +
   geom_bar(fill = ghibli_palettes$KikiMedium[7]) +
+  geom_text(stat='count', aes(label = comma(stat(count))), vjust = -1, size = 5) +
   scale_y_continuous(expand = c(0, 0), limits = c(0, 20000)) +
   theme_ewen_ws(plot_title_size = 18, subtitle_size = 12, base_size = 14) +
+  theme(axis.text.y = element_blank()) +
   labs(title = "Record store review counts",
        subtitle = "# of Hardwax and Honest Jons reviews of records present in the data.",
-       x = NULL, y = "Review count",
-       caption = "@ewen_")
+       x = NULL, y = NULL, caption = "@ewen_")
 ```
 
 ## Characterising store chat `r emo::ji("speech_balloon")`
@@ -178,7 +181,6 @@ It's conclusive - techno is Hardwax and Hardwax is techno.
 Sticking with Honest Jons' reviews for a bit - the most common and specific words have been explored above, but examining these concepts in tandem can help paint a better picture of what makes an HJ review.[^ggforce]
 
 ```{r hj-specific-common}
-desc = '"Jazz" and "Music" are both extremely common and unique (vs. Hardwax) review words.'
 word_log_odds %>% 
   filter(store == "Honest Jons") %>% 
   top_n(50, count_per_review) %>%
@@ -186,18 +188,17 @@ word_log_odds %>%
   geom_hline(yintercept = 0, lty = 2, 
                color = "#222324", alpha = 0.6) +
   geom_text_repel(aes(label = word), family = "Work Sans Light", size = 3, seed = 3) +
-  geom_point2(colour = ghibli_palettes$KikiMedium[7], size = 2) + 
-  geom_mark_ellipse(aes(filter = count > 500, description = desc), 
-                    label.fontsize = 9, label.family = "Work Sans Light") +
+  geom_point2(colour = ghibli_palettes$KikiMedium[7], size = 2.5, alpha = 0.8) + 
   scale_x_log10() +
   theme_ewen_ws(axis = FALSE, grid = "XY", plot_title_size = 16, subtitle_size = 12, 
                 base_size = 12) +
-  labs(title = "Honest Jons specific / common review words",
-       subtitle = "The most frequently occurring and most characteristic words in Honest Jons\nrecord reviews.",
+  labs(title = "Honest Jons specific / frequent review words",
+       subtitle = "The most frequently occurring and most characteristic words in Honest Jons\nrecord reviews. Top 50 most frequent-occuring words included.",
        x = "Words per review", y = "Weighted log odds ratio", caption = "@ewen_") 
 ```
 
-"Music" features heavy in a record store reviews text, shock horror. It should be noted that some of the genre-based words placements in these graphics are skewed by an unequal no. of reviews by genre on the site. 
+"Music" features heavy in a record store reviews text, shock horror. It should be noted that some of the genre-based words placements in these graphics are skewed by an unequal no. of reviews by genre on the site.
+
 Honest Jons lists records under one or more "category", which provides a decent proxy for genre. It's therefore possible to see how many words the shop tends to write about a record, depending on the category it's listed under. 
 
 ```{r hj-cat-counts}
@@ -210,12 +211,12 @@ hj_review_word_counts <- review_words %>%
 
 # viz word count distro
 ggplot(hj_review_word_counts, aes(x = fct_reorder(category, -word_count), y = word_count)) + 
-  geom_sina(alpha = 0.15, colour = ghibli_palettes$KikiMedium[7]) +
+  geom_sina(alpha = 0.5, colour = ghibli_palettes$KikiMedium[7], size = 0.5) +
   scale_y_continuous(expand = c(0, 0)) +
   theme_ewen_ws(plot_title_size = 18, subtitle_size = 12, base_size = 14) +
   theme(axis.text.x = element_text(size = 10)) +
   labs(title = "Honest Jons review lengths",
-       subtitle = "The word counts of Honest Jons reviews, by site category. Ordered by\nmedian review length (descending, left to right).",
+       subtitle = "The word counts of Honest Jons reviews, by site category. Ordered (descending,\nleft to right) by median review length.",
        x = NULL, y = "Word count", caption = "@ewen_")
 ```
 
@@ -256,6 +257,28 @@ hj_log_odds %>%
 ```
 
 Unsurprisingly, the actual category name heads up many of the category-specific words. The results are intuitive elsewhere, too - "Mississippi" high up on the *Blues* list, "Nashville" on the *Folk* one. 
+
+Interestingly, *Reggae* has the highest absolute log odds, suggesting that words used in reggae reviews are more "uniquely reggae" than in other listed categories. Beyond the top ten, what does the whole picture look like?
+
+```{r reggae-cat-odds}
+desc = '"Rhythm", "roots" and "dub" are commonly featured, but also Reggae-specific, review words.'
+
+hj_log_odds %>% 
+  filter(category == "Reggae") %>% 
+  ggplot(aes(count_per_review, log_odds)) +
+  geom_hline(yintercept = 0, lty = 2, 
+               color = "#222324", alpha = 0.6) +
+  geom_text_repel(aes(label = word), family = "Work Sans Light", size = 3, seed = 3,
+                  data = top_n(filter(hj_log_odds, category == "Reggae"), 25, count_per_review)) +
+  geom_point2(colour = ghibli_palettes$KikiMedium[7], size = 3, alpha = 0.5) + 
+  geom_mark_ellipse(aes(filter = count_per_review > 0.1, description = desc),
+                    label.fontsize = 9, label.family = "Work Sans Light") +
+  theme_ewen_ws(axis = FALSE, grid = "XY", plot_title_size = 16, subtitle_size = 12, 
+                base_size = 12) +
+  labs(title = "Reggae specific / frequent review words",
+       subtitle = "The frequency and specificity of words used in Honest Jons'\nreggae record reviews.",
+       x = "Words per review", y = "Weighted log odds ratio", caption = "@ewen_") 
+```
 
 ## Fin
 
