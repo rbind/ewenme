@@ -1,12 +1,12 @@
 ---
-title: "Diggin' into Hardwax & Honest Jons' reviews"
+title: "What's in a Hardwax, or Honest Jons, review?"
 date: '2019-07-15'
 tags:
   - music
   - r
-description: "A quantitative appreciation of the inimitable wordplay over at two of my favourite record stores' sites. TIP!"
-slug: diggin-into-hardwax-honest-jons-reviews
-image: "/blog/2019-07-15-diggin-into-hardwax-honest-jons-reviews_files/figure-html/reggae-cat-odds-1.png"
+description: "A (quantitative) appreciation of the inimitable wordplay at two of my favourite record stores. TIP!"
+slug: whats-in-a-hardwax-honest-jons-review
+image: "/blog/2019-07-15-whats-in-a-hardwax-honest-jons-review_files/figure-html/reggae-cat-odds-1.png"
 draft: no
 ---
 
@@ -19,7 +19,7 @@ if (!require("pacman")) install.packages("pacman")
 pacman::p_load_gh("juliasilge/tidylo", "hadley/emo", "ewenme/ewenthemes")
 
 # load cran pkgs
-pacman::p_load("tidyverse", "tidytext", "ghibli", "see", "ggforce", "ggrepel", "scales")
+pacman::p_load("tidyverse", "tidytext", "ghibli", "see", "ggforce", "ggrepel", "scales", "glue")
 
 update_geom_font_defaults(family = "Work Sans Light")
 
@@ -45,7 +45,8 @@ I'm collating these (and hopefully others, soon come) record store's listings da
 
 # get honest jons data
 honest_jons_recs <- read_csv("https://raw.githubusercontent.com/ewenme/crates/master/data/honest-jons/honest-jons-listings.csv") %>% 
-  filter(!is.na(review))
+  filter(!is.na(review)) %>% 
+  distinct(artist, release, label, .keep_all = TRUE)
 
 honest_jons_recs
 ```
@@ -101,7 +102,7 @@ ggplot(review_word_counts, aes(x = word_count, fill = store, colour = store)) +
   scale_y_continuous(expand = c(0, 0)) +
   theme_ewen_ws(plot_title_size = 18, subtitle_size = 12, base_size = 14) +
   theme(legend.position = "top", legend.title = element_blank()) +
-  labs(title = "Record store review lengths",
+  labs(title = "Hardwax reviews are notoriously short",
        subtitle = "The distribution of record review lengths (word counts) by store.",
        x = "Word count", y = "Density", caption = "@ewen_")
 
@@ -110,6 +111,8 @@ ggplot(review_word_counts, aes(x = word_count, fill = store, colour = store)) +
 In actual fact, Hardwax reviews hover around the seven word mark, with [the longest hitting 38 words](https://hardwax.com/61214/patrick-pulsinger/impassive-skies/). Honest Jons, on the other hand, dish out 27 words on average, but vary considerably - they penned a whole 416 words about [Horace Tapscott With The Pan-Afrikan People's Arkestra](https://www.discogs.com/Horace-Tapscott-With-The-Pan-Afrikan-Peoples-Arkestra-Live-At-IUCC/master/256086). Here's a snippet:
 
 > The pianist was an organiser, and instead of chasing a successful recording career, he wanted to build a community band that would act as “a cultural safe house for the music.” “I wanted to say, This is your music. This is black music, and I want to present a panorama of the whole thing right here.” “We would preserve the music on our ark, the mothership…”
+
+It is worth pointing out that Hardwax review *every* record that hits the store, while Honest Jons are a bit more selective (less than half of the listings gleaned for this work had a review). 
 
 Beyond review length, analysing the actual review content should help to describe makes reading listings on each site such a unique experience. For starters, examining which words are most common in each store's writing (after excluding common stop words e.g. "and").
 
@@ -139,9 +142,9 @@ word_counts %>%
   coord_flip() +
   facet_wrap(~ store, scales = "free") +
   scale_x_reordered() +
-  theme_ewen_ws(axis = FALSE, plot_title_size = 18, subtitle_size = 12, 
+  theme_ewen_ws(axis = FALSE, plot_title_size = 16, subtitle_size = 12, 
                 base_size = 12, axis_title_just = "c") +
-  labs(title = "High-frequency record review words",
+  labs(title = 'Hardwax say "techno" once in every three reviews (roughly)',
        subtitle = "The most common words featured in reviews of records, by store.",
        x = NULL, y = "Words per review", caption = "@ewen_")
 ```
@@ -178,7 +181,7 @@ It's conclusive - techno is Hardwax and Hardwax is techno.
 
 ## Going deeper with HJ's `r emo::ji("mag")`
 
-Sticking with Honest Jons' reviews for a bit - the most common and specific words have been explored above, but examining these concepts in tandem can help paint a better picture of what makes an HJ review.[^ggforce]
+Sticking with Honest Jons' reviews for a bit - the most common and specific words have been explored above, but examining these concepts in tandem can help paint a better picture of what makes an HJ review.
 
 ```{r hj-specific-common}
 word_log_odds %>% 
@@ -192,8 +195,8 @@ word_log_odds %>%
   scale_x_log10() +
   theme_ewen_ws(axis = FALSE, grid = "XY", plot_title_size = 16, subtitle_size = 12, 
                 base_size = 12) +
-  labs(title = "Honest Jons specific / frequent review words",
-       subtitle = "The most frequently occurring and most characteristic words in Honest Jons\nrecord reviews. Top 50 most frequent-occuring words included.",
+  labs(title = 'Honest Jons reviews include "jazz" and "music" a lot',
+       subtitle = "The most frequently occurring and most characteristic words in Honest Jons\nrecord reviews. Top 50 most frequent-occurring words included.",
        x = "Words per review", y = "Weighted log odds ratio", caption = "@ewen_") 
 ```
 
@@ -205,18 +208,18 @@ Honest Jons lists records under one or more "category", which provides a decent 
 # summarise word counts
 hj_review_word_counts <- review_words %>% 
   filter(store == "Honest Jons") %>% 
-  group_by(category, id) %>% 
+  group_by(category, id, artist, release, label) %>% 
   summarise(word_count = n()) %>% 
   ungroup()
 
 # viz word count distro
 ggplot(hj_review_word_counts, aes(x = fct_reorder(category, -word_count), y = word_count)) + 
-  geom_sina(alpha = 0.5, colour = ghibli_palettes$KikiMedium[7], size = 0.5) +
+  geom_sina(alpha = 0.5, colour = ghibli_palettes$KikiMedium[7], size = 0.6) +
   scale_y_continuous(expand = c(0, 0)) +
-  theme_ewen_ws(plot_title_size = 18, subtitle_size = 12, base_size = 14) +
+  theme_ewen_ws(plot_title_size = 14, subtitle_size = 12, base_size = 14) +
   theme(axis.text.x = element_text(size = 10)) +
-  labs(title = "Honest Jons review lengths",
-       subtitle = "The word counts of Honest Jons reviews, by site category. Ordered (descending,\nleft to right) by median review length.",
+  labs(title = "Honest Jons' Jazz reviews are the longest (& Reggae shortest)",
+       subtitle = "The word counts of Honest Jons reviews, by site category. Ordered\n(descending, left to right) by median review length.",
        x = NULL, y = "Word count", caption = "@ewen_")
 ```
 
@@ -251,14 +254,14 @@ hj_log_odds %>%
   theme_ewen_ws(axis = FALSE, base_size = 12, strip_text_size = 14, 
                 plot_title_size = 18, subtitle_size = 12, axis_title_just = "c") +
   theme(axis.text.y = element_text(size = 11, family = "Work Sans ExtraLight")) +
-  labs(title = "Honest Jons category-specific review words",
+  labs(title = "Honest Jons' category-specific review words",
        subtitle = "The words featured in reviews of records that are most specific to that\ncategory (as listed on the site).",
        x = NULL, y = "Log odds ratio, weighted by uninformative Dirichlet prior", caption = "@ewen_") 
 ```
 
 Unsurprisingly, the actual category name heads up many of the category-specific words. The results are intuitive elsewhere, too - "Mississippi" high up on the *Blues* list, "Nashville" on the *Folk* one. 
 
-Interestingly, *Reggae* has the highest absolute log odds, suggesting that words used in reggae reviews are more "uniquely reggae" than in other listed categories. Beyond the top ten, what does the whole picture look like?
+Interestingly, *Reggae* has the highest absolute log odds, suggesting that words used in reggae reviews are more "uniquely reggae" than in other listed categories. Beyond the top ten, what does the whole picture look like?[^ggforce]
 
 ```{r reggae-cat-odds}
 desc = '"Rhythm", "roots" and "dub" are commonly featured, but also Reggae-specific, review words.'
@@ -270,13 +273,13 @@ hj_log_odds %>%
                color = "#222324", alpha = 0.6) +
   geom_text_repel(aes(label = word), family = "Work Sans Light", size = 3, seed = 3,
                   data = top_n(filter(hj_log_odds, category == "Reggae"), 25, count_per_review)) +
-  geom_point2(colour = ghibli_palettes$KikiMedium[7], size = 3, alpha = 0.5) + 
+  geom_point2(colour = ghibli_palettes$KikiMedium[7], size = 3, alpha = 0.3) + 
   geom_mark_ellipse(aes(filter = count_per_review > 0.1, description = desc),
                     label.fontsize = 9, label.family = "Work Sans Light") +
   theme_ewen_ws(axis = FALSE, grid = "XY", plot_title_size = 16, subtitle_size = 12, 
                 base_size = 12) +
-  labs(title = "Reggae specific / frequent review words",
-       subtitle = "The frequency and specificity of words used in Honest Jons'\nreggae record reviews.",
+  labs(title = "Honest Jons' Reggae specific / frequent review words",
+       subtitle = "The frequency and specificity of words used in Honest Jons' reggae record\nreviews.",
        x = "Words per review", y = "Weighted log odds ratio", caption = "@ewen_") 
 ```
 
@@ -284,7 +287,7 @@ hj_log_odds %>%
 
 That's all for now. As a reminder, the data is freely available to play with [here](https://github.com/ewenme/crates). Holla if you do anything with it `r emo::ji("pray")`
 
-[^fullcode]: To keep the post concise and pretty for non-coders, I don't show all of the code, but you can find all the code [here](https://github.com/rbind/ewenme/blob/master/content/blog/2019-07-09-diggin-into-hardwax-honest-jons-reviews.Rmd).
+[^fullcode]: To keep the post concise and pretty for non-coders, I don't show the code. You can find the code [here](https://github.com/rbind/ewenme/blob/master/content/blog/2019-07-09-diggin-into-hardwax-honest-jons-reviews.Rmd).
 [^scraping]: At time of writing, both record store's permit the gathering of their site's listings data (in accordance with the respective `robots.txt`).
 [^lo]: The weighted log odds statistics used here is of the variety described in a [Monroe, Colaresi, and Quinn (2008) paper](https://doi.org/10.1093/pan/mpn018), applied using Julia Silge's really neat [tidylo R package](https://github.com/juliasilge/tidylo). Related, a lot of the text manipulation was made easier by ANOTHER of Julia's ventures, [tidytext](https://www.tidytextmining.com/).
 [^ggforce]: Thomas Pedersen's [ggforce](https://github.com/thomasp85/ggforce) was instrumental in this, and other, visualisations expressed in the post.
