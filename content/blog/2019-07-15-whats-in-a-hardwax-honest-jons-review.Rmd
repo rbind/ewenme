@@ -287,7 +287,7 @@ hj_log_odds %>%
 
 That's all for now. As a reminder, the data is freely available to play with [here](https://github.com/ewenme/crates). Holla if you do anything with it `r emo::ji("pray")`
 
-[^fullcode]: To keep the post concise and pretty for non-coders, I don't show the code. You can find the code [here](https://github.com/rbind/ewenme/blob/master/content/blog/2019-07-09-diggin-into-hardwax-honest-jons-reviews.Rmd).
+[^fullcode]: To keep the post concise and pretty for non-coders, I don't show the code. You can find the code [here](https://github.com/rbind/ewenme/blob/master/content/blog/2019-07-15-whats-in-a-hardwax-honest-jons-review.Rmd).
 [^scraping]: At time of writing, both record store's permit the gathering of their site's listings data (in accordance with the respective `robots.txt`).
 [^lo]: The weighted log odds statistics used here is of the variety described in a [Monroe, Colaresi, and Quinn (2008) paper](https://doi.org/10.1093/pan/mpn018), applied using Julia Silge's really neat [tidylo R package](https://github.com/juliasilge/tidylo). Related, a lot of the text manipulation was made easier by ANOTHER of Julia's ventures, [tidytext](https://www.tidytextmining.com/).
 [^ggforce]: Thomas Pedersen's [ggforce](https://github.com/thomasp85/ggforce) was instrumental in this, and other, visualisations expressed in the post.
