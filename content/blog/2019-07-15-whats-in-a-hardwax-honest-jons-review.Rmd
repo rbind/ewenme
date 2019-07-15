@@ -142,9 +142,9 @@ word_counts %>%
   coord_flip() +
   facet_wrap(~ store, scales = "free") +
   scale_x_reordered() +
-  theme_ewen_ws(axis = FALSE, plot_title_size = 16, subtitle_size = 12, 
+  theme_ewen_ws(axis = FALSE, plot_title_size = 14, subtitle_size = 12, 
                 base_size = 12, axis_title_just = "c") +
-  labs(title = 'Hardwax say "techno" once in every three reviews (roughly)',
+  labs(title = 'Hardwax say "techno" once every three reviews (roughly)',
        subtitle = "The most common words featured in reviews of records, by store.",
        x = NULL, y = "Words per review", caption = "@ewen_")
 ```
