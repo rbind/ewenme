@@ -1,0 +1,87 @@
+---
+title: A decade of Berghain parties, in data
+description: "Numbers behind the last ten years (almost) at the iconic Berlin club."
+date: '2019-08-12'
+slug: decade-of-berghain-parties-in-data
+tags: ['music', 'open-data']
+image: "/blog/2019-08-12-decade-of-berghain-parties-in-data_files/figure-html/year-avg-lineup-size-1.png"
+draft: no
+---
+
+```{r set-up, include=FALSE}
+knitr::opts_chunk$set(
+  cache = FALSE, warning = FALSE, message = FALSE, echo = FALSE, 
+  out.width = '100%', dev = 'png', fig.align = 'center'
+  )
+
+if (!require("pacman")) install.packages("pacman")
+
+# load github pkgs
+pacman::p_load_gh("hadley/emo", "ewenme/ewenthemes", "hrbrmstr/waffle")
+
+# load cran pkgs
+pacman::p_load("tidyverse", "lubridate")
+
+```
+
+[Berghain](http://berghain.de/) is (in)famous for many things. The strict no photography and door policies (which you can take on, VR-style, via [berghaintrainer](https://berghaintrainer.com/)), for starters. It also puts on cool parties, sometimes... 
+
+```{r, fig.align='center'}
+knitr::include_graphics("https://live.staticflickr.com/4695/26100841668_e67a9effab_z.jpg")
+```
+
+What's also cool is, Berghain's site still hosts their programming history on the site. This goes all the way [back to 2009](http://berghain.de/events/2009-12) (check Hudson Mohawke vs. Rustie on the WARP 20 night - I miss Rustie `r emo::ji("sad")`). Some really neat projects have taken advantage of this public archive, like Artiom Dashinsky's [Numbers of Berghain](http://dashinsky.com/berghain-statistics/) piece (which, in turn, makes use of [Olle Holmberg's googlesheet collating 2009-2017 events](https://docs.google.com/spreadsheets/d/1r_OJHzKBwDFIK0YoLSX65g-jp_5djxx-9d4x1-LKUsw/edit#gid=1355724553)).
+
+I managed to pull listings from December 2009 through to July 2019 (at time of writing), now hosted in [this aptly-named GitHub repo](https://github.com/ewenme/berghain). Here's the kind of stories you can quickly get into with it.
+
+```{r year-avg-lineup-size}
+
+# import event data
+events <- read_csv("https://raw.githubusercontent.com/ewenme/berghain/master/data/berghain-events.csv")
+
+# import lineups data
+lineups <- read_csv("https://raw.githubusercontent.com/ewenme/berghain/master/data/berghain-lineups.csv")
+
+# join these
+lineups <- left_join(lineups, events, by = "event_url")
+
+# add live col
+lineups$live <- str_detect(lineups$artist_name, pattern = "LIVE")
+
+# remove LIVE from artist names
+lineups$artist_name_clean <- str_trim(str_remove_all(lineups$artist_name, 
+                                                     pattern = "LIVE"))
+
+# remove non-artist observations
+lineups <- filter(lineups, !is.na(artist_name), 
+                  !str_detect(artist_name, "cancelled"))
+
+# get lineups x year
+lineups_year <- lineups %>% 
+  # isolate berghain / p bar events
+  filter(venue %in% c("Berghain", "Panorama Bar")) %>% 
+  group_by(event_date, event_name) %>% 
+  summarise(artist_count = n_distinct(artist_name_clean)) %>% 
+  ungroup() %>% 
+  mutate(event_year = year(event_date)) %>% 
+  group_by(event_year) %>% 
+  summarise(artist_avg = mean(artist_count), event_count = n())
+
+ggplot(lineups_year, aes(x = event_year, y = artist_avg)) +
+  geom_line() +
+  geom_point() +
+  scale_x_continuous(
+    breaks = seq(
+      min(lineups_year$event_year), max(lineups_year$event_year), 1
+      )
+    ) +
+  scale_y_continuous(limits = c(5, 10), expand = c(0, 0)) +
+  labs(title = "Berghain's lineups have gotten bigger",
+       subtitle = "Average no. of artists on Berghain / Panorama Bar lineups, by year.",
+       x = NULL, y = "lineup size", caption = "@ewen_") +
+  theme_ewen_ws(plot_title_size = 18, subtitle_size = 12, base_size = 12)
+```
+
+Shout me if you do anything cool w the data `r emo::ji("fist")`
+
+[^fullcode]: To keep the post concise and pretty for non-coders, I don't show the code. You can find the code [here](https://github.com/rbind/ewenme/blob/master/content/blog/2019-08-12-decade-of-berghain-parties-in-data.Rmd).
