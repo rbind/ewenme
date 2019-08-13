@@ -17,7 +17,7 @@ knitr::opts_chunk$set(
 if (!require("pacman")) install.packages("pacman")
 
 # load github pkgs
-pacman::p_load_gh("hadley/emo", "ewenme/ewenthemes", "hrbrmstr/waffle")
+pacman::p_load_gh("hadley/emo", "ewenme/ewenthemes")
 
 # load cran pkgs
 pacman::p_load("tidyverse", "lubridate")

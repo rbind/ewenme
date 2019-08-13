@@ -1,0 +1,150 @@
+---
+title: Resident Advisor podcast appearance rankings
+description: "Who features the most in RA's longstanding mix series?"
+date: '2019-08-14'
+slug: ra-podcast-rankings
+tags: ['music', 'open-data']
+draft: yes
+---
+
+```{r set-up, include=FALSE}
+knitr::opts_chunk$set(
+  cache = FALSE, warning = FALSE, message = FALSE, echo = FALSE, 
+  out.width = '100%', dev = 'png', fig.align = 'center'
+  )
+
+if (!require("pacman")) install.packages("pacman")
+
+# load github pkgs
+pacman::p_load_gh("hadley/emo", "ewenme/ewenthemes", "glin/reactable")
+
+# load cran pkgs
+pacman::p_load("tidyverse", "htmltools", "ghibli")
+
+```
+
+
+
+```{r import-data}
+# import RA tracklists data
+tracklists <- read_csv("https://raw.githubusercontent.com/ewenme/mixes/master/data/resident-advisor-podcast/resident-advisor-podcast-tracklists.csv")
+
+# import RA entries data
+entries <- read_csv("https://raw.githubusercontent.com/ewenme/mixes/master/data/resident-advisor-podcast/resident-advisor-podcast-entries.csv")
+
+# split mix titles
+entry_meta <- str_split_fixed(entries$mix_title, pattern = " - ", n = 2)
+
+# get artist name
+entries$artist_name <- entry_meta[, 1]
+entries$artist_name <- str_trim(str_remove_all(entries$artist_name, "\\((.*?)\\)"))
+
+# count artist appearances
+top_tracks <- tracklists %>% 
+  # remove non-artists
+  filter(!artist_name %in% c("?", "N/A", "Intro"), !is.na(artist_name)) %>% 
+  group_by(artist_name) %>% 
+  summarise(mix_count = n_distinct(mix_url), track_count = n()) %>% 
+  ungroup() %>% 
+  top_n(200, wt = mix_count)
+```
+
+
+
+```{r rankings-tbl}
+
+ra_rankings_tbl <- reactable(
+  as.data.frame(top_tracks),
+  defaultPageSize = 20,
+  defaultSorted = "mix_count",
+  defaultColDef = colDef(headerClass = "header", align = "left"),
+  columns = list(
+    artist_name = colDef(
+      name = "artist",
+      width = 150
+    ),
+    mix_count = colDef(
+      name = "# unique mix appearances",
+      defaultSortOrder = "desc",
+      cell = function(value) {
+        width <- paste0(value * 100 / max(top_tracks$mix_count), "%")
+        value <- format(value, width = 2, justify = "right")
+        bar <- div(
+          class = "bar-chart",
+          style = list(marginRight = "6px"),
+          div(class = "bar", style = list(width = width, 
+                                          backgroundColor = ghibli_palettes$MarnieMedium1[3]))
+        )
+        div(class = "bar-cell", span(class = "number", value), bar)
+      }
+    ),
+    track_count = colDef(
+      name = "total track appearances",
+      defaultSortOrder = "desc",
+      cell = function(value) {
+        width <- paste0(value * 100 / max(top_tracks$track_count), "%")
+        value <- format(value, width = 2, justify = "right")
+        bar <- div(
+          class = "bar-chart",
+          style = list(marginRight = "6px"),
+          div(class = "bar", style = list(width = width, 
+                                          backgroundColor = ghibli_palettes$MarnieMedium1[2]))
+        )
+        div(class = "bar-cell", span(class = "number", value), bar)
+      }
+    )
+  ),
+  highlight = FALSE,
+  compact = TRUE,
+  class = "rankings-tbl"
+)
+
+div(class = "rankings",
+  div(class = "subtitle", "RA podcast rankings"),
+  ra_rankings_tbl
+)
+```
+
+```{css}
+
+.rankings {
+  margin: 0 auto;
+  width: 100%;
+  font-family: "Work Sans", sans-serif;
+}
+
+.rankings-tbl {
+  font-size: 14px;
+  line-height: 18px;
+}
+.rankings-tbl a {
+  color: inherit;
+}
+.header {
+  border-bottom: 2px solid #555;
+  font-size: 13px;
+  font-weight: 400;
+  text-transform: uppercase;
+}
+.header:hover {
+  background-color: #eee;
+}
+.bar-cell {
+  display: flex;
+  align-items: center;
+}
+.number {
+  font-family: "Work Sans", sans-serif;
+  font-size: 13.5px;
+  white-space: pre;
+}
+.bar-chart {
+  flex-grow: 1;
+  margin-left: 6px;
+  height: 14px;
+}
+.bar {
+  height: 100%;
+}
+```
+
