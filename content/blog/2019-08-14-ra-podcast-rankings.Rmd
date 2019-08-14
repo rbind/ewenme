@@ -4,13 +4,13 @@ description: "Who features the most in RA's longstanding mix series?"
 date: '2019-08-14'
 slug: ra-podcast-rankings
 tags: ['music', 'open-data']
-draft: yes
+draft: no
 ---
 
 ```{r set-up, include=FALSE}
 knitr::opts_chunk$set(
   cache = FALSE, warning = FALSE, message = FALSE, echo = FALSE, 
-  out.width = '100%', dev = 'png', fig.align = 'center'
+  out.width = '75%', dev = 'png', fig.align = 'center'
   )
 
 if (!require("pacman")) install.packages("pacman")
@@ -23,7 +23,13 @@ pacman::p_load("tidyverse", "htmltools", "ghibli")
 
 ```
 
+[Resident Advisor](https://www.residentadvisor.net/) (RA) have run a (roughly) weekly [podcast mix series](https://www.residentadvisor.net/podcast.aspx) since late 2010 (and still going strong). Each edition sees a new artist sequence a mix, growing a vital cultural artefact which does a good job of tracking the state of 'underground' electronic music. I've been tuning in for a long time, and got to wondering which artists have been featured most prominently throughout the archives.
 
+[MixesDB](https://www.mixesdb.com/w/Main_Page) is the self-proclaimed "database for DJ sets, podcasts, radio shows and more". Over there, fans can enter metadata for mixes, including tracklists (i.e. which tracks were played). There's even an [RA Podcast section](https://www.mixesdb.com/w/Category:Resident_Advisor_Podcast), which means that tracks played within mixes in this series are collated in one place (albeit with some missing data). This would help cure my curiosity.  
+
+## MixesDB 2 .csv `r emo::ji("page_with_curl")`
+
+I've started a collection of mix entries and tracklistings data for RA, and other prominent mix series, within the [mixes](https://github.com/ewenme/mixes) GitHub repo (the code is there, too, if you fancy riffing off of this on your own projects). Most of the data is parsed from MixesDB [who openly admit](https://www.mixesdb.com/w/Help:General) that there can be mistakes (the data is entered by community contributors, remember), so [file an issue](https://github.com/ewenme/mixes/issues) if you see anything fugazi.
 
 ```{r import-data}
 # import RA tracklists data
@@ -49,7 +55,7 @@ top_tracks <- tracklists %>%
   top_n(200, wt = mix_count)
 ```
 
-
+Nonetheless, I dug into the RA Podcast data to find out who's appeared in the most mixes to date. Below is the top ~200 artists according to this metric.[^fullcode]
 
 ```{r rankings-tbl}
 
@@ -73,7 +79,7 @@ ra_rankings_tbl <- reactable(
           class = "bar-chart",
           style = list(marginRight = "6px"),
           div(class = "bar", style = list(width = width, 
-                                          backgroundColor = ghibli_palettes$MarnieMedium1[3]))
+                                          backgroundColor = ghibli_palettes$MarnieMedium1[2]))
         )
         div(class = "bar-cell", span(class = "number", value), bar)
       }
@@ -88,7 +94,7 @@ ra_rankings_tbl <- reactable(
           class = "bar-chart",
           style = list(marginRight = "6px"),
           div(class = "bar", style = list(width = width, 
-                                          backgroundColor = ghibli_palettes$MarnieMedium1[2]))
+                                          backgroundColor = ghibli_palettes$MarnieMedium1[3]))
         )
         div(class = "bar-cell", span(class = "number", value), bar)
       }
@@ -148,3 +154,12 @@ div(class = "rankings",
 }
 ```
 
+<br>
+
+It's a big look for Detroit, then, with the Motor City putting up both #1 (Robert Hood) and #2 (Omar S). Here's a personal fave from Rob to ride out on `r emo::ji("heart_eyes")` `r emo::ji("heart_eyes")`
+
+```{r, eval=TRUE}
+blogdown::shortcode("youtube", "rdH1InuXVP8")
+```
+
+[^fullcode]: You can find the code behind this post [here](https://github.com/rbind/ewenme/blob/master/content/blog/2019-08-14-ra-podcast-rankings.Rmd).
