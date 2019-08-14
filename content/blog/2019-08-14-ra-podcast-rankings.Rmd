@@ -160,7 +160,7 @@ div(class = "rankings",
 It's a big look for Detroit, then, with the Motor City putting up both #1 (Robert Hood) and #2 (Omar S). Here's a personal fave from Rob to ride out on `r emo::ji("heart_eyes")` `r emo::ji("heart_eyes")`
 
 ```{r, eval=TRUE}
-blogdown::shortcode("youtube", "rdH1InuXVP8")
+blogdown::shortcode("youtube", "yRBJDJx_sjg")
 ```
 
 [^fullcode]: You can find the code behind this post [here](https://github.com/rbind/ewenme/blob/master/content/blog/2019-08-14-ra-podcast-rankings.Rmd).
