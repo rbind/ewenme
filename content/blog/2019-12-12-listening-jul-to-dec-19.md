@@ -24,6 +24,8 @@ Here is a list of stuff I was listening to in the last half of 2k19 that brought
 
 *MAGDALENE* by **FKA Twigs** *[Young Turks]* - A break-up record with Nico Jaar on the buttons? So nice to have Twigs back.
 
+*4 Letter Word* by **Flørist** *[The Trilogy Tapes]* - All the way dubbed out, immersive heaters!
+
 *Music X Road* by **Headie One** *[Relentless Records]* - Up there with *Drillers X Trappers* for me. Another big look for Mr. One.
 
 *XYZ* by **Iglooghost, Kai Whiston & BABii** *[Gloo]* - Wonky bubblegum flavours from the future to make you smile (and feel dizzy).
