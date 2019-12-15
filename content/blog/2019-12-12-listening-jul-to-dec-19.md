@@ -60,5 +60,7 @@ Here is a list of stuff I was listening to in the last half of 2k19 that brought
 
 *VORTEX* by **Special Request** *[Houndstooth]* - Woolford was not playing around with this one, to be played LOUD with friends.
 
+*~~~*
+
 <iframe src="https://buymusic.club/embed/ewen-listening-jul-dec-19" height="500" width="100%" frameborder="0"></iframe>
 
