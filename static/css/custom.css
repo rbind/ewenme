@@ -51,11 +51,6 @@
 .subtitle {
   font-family: 'Work Sans Light', sans-serif;
   font-weight: 300;
-  font-size: 16px;
-}
-
-.content {
-  font-size: 18px;
 }
 
 body {
@@ -86,13 +81,13 @@ em {
 
 .section {
   background-color: #fff;
-  padding: 20px 0;
+  padding: 1rem 0;
 }
 
 .container {
   max-width: 800px;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 0 1rem;
 }
 
 .hljs {
@@ -132,10 +127,8 @@ em {
 }
 
 .fa-floppy-o {
-  margin-left: 10px;
+  margin-left: 0.5rem;
   color: #42464c;
   text-decoration:none;
 	border-bottom-style: none;
   }
-  
-  
