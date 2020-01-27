@@ -51,6 +51,7 @@
 .subtitle {
   font-family: 'Work Sans Light', sans-serif;
   font-weight: 300;
+  font-size: 16px;
 }
 
 .content {
@@ -61,6 +62,14 @@ body {
   font-family: 'charterregular', sans-serif;
   font-weight: 400;
 	background-color: #dcdcdc;
+	text-rendering: optimizeLegibility;
+	line-height: 1.6;
+	font-size: 1rem;
+}
+
+.content p {
+  margin: 1rem 0;
+  text-align: left;
 }
 
 strong {

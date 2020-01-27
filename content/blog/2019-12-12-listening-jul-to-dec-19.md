@@ -30,7 +30,7 @@ Here is a list of stuff I was listening to in the last half of 2k19 that brought
 
 *XYZ* by **Iglooghost, Kai Whiston & BABii** *[Gloo]* - Wonky bubblegum flavours from the future to make you smile (and feel dizzy).
 
-*Jay Mita and Sisso meet the Modern Institute at the Villa* by **Jay Mitta, Modern Institute, Sisso, Errorsmith** *[Nyege Nyege Tapes]* - 
+*Jay Mita and Sisso meet the Modern Institute at the Villa* by **Jay Mitta, Modern Institute, Sisso, Errorsmith** *[Nyege Nyege Tapes]*
 
 *GRIME MC* by **Jme** *[Boy Better Know]* - A victory lap for a national treasure, you'll have to work a bit harder than normal to find this one...
 

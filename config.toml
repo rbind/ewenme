@@ -1,9 +1,9 @@
 baseurl = "https://ewen.io/"
 title = "ewen"
 description = "ewen's writing and projects."
-copyright = ""
 languageCode = "en"
 theme = "kiss"
+copyright = "&copy; ewen 2020"
 Paginate = 5
 enableEmoji = true
 enableRobotsTXT = true
@@ -19,7 +19,7 @@ customCSS = ["css/custom.css"]
 
 [params.info]
 homeTitle = "ewen"
-description = "ewen's writing and projects."
+description = "ewen's writings and projects."
 enableSocial = true
 poweredby = false
 related = false
