@@ -14,14 +14,14 @@ draft: no
 <div id="searchin" class="section level2">
 <h2>Searchin’</h2>
 <p>The Genius API’s search capabilities allows for users to scan all hosted content on the site (i.e. all songs). A couple of quick implementations exist in the package for retrieving artist (<code>search_artist()</code>) and song (<code>search_song()</code>) matches for search terms. Let’s start by looking for songs brought back by a simple search for “Versace”.</p>
-<pre class="r"><code>versace_search &lt;- search_song(search_term = &quot;Versace&quot;) %&gt;% glimpse</code></pre>
+<pre class="r"><code>versace_search &lt;- search_song(search_term = &quot;Versace&quot;) %&gt;% glimpse()</code></pre>
 <pre><code>## Observations: 10
 ## Variables: 5
-## $ song_id         &lt;int&gt; 176872, 2898687, 441102, 176951, 182654, 3759279…
-## $ song_name       &lt;chr&gt; &quot;Versace (Remix) (Ft. Drake)&quot;, &quot;Versace on the F…
-## $ song_lyrics_url &lt;chr&gt; &quot;https://genius.com/Migos-versace-remix-lyrics&quot;,…
-## $ artist_id       &lt;int&gt; 44080, 500, 12936, 44080, 1319, 12715, 554, 1293…
-## $ artist_name     &lt;chr&gt; &quot;Migos&quot;, &quot;Bruno Mars&quot;, &quot;RiFF RAFF&quot;, &quot;Migos&quot;, &quot;Me…</code></pre>
+## $ song_id         &lt;int&gt; 176872, 2898687, 441102, 182961, 176951, 182654, 3759…
+## $ song_name       &lt;chr&gt; &quot;Versace (Remix) (Ft. Drake)&quot;, &quot;Versace on the Floor&quot;…
+## $ song_lyrics_url &lt;chr&gt; &quot;https://genius.com/Migos-versace-remix-lyrics&quot;, &quot;htt…
+## $ artist_id       &lt;int&gt; 44080, 500, 12936, 12936, 44080, 1319, 12715, 554, 12…
+## $ artist_name     &lt;chr&gt; &quot;Migos&quot;, &quot;Bruno Mars&quot;, &quot;RiFF RAFF&quot;, &quot;RiFF RAFF&quot;, &quot;Mig…</code></pre>
 </div>
 <div id="goin-meta" class="section level2">
 <h2>Goin’ Meta</h2>
@@ -30,22 +30,22 @@ draft: no
   filter(artist_name == &quot;Migos&quot;, song_name == &quot;Versace&quot;) %&gt;% 
   pull(song_id) %&gt;% 
   get_song_meta() %&gt;% 
-  glimpse</code></pre>
+  glimpse()</code></pre>
 <pre><code>## Observations: 1
 ## Variables: 13
-## $ song_id            &lt;int&gt; 176951
-## $ song_name          &lt;chr&gt; &quot;Versace&quot;
-## $ song_lyrics_url    &lt;chr&gt; &quot;https://genius.com/Migos-versace-lyrics&quot;
-## $ song_art_image_url &lt;chr&gt; &quot;https://images.genius.com/4fe960be500117d652…
-## $ release_date       &lt;chr&gt; &quot;2013-07-09&quot;
-## $ pageviews          &lt;int&gt; 170530
-## $ annotation_count   &lt;int&gt; 28
-## $ artist_id          &lt;int&gt; 44080
-## $ artist_name        &lt;chr&gt; &quot;Migos&quot;
-## $ artist_url         &lt;chr&gt; &quot;https://genius.com/artists/Migos&quot;
-## $ album_id           &lt;int&gt; 36011
-## $ album_name         &lt;chr&gt; &quot;Young Rich Niggas&quot;
-## $ album_url          &lt;chr&gt; &quot;https://genius.com/albums/Migos/Young-rich-n…</code></pre>
+## $ song_id               &lt;int&gt; 176951
+## $ song_name             &lt;chr&gt; &quot;Versace&quot;
+## $ song_lyrics_url       &lt;chr&gt; &quot;https://genius.com/Migos-versace-lyrics&quot;
+## $ song_art_image_url    &lt;chr&gt; &quot;https://images.genius.com/4fe960be500117d652f0…
+## $ song_release_date     &lt;chr&gt; &quot;2013-07-09&quot;
+## $ song_pageviews        &lt;int&gt; 190795
+## $ song_annotation_count &lt;int&gt; 8
+## $ artist_id             &lt;int&gt; 44080
+## $ artist_name           &lt;chr&gt; &quot;Migos&quot;
+## $ artist_url            &lt;chr&gt; &quot;https://genius.com/artists/Migos&quot;
+## $ album_id              &lt;int&gt; 36011
+## $ album_name            &lt;chr&gt; &quot;Young Rich Niggas&quot;
+## $ album_url             &lt;chr&gt; &quot;https://genius.com/albums/Migos/Young-rich-nig…</code></pre>
 <p>With this metadata, we can easily pull up the song’s artwork, for example. Why not.</p>
 <pre class="r"><code>artwork &lt;- versace_meta$song_art_image_url
 

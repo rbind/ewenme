@@ -29,7 +29,7 @@ Since then, I've found a window of time to build on and consolidate this work in
 The Genius API's search capabilities allows for users to scan all hosted content on the site (i.e. all songs). A couple of quick implementations exist in the package for retrieving artist (`search_artist()`) and song (`search_song()`) matches for search terms. Let's start by looking for songs brought back by a simple search for "Versace".
 
 ```{r song_search}
-versace_search <- search_song(search_term = "Versace") %>% glimpse
+versace_search <- search_song(search_term = "Versace") %>% glimpse()
 ```
 
 ## Goin' Meta
@@ -41,7 +41,7 @@ versace_meta <- versace_search %>%
   filter(artist_name == "Migos", song_name == "Versace") %>% 
   pull(song_id) %>% 
   get_song_meta() %>% 
-  glimpse
+  glimpse()
 ```
 
 With this metadata, we can easily pull up the song's artwork, for example. Why not.
