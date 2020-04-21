@@ -62,7 +62,7 @@ body {
 	font-size: 1rem;
 }
 
-.content {
+.content, .content p {
   margin: 1rem 0;
   text-align: left;
   font-size: 18px;
