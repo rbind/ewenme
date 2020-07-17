@@ -10,7 +10,7 @@ draft: no
 
 I recorded a new mix last nite! Nothing intellectual really, just pure funky energies for dancing/healing to. Get it in ur cups...
 
-{{% player "https://www.dropbox.com/s/mbzx006ed3r9pov/funky%20gemz%2C%20march%202020.mp3" %}}
+{{< player "https://www.dropbox.com/s/mbzx006ed3r9pov/funky%20gemz%2C%20march%202020.mp3" >}}
 
 1. DJ Lostboi & Torus - Open World *[Queeste]*
 2. UNIIQU3 - Go Dumb (BITCH I TWERK) (Ft. Addy OMG) *[Juke Bounce Werk]*

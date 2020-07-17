@@ -1,40 +1,42 @@
-baseurl = "https://ewen.io/"
+theme = "hugo-theme-codex"
+
+baseURL = "https://ewen.io/"
 title = "ewen"
 description = "ewen's writing and projects."
 languageCode = "en"
-theme = "kiss"
-copyright = "&copy; ewen 2020"
-Paginate = 5
+copyright = "© {year}"
+
 enableEmoji = true
 enableRobotsTXT = true
 ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
 
-[params.rss]
-includeContent = true
-authorName = "ewen"
-authorEmail = "ewenhenderson@gmail.com"
+[params]
+  dateFormat = "Jan 2 2006"
+  email = "mailto:ewenhenderson@gmail.com"
+  twitter = "https://twitter.com/ewen_"
+  github = "https://github.com/ewenme"
+  iconTitles = ["Email", "Twitter", "GitHub"]
 
-[params.assets]
-customCSS = ["css/custom.css"]
+[markup]
+  [markup.highlight]
+    codeFences = false
+    
+  # Set to false to disallow raw HTML in markdown files
+  [markup.goldmark.renderer]
+      unsafe = true
 
-[params.info]
-homeTitle = "ewen"
-description = "ewen's writings and projects."
-enableSocial = true
-poweredby = false
-related = false
+# Controls the navigation
+[[menu.main]]
+  identifier = "about"
+  name = "about"
+  title = "About"
+  url = "/"
 
-[params.social]
-email = "ewenhenderson@gmail.com"
-twitter = "ewen_"
-github = "ewenme"
-rss = "index.xml"
-
-[params.social.config]
-platforms = ["email", "twitter", "github", "rss"]
-
-[taxonomies]
-tag = "tags"
+[[menu.main]]
+  identifier = "blog"
+  name = "blog"
+  title = "Blog"
+  url = "/blog"
 
 [permalinks]
 blog = "/:year/:month/:day/:slug/"

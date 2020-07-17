@@ -1,0 +1,89 @@
+// home stop colour
+.fancy {
+  color: #1e88e5;
+}
+
+// custom fonts
+@import url(https://fonts.googleapis.com/css?family=Work+Sans:300,400,700&subset=latin-ext);
+
+@font-face {
+    font-family: 'charter';
+    src: url('webfonts/charter_regular-webfont.eot');
+    src: url('webfonts/charter_regular-webfont.eot?#iefix') format('embedded-opentype');
+    src: url('webfonts/charter_regular-webfont.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'charter';
+    src: url('webfonts/charter_bold-webfont.eot');
+    src: url('webfonts/charter_bold-webfont.eot?#iefix') format('embedded-opentype');
+    src: url('webfonts/charter_bold-webfont.woff') format('woff');
+    font-weight: bold;
+}
+
+@font-face {
+    font-family: 'charter';
+    src: url('webfonts/charter_italic-webfont.eot');
+    src: url('webfonts/charter_italic-webfont.eot?#iefix') format('embedded-opentype');
+    src: url('webfonts/charter_italic-webfont.woff') format('woff');
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'charter';
+    src: url('webfonts/charter_bold_italic-webfont.eot');
+    src: url('webfonts/charter_bold_italic-webfont.eot?#iefix') format('embedded-opentype');
+    src: url('webfonts/charter_bold_italic-webfont.woff') format('woff');
+    font-weight: bold;
+    font-style: italic;
+}
+
+h1, h2, h3, h4, h5, h6,
+.title {
+  font-family: 'Work Sans Bold', sans-serif;
+  font-weight: 700;
+  color: #222324;
+}
+
+.post__content {
+  font-family: 'charter', sans-serif;
+  font-weight: 400;
+	text-rendering: optimizeLegibility;
+	line-height: 1.625;
+	font-size: 1rem;
+}
+
+// audio player
+#audioplayer { 
+	display: flex;
+	height: 40px;
+  position: relative;
+  align-items: center;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+  font-family: 'Work Sans', sans-serif;
+}
+
+#pButton {
+    height: 40px;
+    border: none;
+    background-size: 50% 50%;
+    background-repeat: no-repeat;
+    background-position: center;
+		background: transparent;
+    float: left;
+    color: #42464c;
+    margin-right: 0.5rem;
+}
+
+#timeElapsed, #duration {
+  width: 50px;
+  max-width: 100px;
+}
+
+.fa-floppy-o {
+  margin-left: 0.5rem;
+  color: #42464c;
+  text-decoration: none;
+	border-bottom-style: none;
+  }
