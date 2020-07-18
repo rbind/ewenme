@@ -10,20 +10,16 @@ enableEmoji = true
 enableRobotsTXT = true
 ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
 
+[author]
+  name = "ewen"
+  email = "ewenhenderson@gmail.com"
+
 [params]
   dateFormat = "Jan 2 2006"
   email = "mailto:ewenhenderson@gmail.com"
   twitter = "https://twitter.com/ewen_"
   github = "https://github.com/ewenme"
   iconTitles = ["Email", "Twitter", "GitHub"]
-
-[markup]
-  [markup.highlight]
-    codeFences = false
-    
-  # Set to false to disallow raw HTML in markdown files
-  [markup.goldmark.renderer]
-      unsafe = true
 
 # Controls the navigation
 [[menu.main]]
