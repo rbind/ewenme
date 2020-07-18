@@ -13,9 +13,7 @@ Enter [Discogs](http://www.discogs.com) - the definitive recorded music database
 
 A user can browse through the individual entries for each of their records, see an overview of their whole collection:
 
-```{r echo = FALSE, out.width = "75%", fig.align = "center"}
-knitr::include_graphics("/img/2017-03-01-vinylspotting-discogs-fairytale/discogs-collection-page.png")
-```
+![Discogs collection overview](/blog/2017-03-01-vinylspotting-discogs-fairytale_files/discogs-collection-page.png)
 
 It's essentially a tabulated view of your records with rudimentary info, and some record sleeve thumbnails to boot. The 'collection value' is a new addition that, as far as I can tell, is the **only** summary statistic on show (besides the count), which got me thinking:
 
@@ -36,11 +34,9 @@ A few concepts were prominent in my head-space:
 
 ## Introducing vinylSpotting
 
-*vinylSpotting* is now available for diggers everywhere (psst...if you ain't, try it out with my username *ewen_henderson*) over [here](https://apps.ewen.io/vinylspotting), with a tiny showcase below.
+*vinylSpotting* is now available for diggers everywhere over [here](https://apps.ewen.io/vinylspotting), with a tiny showcase below.
 
-```{r echo = FALSE, out.width = "75%", fig.align = "center"}
-knitr::include_graphics("/img/2017-03-01-vinylspotting-discogs-fairytale/vinyspotting-preview.gif")
-```
+![vinylSpotting showcase](/blog/2017-03-01-vinylspotting-discogs-fairytale_files/vinyspotting-preview.gif)
 
 Head over to the app itself to play, then check the [github repo](https://github.com/ewenme/vinylspotting) if you want to see the Shiny code. Behind the scenes, *vinylSpotting* retrieves public Discogs collections via the [Discogs API v2.0](https://www.discogs.com/developers/) (sidenote - the data heavy lifting is made simple courtesy of the [discogger](https://github.com/ewenme/discogger) package, in case you want to use the Discogs API in your own project).
 
