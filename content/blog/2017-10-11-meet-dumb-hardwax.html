@@ -2,7 +2,8 @@
 title: "Meet Dumb Hardwax"
 description: "The story of my first tweetbot, complete with forays into Azure and Markov Chains."
 date: "2017-10-11"
-tags: ["r", "bots", "cloud", "markov-chains"]
+tags: ["r", "bots", "text-gen"]
+keywords: ["r", "twitterbot", "tweetbot", "bot", "markov chain", "text gen"]
 slug: meet-dumb-hardwax
 draft: no
 ---
@@ -10,14 +11,7 @@ draft: no
 
 
 <p>Twitter bots have gotten a fairly bad rap, recently <a href="http://uk.businessinsider.com/twitter-russia-investigation-should-look-at-trump-interaction-with-bots-2017-10?r=US&amp;IR=T">(often with good reason)</a>. When they’re done right, a genuinely quirky robot can cut through a feed full of humans with beautiful tidbits. God bless <span class="citation">[@tinycarebot]</span>(<a href="https://twitter.com/tinycarebot" class="uri">https://twitter.com/tinycarebot</a>).</p>
-<blockquote class="twitter-tweet" data-lang="en">
-<p lang="en" dir="ltr">
-💟: please dont forget to text back your friends
-</p>
-— here's your reminder (<span class="citation">@tinycarebot</span>) <a href="https://twitter.com/tinycarebot/status/916319972112175105?ref_src=twsrc%5Etfw">October 6, 2017</a>
-</blockquote>
-<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
-<p><br></p>
+{{% tweet "916319972112175105" %}}
 <p>Another thing that gives me life is reading <a href="https://hardwax.com/">Hardwax</a>, a hugely influential Berlin record store, get excited about their new stock. Their snappy, idiosyncratic descriptions of new music is steeped in electronic music folklore. Gems like this are peppered all over:</p>
 <blockquote>
 <p>“Dancehall from cyberspace - awesomely fresh &amp; fearless &amp; full of Grime affinities”</p>
@@ -28,7 +22,7 @@ draft: no
 <div id="gettin-in-to-a-scrape" class="section level2">
 <h2>Gettin’ in to a scrape</h2>
 <p>First up, I went straight to the Hardwax web shop to get hold of the review/description text accompanying releases on there. This would serve as the corpus of text from which we can build our Markov chain review generator. Here’s what the release pages look like:</p>
-<p><img src="/img/2017-10-11-Meet_Dumb_Hardwax/hardwax_site.png" width="75%" style="display: block; margin: auto;" /></p>
+<p><img src="/blog/2017-10-11-meet-dumb-hardwax_files/hardwax_site.png" style="width:75.0%" /></p>
 <p>Those bits circled in red? <em>Those</em> are the Hardwax reviews. I was able to put together a fairly simple function (leaning heavily on <code>rvest</code>) to scrape them.</p>
 <pre class="r"><code># web scraper for hardwax reviews
 hardwax_scrape &lt;- function(page, no) {
@@ -47,12 +41,12 @@ hardwax_scrape &lt;- function(page, no) {
 <p>This simple URL structure meant the function could be easily applied for each section/genre on the site, like pulling the latest weeks new ish:</p>
 <pre class="r"><code># scrape news
 lapply(seq_along(1:2), hardwax_scrape, page=&quot;this-week&quot;) %&gt;% unlist() %&gt;% head()</code></pre>
-<pre><code>## [1] &quot;Heavy, EBM tinged Techno grinders&quot;                               
-## [2] &quot;Mesmerizing, deep, vibrant Techno trips (download card included)&quot;
-## [3] &quot;Fine, warmly dubbed out House drifters&quot;                          
-## [4] &quot;Expertly excuted, playful Electro bangers&quot;                       
-## [5] &quot;Previously unreleased, far-out mid-90s UK Jungle gems&quot;           
-## [6] &quot;Ace, reduced Drum &amp; Bass rollers&quot;</code></pre>
+<pre><code>## [1] &quot;Classy, drum centered UK House takes&quot;                                        
+## [2] &quot;Classy, playfully atmospheric &amp; warm Deep House Album&quot;                       
+## [3] &quot;Subtle, minimalist Ambient pulses&quot;                                           
+## [4] &quot;Classy, warm Deep House smoothness&quot;                                          
+## [5] &quot;Proper reissue of late 80s Ambient leftfield project, comes w/ download card&quot;
+## [6] &quot;Reissue of rare 80s South African Boogie&quot;</code></pre>
 <p>Once the various sections were scraped, some data cleaning procedures (remove releases with no reviews, reviews longer than 140 characters, or duplicate reviews) ensured the reviews were fit for purpose to head on to the next stage.<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a></p>
 </div>
 <div id="preppin-the-text" class="section level2">
@@ -173,7 +167,7 @@ dumb_hardwax &lt;- function(x) {
 }
 
 dumb_hardwax()</code></pre>
-<pre><code>## [1] &quot;Pulsating, dub techno house tunes killer dubstep (w/ download code)&quot;</code></pre>
+<pre><code>## [1] &quot;Ebm works minimal techno tracks fine dj tool deep house - Highly Recommended!&quot;</code></pre>
 <p>Look at that - the bot made it’s first review. Lets share it with the world…</p>
 </div>
 <div id="twittering" class="section level2">
@@ -191,14 +185,14 @@ post_tweet(status = dumb_hardwax(), token = twitter_token)</code></pre>
 <div id="meet-dumb-hardwax" class="section level2">
 <h2>Meet Dumb Hardwax</h2>
 <p>My work is done - say hi to <a href="https://twitter.com/dumb_hardwax">Dumb Hardwax</a>. Trying it’s hardest to make Hardwax gold once an hour.</p>
-<p><img src="/img/2017-10-11-Meet_Dumb_Hardwax/dumb_hardwax.png" width="75%" style="display: block; margin: auto;" /></p>
+<p><img src="/blog/2017-10-11-meet-dumb-hardwax_files/dumb_hardwax.png" style="width:75.0%" /></p>
 <p>Well, the result is incredibly niche, but if you’ve made it this far, I’m sure you already have great plans for a uniquely useless bot (made with love).</p>
 </div>
 <div class="footnotes">
 <hr />
 <ol>
-<li id="fn1"><p>To keep the post concise I don’t show all of the code, especially code that generates figures. But you can find the full code <a href="https://github.com/rbind/ewenme/blob/master/content/blog/meet-dumb-hardwax.Rmd">here</a>.<a href="#fnref1" class="footnote-back">↩</a></p></li>
-<li id="fn2"><p>Because the website isn’t static (i.e. the release pages change), the workflow is not entirely reproducible. While the code provided here will scrape, clean data etc., the end-to-end result may be different. Please refer to the <a href="https://github.com/ewenme/dumb-hardwax/blob/master/review%20scrape.R">scrape</a>, <a href="https://github.com/ewenme/dumb-hardwax/blob/master/review%20clean.R">clean</a> and <a href="https://github.com/ewenme/dumb-hardwax/blob/master/hardwax_bot.R">bot</a> scripts hosted on GitHub for a full audit trail of the code used to create the current version of Dumb Hardwax.<a href="#fnref2" class="footnote-back">↩</a></p></li>
-<li id="fn3"><p>Given that <a href="(http://rmhogervorst.nl/cleancode/blog/2017/01/21/markov-chain.html)">Roel’s post</a> covers a lot of the same word count/bigram/trigram processing steps that I did, check that out if you wanted more commentary around the code used during the process.<a href="#fnref3" class="footnote-back">↩</a></p></li>
+<li id="fn1"><p>To keep the post concise I don’t show all of the code, especially code that generates figures. But you can find the full code <a href="https://github.com/rbind/ewenme/blob/master/content/blog/meet-dumb-hardwax.Rmd">here</a>.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn2"><p>Because the website isn’t static (i.e. the release pages change), the workflow is not entirely reproducible. While the code provided here will scrape, clean data etc., the end-to-end result may be different. Please refer to the <a href="https://github.com/ewenme/dumb-hardwax/blob/master/review%20scrape.R">scrape</a>, <a href="https://github.com/ewenme/dumb-hardwax/blob/master/review%20clean.R">clean</a> and <a href="https://github.com/ewenme/dumb-hardwax/blob/master/hardwax_bot.R">bot</a> scripts hosted on GitHub for a full audit trail of the code used to create the current version of Dumb Hardwax.<a href="#fnref2" class="footnote-back">↩︎</a></p></li>
+<li id="fn3"><p>Given that <a href="(http://rmhogervorst.nl/cleancode/blog/2017/01/21/markov-chain.html)">Roel’s post</a> covers a lot of the same word count/bigram/trigram processing steps that I did, check that out if you wanted more commentary around the code used during the process.<a href="#fnref3" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>

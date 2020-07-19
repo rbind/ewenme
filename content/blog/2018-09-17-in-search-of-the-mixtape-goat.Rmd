@@ -12,7 +12,7 @@ draft: no
 knitr::opts_chunk$set(cache = FALSE, warning = FALSE, message = FALSE, echo = FALSE, out.width = '75%', dev = 'svg', fig.align='center')
 ```
 
-![](/img/2018-09-17-in-search-of-the-mixtape-goat/xxx-art.jpg#c)
+![](/blog/2018-09-17-in-search-of-the-mixtape-goat_files/xxx-art.jpg)
 
 The modern definition of the hip-hop mixtape originates in hip-hop circles of the 2000s, speaking to an artist's independently released projects that act as precursors to "official" full-lengths. [In previous generations](https://www.billboard.com/articles/columns/hip-hop/7669073/history-dj-drama-mixtape-evolution), hip-hop mixtapes were more DJ-led and focused on the ingenuity of the edit, but a DIY ethos has prevailed with a shift towards MCs as main attraction. The rise of mainstream streaming services and fall of physical formats has challenged the identity of the mixtape somewhat, but understanding how this artform has reinvented itself around the current climate might help alleviate these concerns.
 
@@ -20,7 +20,7 @@ Traditionally speaking, mixtapes are usually free and subsequently avoid growing
 
 You can actually see how this cultural phenomenon intersects with software development. Take [Glitch's about page](https://glitch.com/about), specifically the use of the word "remix", hinting that the act of a developer re-working an app (that someone else built and shared) isn't that far removed from [Frank Ocean flipping a Coldplay sample](https://www.youtube.com/watch?v=zD3lRLThVRY). (I'm aware that, beyond staring at computer screens in the dark, the developer-musician comparisons probably stop here).
 
-![](/img/2018-09-17-in-search-of-the-mixtape-goat/nostalgia-ultra-art.jpg#c)
+![](/blog/2018-09-17-in-search-of-the-mixtape-goat_files/nostalgia-ultra-art.jpg)
 
 I wanted to toast this crossover in philosophy by sharing some data-driven stories of the mixtape. This piece should be good ammo in heated mixtape legend convos, at least...
 
@@ -30,7 +30,7 @@ So, who was really putting [Numbers On The Boards](https://www.youtube.com/watch
 
 A good place to start is [DatPiff](http://www.datpiff.com/), maybe the leading dedicated website for hip-hop mixtape digging. In the [celebrated section](http://www.datpiff.com/mixtapes/celebrated), you can quickly spot download figures mapped to pre-eminent mixtape projects.
 
-![](/img/2018-09-17-in-search-of-the-mixtape-goat/datpiff-screenshot.png#c)
+![](/blog/2018-09-17-in-search-of-the-mixtape-goat_files/datpiff-screenshot.png)
 
 Harvesting these figures and crunching the downloads for each artist can uncover who *really* runs the mixtape game.[^data] This comes with some caveats - mixtape streams are ignored (not readily obtainable for all listings), as are tapes not available on DatPiff (or those that have been taken down). Still, a good idea of the state of play is well within reach (PS the next bit is best enjoyed and explored on a desktop browser, if you have one handy)...[^bubbles]
 
@@ -75,7 +75,7 @@ Harvesting these figures and crunching the downloads for each artist can uncover
 
 In case there was any doubt, Lil Wayne AKA Weezy AKA Tunechi comes out on top of DatPiff mixtape downloads, clocking in at **~18 million**. This can be largely attributed to his infamous mixtape run of 2004-2008, encompassing both the *Da Drought* and *Dedication* series'. Of the former, [#3](https://www.youtube.com/watch?v=VjGSyQU-YxQ) (2007) is widely regarded as the best of the bunch and even fancied as the finest of it's class in critical circles. Your fave could never etc etc.
 
-![](/img/2018-09-17-in-search-of-the-mixtape-goat/weezy.gif#c)
+![](/blog/2018-09-17-in-search-of-the-mixtape-goat_files/weezy.gif)
 
 Honorable mentions to a few of my favs (plus helpful pointers to some best-in-class material):
 

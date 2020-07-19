@@ -20,14 +20,14 @@ draft: no
 
 
 <p><a href="https://en.wikipedia.org/wiki/Linear_programming">Linear optimization</a> (AKA linear programming) is all around us, even if we don’t really know it. For example, how did you come to pick your route to work today? This decision, lovingly known as “getting from A to B”, is (most of the time) objectively simple: <strong>which route is the quickest?</strong></p>
-<p><img src="/img/2017-11-06-Linear_Programming_Fantasy/route-icon.png" width="75%" style="display: block; margin: auto;" /></p>
+<p><img src="/blog/2017-11-06-linear-programming-fantasy_files/route-icon.png" /></p>
 <p>There are known variables that we need to identify and use in solving this problem (known as <strong>decision variables</strong>), for example:</p>
 <ul>
 <li>The speed at which different modes of transports travel</li>
 <li>The distance of each possible route</li>
 </ul>
 <p>As anyone who has ever travelled anywhere will know, there are other parameters that we might want to factor in to a solution. We might prefer to avoid certain modes of transport outright, spend less time walking, etc. Extending this problem to a business setting (not to knock anyone rocking it in their daily life), when there might be additional restrictions to consider (think of a delivery order operation) - minimizing fuel consumption, or avoiding tolls. Any ‘best route’ can be reviewed to ensure these <strong>constraints</strong> are taken care of.</p>
-<p><img src="/img/2017-11-06-Linear_Programming_Fantasy/route-plan-anim.gif" width="75%" style="display: block; margin: auto;" /></p>
+<p><img src="/blog/2017-11-06-linear-programming-fantasy_files/route-plan-anim.gif" /></p>
 <div id="let-me-optimize-your-fantasy" class="section level2">
 <h2>Let Me Optimize Your Fantasy</h2>
 <p>What good can these techniques do for me? I’d come across a couple of nice implementations of linear programming techniques in the <a href="https://fantasy.premierleague.com/">Fantasy Premier League</a>(FPL) space - shout out to Martin Eastwood for his <a href="https://github.com/martineastwood/penalty/tree/master/fantasy_football_optimiser">penalty</a> work and Torvaney’s <a href="https://github.com/Torvaney/fpl-optimiser">fpl-optimiser</a> (honorable mention to Sean Taylor’s <a href="https://gist.github.com/seanjtaylor/b4d423dad0083cc8cc5b2a9fd1e4e63e">NFL fantasy projections</a>in R, but the sport/techniques involved are out of scope just now). Both of these projects look to optimize the same thing: the <strong>total number of points</strong> a fantasy football team scores within some shared constraints that the game rules enforce (staying within a 100 million budget, no more than 3 players per team).</p>
@@ -36,7 +36,7 @@ draft: no
 <div id="complementary-keepers-and-where-to-find-them" class="section level2">
 <h2>Complementary Keepers (and Where to Find Them)</h2>
 <p>Rotation - the practice of picking complementary players (those who play at home on alternate weeks, for example) to play in a rotating fashion - is squad-based fantasy sport game 101, allowing managers to seamlessly segue between class acts across a well-balanced squad.</p>
-<p><img src="/img/2017-11-06-Linear_Programming_Fantasy/rotation-wrong.gif" width="75%" style="display: block; margin: auto;" /></p>
+<p><img src="/blog/2017-11-06-linear-programming-fantasy_files/rotation-wrong.gif" /></p>
 <p>Rotation policy is at it’s simplest when applied to goalkeepers. The constraints are simple: you have to buy two, but you can only play one each week. This encourages FPL managers to look at a couple of cheaper options that play home &amp; away alternately, for example, rather than lumping for premium products. Which strategy wins out, though? Lets re-frame this as a real-world linear optimization problem, defining the pieces we need.</p>
 </div>
 <div id="decision-variables" class="section level2">
@@ -153,7 +153,7 @@ goalie_rotation &lt;- goalie_rotation %&gt;%
 <p>We’re ready to see the optimized goalkeeping combo, maximizing potential points return while minimizing costs [insert drum roll]. I’ll leave in the top ten, for some context.</p>
 <table class="table" style="margin-left: auto; margin-right: auto;">
 <caption>
-<span id="tab:unnamed-chunk-4">Table 1: </span>Top goalkeeper combos (optimized on points per million)
+<span id="tab:unnamed-chunk-1">Table 1: </span>Top goalkeeper combos (optimized on points per million)
 </caption>
 <thead>
 <tr>
@@ -248,7 +248,7 @@ Fabianski (Swansea) &amp; Pope (Burnley)
 <p>Before finishing up, let’s consider how the solution might change if a new constraint is introduced. What if an FPL manager doesn’t have the budget for some of these recommendations, anyway? What recommendations would we make if cost was an enforced constraint - for example, a remaining budget of 9 million?</p>
 <table class="table" style="margin-left: auto; margin-right: auto;">
 <caption>
-<span id="tab:unnamed-chunk-5">Table 2: </span>Top goalkeeper combos for 9 million or less (optimized on points per million)
+<span id="tab:unnamed-chunk-2">Table 2: </span>Top goalkeeper combos for 9 million or less (optimized on points per million)
 </caption>
 <thead>
 <tr>
@@ -348,7 +348,7 @@ Fabianski (Swansea) &amp; Pope (Burnley)
 <div class="footnotes">
 <hr />
 <ol>
-<li id="fn1"><p>To keep the post concise I don’t show all of the code, especially code that generates figures. But you can find the full code <a href="https://github.com/rbind/ewenme/blob/master/content/blog/linear-programming-fantasy.Rmd">here</a>.<a href="#fnref1" class="footnote-back">↩</a></p></li>
-<li id="fn2"><p>The current Github repo I’m using for linear programming implementations in FPL is <a href="https://github.com/ewenme/fplinear">here</a>, called fplinear.<a href="#fnref2" class="footnote-back">↩</a></p></li>
+<li id="fn1"><p>To keep the post concise I don’t show all of the code, especially code that generates figures. But you can find the full code <a href="https://github.com/rbind/ewenme/blob/master/content/blog/linear-programming-fantasy.Rmd">here</a>.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn2"><p>The current Github repo I’m using for linear programming implementations in FPL is <a href="https://github.com/ewenme/fplinear">here</a>, called fplinear.<a href="#fnref2" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>

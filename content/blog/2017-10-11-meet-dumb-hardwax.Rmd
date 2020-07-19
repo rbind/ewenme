@@ -2,7 +2,8 @@
 title: "Meet Dumb Hardwax"
 description: "The story of my first tweetbot, complete with forays into Azure and Markov Chains."
 date: "2017-10-11"
-tags: ["r", "bots", "cloud", "markov-chains"]
+tags: ["r", "bots", "text-gen"]
+keywords: ["r", "twitterbot", "tweetbot", "bot", "markov chain", "text gen"]
 slug: meet-dumb-hardwax
 draft: no
 ---
@@ -10,7 +11,7 @@ draft: no
 ```{r setup, include=FALSE}
 
 # markdown setup
-knitr::opts_chunk$set(cache=TRUE, echo = TRUE, warning = FALSE, message = FALSE, out.width = '100%', dpi = 180)
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, out.width = '100%', dpi = 180)
 
 # load pkgs for session
 library(tidyverse)
@@ -22,10 +23,9 @@ library(tidytext)
 
 Twitter bots have gotten a fairly bad rap, recently [(often with good reason)](http://uk.businessinsider.com/twitter-russia-investigation-should-look-at-trump-interaction-with-bots-2017-10?r=US&IR=T). When they're done right, a genuinely quirky robot can cut through a feed full of humans with beautiful tidbits. God bless [@tinycarebot](https://twitter.com/tinycarebot).
 
-<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">💟: please dont forget to text back your friends</p>&mdash; here&#39;s your reminder (@tinycarebot) <a href="https://twitter.com/tinycarebot/status/916319972112175105?ref_src=twsrc%5Etfw">October 6, 2017</a></blockquote>
-<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
-
-<br>
+```{r echo=FALSE}
+blogdown::shortcode('tweet', '916319972112175105')
+```
 
 Another thing that gives me life is reading [Hardwax](https://hardwax.com/), a hugely influential Berlin record store, get excited about their new stock. Their snappy, idiosyncratic descriptions of new music is steeped in electronic music folklore. Gems like this are peppered all over:
 
@@ -41,9 +41,7 @@ Could there be potential to subvert this principle, knitting together words to f
 
 First up, I went straight to the Hardwax web shop to get hold of the review/description text accompanying releases on there. This would serve as the corpus of text from which we can build our Markov chain review generator. Here's what the release pages look like:
 
-```{r site pic, out.width = "75%", fig.align = "center", echo=FALSE}
-knitr::include_graphics("/img/2017-10-11-Meet_Dumb_Hardwax/hardwax_site.png")
-```
+![](/blog/2017-10-11-meet-dumb-hardwax_files/hardwax_site.png){width=75%}
 
 Those bits circled in red? *Those* are the Hardwax reviews. I was able to put together a fairly simple function (leaning heavily on `rvest`) to scrape them.
 
@@ -355,11 +353,9 @@ I stumbled across an impeccable tutorial [here](https://github.com/thdeltei/azur
 
 ## Meet Dumb Hardwax
 
-My work is done - say hi to [Dumb Hardwax](https://twitter.com/dumb_hardwax). Trying it's hardest to make Hardwax gold once an hour. 
+My work is done - say hi to [Dumb Hardwax](https://twitter.com/dumb_hardwax). Trying it's hardest to make Hardwax gold once an hour.
 
-```{r bot pic, out.width = "75%", fig.align = "center", echo=FALSE}
-knitr::include_graphics("/img/2017-10-11-Meet_Dumb_Hardwax/dumb_hardwax.png")
-```
+![](/blog/2017-10-11-meet-dumb-hardwax_files/dumb_hardwax.png){width=75%}
 
 Well, the result is incredibly niche, but if you've made it this far, I'm sure you already have great plans for a uniquely useless bot (made with love).  
 

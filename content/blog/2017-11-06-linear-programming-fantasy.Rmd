@@ -43,9 +43,7 @@ goalie_data <- filter(player_data, position=="Goalkeeper", round <= 10) %>%
 
 [Linear optimization](https://en.wikipedia.org/wiki/Linear_programming) (AKA linear programming) is all around us, even if we don't really know it. For example, how did you come to pick your route to work today? This decision, lovingly known as "getting from A to B", is (most of the time) objectively simple: **which route is the quickest?**
 
-```{r, out.width = "75%", fig.align = "center", echo=FALSE}
-knitr::include_graphics("/img/2017-11-06-Linear_Programming_Fantasy/route-icon.png")
-```
+![](/blog/2017-11-06-linear-programming-fantasy_files/route-icon.png)
 
 There are known variables that we need to identify and use in solving this problem (known as **decision variables**), for example:
 
@@ -54,9 +52,7 @@ There are known variables that we need to identify and use in solving this probl
 
 As anyone who has ever travelled anywhere will know, there are other parameters that we might want to factor in to a solution. We might prefer to avoid certain modes of transport outright, spend less time walking, etc. Extending this problem to a business setting (not to knock anyone rocking it in their daily life), when there might be additional restrictions to consider (think of a delivery order operation) - minimizing fuel consumption, or avoiding tolls. Any 'best route' can be reviewed to ensure these **constraints** are taken care of.
 
-```{r, out.width = "75%", fig.align = "center", echo=FALSE}
-knitr::include_graphics("/img/2017-11-06-Linear_Programming_Fantasy/route-plan-anim.gif")
-```
+![](/blog/2017-11-06-linear-programming-fantasy_files/route-plan-anim.gif)
 
 ## Let Me Optimize Your Fantasy
 
@@ -68,9 +64,7 @@ There are some obvious weaknesses to this approach - the game is played on a wee
 
 Rotation - the practice of picking complementary players (those who play at home on alternate weeks, for example) to play in a rotating fashion - is squad-based fantasy sport game 101, allowing managers to seamlessly segue between class acts across a well-balanced squad.
 
-```{r, out.width = "75%", fig.align = "center", echo=FALSE}
-knitr::include_graphics("/img/2017-11-06-Linear_Programming_Fantasy/rotation-wrong.gif")
-```
+![](/blog/2017-11-06-linear-programming-fantasy_files/rotation-wrong.gif)
 
 Rotation policy is at it's simplest when applied to goalkeepers. The constraints are simple: you have to buy two, but you can only play one each week. This encourages FPL managers to look at a couple of cheaper options that play home & away alternately, for example, rather than lumping for premium products. Which strategy wins out, though? Lets re-frame this as a real-world linear optimization problem, defining the pieces we need.
 

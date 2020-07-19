@@ -15,7 +15,7 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
   email = "ewenhenderson@gmail.com"
 
 [params]
-  dateFormat = "Jan 2 2006"
+  dateFormat = "2 Jan, 2006"
   email = "mailto:ewenhenderson@gmail.com"
   twitter = "https://twitter.com/ewen_"
   github = "https://github.com/ewenme"
