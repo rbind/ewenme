@@ -20,7 +20,7 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
   twitter = "https://twitter.com/ewen_"
   github = "https://github.com/ewenme"
   soundcloud = "https://soundcloud.com/3w3n"
-  bandcamp = "sky.com"
+  bandcamp = "https://bandcamp.com/ewen_"
   
   iconTitles = ["SoundCloud", "BandCamp"]
   iconOrder = ["Email", "Twitter", "Github", "SoundCloud", "BandCamp"]
