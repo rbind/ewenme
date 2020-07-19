@@ -15,11 +15,13 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
   email = "ewenhenderson@gmail.com"
 
 [params]
-  dateFormat = "2 Jan, 2006"
+  dateFormat = "02 Jan, 2006"
   email = "mailto:ewenhenderson@gmail.com"
   twitter = "https://twitter.com/ewen_"
   github = "https://github.com/ewenme"
-  iconTitles = ["Email", "Twitter", "GitHub"]
+  soundcloud = "https://soundcloud.com/3w3n"
+  
+  iconOrder = ["email", "twitter", "github", "SoundCloud"]
 
 # Controls the navigation
 [[menu.main]]
