@@ -1,4 +1,4 @@
 ---
 heading: "I'm Ewen"
-subheading: "how u can reach me:"
+subheading: "some places u can find me:"
 ---
