@@ -3,13 +3,14 @@ title: "Building open football player transfer data"
 description: "Collating player transfers to and from football clubs in major European leagues."
 date: '2018-08-27'
 slug: building-open-football-player-transfer-data
-tags: ["football", "data-viz"]
+tags: ["football", "open-data"]
+keywords: ["football", "transfers", "open data", "r", "web scraping"]
 image: https://github.com/ewenme/transfers/raw/master/figures/chelsea-transfers-web.png
 draft: no
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(cache=TRUE, warning = FALSE, message = FALSE, echo = FALSE, out.width = '100%', dev = 'png')
+knitr::opts_chunk$set(warning = FALSE, message = FALSE, echo = FALSE, out.width = '100%', dev = 'png')
 
 # load packages
 library(readr)
@@ -32,6 +33,8 @@ I eventually settled on ~~scraping~~ using [the Guardian's Transfer Interactive]
 Enter [Transfermarkt](https://www.transfermarkt.co.uk/), a data goldmine of player transfers for a number of major European leagues (e.g. English Premier League, Spanish La Liga, Italian Serie A) and some other oddities (my personal favourite is [this list of father/son combos for national teams - glorious and appreciated](https://www.transfermarkt.co.uk/spieler/vatersohnnationalspieler/statistik)). Season-level stats like player transfers run back for quite a few seasons, joyously arranged in predictable html tables for bountiful scraping. I wrote a short scraping program[^scrape] to collect and clean up player transfers for these (and other) leagues, back to the 1992/1993 season (N.B. this decision was entirely arbitrary).
 
 Et voila - the data is now freely available, [hosted on Github as flat .csv files](https://github.com/ewenme/transfers/tree/master/data) (in accordance with Transfermarkt's [terms of use](https://www.transfermarkt.co.uk/intern/anb))[^legal]. Here's a preview, lovingly featuring the deal taking Mr. Keown to Arsenal.
+
+<br>
 
 ```{r data-preview}
 kable(head(epl_transfers), format = "html") %>% 

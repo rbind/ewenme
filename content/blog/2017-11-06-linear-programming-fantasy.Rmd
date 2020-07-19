@@ -3,6 +3,7 @@ title: "My Linear(ish) programming fantasy"
 description: "Applying linear programming principles to the selection of a fantasy football team."
 date: "2017-11-06"
 tags: ["r", "linear-programming", "fpl"]
+keywords: ["r", "fpl", "fantasy premier league", "linear optimisation", "linear programming"]
 slug: my-linear-programming-fantasy
 draft: no
 ---
@@ -43,7 +44,7 @@ goalie_data <- filter(player_data, position=="Goalkeeper", round <= 10) %>%
 
 [Linear optimization](https://en.wikipedia.org/wiki/Linear_programming) (AKA linear programming) is all around us, even if we don't really know it. For example, how did you come to pick your route to work today? This decision, lovingly known as "getting from A to B", is (most of the time) objectively simple: **which route is the quickest?**
 
-![](/blog/2017-11-06-linear-programming-fantasy_files/route-icon.png)
+![](/blog/2017-11-06-linear-programming-fantasy_files/route-icon.png){width=75%}
 
 There are known variables that we need to identify and use in solving this problem (known as **decision variables**), for example:
 
@@ -52,7 +53,7 @@ There are known variables that we need to identify and use in solving this probl
 
 As anyone who has ever travelled anywhere will know, there are other parameters that we might want to factor in to a solution. We might prefer to avoid certain modes of transport outright, spend less time walking, etc. Extending this problem to a business setting (not to knock anyone rocking it in their daily life), when there might be additional restrictions to consider (think of a delivery order operation) - minimizing fuel consumption, or avoiding tolls. Any 'best route' can be reviewed to ensure these **constraints** are taken care of.
 
-![](/blog/2017-11-06-linear-programming-fantasy_files/route-plan-anim.gif)
+![](/blog/2017-11-06-linear-programming-fantasy_files/route-plan-anim.gif){width=75%}
 
 ## Let Me Optimize Your Fantasy
 
@@ -64,13 +65,15 @@ There are some obvious weaknesses to this approach - the game is played on a wee
 
 Rotation - the practice of picking complementary players (those who play at home on alternate weeks, for example) to play in a rotating fashion - is squad-based fantasy sport game 101, allowing managers to seamlessly segue between class acts across a well-balanced squad.
 
-![](/blog/2017-11-06-linear-programming-fantasy_files/rotation-wrong.gif)
+![](/blog/2017-11-06-linear-programming-fantasy_files/rotation-wrong.gif){width=75%}
 
 Rotation policy is at it's simplest when applied to goalkeepers. The constraints are simple: you have to buy two, but you can only play one each week. This encourages FPL managers to look at a couple of cheaper options that play home & away alternately, for example, rather than lumping for premium products. Which strategy wins out, though? Lets re-frame this as a real-world linear optimization problem, defining the pieces we need.
 
 ## Decision Variables
 
 The **decision variables** comprise the things that will decide the output and represent the solution. In our case, these are the points scored by the two goalkeepers we pick - let's call them Goalkeeper A and Goalkeeper B. It's also worth noting the **non-negativity restriction** on decision variables i.e. the values should be greater than or equal to zero.
+
+<br>
 
 ```{r goalies_tab}
 # unique goalies list
@@ -225,6 +228,8 @@ goalie_rotation <- goalie_rotation %>%
 
 We're ready to see the optimized goalkeeping combo, maximizing potential points return while minimizing costs [insert drum roll]. I'll leave in the top ten, for some context.
 
+<br>
+
 ```{r}
 goalie_rotation %>%
   # total points top ten
@@ -246,6 +251,8 @@ goalie_rotation %>%
 So, Messrs Hart and Lossl grab top spot when accounting for both points and cost in our quest for optimization. This season, that combination returned a points potential of 70 while costing a combined 9 million, which works out at 7.8 points per million.
 
 Before finishing up, let's consider how the solution might change if a new constraint is introduced. What if an FPL manager doesn't have the budget for some of these recommendations, anyway? What recommendations would we make if cost was an enforced constraint - for example, a remaining budget of 9 million?
+
+<br>
 
 ```{r}
 goalie_rotation %>%

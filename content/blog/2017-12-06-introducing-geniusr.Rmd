@@ -3,6 +3,7 @@ title: "Introducing geniusr"
 description: "I made an R interface to the Genius API."
 date: "2017-12-06"
 tags: ["r", "music"]
+keywords: ["r", "music", "lyrics", "genius", "geniusr"]
 slug: introducing-geniusr
 draft: no
 ---

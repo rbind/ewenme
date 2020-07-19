@@ -3,7 +3,8 @@ title: "introducing GRIMENET"
 description: "A site for exploring UK Grime through the lens of artist collaboration."
 date: '2020-05-27'
 slug: grimenet-intro
-tags: ["music", "shiny"]
+tags: ["grime", "shiny"]
+keywords: ["grime", "uk", "network visualisation", "shiny", "r", "grimenet"]
 image: "https://github.com/ewenme/grimenet/raw/master/inst/app/www/grimenet.png"
 draft: no
 ---

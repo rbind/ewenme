@@ -4,6 +4,7 @@ description: "Building a site to help turn Rekordbox + Traktor exports into simp
 date: '2020-01-27'
 slug: introducing-tracklister
 tags: ["react", "dj"]
+keywords: ["tracklister", "traktor", "rekordbox", "react", "tracklist"]
 image: "https://raw.githubusercontent.com/ewenme/tracklister/master/public/logo.png"
 draft: no
 ---

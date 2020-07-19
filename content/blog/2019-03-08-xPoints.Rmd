@@ -3,7 +3,8 @@ title: '...xPoints?'
 description: "Translating advanced player performance metrics into fantasy football points potential."
 date: '2019-03-08'
 slug: xPoints
-tags: ["football", "fpl"]
+tags: ["fpl", "r"]
+keywords: ["fpl", "fplr", "understatr", "r"]
 image: "/blog/2019-03-08-xPoints_files/figure-html/simple-xGA-1.png"
 draft: no
 ---
@@ -23,7 +24,7 @@ Back in August 2017, [StatsBomb's Ted Knutson predicted](https://statsbomb.com/2
 
 [Fantasy Premier League](https://fantasy.premierleague.com/) (FPL) is the official fantasy football game of the [Premier League](https://en.wikipedia.org/wiki/Premier_League), with more than five million "managers" (plus many thousands of passive aggressive workplace league rivalries) and counting. FPL managers, particularly those taking it seriously/semi-seriously, probably represent an early adopter population in Ted's above prophecy - fans with a vested interest in gaining competitive advantage. It definitely shows... [Michael Caley chatting to the FML FPL podcast](http://fmlfpl.libsyn.com/ep-161-fireside-chat-with-michael-caley) recently, for one.
 
-I think there's some appetite around for this stuff. What's also interesting to me is that, as an application of metrics like expected goals (xG), fantasy football player evaluation is a far simpler optimisation problem than the real thing. Especially for attacking players, FPL player evaluation is predominantly about *individual goal contributions* (goals and assists) because they result in *points* (three for an assist, while grabbing a goal equals four or five points for midfielders and forwards respectively). Other contributions to general play can be glossed over for the most part, even the "pre-assist", hence why the original FPL valuation for N'Golo Kanté (£5.0m) was so much lower than Sadio Mané's (£9.5m) in the current (2018/19) season.
+I think there's some appetite around for this stuff. What's also interesting to me is that, as an application of metrics like expected goals (xG), fantasy football player evaluation is a far simpler optimisation problem than the real thing. Especially for attacking players, FPL player evaluation is predominantly about *individual goal contributions* (goals and assists) because they result in *points* (three for an assist, while grabbing a goal equals four or five points for midfielders and forwards respectively). Other contributions to general play can be glossed over for the most part, even the "pre-assist", hence why the original FPL valuation for N'Golo Kanté (£5.0m) was so much lower than Sadio Mané's (£11m) in the current (2019/20) season.
 
 Therefore, a useful FPL evaluation of attacking players could be made using metrics that quantify activity at the very sharp end of attacking moves, namely variations of:
 
@@ -46,10 +47,22 @@ remotes::install_github(c("ewenme/fplr", "ewenme/understatr"))
 
 ```{r get-fpl-data}
 library(fplr)
+library(dplyr)
 
-fpl_data <- fpl_get_players()
+# get player/team/positional data
+players <- fpl_get_player_all()
 
-fpl_data
+teams <- fpl_get_teams() %>% 
+  select(id, name)
+
+positions <- fpl_get_player_types() %>% 
+  select(id, singular_name)
+
+# join!
+fpl_data <- players %>% 
+  left_join(teams, by=c("team"="id")) %>% 
+  left_join(positions, by=c("element_type"="id")) %>% 
+  rename(team_name=name, position=singular_name)
 ```
 
 ...and [understatr](https://github.com/ewenme/understatr) can help fetch [understat](https://understat.com/) data.
@@ -58,10 +71,10 @@ fpl_data
 library(understatr)
 
 # get EPL team data
-epl_team_stats <- get_league_teams_stats(league_name = "EPL", year = 2018)
+epl_team_stats <- get_league_teams_stats(league_name = "EPL", year = 2019)
 
 # get EPL player data
-epl_player_stats <- purrr::map_dfr(unique(epl_team_stats$team_name), get_team_players_stats, year = 2018)
+epl_player_stats <- purrr::map_dfr(unique(epl_team_stats$team_name), get_team_players_stats, year = 2019)
 
 epl_player_stats
 ```
@@ -69,7 +82,6 @@ epl_player_stats
 There isn't a common identifier for joining across datasets, so a bit of prep is required to help join the datasets (e.g. standardising team/player names). Names are annoying, so I missed off some recoding of non-descript (read: little minutes) attacking players.[^fullcode] Sorry.
 
 ```{r data-cleaning, echo=FALSE}
-library(dplyr)
 library(stringr)
 
 # club name disparities
@@ -136,7 +148,7 @@ update_geom_font_defaults(family = "Work Sans Light", size = 3)
 ggplot(player_stats, aes(x = xG_90, y = xA_90)) +
   geom_point(aes(colour = position)) +
   # add chart labels
-  labs(title = "Expected goals contributions, 2018/19",
+  labs(title = "Expected goals contributions, 2019/20",
        subtitle = "Expected goals (xG) and expected assists (xA) per 90 minutes. Positions as defined in Fantasy\nPremier League (FPL). Players with less than 900 minutes removed.",
        x = "xG per 90", y = "xA per 90", caption = "source: understat.com, fantasy.premierleague.com | @ewen_") +
   # add data labels
@@ -178,7 +190,7 @@ player_stats %>%
   geom_col(fill = ghibli_palettes$SpiritedMedium[4]) +
   coord_flip() +
   # add chart labels
-  labs(title = "Points from expected goals contributions, 2018/19",
+  labs(title = "Points from expected goals contributions, 2019/20",
        subtitle = "Top 20 expected FPL points (xP) from goals and assists per 90 minutes.\nPlayers with less than 900 minutes removed.",
        x = NULL, y = "xP per 90", caption = "source: understat.com, fantasy.premierleague.com | @ewen_") +
   # add my chart theme
@@ -197,7 +209,7 @@ player_stats %>%
   geom_col(fill = ghibli_palettes$SpiritedMedium[4]) +
   coord_flip() +
   # add chart labels
-  labs(title = "Points per £m from expected goals contributions, 2018/19",
+  labs(title = "Points per £m from expected goals contributions, 2019/20",
        subtitle = "Top 20 expected FPL points per £m (xPm) from goals and assists per 90 mins.\nPlayers with less than 900 minutes removed.",
        x = NULL, y = "xPm per 90", caption = "source: understat.com, fantasy.premierleague.com | @ewen_") +
   # add my chart theme
@@ -205,8 +217,6 @@ player_stats %>%
                 plot_title_size = 12) +
   theme(axis.text.y = element_text(family = "Work Sans Light"))
 ```
-
-Ashley Barnes and Danny Ings, Turf Moor behemoths present and past, top the charts here. 
 
 ## Reprise `r emo::ji("crystal")`
 

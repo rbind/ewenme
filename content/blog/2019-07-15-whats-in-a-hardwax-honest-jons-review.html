@@ -1,9 +1,8 @@
 ---
 title: "What's in a Hardwax, or Honest Jons, review?"
 date: '2019-07-15'
-tags:
-  - music
-  - r
+tags: ["records", "r"]
+keywords: ["record store", "r", "hardwax", "honest jons", "tidytext"]
 description: "A (quantitative) appreciation of the inimitable wordplay at two of my favourite record stores. TIP!"
 slug: whats-in-a-hardwax-honest-jons-review
 image: "/blog/2019-07-15-whats-in-a-hardwax-honest-jons-review_files/figure-html/reggae-cat-odds-1.png"
@@ -26,18 +25,18 @@ draft: no
 <h2>Scrapin’ up the crates ⛏</h2>
 <p>I’m collating these (and hopefully others, soon come) record store’s listings data<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a> over at <a href="https://github.com/ewenme/crates">crates</a>, a GitHub repo with data + code as u like. Here’s a preview of Honest Jons’ listings, to give u a flavour.</p>
 <pre><code>## # A tibble: 4,560 x 5
-##    artist        release         label       review                category
-##    &lt;chr&gt;         &lt;chr&gt;           &lt;chr&gt;       &lt;chr&gt;                 &lt;chr&gt;   
-##  1 Ain&#39;t No Gra… The Life And L… Dust To Di… The flaming Appalach… Blues   
-##  2 AMC TEST ART… &lt;NA&gt;            Ace         Thsi is a test produ… Blues   
-##  3 Anthology Of… &lt;NA&gt;            Smithsonia… Harry Smith’s monume… Blues   
-##  4 Lavern Baker  La Vern         Rumble      Her 1956 Atlantic de… Blues   
-##  5 Bandera Doo … &lt;NA&gt;            Ace         For Your Precious Lo… Blues   
-##  6 Pastor T.L. … Like A Ship...… Numero      Gospel soul classic … Blues   
-##  7 The Big Beat  The Dave Barth… Ace         Hats off every time … Blues   
-##  8 Big Bill Bro… Do That Guitar… Yazoo       Thoroughly entertain… Blues   
-##  9 Black Cat Tr… &lt;NA&gt;            Mamlish     Roars out of the tra… Blues   
-## 10 Bobby Bland   Two Steps From… Duke        The 1960 review of h… Blues   
+##    artist        release          label        review                   category
+##    &lt;chr&gt;         &lt;chr&gt;            &lt;chr&gt;        &lt;chr&gt;                    &lt;chr&gt;   
+##  1 Ain&#39;t No Gra… The Life And Le… Dust To Dig… The flaming Appalachian… Blues   
+##  2 AMC TEST ART… &lt;NA&gt;             Ace          Thsi is a test product   Blues   
+##  3 Anthology Of… &lt;NA&gt;             Smithsonian… Harry Smith’s monument.  Blues   
+##  4 Lavern Baker  La Vern          Rumble       Her 1956 Atlantic debut… Blues   
+##  5 Bandera Doo … &lt;NA&gt;             Ace          For Your Precious Love … Blues   
+##  6 Pastor T.L. … Like A Ship... … Numero       Gospel soul classic fro… Blues   
+##  7 The Big Beat  The Dave Bartho… Ace          Hats off every time to … Blues   
+##  8 Big Bill Bro… Do That Guitar … Yazoo        Thoroughly entertaining… Blues   
+##  9 Black Cat Tr… &lt;NA&gt;             Mamlish      Roars out of the traps … Blues   
+## 10 Bobby Bland   Two Steps From … Duke         The 1960 review of his … Blues   
 ## # … with 4,550 more rows</code></pre>
 <p>Similar listings data are available in <code>crates</code> for Hardwax. Here’s what’s in there to work with (at time of writing).</p>
 <p><img src="/blog/2019-07-15-whats-in-a-hardwax-honest-jons-review_files/figure-html/merge-data-1.png" width="100%" style="display: block; margin: auto;" /></p>
@@ -51,7 +50,7 @@ draft: no
 <p>The pianist was an organiser, and instead of chasing a successful recording career, he wanted to build a community band that would act as “a cultural safe house for the music.” “I wanted to say, This is your music. This is black music, and I want to present a panorama of the whole thing right here.” “We would preserve the music on our ark, the mothership…”</p>
 </blockquote>
 <p>It is worth pointing out that Hardwax review <em>every</em> record that hits the store, while Honest Jons are a bit more selective (less than half of the listings gleaned for this work had a review).</p>
-<p>Beyond review length, analysing the actual review content should help to describe makes reading listings on each site such a unique experience. For starters, examining which words are most common in each store’s writing (after excluding common stop words e.g. “and”).</p>
+<p>Beyond review length, analysing the actual review content should help to describe makes reading listings on each site such a unique experience. For starters, examining which words are most common in each store’s writing (after excluding common stop words e.g. “and”).</p>
 <p><img src="/blog/2019-07-15-whats-in-a-hardwax-honest-jons-review_files/figure-html/store-common-1.png" width="100%" style="display: block; margin: auto;" /></p>
 <p>Yeah, Hardwax talk techno quite a bit. Interestingly, “classic” is the only word that features in the top ten across both shops.</p>
 <p>A weighted log odds statistic<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a> can be helpful to measure how the usage of words differs across groups (in this case, record stores), accounting for sampling variability. In short, which words are most representative of that store when compared to the other?</p>
@@ -79,9 +78,9 @@ draft: no
 <div class="footnotes">
 <hr />
 <ol>
-<li id="fn1"><p>To keep the post concise and pretty for non-coders, I don’t show the code. You can find the code <a href="https://github.com/rbind/ewenme/blob/master/content/blog/2019-07-15-whats-in-a-hardwax-honest-jons-review.Rmd">here</a>.<a href="#fnref1" class="footnote-back">↩</a></p></li>
-<li id="fn2"><p>At time of writing, both record store’s permit the gathering of their site’s listings data (in accordance with the respective <code>robots.txt</code>).<a href="#fnref2" class="footnote-back">↩</a></p></li>
-<li id="fn3"><p>The weighted log odds statistics used here is of the variety described in a <a href="https://doi.org/10.1093/pan/mpn018">Monroe, Colaresi, and Quinn (2008) paper</a>, applied using Julia Silge’s really neat <a href="https://github.com/juliasilge/tidylo">tidylo R package</a>. Related, a lot of the text manipulation was made easier by ANOTHER of Julia’s ventures, <a href="https://www.tidytextmining.com/">tidytext</a>.<a href="#fnref3" class="footnote-back">↩</a></p></li>
-<li id="fn4"><p>Thomas Pedersen’s <a href="https://github.com/thomasp85/ggforce">ggforce</a> was instrumental in this, and other, visualisations expressed in the post.<a href="#fnref4" class="footnote-back">↩</a></p></li>
+<li id="fn1"><p>To keep the post concise and pretty for non-coders, I don’t show the code. You can find the code <a href="https://github.com/rbind/ewenme/blob/master/content/blog/2019-07-15-whats-in-a-hardwax-honest-jons-review.Rmd">here</a>.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn2"><p>At time of writing, both record store’s permit the gathering of their site’s listings data (in accordance with the respective <code>robots.txt</code>).<a href="#fnref2" class="footnote-back">↩︎</a></p></li>
+<li id="fn3"><p>The weighted log odds statistics used here is of the variety described in a <a href="https://doi.org/10.1093/pan/mpn018">Monroe, Colaresi, and Quinn (2008) paper</a>, applied using Julia Silge’s really neat <a href="https://github.com/juliasilge/tidylo">tidylo R package</a>. Related, a lot of the text manipulation was made easier by ANOTHER of Julia’s ventures, <a href="https://www.tidytextmining.com/">tidytext</a>.<a href="#fnref3" class="footnote-back">↩︎</a></p></li>
+<li id="fn4"><p>Thomas Pedersen’s <a href="https://github.com/thomasp85/ggforce">ggforce</a> was instrumental in this, and other, visualisations expressed in the post.<a href="#fnref4" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>

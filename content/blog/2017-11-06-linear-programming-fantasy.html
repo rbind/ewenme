@@ -3,6 +3,7 @@ title: "My Linear(ish) programming fantasy"
 description: "Applying linear programming principles to the selection of a fantasy football team."
 date: "2017-11-06"
 tags: ["r", "linear-programming", "fpl"]
+keywords: ["r", "fpl", "fantasy premier league", "linear optimisation", "linear programming"]
 slug: my-linear-programming-fantasy
 draft: no
 ---
@@ -20,14 +21,14 @@ draft: no
 
 
 <p><a href="https://en.wikipedia.org/wiki/Linear_programming">Linear optimization</a> (AKA linear programming) is all around us, even if we don’t really know it. For example, how did you come to pick your route to work today? This decision, lovingly known as “getting from A to B”, is (most of the time) objectively simple: <strong>which route is the quickest?</strong></p>
-<p><img src="/blog/2017-11-06-linear-programming-fantasy_files/route-icon.png" /></p>
+<p><img src="/blog/2017-11-06-linear-programming-fantasy_files/route-icon.png" style="width:75.0%" /></p>
 <p>There are known variables that we need to identify and use in solving this problem (known as <strong>decision variables</strong>), for example:</p>
 <ul>
 <li>The speed at which different modes of transports travel</li>
 <li>The distance of each possible route</li>
 </ul>
 <p>As anyone who has ever travelled anywhere will know, there are other parameters that we might want to factor in to a solution. We might prefer to avoid certain modes of transport outright, spend less time walking, etc. Extending this problem to a business setting (not to knock anyone rocking it in their daily life), when there might be additional restrictions to consider (think of a delivery order operation) - minimizing fuel consumption, or avoiding tolls. Any ‘best route’ can be reviewed to ensure these <strong>constraints</strong> are taken care of.</p>
-<p><img src="/blog/2017-11-06-linear-programming-fantasy_files/route-plan-anim.gif" /></p>
+<p><img src="/blog/2017-11-06-linear-programming-fantasy_files/route-plan-anim.gif" style="width:75.0%" /></p>
 <div id="let-me-optimize-your-fantasy" class="section level2">
 <h2>Let Me Optimize Your Fantasy</h2>
 <p>What good can these techniques do for me? I’d come across a couple of nice implementations of linear programming techniques in the <a href="https://fantasy.premierleague.com/">Fantasy Premier League</a>(FPL) space - shout out to Martin Eastwood for his <a href="https://github.com/martineastwood/penalty/tree/master/fantasy_football_optimiser">penalty</a> work and Torvaney’s <a href="https://github.com/Torvaney/fpl-optimiser">fpl-optimiser</a> (honorable mention to Sean Taylor’s <a href="https://gist.github.com/seanjtaylor/b4d423dad0083cc8cc5b2a9fd1e4e63e">NFL fantasy projections</a>in R, but the sport/techniques involved are out of scope just now). Both of these projects look to optimize the same thing: the <strong>total number of points</strong> a fantasy football team scores within some shared constraints that the game rules enforce (staying within a 100 million budget, no more than 3 players per team).</p>
@@ -36,12 +37,13 @@ draft: no
 <div id="complementary-keepers-and-where-to-find-them" class="section level2">
 <h2>Complementary Keepers (and Where to Find Them)</h2>
 <p>Rotation - the practice of picking complementary players (those who play at home on alternate weeks, for example) to play in a rotating fashion - is squad-based fantasy sport game 101, allowing managers to seamlessly segue between class acts across a well-balanced squad.</p>
-<p><img src="/blog/2017-11-06-linear-programming-fantasy_files/rotation-wrong.gif" /></p>
+<p><img src="/blog/2017-11-06-linear-programming-fantasy_files/rotation-wrong.gif" style="width:75.0%" /></p>
 <p>Rotation policy is at it’s simplest when applied to goalkeepers. The constraints are simple: you have to buy two, but you can only play one each week. This encourages FPL managers to look at a couple of cheaper options that play home &amp; away alternately, for example, rather than lumping for premium products. Which strategy wins out, though? Lets re-frame this as a real-world linear optimization problem, defining the pieces we need.</p>
 </div>
 <div id="decision-variables" class="section level2">
 <h2>Decision Variables</h2>
 <p>The <strong>decision variables</strong> comprise the things that will decide the output and represent the solution. In our case, these are the points scored by the two goalkeepers we pick - let’s call them Goalkeeper A and Goalkeeper B. It’s also worth noting the <strong>non-negativity restriction</strong> on decision variables i.e. the values should be greater than or equal to zero.</p>
+<p><br></p>
 <div id="htmlwidget-1" style="width:100%;height:auto;" class="datatables html-widget"></div>
 <script type="application/json" data-for="htmlwidget-1">{"x":{"filter":"none","data":[[2,94,240,260,375,1,74,95,96,135,189,213,214,241,261,306,328,376,559,29,30,54,75,115,136,137,163,190,287,305,329,350,396,397,421,438,439,469,473,479,530,536,565,3,31,53,116,162,262,286,351,420,506,529,540,545,547,549,554,555,557,566,569],["Cech","Courtois","Ederson","de Gea","Lloris","Ospina","Heaton","Eduardo","Caballero","Pickford","Schmeichel","Mignolet","Karius","Bravo","Romero","Forster","Butland","Vorm","Macey","Begovic","Boruc","Ryan","Robinson","Hennessey","Robles","Stekelenburg","Lössl","Hamer","Darlow","McCarthy","Grant","Fabianski","Pantilimon","Gomes","Foster","Adrián","Randolph","Pope","Jakupovic","Hart","Ward","Karnezis","Gazzaniga","Martinez","Federici","Mäenpää","Speroni","Coleman","Joel Pereira","Elliot","Nordfeldt","Myhill","Taylor","Woodman","Krul","Legzdins","Green","Ramsdale","Lindegaard","Henry","Palmer","Whiteman","Haugaard"],["Arsenal","Chelsea","Man City","Man Utd","Spurs","Arsenal","Burnley","Chelsea","Chelsea","Everton","Leicester","Liverpool","Liverpool","Man City","Man Utd","Southampton","Stoke","Spurs","Arsenal","Bournemouth","Bournemouth","Brighton","Burnley","Crystal Palace","Everton","Everton","Huddersfield","Leicester","Newcastle","Southampton","Stoke","Swansea","Watford","Watford","West Brom","West Ham","West Ham","Burnley","Leicester","West Ham","Liverpool","Watford","Spurs","Arsenal","Bournemouth","Brighton","Crystal Palace","Huddersfield","Man Utd","Newcastle","Swansea","West Brom","Southampton","Newcastle","Brighton","Burnley","Huddersfield","Bournemouth","Burnley","Crystal Palace","West Brom","Spurs","Stoke"],[5.5,5.5,5.5,5.5,5.5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>player_id<\/th>\n      <th>web_name<\/th>\n      <th>team_name<\/th>\n      <th>start_price<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[0,3]}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 <p>This list of goalies represents our options for goalkeeper A and goalkeeper B, with their respective teams and associated costs. Now, we specify the ultimate objective that guides this decision.</p>
@@ -151,6 +153,7 @@ goalie_rotation &lt;- goalie_rotation %&gt;%
          combo=glue(&quot;{player_name} ({team_name}) &amp; {rotation_player_name} ({rotation_team_name}) &quot;),
          points_per_mil=points/total_price)</code></pre>
 <p>We’re ready to see the optimized goalkeeping combo, maximizing potential points return while minimizing costs [insert drum roll]. I’ll leave in the top ten, for some context.</p>
+<p><br></p>
 <table class="table" style="margin-left: auto; margin-right: auto;">
 <caption>
 <span id="tab:unnamed-chunk-1">Table 1: </span>Top goalkeeper combos (optimized on points per million)
@@ -246,6 +249,7 @@ Fabianski (Swansea) &amp; Pope (Burnley)
 </table>
 <p>So, Messrs Hart and Lossl grab top spot when accounting for both points and cost in our quest for optimization. This season, that combination returned a points potential of 70 while costing a combined 9 million, which works out at 7.8 points per million.</p>
 <p>Before finishing up, let’s consider how the solution might change if a new constraint is introduced. What if an FPL manager doesn’t have the budget for some of these recommendations, anyway? What recommendations would we make if cost was an enforced constraint - for example, a remaining budget of 9 million?</p>
+<p><br></p>
 <table class="table" style="margin-left: auto; margin-right: auto;">
 <caption>
 <span id="tab:unnamed-chunk-2">Table 2: </span>Top goalkeeper combos for 9 million or less (optimized on points per million)

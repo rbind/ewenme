@@ -1,9 +1,8 @@
 ---
 title: "What's in a Hardwax, or Honest Jons, review?"
 date: '2019-07-15'
-tags:
-  - music
-  - r
+tags: ["records", "r"]
+keywords: ["record store", "r", "hardwax", "honest jons", "tidytext"]
 description: "A (quantitative) appreciation of the inimitable wordplay at two of my favourite record stores. TIP!"
 slug: whats-in-a-hardwax-honest-jons-review
 image: "/blog/2019-07-15-whats-in-a-hardwax-honest-jons-review_files/figure-html/reggae-cat-odds-1.png"
@@ -11,15 +10,25 @@ draft: no
 ---
 
 ```{r set-up, include=FALSE}
-knitr::opts_chunk$set(cache = FALSE, warning = FALSE, message = FALSE, echo = FALSE, out.width = '100%', dev = 'png', fig.align = 'center')
+knitr::opts_chunk$set(
+  warning = FALSE, message = FALSE, echo = FALSE, out.width = '100%', dev = 'png', fig.align = 'center'
+  )
 
 if (!require("pacman")) install.packages("pacman")
 
 # load github pkgs
-pacman::p_load_gh("juliasilge/tidylo", "hadley/emo", "ewenme/ewenthemes")
+pacman::p_load_gh("hadley/emo", "ewenme/ewenthemes")
 
 # load cran pkgs
-pacman::p_load("tidyverse", "tidytext", "ghibli", "see", "ggforce", "ggrepel", "scales", "glue")
+library(tidyverse)
+library(tidytext)
+library(tidylo)
+library(ghibli)
+library(see)
+library(ggforce)
+library(ggrepel)
+library(scales)
+library(glue)
 
 update_geom_font_defaults(family = "Work Sans Light")
 
@@ -85,17 +94,18 @@ Even if you're not familiar with Hardwax's or Honest Jons' review style, you may
 ```{r review-lengths}
 
 # create word-level data
-review_words <- records %>% 
-  unnest_tokens(word, review, token = "words") 
+words <- records %>% 
+  unnest_tokens(word, review, token = "words") %>% 
+  ungroup()
 
 # summarise word counts
-review_word_counts <- review_words %>% 
+word_counts <- words %>% 
   group_by(store, id) %>% 
   summarise(word_count = n()) %>% 
   ungroup()
   
 # viz word count distro
-ggplot(review_word_counts, aes(x = word_count, fill = store, colour = store)) + 
+ggplot(word_counts, aes(x = word_count, fill = store, colour = store)) + 
   geom_density(alpha = 0.5) +
   scale_fill_ghibli_d(name = "KikiMedium", direction = -1) +
   scale_colour_ghibli_d(name = "KikiMedium", direction = -1) +
@@ -118,12 +128,10 @@ Beyond review length, analysing the actual review content should help to describ
 
 ```{r store-common}
 # create word-level df
-review_words <- records %>% 
-  unnest_tokens(word, review, token = "words") %>% 
-  anti_join(stop_words)
+review_words <- dplyr::anti_join(words, stop_words)
 
 # calc word count metrics
-word_counts <- review_words %>%
+review_word_counts <- review_words %>%
   group_by(store) %>% 
   mutate(review_count = n_distinct(id)) %>% 
   group_by(store, word) %>% 
@@ -132,7 +140,7 @@ word_counts <- review_words %>%
   ungroup()
   
 # plot common words x store
-word_counts %>% 
+review_word_counts %>% 
   group_by(store) %>% 
   top_n(10, count_per_review) %>% 
   ungroup() %>% 
@@ -156,17 +164,16 @@ A weighted log odds statistic[^lo] can be helpful to measure how the usage of wo
 ```{r store-specific}
 
 # calc log odds
-word_log_odds <- word_counts %>% 
-  bind_log_odds(store, word, count) %>%
-  arrange(-log_odds)
+word_log_odds <- review_word_counts %>% 
+  bind_log_odds(store, word, count)
 
 # plot highest log odds x store
 word_log_odds %>%
   group_by(store) %>%
   top_n(10) %>%
   ungroup %>%
-  mutate(word = reorder(word, log_odds)) %>%
-  ggplot(aes(word, log_odds)) +
+  mutate(word = reorder(word, log_odds_weighted)) %>%
+  ggplot(aes(word, log_odds_weighted)) +
   geom_point2(size = 4, colour = ghibli_palettes$KikiMedium[7]) +
   facet_wrap(~store, scales = "free") +
   coord_flip() +
@@ -187,7 +194,7 @@ Sticking with Honest Jons' reviews for a bit - the most common and specific word
 word_log_odds %>% 
   filter(store == "Honest Jons") %>% 
   top_n(50, count_per_review) %>%
-  ggplot(aes(count_per_review, log_odds)) +
+  ggplot(aes(count_per_review, log_odds_weighted)) +
   geom_hline(yintercept = 0, lty = 2, 
                color = "#222324", alpha = 0.6) +
   geom_text_repel(aes(label = word), family = "Work Sans Light", size = 3, seed = 3) +
@@ -238,16 +245,15 @@ hj_word_counts <- review_words %>%
   ungroup()
 
 hj_log_odds <- hj_word_counts %>% 
-  bind_log_odds(category, word, count) %>%
-  arrange(-log_odds)
+  bind_log_odds(category, word, count)
 
 # plot highest log odds x category
 hj_log_odds %>%
   group_by(category) %>%
   top_n(10) %>%
   ungroup %>%
-  mutate(word = reorder(word, log_odds)) %>%
-  ggplot(aes(word, log_odds)) +
+  mutate(word = reorder(word, log_odds_weighted)) %>%
+  ggplot(aes(word, log_odds_weighted)) +
   geom_point2(size = 3, colour = ghibli_palettes$KikiMedium[7]) +
   facet_wrap(~ category, scales = "free", ncol = 2) +
   coord_flip() +
@@ -267,12 +273,14 @@ Interestingly, *Reggae* has the highest absolute log odds, suggesting that words
 desc = '"Rhythm", "roots" and "dub" are commonly featured, but also Reggae-specific, review words.'
 
 hj_log_odds %>% 
-  filter(category == "Reggae") %>% 
-  ggplot(aes(count_per_review, log_odds)) +
+  dplyr::filter(category == "Reggae") %>% 
+  ggplot(aes(count_per_review, log_odds_weighted)) +
   geom_hline(yintercept = 0, lty = 2, 
                color = "#222324", alpha = 0.6) +
   geom_text_repel(aes(label = word), family = "Work Sans Light", size = 3, seed = 3,
-                  data = top_n(filter(hj_log_odds, category == "Reggae"), 25, count_per_review)) +
+                  data = top_n(
+                    dplyr::filter(hj_log_odds, category == "Reggae"), 25, count_per_review)
+                  ) +
   geom_point2(colour = ghibli_palettes$KikiMedium[7], size = 3, alpha = 0.3) + 
   geom_mark_ellipse(aes(filter = count_per_review > 0.1, description = desc),
                     label.fontsize = 9, label.family = "Work Sans Light") +

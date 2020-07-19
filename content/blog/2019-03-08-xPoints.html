@@ -3,7 +3,8 @@ title: '...xPoints?'
 description: "Translating advanced player performance metrics into fantasy football points potential."
 date: '2019-03-08'
 slug: xPoints
-tags: ["football", "fpl"]
+tags: ["fpl", "r"]
+keywords: ["fpl", "fplr", "understatr", "r"]
 image: "/blog/2019-03-08-xPoints_files/figure-html/simple-xGA-1.png"
 draft: no
 ---
@@ -23,7 +24,7 @@ The stats don't look great but <a href="https://twitter.com/jjenas8?ref_src=twsr
 <p>Create an entire new generation of highly educated fans and coaches who view the game itself in a more knowledgeable light.</p>
 </blockquote>
 <p><a href="https://fantasy.premierleague.com/">Fantasy Premier League</a> (FPL) is the official fantasy football game of the <a href="https://en.wikipedia.org/wiki/Premier_League">Premier League</a>, with more than five million “managers” (plus many thousands of passive aggressive workplace league rivalries) and counting. FPL managers, particularly those taking it seriously/semi-seriously, probably represent an early adopter population in Ted’s above prophecy - fans with a vested interest in gaining competitive advantage. It definitely shows… <a href="http://fmlfpl.libsyn.com/ep-161-fireside-chat-with-michael-caley">Michael Caley chatting to the FML FPL podcast</a> recently, for one.</p>
-<p>I think there’s some appetite around for this stuff. What’s also interesting to me is that, as an application of metrics like expected goals (xG), fantasy football player evaluation is a far simpler optimisation problem than the real thing. Especially for attacking players, FPL player evaluation is predominantly about <em>individual goal contributions</em> (goals and assists) because they result in <em>points</em> (three for an assist, while grabbing a goal equals four or five points for midfielders and forwards respectively). Other contributions to general play can be glossed over for the most part, even the “pre-assist”, hence why the original FPL valuation for N’Golo Kanté (£5.0m) was so much lower than Sadio Mané’s (£9.5m) in the current (2018/19) season.</p>
+<p>I think there’s some appetite around for this stuff. What’s also interesting to me is that, as an application of metrics like expected goals (xG), fantasy football player evaluation is a far simpler optimisation problem than the real thing. Especially for attacking players, FPL player evaluation is predominantly about <em>individual goal contributions</em> (goals and assists) because they result in <em>points</em> (three for an assist, while grabbing a goal equals four or five points for midfielders and forwards respectively). Other contributions to general play can be glossed over for the most part, even the “pre-assist”, hence why the original FPL valuation for N’Golo Kanté (£5.0m) was so much lower than Sadio Mané’s (£11m) in the current (2019/20) season.</p>
 <p>Therefore, a useful FPL evaluation of attacking players could be made using metrics that quantify activity at the very sharp end of attacking moves, namely variations of:</p>
 <ul>
 <li><strong>xG:</strong> How many goals should a player have scored on average, given the shots they took?</li>
@@ -37,67 +38,48 @@ The stats don't look great but <a href="https://twitter.com/jjenas8?ref_src=twsr
 <pre class="r"><code>remotes::install_github(c(&quot;ewenme/fplr&quot;, &quot;ewenme/understatr&quot;))</code></pre>
 <p><a href="https://ewenme.github.io/fplr/">fplr</a> helps get data on FPL players…</p>
 <pre class="r"><code>library(fplr)
+library(dplyr)
 
-fpl_data &lt;- fpl_get_players()
+# get player/team/positional data
+players &lt;- fpl_get_player_all()
 
-fpl_data</code></pre>
-<pre><code>## # A tibble: 606 x 60
-##       id photo web_name team_code status   code first_name second_name
-##    &lt;int&gt; &lt;chr&gt; &lt;chr&gt;        &lt;int&gt; &lt;chr&gt;   &lt;int&gt; &lt;chr&gt;      &lt;chr&gt;      
-##  1     1 1133… Cech             3 Avail…  11334 Petr       Cech       
-##  2     2 8020… Leno             3 Avail…  80201 Bernd      Leno       
-##  3     3 5150… Kosciel…         3 Avail…  51507 Laurent    Koscielny  
-##  4     4 9874… Bellerín         3 Injur…  98745 Héctor     Bellerín   
-##  5     5 3841… Monreal          3 Avail…  38411 Nacho      Monreal    
-##  6     6 1560… Holding          3 Injur… 156074 Rob        Holding    
-##  7     7 6914… Mustafi          3 Avail…  69140 Shkodran   Mustafi    
-##  8     8 1114… Kolasin…         3 Avail… 111457 Sead       Kolasinac  
-##  9    10 2339… Mavropa…         3 Avail… 233963 Konstanti… Mavropanos 
-## 10    11 2733… Lichtst…         3 Avail…  27335 Stephan    Lichtstein…
-## # … with 596 more rows, and 52 more variables: squad_number &lt;int&gt;,
-## #   news &lt;chr&gt;, now_cost &lt;dbl&gt;, news_added &lt;chr&gt;,
-## #   chance_of_playing_this_round &lt;int&gt;,
-## #   chance_of_playing_next_round &lt;int&gt;, value_form &lt;dbl&gt;,
-## #   value_season &lt;dbl&gt;, cost_change_start &lt;dbl&gt;, cost_change_event &lt;dbl&gt;,
-## #   cost_change_start_fall &lt;int&gt;, cost_change_event_fall &lt;int&gt;,
-## #   in_dreamteam &lt;lgl&gt;, dreamteam_count &lt;int&gt;, selected_by_percent &lt;dbl&gt;,
-## #   form &lt;dbl&gt;, transfers_out &lt;int&gt;, transfers_in &lt;int&gt;,
-## #   transfers_out_event &lt;int&gt;, transfers_in_event &lt;int&gt;, loans_in &lt;int&gt;,
-## #   loans_out &lt;int&gt;, loaned_in &lt;int&gt;, loaned_out &lt;int&gt;,
-## #   total_points &lt;int&gt;, event_points &lt;int&gt;, points_per_game &lt;dbl&gt;,
-## #   ep_this &lt;dbl&gt;, ep_next &lt;dbl&gt;, special &lt;lgl&gt;, minutes &lt;int&gt;,
-## #   goals_scored &lt;int&gt;, assists &lt;int&gt;, clean_sheets &lt;int&gt;,
-## #   goals_conceded &lt;int&gt;, own_goals &lt;int&gt;, penalties_saved &lt;int&gt;,
-## #   penalties_missed &lt;int&gt;, yellow_cards &lt;int&gt;, red_cards &lt;int&gt;,
-## #   saves &lt;int&gt;, bonus &lt;int&gt;, bps &lt;int&gt;, influence &lt;dbl&gt;,
-## #   creativity &lt;dbl&gt;, threat &lt;dbl&gt;, ict_index &lt;dbl&gt;, ea_index &lt;int&gt;,
-## #   element_type &lt;int&gt;, team &lt;int&gt;, team_name &lt;chr&gt;, position &lt;chr&gt;</code></pre>
+teams &lt;- fpl_get_teams() %&gt;% 
+  select(id, name)
+
+positions &lt;- fpl_get_player_types() %&gt;% 
+  select(id, singular_name)
+
+# join!
+fpl_data &lt;- players %&gt;% 
+  left_join(teams, by=c(&quot;team&quot;=&quot;id&quot;)) %&gt;% 
+  left_join(positions, by=c(&quot;element_type&quot;=&quot;id&quot;)) %&gt;% 
+  rename(team_name=name, position=singular_name)</code></pre>
 <p>…and <a href="https://github.com/ewenme/understatr">understatr</a> can help fetch <a href="https://understat.com/">understat</a> data.</p>
 <pre class="r"><code>library(understatr)
 
 # get EPL team data
-epl_team_stats &lt;- get_league_teams_stats(league_name = &quot;EPL&quot;, year = 2018)
+epl_team_stats &lt;- get_league_teams_stats(league_name = &quot;EPL&quot;, year = 2019)
 
 # get EPL player data
-epl_player_stats &lt;- purrr::map_dfr(unique(epl_team_stats$team_name), get_team_players_stats, year = 2018)
+epl_player_stats &lt;- purrr::map_dfr(unique(epl_team_stats$team_name), get_team_players_stats, year = 2019)
 
 epl_player_stats</code></pre>
-<pre><code>## # A tibble: 493 x 19
-##    player_id player_name games  time goals    xG assists    xA shots
-##        &lt;int&gt; &lt;chr&gt;       &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;dbl&gt;   &lt;int&gt; &lt;dbl&gt; &lt;int&gt;
-##  1       714 Gylfi Sigu…    29  2364    11 8.68        3 4.43     65
-##  2      6026 Richarlison    27  2084    10 8.12        1 1.03     58
-##  3      5555 Dominic Ca…    27  1060     5 3.40        1 0.660    26
-##  4       503 Theo Walco…    28  1932     3 5.19        2 2.78     33
-##  5      1823 Lucas Digne    26  2160     3 0.931       3 6.30     26
-##  6      6477 Cenk Tosun     21   925     2 3.67        3 0.438    31
-##  7       585 Seamus Col…    22  1934     1 0.536       1 2.11     10
-##  8       935 Kurt Zouma     24  1893     1 0.880       2 0.443    14
-##  9      1653 Michael Ke…    26  2340     1 1.77        2 1.18     25
-## 10      2383 André Gomes    21  1548     1 1.14        1 0.553    14
-## # … with 483 more rows, and 10 more variables: key_passes &lt;int&gt;,
-## #   yellow_cards &lt;int&gt;, red_cards &lt;int&gt;, position &lt;chr&gt;, team_name &lt;chr&gt;,
-## #   npg &lt;int&gt;, npxG &lt;dbl&gt;, xGChain &lt;dbl&gt;, xGBuildup &lt;dbl&gt;, year &lt;int&gt;</code></pre>
+<pre><code>## # A tibble: 517 x 19
+##    player_id player_name games  time goals    xG assists    xA shots key_passes
+##        &lt;dbl&gt; &lt;chr&gt;       &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;      &lt;dbl&gt;
+##  1       675 Jack Greal…    34  3055     7 6.58        6 7.24     68         88
+##  2      7722 Trézéguet      32  1775     5 5.18        1 0.937    46         20
+##  3      7724 Wesley         21  1806     5 7.27        1 0.884    36         11
+##  4      5612 Anwar El G…    33  2081     4 6.38        4 2.88     53         30
+##  5      6122 Douglas Lu…    34  2422     3 2.28        2 1.98     38         16
+##  6      7721 Conor Hour…    25  1394     3 1.63        5 5.44     29         35
+##  7      7723 John McGinn    26  2143     3 3.51        2 2.42     49         34
+##  8      1024 Tyrone Min…    31  2722     2 0.917       1 0.533     8          6
+##  9       884 Matt Targe…    26  2125     1 0.394       2 3.30      7         29
+## 10      1685 Ahmed Elmo…    17   983     1 0.196       1 2.19      5         21
+## # … with 507 more rows, and 9 more variables: yellow_cards &lt;dbl&gt;,
+## #   red_cards &lt;dbl&gt;, position &lt;chr&gt;, team_name &lt;chr&gt;, npg &lt;dbl&gt;, npxG &lt;dbl&gt;,
+## #   xGChain &lt;dbl&gt;, xGBuildup &lt;dbl&gt;, year &lt;dbl&gt;</code></pre>
 <p>There isn’t a common identifier for joining across datasets, so a bit of prep is required to help join the datasets (e.g. standardising team/player names). Names are annoying, so I missed off some recoding of non-descript (read: little minutes) attacking players.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> Sorry.</p>
 <p>Once that’s down, the data can be merged and the attackers with reasonable minutes (at least 900) isolated. At the same time, we can put together the metrics of interest discussed above.</p>
 <pre class="r"><code># join understat/fpl data
@@ -116,25 +98,25 @@ player_stats &lt;- left_join(
   mutate(xGA_90 = xG_90 + xA_90)
 
 player_stats</code></pre>
-<pre><code>## # A tibble: 149 x 31
+<pre><code>## # A tibble: 167 x 31
 ##       id web_name status now_cost cost_change_sta… total_points minutes
 ##    &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;     &lt;dbl&gt;            &lt;dbl&gt;        &lt;int&gt;   &lt;int&gt;
-##  1    13 Özil     Avail…      7.9             -0.6           70    1185
-##  2    14 Ramsey   Avail…      7.1             -0.4           73    1051
-##  3    15 Iwobi    Avail…      5.4             -0.1           76    1519
-##  4    17 Xhaka    Avail…      5.2             -0.3           69    2062
-##  5    18 Mkhitar… Avail…      6.8             -0.2           85    1156
-##  6    22 Lacazet… Avail…      9.5              0            138    1884
-##  7    23 Aubamey… Avail…     10.9             -0.1          157    2119
-##  8   450 Torreira Suspe…      4.8             -0.2           72    2072
-##  9   451 Guendou… Avail…      4.4             -0.1           38    1688
-## 10    35 Surman   Avail…      4.6             -0.4           33    1348
-## # … with 139 more rows, and 24 more variables: team_name &lt;chr&gt;,
-## #   position &lt;chr&gt;, player_id &lt;int&gt;, player_name &lt;chr&gt;, games &lt;int&gt;,
-## #   time &lt;int&gt;, goals &lt;int&gt;, xG &lt;dbl&gt;, assists &lt;int&gt;, xA &lt;dbl&gt;,
-## #   shots &lt;int&gt;, key_passes &lt;int&gt;, npg &lt;int&gt;, npxG &lt;dbl&gt;, xGChain &lt;dbl&gt;,
-## #   xGBuildup &lt;dbl&gt;, goals_90 &lt;dbl&gt;, xG_90 &lt;dbl&gt;, assists_90 &lt;dbl&gt;,
-## #   xA_90 &lt;dbl&gt;, shots_90 &lt;dbl&gt;, npg_90 &lt;dbl&gt;, npxG_90 &lt;dbl&gt;, xGA_90 &lt;dbl&gt;</code></pre>
+##  1    11 Aubamey… a          10.9             -0.1          187    2956
+##  2    12 Lacazet… a           9.2             -0.3          113    1721
+##  3    15 Özil     a           6.9             -0.6           53    1439
+##  4    18 Xhaka    a           5.1             -0.4           71    2451
+##  5    19 Torreira a           4.7             -0.3           45    1438
+##  6    21 Guendou… a           4.1             -0.4           48    1744
+##  7   469 Ceballos a           5.2             -0.3           53    1526
+##  8   488 Pépé     a           8.9             -0.6          103    1903
+##  9   541 Saka     a           4.7              0.2           70    1687
+## 10    28 Houriha… a           5.7             -0.3           77    1379
+## # … with 157 more rows, and 24 more variables: team_name &lt;chr&gt;, position &lt;chr&gt;,
+## #   player_id &lt;dbl&gt;, player_name &lt;chr&gt;, games &lt;dbl&gt;, time &lt;dbl&gt;, goals &lt;dbl&gt;,
+## #   xG &lt;dbl&gt;, assists &lt;dbl&gt;, xA &lt;dbl&gt;, shots &lt;dbl&gt;, key_passes &lt;dbl&gt;,
+## #   npg &lt;dbl&gt;, npxG &lt;dbl&gt;, xGChain &lt;dbl&gt;, xGBuildup &lt;dbl&gt;, goals_90 &lt;dbl&gt;,
+## #   xG_90 &lt;dbl&gt;, assists_90 &lt;dbl&gt;, xA_90 &lt;dbl&gt;, shots_90 &lt;dbl&gt;, npg_90 &lt;dbl&gt;,
+## #   npxG_90 &lt;dbl&gt;, xGA_90 &lt;dbl&gt;</code></pre>
 <p>Let’s get some of these numbers on the board, already. I’ll start with a simple scatter plot of xG90 vs xA90, and also mark out players’ FPL positions (PS - the chart styles come courtesy of another personal pkg, <a href="https://github.com/ewenme/ewenthemes">ewenthemes</a>).</p>
 <p><img src="/blog/2019-03-08-xPoints_files/figure-html/simple-xGA-1.svg" width="100%" style="display: block; margin: auto;" /></p>
 <p>This is <em>starting</em> to look useful for an FPL manager. It’s possible to spot players who are regularly creating and getting goalscoring opportunities. A bit more work is needed to actually identify who the best picks are, based on these metrics.</p>
@@ -145,7 +127,6 @@ player_stats</code></pre>
 <p><img src="/blog/2019-03-08-xPoints_files/figure-html/xPoints-calc-1.svg" width="100%" style="display: block; margin: auto;" /></p>
 <p>Now it’s easier to differentiate a Mo’ and a Kun, for example. Still, crucial information has been left out thus far - <strong>player price</strong>. Each FPL player is attributed a cost in £millions. By adjusting for this, players who represent the best value can be unearthed.</p>
 <p><img src="/blog/2019-03-08-xPoints_files/figure-html/value-calc-1.svg" width="100%" style="display: block; margin: auto;" /></p>
-<p>Ashley Barnes and Danny Ings, Turf Moor behemoths present and past, top the charts here.</p>
 </div>
 <div id="reprise" class="section level2">
 <h2>Reprise 🔮</h2>
@@ -165,6 +146,6 @@ player_stats</code></pre>
 <div class="footnotes">
 <hr />
 <ol>
-<li id="fn1"><p>To keep the post concise I don’t show all of the code, especially code that generates figures. But you can find all the code <a href="https://github.com/rbind/ewenme/blob/master/content/blog/2019-01-26-xPoints.Rmd">here</a>.<a href="#fnref1" class="footnote-back">↩</a></p></li>
+<li id="fn1"><p>To keep the post concise I don’t show all of the code, especially code that generates figures. But you can find all the code <a href="https://github.com/rbind/ewenme/blob/master/content/blog/2019-01-26-xPoints.Rmd">here</a>.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>

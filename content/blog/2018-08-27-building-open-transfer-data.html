@@ -3,7 +3,8 @@ title: "Building open football player transfer data"
 description: "Collating player transfers to and from football clubs in major European leagues."
 date: '2018-08-27'
 slug: building-open-football-player-transfer-data
-tags: ["football", "data-viz"]
+tags: ["football", "open-data"]
+keywords: ["football", "transfers", "open data", "r", "web scraping"]
 image: https://github.com/ewenme/transfers/raw/master/figures/chelsea-transfers-web.png
 draft: no
 ---
@@ -18,6 +19,7 @@ draft: no
 <p>I eventually settled on <del>scraping</del> using <a href="https://www.theguardian.com/football/ng-interactive/2017/jun/22/transfer-window-2017-every-deal-in-europes-top-five-leagues">the Guardian’s Transfer Interactive</a> to power my previous work. This source included transfer timestamps, which allowed for some intra-window time series stuff - it remains handily <a href="https://github.com/Worville/guardian_transfers">hosted by Tom Worville in a public, flat-file format</a>. However, it isn’t really set up for investigating historical trends as the Guardian has only run this interactive since 2017, as far as I can tell.</p>
 <p>Enter <a href="https://www.transfermarkt.co.uk/">Transfermarkt</a>, a data goldmine of player transfers for a number of major European leagues (e.g. English Premier League, Spanish La Liga, Italian Serie A) and some other oddities (my personal favourite is <a href="https://www.transfermarkt.co.uk/spieler/vatersohnnationalspieler/statistik">this list of father/son combos for national teams - glorious and appreciated</a>). Season-level stats like player transfers run back for quite a few seasons, joyously arranged in predictable html tables for bountiful scraping. I wrote a short scraping program<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a> to collect and clean up player transfers for these (and other) leagues, back to the 1992/1993 season (N.B. this decision was entirely arbitrary).</p>
 <p>Et voila - the data is now freely available, <a href="https://github.com/ewenme/transfers/tree/master/data">hosted on Github as flat .csv files</a> (in accordance with Transfermarkt’s <a href="https://www.transfermarkt.co.uk/intern/anb">terms of use</a>)<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a>. Here’s a preview, lovingly featuring the deal taking Mr. Keown to Arsenal.</p>
+<p><br></p>
 <div style="border: 1px solid #ddd; padding: 5px; overflow-x: scroll; width:100%; ">
 <table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
@@ -291,9 +293,9 @@ Premier League
 <div class="footnotes">
 <hr />
 <ol>
-<li id="fn1"><p>You can find the R code used to generate this post <a href="https://github.com/rbind/ewenme/blob/master/content/blog/2018-08-27-building-open-transfer-data.Rmd">here</a>.<a href="#fnref1" class="footnote-back">↩</a></p></li>
-<li id="fn2"><p>For this post I chose to omit lengthy passages on web scraping, as not to deter non-programmers (insights can be gleaned from the cleaned data w/o additional code). However, the code used to scrape, clean and analyse the data is publicly available within the <code>src</code> directory of the <a href="https://github.com/ewenme/transfers">transfers GitHub repo</a>, featuring <a href="https://github.com/hadley/rvest">rvest</a> (web scraping for R) in conjunction with <a href="https://github.com/tidyverse/purrr">purrr</a> (iteration tools for R).<a href="#fnref2" class="footnote-back">↩</a></p></li>
-<li id="fn3"><p>Web scraping is a legally/ethically grey area. All effort should be made to verify if scraping a webpage is in accordance with the parent domain’s terms of use. A helpful permissions checker for R, <a href="https://github.com/ropensci/robotstxt">robotstxt</a>, is invaluable in this pursuit. Use this (or similar in other languages), or at least study the terms of use for the domain in question closely.<a href="#fnref3" class="footnote-back">↩</a></p></li>
-<li id="fn4"><p>For the R code used to sketch the chart examples included in the post (and others that didn’t make the cut), try <a href="https://github.com/ewenme/transfers/blob/master/src/02-viz.R">here</a>.<a href="#fnref4" class="footnote-back">↩</a></p></li>
+<li id="fn1"><p>You can find the R code used to generate this post <a href="https://github.com/rbind/ewenme/blob/master/content/blog/2018-08-27-building-open-transfer-data.Rmd">here</a>.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn2"><p>For this post I chose to omit lengthy passages on web scraping, as not to deter non-programmers (insights can be gleaned from the cleaned data w/o additional code). However, the code used to scrape, clean and analyse the data is publicly available within the <code>src</code> directory of the <a href="https://github.com/ewenme/transfers">transfers GitHub repo</a>, featuring <a href="https://github.com/hadley/rvest">rvest</a> (web scraping for R) in conjunction with <a href="https://github.com/tidyverse/purrr">purrr</a> (iteration tools for R).<a href="#fnref2" class="footnote-back">↩︎</a></p></li>
+<li id="fn3"><p>Web scraping is a legally/ethically grey area. All effort should be made to verify if scraping a webpage is in accordance with the parent domain’s terms of use. A helpful permissions checker for R, <a href="https://github.com/ropensci/robotstxt">robotstxt</a>, is invaluable in this pursuit. Use this (or similar in other languages), or at least study the terms of use for the domain in question closely.<a href="#fnref3" class="footnote-back">↩︎</a></p></li>
+<li id="fn4"><p>For the R code used to sketch the chart examples included in the post (and others that didn’t make the cut), try <a href="https://github.com/ewenme/transfers/blob/master/src/02-viz.R">here</a>.<a href="#fnref4" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>

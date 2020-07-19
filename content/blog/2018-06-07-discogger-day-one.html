@@ -3,8 +3,9 @@ title: "discogger (day one)"
 description: "Building an R interface to the Discogs API."
 date: '2018-06-07'
 slug: discogger-day-one
-tags: ["music", "R"]
-image: https://raw.githubusercontent.com/rbind/ewenme/master/public/blog/2018-06-07-discogger-day-one_files/figure-html/unnamed-chunk-4-1.png
+tags: ["discogs", "r"]
+keywords: ["discogs", "discogger", "r", "api"]
+image: https://raw.githubusercontent.com/rbind/ewenme/master/static/blog/2018-06-07-discogger-day-one_files/figure-html/unnamed-chunk-4-1.png
 draft: no
 ---
 
@@ -85,7 +86,7 @@ discogs_label(label_id = 314)</code></pre>
 ##  $ resource_url: chr &quot;https://api.discogs.com/labels/314&quot;
 ##  $ id          : int 314
 ##  $ data_quality: chr &quot;Correct&quot;</code></pre>
-<p>Hopefully you learnt something new from that output, but it’s not particularly ready for any analysis. I’m quite interested in getting more detailed metadata around Dance Mania’s 12&quot; releases, which can be done with <code>discogs_label_releases()</code>.</p>
+<p>Hopefully you learnt something new from that output, but it’s not particularly ready for any analysis. I’m quite interested in getting more detailed metadata around Dance Mania’s 12" releases, which can be done with <code>discogs_label_releases()</code>.</p>
 <pre class="r"><code># get DM releases
 dm_releases &lt;- discogs_label_releases(label_id = 314)
   

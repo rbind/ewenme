@@ -3,7 +3,8 @@ title: "deejae"
 description: "An app to help digital DJs explore and visualise their selections."
 date: '2018-05-12'
 slug: deejae
-tags: ["music", "shiny"]
+tags: ["dj", "shiny"]
+keywords: ["r", "shiny", "traktor", "native instruments", "deejae"]
 image: https://raw.githubusercontent.com/ewenme/deejae/master/example_screenshot.png
 draft: no
 ---
@@ -16,9 +17,7 @@ Digital DJ software like [Native Instruments' Traktor](https://www.native-instru
 
 [deejae](https://ewenme.shinyapps.io/deejae) is a free-to-use web application that attempts to empower DJs with a tool that can answer these kinds of questions. Examine your selections set-by-set, or see what patterns emerge over longer periods. Support exists for *Traktor* users only right now, but if there's appetite I'll look to add support for other DDJ software soon enough.
 
-```{r echo = FALSE, fig.align = "center"}
-knitr::include_graphics("https://github.com/ewenme/deejae/raw/master/example_animation.gif")
-```
+![](https://github.com/ewenme/deejae/raw/master/example_animation.gif){width=75%}
 
 I want *deejae* to be an ongoing open-source project, with user feedback driving development. As described above, expect more functionality/features in response to how DJs want to interact with it. [Hit me up](ewenhenderson@gmail.com) with ideas / feedback / bugs. If you're a developer, file an issue/pull request over at the [GitHub repo](https://github.com/ewenme/deejae) (also home to all source code).
 

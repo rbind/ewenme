@@ -3,7 +3,8 @@ title: "In search of the mixtape GOAT"
 description: "A data-driven tribute to the best of the mixtape era glow-ups."
 date: '2018-09-17'
 slug: in-search-of-the-mixtape-goat
-tags: ["music", "data-viz", "d3"]
+tags: ["mixtapes", "d3"]
+keywords: ["datpiff", "d3", "lil wayne", "mixtape", "bubble chart"]
 image: "https://github.com/rbind/ewenme/raw/master/static/img/2018-09-17-in-search-of-the-mixtape-goat/datpiff-bubble.png"
 draft: no
 ---
@@ -20,7 +21,7 @@ Traditionally speaking, mixtapes are usually free and subsequently avoid growing
 
 You can actually see how this cultural phenomenon intersects with software development. Take [Glitch's about page](https://glitch.com/about), specifically the use of the word "remix", hinting that the act of a developer re-working an app (that someone else built and shared) isn't that far removed from [Frank Ocean flipping a Coldplay sample](https://www.youtube.com/watch?v=zD3lRLThVRY). (I'm aware that, beyond staring at computer screens in the dark, the developer-musician comparisons probably stop here).
 
-![](/blog/2018-09-17-in-search-of-the-mixtape-goat_files/nostalgia-ultra-art.jpg)
+![](/blog/2018-09-17-in-search-of-the-mixtape-goat_files/nostalgia-ultra-art.jpg){width=75%}
 
 I wanted to toast this crossover in philosophy by sharing some data-driven stories of the mixtape. This piece should be good ammo in heated mixtape legend convos, at least...
 
@@ -30,7 +31,7 @@ So, who was really putting [Numbers On The Boards](https://www.youtube.com/watch
 
 A good place to start is [DatPiff](http://www.datpiff.com/), maybe the leading dedicated website for hip-hop mixtape digging. In the [celebrated section](http://www.datpiff.com/mixtapes/celebrated), you can quickly spot download figures mapped to pre-eminent mixtape projects.
 
-![](/blog/2018-09-17-in-search-of-the-mixtape-goat_files/datpiff-screenshot.png)
+![](/blog/2018-09-17-in-search-of-the-mixtape-goat_files/datpiff-screenshot.png){width=75%}
 
 Harvesting these figures and crunching the downloads for each artist can uncover who *really* runs the mixtape game.[^data] This comes with some caveats - mixtape streams are ignored (not readily obtainable for all listings), as are tapes not available on DatPiff (or those that have been taken down). Still, a good idea of the state of play is well within reach (PS the next bit is best enjoyed and explored on a desktop browser, if you have one handy)...[^bubbles]
 
@@ -75,7 +76,7 @@ Harvesting these figures and crunching the downloads for each artist can uncover
 
 In case there was any doubt, Lil Wayne AKA Weezy AKA Tunechi comes out on top of DatPiff mixtape downloads, clocking in at **~18 million**. This can be largely attributed to his infamous mixtape run of 2004-2008, encompassing both the *Da Drought* and *Dedication* series'. Of the former, [#3](https://www.youtube.com/watch?v=VjGSyQU-YxQ) (2007) is widely regarded as the best of the bunch and even fancied as the finest of it's class in critical circles. Your fave could never etc etc.
 
-![](/blog/2018-09-17-in-search-of-the-mixtape-goat_files/weezy.gif)
+![](/blog/2018-09-17-in-search-of-the-mixtape-goat_files/weezy.gif){width=75%}
 
 Honorable mentions to a few of my favs (plus helpful pointers to some best-in-class material):
 

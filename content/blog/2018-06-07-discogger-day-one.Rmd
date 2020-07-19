@@ -3,8 +3,9 @@ title: "discogger (day one)"
 description: "Building an R interface to the Discogs API."
 date: '2018-06-07'
 slug: discogger-day-one
-tags: ["music", "R"]
-image: https://raw.githubusercontent.com/rbind/ewenme/master/public/blog/2018-06-07-discogger-day-one_files/figure-html/unnamed-chunk-4-1.png
+tags: ["discogs", "r"]
+keywords: ["discogs", "discogger", "r", "api"]
+image: https://raw.githubusercontent.com/rbind/ewenme/master/static/blog/2018-06-07-discogger-day-one_files/figure-html/unnamed-chunk-4-1.png
 draft: no
 ---
 
