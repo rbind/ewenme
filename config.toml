@@ -28,13 +28,13 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
 # Controls the navigation
 [[menu.main]]
   identifier = "about"
-  name = "about"
+  name = "/about"
   title = "About"
   url = "/"
 
 [[menu.main]]
   identifier = "blog"
-  name = "blog"
+  name = "/blog"
   title = "Blog"
   url = "/blog"
 

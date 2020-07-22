@@ -4,13 +4,14 @@
 }
 
 // custom fonts
-@import url(https://fonts.googleapis.com/css?family=Work+Sans:300,400,700&subset=latin-ext);
+@import url(https://fonts.googleapis.com/css?family=Work+Sans:300,400,700&subset=latin-ext&display=swap);
 
 @font-face {
     font-family: 'charter';
     src: url('webfonts/charter_regular-webfont.eot');
     src: url('webfonts/charter_regular-webfont.eot?#iefix') format('embedded-opentype');
     src: url('webfonts/charter_regular-webfont.woff') format('woff');
+    font-display: swap;
 }
 
 @font-face {
@@ -19,6 +20,7 @@
     src: url('webfonts/charter_bold-webfont.eot?#iefix') format('embedded-opentype');
     src: url('webfonts/charter_bold-webfont.woff') format('woff');
     font-weight: bold;
+    font-display: swap;
 }
 
 @font-face {
@@ -27,6 +29,7 @@
     src: url('webfonts/charter_italic-webfont.eot?#iefix') format('embedded-opentype');
     src: url('webfonts/charter_italic-webfont.woff') format('woff');
     font-style: italic;
+    font-display: swap;
 }
 
 @font-face {
@@ -36,6 +39,7 @@
     src: url('webfonts/charter_bold_italic-webfont.woff') format('woff');
     font-weight: bold;
     font-style: italic;
+    font-display: swap;
 }
 
 html {
