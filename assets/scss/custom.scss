@@ -4,7 +4,8 @@
 }
 
 // custom fonts
-@import url(https://fonts.googleapis.com/css?family=Work+Sans:300,400,700&subset=latin-ext&display=swap);
+@import url('https://fonts.googleapis.com/css2?family=Recursive:wght,CASL@300..700,0..1&display=swap'); 
+@import url(https://fonts.googleapis.com/css2?family=Recursive:wght,MONO@300,0..1,0..1&display=swap);
 
 @font-face {
     font-family: 'charter';
@@ -43,7 +44,7 @@
 }
 
 html {
-  font-family: 'Work Sans', sans-serif;
+  font-family: 'Recursive', sans-serif;
   color: #222324;
 }
 
@@ -57,6 +58,8 @@ html {
 
 // syntax highlighting
 .hljs {
+  font-family: 'Recursive', monospace;
+  font-weight: 300;
   display: block;
   overflow-x: auto;
   padding: 0.5em;
