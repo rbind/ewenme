@@ -3,7 +3,7 @@ title: A decade of Berghain parties, in data
 description: "Numbers behind the last ten years (almost) at the iconic Berlin club."
 date: '2019-08-12'
 slug: decade-of-berghain-parties-in-data
-tags: ['club-nights', 'open-data']
+tags: ['clubs', 'open-data']
 keywords: ["berghain", "open data", "club nights"]
 image: "/blog/2019-08-12-decade-of-berghain-parties-in-data_files/figure-html/year-avg-lineup-size-1.png"
 draft: no
@@ -80,7 +80,7 @@ ggplot(lineups_year, aes(x = event_year, y = artist_avg)) +
   labs(title = "Berghain's lineups have gotten bigger",
        subtitle = "Average no. of artists on Berghain / Panorama Bar lineups, by year.",
        x = NULL, y = "lineup size", caption = "@ewen_") +
-  theme_ewen_ws(plot_title_size = 18, subtitle_size = 12, base_size = 12)
+  theme_ewen_rs(plot_title_size = 18, subtitle_size = 12, base_size = 12)
 ```
 
 Shout me if you do anything cool w the data `r emo::ji("fist")`

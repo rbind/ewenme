@@ -30,7 +30,7 @@ library(ggrepel)
 library(scales)
 library(glue)
 
-update_geom_font_defaults(family = "Work Sans Light")
+update_geom_font_defaults(family = "Recursive Light")
 
 ```
 
@@ -80,7 +80,7 @@ ggplot(data = records, aes(x = store)) +
   geom_bar(fill = ghibli_palettes$KikiMedium[7]) +
   geom_text(stat='count', aes(label = comma(stat(count))), vjust = -1, size = 5) +
   scale_y_continuous(expand = c(0, 0), limits = c(0, 20000)) +
-  theme_ewen_ws(plot_title_size = 18, subtitle_size = 12, base_size = 14) +
+  theme_ewen_rs(plot_title_size = 18, subtitle_size = 12, base_size = 14) +
   theme(axis.text.y = element_blank()) +
   labs(title = "Record store review counts",
        subtitle = "# of Hardwax and Honest Jons reviews of records present in the data.",
@@ -110,7 +110,7 @@ ggplot(word_counts, aes(x = word_count, fill = store, colour = store)) +
   scale_fill_ghibli_d(name = "KikiMedium", direction = -1) +
   scale_colour_ghibli_d(name = "KikiMedium", direction = -1) +
   scale_y_continuous(expand = c(0, 0)) +
-  theme_ewen_ws(plot_title_size = 18, subtitle_size = 12, base_size = 14) +
+  theme_ewen_rs(plot_title_size = 18, subtitle_size = 12, base_size = 14) +
   theme(legend.position = "top", legend.title = element_blank()) +
   labs(title = "Hardwax reviews are notoriously short",
        subtitle = "The distribution of record review lengths (word counts) by store.",
@@ -150,7 +150,7 @@ review_word_counts %>%
   coord_flip() +
   facet_wrap(~ store, scales = "free") +
   scale_x_reordered() +
-  theme_ewen_ws(axis = FALSE, plot_title_size = 14, subtitle_size = 12, 
+  theme_ewen_rs(axis = FALSE, plot_title_size = 14, subtitle_size = 12, 
                 base_size = 12, axis_title_just = "c") +
   labs(title = 'Hardwax say "techno" once every three reviews (roughly)',
        subtitle = "The most common words featured in reviews of records, by store.",
@@ -177,7 +177,7 @@ word_log_odds %>%
   geom_point2(size = 4, colour = ghibli_palettes$KikiMedium[7]) +
   facet_wrap(~store, scales = "free") +
   coord_flip() +
-  theme_ewen_ws(axis = FALSE, plot_title_size = 18, subtitle_size = 12, 
+  theme_ewen_rs(axis = FALSE, plot_title_size = 18, subtitle_size = 12, 
                 base_size = 12, axis_title_just = "c") +
   labs(title = "Record store-specific review words",
        subtitle = "The words featured in reviews of records that are most specific to that\nrecord store.",
@@ -200,7 +200,7 @@ word_log_odds %>%
   geom_text_repel(aes(label = word), family = "Work Sans Light", size = 3, seed = 3) +
   geom_point2(colour = ghibli_palettes$KikiMedium[7], size = 2.5, alpha = 0.8) + 
   scale_x_log10() +
-  theme_ewen_ws(axis = FALSE, grid = "XY", plot_title_size = 16, subtitle_size = 12, 
+  theme_ewen_rs(axis = FALSE, grid = "XY", plot_title_size = 16, subtitle_size = 12, 
                 base_size = 12) +
   labs(title = 'Honest Jons reviews include "jazz" and "music" a lot',
        subtitle = "The most frequently occurring and most characteristic words in Honest Jons\nrecord reviews. Top 50 most frequent-occurring words included.",
@@ -223,7 +223,7 @@ hj_review_word_counts <- review_words %>%
 ggplot(hj_review_word_counts, aes(x = fct_reorder(category, -word_count), y = word_count)) + 
   geom_sina(alpha = 0.5, colour = ghibli_palettes$KikiMedium[7], size = 0.6) +
   scale_y_continuous(expand = c(0, 0)) +
-  theme_ewen_ws(plot_title_size = 14, subtitle_size = 12, base_size = 14) +
+  theme_ewen_rs(plot_title_size = 14, subtitle_size = 12, base_size = 14) +
   theme(axis.text.x = element_text(size = 10)) +
   labs(title = "Honest Jons' Jazz reviews are the longest (& Reggae shortest)",
        subtitle = "The word counts of Honest Jons reviews, by site category. Ordered\n(descending, left to right) by median review length.",
@@ -257,9 +257,9 @@ hj_log_odds %>%
   geom_point2(size = 3, colour = ghibli_palettes$KikiMedium[7]) +
   facet_wrap(~ category, scales = "free", ncol = 2) +
   coord_flip() +
-  theme_ewen_ws(axis = FALSE, base_size = 12, strip_text_size = 14, 
+  theme_ewen_rs(axis = FALSE, base_size = 12, strip_text_size = 14, 
                 plot_title_size = 18, subtitle_size = 12, axis_title_just = "c") +
-  theme(axis.text.y = element_text(size = 11, family = "Work Sans ExtraLight")) +
+  # theme(axis.text.y = element_text(size = 11, family = "Work Sans ExtraLight")) +
   labs(title = "Honest Jons' category-specific review words",
        subtitle = "The words featured in reviews of records that are most specific to that\ncategory (as listed on the site).",
        x = NULL, y = "Log odds ratio, weighted by uninformative Dirichlet prior", caption = "@ewen_") 
@@ -277,14 +277,14 @@ hj_log_odds %>%
   ggplot(aes(count_per_review, log_odds_weighted)) +
   geom_hline(yintercept = 0, lty = 2, 
                color = "#222324", alpha = 0.6) +
-  geom_text_repel(aes(label = word), family = "Work Sans Light", size = 3, seed = 3,
+  geom_text_repel(aes(label = word), family = "Recursive Light", size = 3, seed = 3,
                   data = top_n(
                     dplyr::filter(hj_log_odds, category == "Reggae"), 25, count_per_review)
                   ) +
   geom_point2(colour = ghibli_palettes$KikiMedium[7], size = 3, alpha = 0.3) + 
   geom_mark_ellipse(aes(filter = count_per_review > 0.1, description = desc),
-                    label.fontsize = 9, label.family = "Work Sans Light") +
-  theme_ewen_ws(axis = FALSE, grid = "XY", plot_title_size = 16, subtitle_size = 12, 
+                    label.fontsize = 9, label.family = "Recursive Light") +
+  theme_ewen_rs(axis = FALSE, grid = "XY", plot_title_size = 16, subtitle_size = 12, 
                 base_size = 12) +
   labs(title = "Honest Jons' Reggae specific / frequent review words",
        subtitle = "The frequency and specificity of words used in Honest Jons' reggae record\nreviews.",

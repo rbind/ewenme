@@ -19,6 +19,7 @@ library(tidytext)
 library(ggplot2)
 library(waffle)
 library(extrafont)
+library(ewenthemes)
 ```
 
 I made a new R package (`r emo::ji("fire")``r emo::ji("package")``r emo::ji("fire")`) this week. My [sophomore post on this site](https://ewenme.rbind.io/blog/2017-03-20-kanye_sentiment_analysis/) (from way back in March) was a text-based analysis of Kanye West records, which exposed me to the [Genius](https://genius.com/) API[^documentation] once I wanted to get hold of some lyrical content. In the process, I wrote some functions for playing nicely with this API in R that I knew would probably be handy for others dabbling/wanting to dabble in similar matters.
@@ -55,11 +56,11 @@ knitr::include_graphics(path = artwork)
 
 ## Gettin' Lyrical
 
-The package allows you to grab lyrics for tracks real quick, using the `scrape_lyrics_id()` (or `scrape_lyrics_url()`) function.[^scrape] While we're at it, let's call on `tidytext` and answer a question for the people - *just how much were the Migos chatting about "Versace" in 'Versace'?*
+The package allows you to grab lyrics for tracks real quick, using the `get_lyrics_id()` (or `get_lyrics_url()`) function.[^scrape] While we're at it, let's call on `tidytext` and answer a question for the people - *just how much were the Migos chatting about "Versace" in 'Versace'?*
 
 ```{r lyrics, warning=FALSE}
 # get words proportion representation
-versace_prop <- scrape_lyrics_url(versace_meta$song_lyrics_url) %>%
+versace_prop <- get_lyrics_url(versace_meta$song_lyrics_url) %>%
   unnest_tokens(word, line) %>%
   count(word) %>%
   mutate(proportion = n / sum(n)) %>%
@@ -73,10 +74,14 @@ parts <- c("Not Versace" = versace_prop$proportion[[1]],
            "Versace" = versace_prop$proportion[[2]])
 
 waffle(parts, rows = 8, size = 1, colors = c("#3C3A32", "#E3BD08"), 
-       title = "How much of the Migos - 'Versace' lyrics are, indeed, Versace?") +
+       title = 'How much of the Migos — Versace lyrics are "Versace"?') +
   labs(caption="@ewen_") +
-  theme_void(base_family = "Work Sans", base_size = 12) +
-  theme(legend.position = "bottom")
+  theme_ewen_rs(plot_title_size = 14, axis = FALSE, grid = FALSE) +
+  theme(
+    axis.title.x = element_blank(), axis.title.y = element_blank(), 
+    axis.text.x = element_blank(), axis.text.y = element_blank(),
+    legend.position = "bottom"
+    )
 ```
 
 The word "Versace" represents 32.5% of the lyrics in Migos - Versace. Phew.

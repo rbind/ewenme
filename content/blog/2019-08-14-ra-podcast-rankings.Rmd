@@ -110,7 +110,6 @@ ra_rankings_tbl <- reactable(
 )
 
 div(class = "rankings",
-  div(class = "subtitle", "RA podcast rankings"),
   ra_rankings_tbl
 )
 ```
@@ -120,7 +119,7 @@ div(class = "rankings",
 .rankings {
   margin: 0 auto;
   width: 100%;
-  font-family: "Work Sans", sans-serif;
+  font-family: "Recursive", sans-serif;
 }
 
 .rankings-tbl {
@@ -133,7 +132,7 @@ div(class = "rankings",
 .header {
   border-bottom: 2px solid #555;
   font-size: 13px;
-  font-weight: 400;
+  font-weight: bold;
   text-transform: uppercase;
 }
 .header:hover {
@@ -144,7 +143,7 @@ div(class = "rankings",
   align-items: center;
 }
 .number {
-  font-family: "Work Sans", sans-serif;
+  font-family: "Recursive", sans-serif;
   font-size: 13.5px;
   white-space: pre;
 }

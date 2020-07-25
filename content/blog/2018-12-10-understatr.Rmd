@@ -51,8 +51,7 @@ dortmund %>%
   labs(title = "Expected goals contributions", subtitle = "Borussia Dortmund, 2018/19",
        x = NULL, caption = "source: understat.com | @ewen_") +
   # add my personal chart theme
-  theme_ewen_ws(grid = "X", axis = FALSE, axis_text_size = 9) +
-  theme(axis.text.y = element_text(family = "Work Sans Light"))
+  theme_ewen_rs(grid = "X", axis = FALSE, axis_text_size = 9)
 ```
 
 Peep the project's GitHub page for updates, for now at least. As noted in the [readme](https://github.com/ewenme/understatr/blob/master/README.md), while non-commercial use of the data is fine for now, I don't own it and similarly don't control changes to the website. I say this to say that `understatr` may break (or become illegal) in future, so enjoy it while you can `r emo::ji("balloon")` I'd be psyched to hear about people using it, or even contributing to it. Esp. here for the hottest of hot take Messi radar trolls, please cite the proj in all of those.

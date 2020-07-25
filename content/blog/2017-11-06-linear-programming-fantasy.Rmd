@@ -106,12 +106,10 @@ goalie_data %>%
   scale_fill_viridis_c(option = "A", 
                        guide = guide_colourbar(title = "Points", direction = "horizontal")) +
   coord_equal() +
-  theme_ewen_ws(grid = FALSE, axis = FALSE) +
+  theme_ewen_rs(grid = FALSE, axis = FALSE) +
   theme(legend.position = "bottom",
-        plot.margin = unit(c(0.35, 0.2, 0.3, 0.35), "cm"),
         plot.title = element_text(hjust = 1, size = 16),
-        plot.subtitle = element_text(hjust = 1, size = 14),
-        axis.text = element_text(size = 12))
+        plot.subtitle = element_text(hjust = 1, size = 14))
 
 ```
 

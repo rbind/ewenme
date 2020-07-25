@@ -5,7 +5,7 @@
 
 // custom fonts
 @import url('https://fonts.googleapis.com/css2?family=Recursive:wght,CASL@300..800,0.5&display=swap'); 
-@import url(https://fonts.googleapis.com/css2?family=Recursive:wght,CASL,MONO@300,1,0.5&display=swap);
+@import url(https://fonts.googleapis.com/css2?family=Recursive:wght,MONO@1&display=swap);
 
 @font-face {
     font-family: 'charter';
@@ -54,6 +54,10 @@ html {
 	text-rendering: optimizeLegibility;
 	line-height: 1.625;
 	font-size: 1rem;
+}
+
+.post__content > h1,h2,h3,h4,h5 {
+  font-family: 'Recursive', sans-serif;
 }
 
 // syntax highlighting

@@ -127,44 +127,46 @@ dm_community_metrics &lt;- tibble(
   ) %&gt;%
   # for each record...
   group_by(title, artist) %&gt;%
-  # keep the one most users have...
-  filter(have == max(have),
-         # ...and rm releases with missing release year
-         year &gt;= 1985)
+  filter(
+    # keep the one most users have...
+    have == max(have),
+    # ...and rm releases with missing release year
+    year &gt;= 1985
+    ) %&gt;% 
+  ungroup()
 
 dm_community_metrics</code></pre>
-<pre><code>## # A tibble: 317 x 5
-## # Groups:   title, artist [317]
-##    title                      artist                      year  have  want
-##    &lt;chr&gt;                      &lt;chr&gt;                      &lt;int&gt; &lt;int&gt; &lt;int&gt;
-##  1 Freaky Style Take: 2       DJ Funk                     1996   170   168
-##  2 This X-Mas Rap             Mello D.                    1988     3    23
-##  3 This Christmas (Rap)       Mello D.                    1988    30    72
-##  4 House Nation               Housemaster Boyz, The And…  1986   967  1113
-##  5 Hard Core (On The One)     Duane &amp; Co.                 1987   401   261
-##  6 Jack My Body               Yellow House                1987   321   297
-##  7 Frequency (Out Of Control) Lil&#39; Louis                  1987     3   379
-##  8 Insane                     Suburban Boyz               1988   253   480
-##  9 The Original Video Clash   Lil&#39; Louis                  1988   893  1275
-## 10 I Want Your Love           Victor Romeo &amp; The Move F…  1988   280   210
-## # ... with 307 more rows</code></pre>
+<pre><code>## # A tibble: 316 x 5
+##    title                 artist                                 year  have  want
+##    &lt;chr&gt;                 &lt;chr&gt;                                 &lt;int&gt; &lt;int&gt; &lt;int&gt;
+##  1 What&#39;s That           Browns, The                            1985    74   261
+##  2 Freaky Style Take: 2  DJ Funk                                1996   196   223
+##  3 This X-Mas Rap        Mello D.                               1988     3    31
+##  4 This Christmas (Rap)  Mello D.                               1988    36    86
+##  5 House Nation          Housemaster Boyz, The And Rude Boy O…  1986  1206  1332
+##  6 Hard Core (On The On… Duane &amp; Co.                            1987   484   312
+##  7 Jack My Body          Yellow House                           1987   367   338
+##  8 Frequency (Out Of Co… Lil&#39; Louis                             1987     4   429
+##  9 Insane                Suburban Boyz                          1988   293   560
+## 10 The Original Video C… Lil&#39; Louis                             1988   995  1438
+## # … with 306 more rows</code></pre>
 <p>With this output, a visualisation can be knocked up to explore which Dance Mania 12-inches Discogs users want or own.</p>
 <pre class="r"><code># load viz helpers
 library(scico)
-library(hrbrthemes)
+library(ewenthemes)
 library(ggrepel)
 
 # plot
 ggplot(dm_community_metrics, aes(x=have, y=want)) +
   geom_point(aes(colour=year)) +
-  geom_text_repel(aes(label=paste0(artist, &quot; - &quot;, title)), size=2,
+  geom_text_repel(aes(label=paste0(artist, &quot; - &quot;, title)), size=3,
                   data = subset(dm_community_metrics, have &gt;= 800 | want &gt;= 1000),
                   family = &quot;IBM Plex Sans&quot;) +
   labs(title=&quot;Dance Mania 12\&quot;s on Discogs&quot;, 
-       subtitle=&quot;How many Discogs user&#39;s own/want Dance Mania 12-inches (1985 - 2018).&quot;,
+       subtitle=&quot;How many Discogs user&#39;s own/want Dance Mania (1985 - 2018) 12-inches&quot;,
        x = &quot;Own it&quot;, y = &quot;Want it&quot;,
        caption=&quot;source: Discogs | made by @ewen_&quot;) +
-  theme_ipsum_ps(grid = FALSE) +
+  theme_ewen_rs(grid = FALSE, subtitle_size = 11, subtitle_margin = 20) +
   scico::scale_colour_scico(palette = &quot;lajolla&quot;) +
   guides(col = guide_colourbar(direction = &quot;horizontal&quot;, title = &quot;Release year&quot;,
                                barheight = 0.5, barwidth = 10, title.vjust = 1)) +

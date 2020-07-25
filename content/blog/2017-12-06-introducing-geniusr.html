@@ -55,9 +55,9 @@ knitr::include_graphics(path = artwork)</code></pre>
 </div>
 <div id="gettin-lyrical" class="section level2">
 <h2>Gettin’ Lyrical</h2>
-<p>The package allows you to grab lyrics for tracks real quick, using the <code>scrape_lyrics_id()</code> (or <code>scrape_lyrics_url()</code>) function.<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a> While we’re at it, let’s call on <code>tidytext</code> and answer a question for the people - <em>just how much were the Migos chatting about “Versace” in ‘Versace’?</em></p>
+<p>The package allows you to grab lyrics for tracks real quick, using the <code>get_lyrics_id()</code> (or <code>get_lyrics_url()</code>) function.<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a> While we’re at it, let’s call on <code>tidytext</code> and answer a question for the people - <em>just how much were the Migos chatting about “Versace” in ‘Versace’?</em></p>
 <pre class="r"><code># get words proportion representation
-versace_prop &lt;- scrape_lyrics_url(versace_meta$song_lyrics_url) %&gt;%
+versace_prop &lt;- get_lyrics_url(versace_meta$song_lyrics_url) %&gt;%
   unnest_tokens(word, line) %&gt;%
   count(word) %&gt;%
   mutate(proportion = n / sum(n)) %&gt;%
@@ -71,10 +71,14 @@ parts &lt;- c(&quot;Not Versace&quot; = versace_prop$proportion[[1]],
            &quot;Versace&quot; = versace_prop$proportion[[2]])
 
 waffle(parts, rows = 8, size = 1, colors = c(&quot;#3C3A32&quot;, &quot;#E3BD08&quot;), 
-       title = &quot;How much of the Migos - &#39;Versace&#39; lyrics are, indeed, Versace?&quot;) +
+       title = &#39;How much of the Migos — Versace lyrics are &quot;Versace&quot;?&#39;) +
   labs(caption=&quot;@ewen_&quot;) +
-  theme_void(base_family = &quot;Work Sans&quot;, base_size = 12) +
-  theme(legend.position = &quot;bottom&quot;)</code></pre>
+  theme_ewen_rs(plot_title_size = 14, axis = FALSE, grid = FALSE) +
+  theme(
+    axis.title.x = element_blank(), axis.title.y = element_blank(), 
+    axis.text.x = element_blank(), axis.text.y = element_blank(),
+    legend.position = &quot;bottom&quot;
+    )</code></pre>
 <p><img src="/blog/2017-12-06-introducing-geniusr_files/figure-html/lyrics-1.png" width="672" /></p>
 <p>The word “Versace” represents 32.5% of the lyrics in Migos - Versace. Phew.</p>
 <p>That’s all for now, enjoy the package and keep up with future developments over at the <a href="https://github.com/ewenme/geniusr">GitHub repo</a>.</p>

@@ -100,7 +100,7 @@ transfers %>%
        subtitle= "Distribution of European football transfer window activity in 2017\n(permanent transfers only).",
        x=NULL, y=NULL,
        caption="Source: the Guardian   |   Made by @ewen_") +
-  theme_ewen_ws(plot_title_size = 14, subtitle_size = 11) +
+  theme_ewen_rs(plot_title_size = 14, subtitle_size = 11) +
   scale_x_date(date_breaks = "1 month", date_labels = "%b") +
   theme(axis.text.x = element_text(size=10),
         plot.margin = unit(c(0.35, 0.2, 0.3, 0.35), "cm"))
@@ -121,7 +121,7 @@ transfers %>%
   labs(title="How did the loan market differ from permanent transfers?",
        x=NULL, y=NULL,
        caption="Source: the Guardian   |   Made by @ewen_") +
-  theme_ewen_ws(plot_title_size = 13) +
+  theme_ewen_rs(plot_title_size = 13) +
   scale_x_date(date_breaks = "1 month", date_labels = "%b") +
   theme(axis.text.x = element_text(size=10),
         plot.margin = unit(c(0.35, 0.2, 0.3, 0.35), "cm"),
@@ -198,7 +198,7 @@ transfers %>%
        caption="Source: the Guardian   |   Made by @ewen_") +
   theme(axis.text.x = element_text(size=10),
         plot.margin = unit(c(0.35, 0.2, 0.3, 0.35), "cm")) +
-  theme_ewen_ws(grid = FALSE, axis = FALSE, subtitle_size = 11) +
+  theme_ewen_rs(grid = FALSE, axis = FALSE, subtitle_size = 11) +
   geom_hline(yintercept = seq(from=0.1, to=0.4, by=0.1), colour="white")
 
 ```
@@ -228,11 +228,11 @@ flows <- transfers %>%
 # plot using ggraph
 ggraph(flows, layout = 'kk') + 
   geom_edge_fan(aes(color=spend), width=1.2, arrow = arrow(length = unit(4, 'mm')), 
-                start_cap = circle(3, 'mm'),
-                end_cap = circle(3, 'mm')) + 
+                start_cap = circle(3, 'mm'), end_cap = circle(3, 'mm')) + 
   geom_node_point(size = 2, show.legend = FALSE) + 
-  theme_ewen_ws(grid = FALSE, axis = FALSE) +
-  theme(axis.title = element_blank(), axis.text = element_blank()) +
+  theme_ewen_rs(plot_title_size = 20, base_size = 12, grid = FALSE, axis = FALSE) +
+  theme(axis.title.x = element_blank(), axis.title.y = element_blank(), 
+        axis.text.x = element_blank(), axis.text.y = element_blank()) +
   geom_node_text(aes(label=name), size=4, repel = TRUE, nudge_y = 0.3) +
   labs(title="Transfer business between European leagues",
        subtitle="Flows (£ millions) in disclosed transfer fees between the big five leagues in 2017.",

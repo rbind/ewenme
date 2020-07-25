@@ -67,33 +67,36 @@ dm_community_metrics <- tibble(
   ) %>%
   # for each record...
   group_by(title, artist) %>%
-  # keep the one most users have...
-  filter(have == max(have),
-         # ...and rm releases with missing release year
-         year >= 1985)
+  filter(
+    # keep the one most users have...
+    have == max(have),
+    # ...and rm releases with missing release year
+    year >= 1985
+    ) %>% 
+  ungroup()
 
 dm_community_metrics
 ```
 
 With this output, a visualisation can be knocked up to explore which Dance Mania 12-inches Discogs users want or own.
 
-```{r}
+```{r fig.height=7}
 # load viz helpers
 library(scico)
-library(hrbrthemes)
+library(ewenthemes)
 library(ggrepel)
 
 # plot
 ggplot(dm_community_metrics, aes(x=have, y=want)) +
   geom_point(aes(colour=year)) +
-  geom_text_repel(aes(label=paste0(artist, " - ", title)), size=2,
+  geom_text_repel(aes(label=paste0(artist, " - ", title)), size=3,
                   data = subset(dm_community_metrics, have >= 800 | want >= 1000),
                   family = "IBM Plex Sans") +
   labs(title="Dance Mania 12\"s on Discogs", 
-       subtitle="How many Discogs user's own/want Dance Mania 12-inches (1985 - 2018).",
+       subtitle="How many Discogs user's own/want Dance Mania (1985 - 2018) 12-inches",
        x = "Own it", y = "Want it",
        caption="source: Discogs | made by @ewen_") +
-  theme_ipsum_ps(grid = FALSE) +
+  theme_ewen_rs(grid = FALSE, subtitle_size = 11, subtitle_margin = 20) +
   scico::scale_colour_scico(palette = "lajolla") +
   guides(col = guide_colourbar(direction = "horizontal", title = "Release year",
                                barheight = 0.5, barwidth = 10, title.vjust = 1)) +

@@ -143,8 +143,6 @@ library(ewenthemes)
 library(scico)
 library(ggrepel)
 
-update_geom_font_defaults(family = "Work Sans Light", size = 3)
-
 ggplot(player_stats, aes(x = xG_90, y = xA_90)) +
   geom_point(aes(colour = position)) +
   # add chart labels
@@ -154,11 +152,11 @@ ggplot(player_stats, aes(x = xG_90, y = xA_90)) +
   # add data labels
   geom_text_repel(aes(label = web_name), 
                   data = filter(player_stats, ntile(xG_90, 10) == 10 | ntile(xA_90, 10) == 10),
-                  family = "Work Sans Light", size = 3) +
+                  family = "Recursive Light", size = 3) +
   # set colours
   scale_colour_scico_d(palette = "hawaii") +
   # add my chart theme
-  theme_ewen_ws(grid = FALSE, subtitle_size = 10) +
+  theme_ewen_rs(grid = FALSE, subtitle_size = 10) +
   theme(legend.position = "top", legend.title = element_blank())
 
 ```
@@ -194,9 +192,9 @@ player_stats %>%
        subtitle = "Top 20 expected FPL points (xP) from goals and assists per 90 minutes.\nPlayers with less than 900 minutes removed.",
        x = NULL, y = "xP per 90", caption = "source: understat.com, fantasy.premierleague.com | @ewen_") +
   # add my chart theme
-  theme_ewen_ws(grid = "X", axis = FALSE, axis_text_size = 9, subtitle_size = 10,
+  theme_ewen_rs(grid = "X", axis = FALSE, axis_text_size = 9, subtitle_size = 10,
                 plot_title_size = 14) +
-  theme(axis.text.y = element_text(family = "Work Sans Light"))
+  theme(axis.text.y = element_text(family = "Recursive Light"))
 
 ```
 
@@ -213,9 +211,9 @@ player_stats %>%
        subtitle = "Top 20 expected FPL points per £m (xPm) from goals and assists per 90 mins.\nPlayers with less than 900 minutes removed.",
        x = NULL, y = "xPm per 90", caption = "source: understat.com, fantasy.premierleague.com | @ewen_") +
   # add my chart theme
-  theme_ewen_ws(grid = "X", axis = FALSE, axis_text_size = 9, subtitle_size = 10,
+  theme_ewen_rs(grid = "X", axis = FALSE, axis_text_size = 9, subtitle_size = 10,
                 plot_title_size = 12) +
-  theme(axis.text.y = element_text(family = "Work Sans Light"))
+  theme(axis.text.y = element_text(family = "Recursive Light"))
 ```
 
 ## Reprise `r emo::ji("crystal")`

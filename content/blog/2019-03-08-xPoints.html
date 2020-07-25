@@ -32,7 +32,7 @@ The stats don't look great but <a href="https://twitter.com/jjenas8?ref_src=twsr
 </ul>
 <p>These can subsequently be combined to form an <strong>expected goals contributions</strong> measure, and thus a shorthand for understanding which attacking FPL assets to consider. So, what’s the hold-up?</p>
 <div id="some-helpers-i-made-earlier" class="section level2">
-<h2>Some helpers I made earlier 💁</h2>
+<h2>Some helpers I made earlier 🆘</h2>
 <p>Turns out that getting at the data should be quite simple - I’ve already authored a pair of R packages ready for the job.</p>
 <p>Both can be installed from GitHub using another library, <a href="https://github.com/r-lib/remotes">remotes</a>:</p>
 <pre class="r"><code>remotes::install_github(c(&quot;ewenme/fplr&quot;, &quot;ewenme/understatr&quot;))</code></pre>
@@ -64,20 +64,20 @@ epl_team_stats &lt;- get_league_teams_stats(league_name = &quot;EPL&quot;, year 
 epl_player_stats &lt;- purrr::map_dfr(unique(epl_team_stats$team_name), get_team_players_stats, year = 2019)
 
 epl_player_stats</code></pre>
-<pre><code>## # A tibble: 517 x 19
+<pre><code>## # A tibble: 518 x 19
 ##    player_id player_name games  time goals    xG assists    xA shots key_passes
 ##        &lt;dbl&gt; &lt;chr&gt;       &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;      &lt;dbl&gt;
-##  1       675 Jack Greal…    34  3055     7 6.58        6 7.24     68         88
-##  2      7722 Trézéguet      32  1775     5 5.18        1 0.937    46         20
+##  1       675 Jack Greal…    35  3145     7 6.60        6 7.60     69         91
+##  2      7722 Trézéguet      33  1865     6 5.25        1 0.958    48         21
 ##  3      7724 Wesley         21  1806     5 7.27        1 0.884    36         11
 ##  4      5612 Anwar El G…    33  2081     4 6.38        4 2.88     53         30
-##  5      6122 Douglas Lu…    34  2422     3 2.28        2 1.98     38         16
-##  6      7721 Conor Hour…    25  1394     3 1.63        5 5.44     29         35
-##  7      7723 John McGinn    26  2143     3 3.51        2 2.42     49         34
-##  8      1024 Tyrone Min…    31  2722     2 0.917       1 0.533     8          6
-##  9       884 Matt Targe…    26  2125     1 0.394       2 3.30      7         29
-## 10      1685 Ahmed Elmo…    17   983     1 0.196       1 2.19      5         21
-## # … with 507 more rows, and 9 more variables: yellow_cards &lt;dbl&gt;,
+##  5      6122 Douglas Lu…    35  2512     3 2.28        2 1.98     38         16
+##  6      7721 Conor Hour…    26  1470     3 1.63        5 5.44     29         35
+##  7      7723 John McGinn    27  2233     3 3.67        2 2.42     52         34
+##  8      1024 Tyrone Min…    32  2812     2 0.917       2 0.571     8          7
+##  9       884 Matt Targe…    27  2215     1 0.394       2 3.30      7         29
+## 10      1685 Ahmed Elmo…    18  1007     1 0.196       1 2.22      5         22
+## # … with 508 more rows, and 9 more variables: yellow_cards &lt;dbl&gt;,
 ## #   red_cards &lt;dbl&gt;, position &lt;chr&gt;, team_name &lt;chr&gt;, npg &lt;dbl&gt;, npxG &lt;dbl&gt;,
 ## #   xGChain &lt;dbl&gt;, xGBuildup &lt;dbl&gt;, year &lt;dbl&gt;</code></pre>
 <p>There isn’t a common identifier for joining across datasets, so a bit of prep is required to help join the datasets (e.g. standardising team/player names). Names are annoying, so I missed off some recoding of non-descript (read: little minutes) attacking players.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> Sorry.</p>
@@ -98,20 +98,20 @@ player_stats &lt;- left_join(
   mutate(xGA_90 = xG_90 + xA_90)
 
 player_stats</code></pre>
-<pre><code>## # A tibble: 167 x 31
+<pre><code>## # A tibble: 171 x 31
 ##       id web_name status now_cost cost_change_sta… total_points minutes
 ##    &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;     &lt;dbl&gt;            &lt;dbl&gt;        &lt;int&gt;   &lt;int&gt;
-##  1    11 Aubamey… a          10.9             -0.1          187    2956
-##  2    12 Lacazet… a           9.2             -0.3          113    1721
+##  1    11 Aubamey… a          10.9             -0.1          189    3046
+##  2    12 Lacazet… a           9.2             -0.3          114    1811
 ##  3    15 Özil     a           6.9             -0.6           53    1439
-##  4    18 Xhaka    a           5.1             -0.4           71    2451
-##  5    19 Torreira a           4.7             -0.3           45    1438
+##  4    18 Xhaka    a           5.1             -0.4           72    2496
+##  5    19 Torreira a           4.7             -0.3           45    1483
 ##  6    21 Guendou… a           4.1             -0.4           48    1744
-##  7   469 Ceballos a           5.2             -0.3           53    1526
-##  8   488 Pépé     a           8.9             -0.6          103    1903
-##  9   541 Saka     a           4.7              0.2           70    1687
-## 10    28 Houriha… a           5.7             -0.3           77    1379
-## # … with 157 more rows, and 24 more variables: team_name &lt;chr&gt;, position &lt;chr&gt;,
+##  7   469 Ceballos a           5.2             -0.3           55    1616
+##  8   488 Pépé     a           8.9             -0.6          104    1933
+##  9   541 Saka     a           4.7              0.2           71    1746
+## 10    28 Houriha… a           5.7             -0.3           80    1451
+## # … with 161 more rows, and 24 more variables: team_name &lt;chr&gt;, position &lt;chr&gt;,
 ## #   player_id &lt;dbl&gt;, player_name &lt;chr&gt;, games &lt;dbl&gt;, time &lt;dbl&gt;, goals &lt;dbl&gt;,
 ## #   xG &lt;dbl&gt;, assists &lt;dbl&gt;, xA &lt;dbl&gt;, shots &lt;dbl&gt;, key_passes &lt;dbl&gt;,
 ## #   npg &lt;dbl&gt;, npxG &lt;dbl&gt;, xGChain &lt;dbl&gt;, xGBuildup &lt;dbl&gt;, goals_90 &lt;dbl&gt;,
