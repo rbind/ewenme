@@ -4,39 +4,45 @@
 }
 
 // custom fonts
-@import url('https://fonts.googleapis.com/css2?family=Recursive:wght,CASL@300..800,0.5&display=swap'); 
-@import url(https://fonts.googleapis.com/css2?family=Recursive:wght,MONO@1&display=swap);
+:root {
+    --recursive-mono: 0;
+    --recursive-casl: 0.5;
+}
+
+* {
+    font-variation-settings: "MONO" var(--recursive-mono),
+                           "CASL" var(--recursive-casl);
+}
 
 @font-face {
-    font-family: 'charter';
-    src: url('webfonts/charter_regular-webfont.eot');
-    src: url('webfonts/charter_regular-webfont.eot?#iefix') format('embedded-opentype');
+    font-family: 'recursive';
+    src: url('webfonts/Recursive_VF_1.52.woff2') format('woff2-variations');
+    font-weight: 300 1000;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'charter', sans-serif;
     src: url('webfonts/charter_regular-webfont.woff') format('woff');
     font-display: swap;
 }
 
 @font-face {
-    font-family: 'charter';
-    src: url('webfonts/charter_bold-webfont.eot');
-    src: url('webfonts/charter_bold-webfont.eot?#iefix') format('embedded-opentype');
+    font-family: 'charter', sans-serif;
     src: url('webfonts/charter_bold-webfont.woff') format('woff');
     font-weight: bold;
     font-display: swap;
 }
 
 @font-face {
-    font-family: 'charter';
-    src: url('webfonts/charter_italic-webfont.eot');
-    src: url('webfonts/charter_italic-webfont.eot?#iefix') format('embedded-opentype');
+    font-family: 'charter', sans-serif;
     src: url('webfonts/charter_italic-webfont.woff') format('woff');
     font-style: italic;
     font-display: swap;
 }
 
 @font-face {
-    font-family: 'charter';
-    src: url('webfonts/charter_bold_italic-webfont.eot');
-    src: url('webfonts/charter_bold_italic-webfont.eot?#iefix') format('embedded-opentype');
+    font-family: 'charter', sans-serif;
     src: url('webfonts/charter_bold_italic-webfont.woff') format('woff');
     font-weight: bold;
     font-style: italic;
@@ -44,7 +50,7 @@
 }
 
 html {
-  font-family: 'Recursive', sans-serif;
+  font-family: 'recursive', sans-serif;
   color: #222324;
 }
 
@@ -57,13 +63,17 @@ html {
 }
 
 .post__content > h1,h2,h3,h4,h5 {
-  font-family: 'Recursive', sans-serif;
+  font-family: 'recursive', sans-serif;
+  font-variation-settings: "MONO" var(--recursive-mono),
+                           "CASL" var(--recursive-casl);
 }
 
 // syntax highlighting
 .hljs {
-  font-family: 'Recursive', monospace;
+  font-family: 'recursive', monospace;
   font-weight: 300;
+  --recursive-mono: 1;
+  --recursive-casl: 0.5;
   display: block;
   overflow-x: auto;
   padding: 0.5em;
