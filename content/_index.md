@@ -1,4 +1,4 @@
 ---
 heading: "Ewen"
-subheading: "other places 2 find me:"
+subheading: "other places to find me:"
 ---
