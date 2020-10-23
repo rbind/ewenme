@@ -3,7 +3,7 @@ title: "Building open football player transfer data"
 description: "Collating player transfers to and from football clubs in major European leagues."
 date: '2018-08-27'
 slug: building-open-football-player-transfer-data
-tags: ["football", "open-data"]
+tags: ["football", "open-data", "r"]
 keywords: ["football", "transfers", "open data", "r", "web scraping"]
 image: https://github.com/ewenme/transfers/raw/master/figures/chelsea-transfers-web.png
 draft: no
@@ -45,6 +45,9 @@ fee
 <th style="text-align:left;">
 transfer_movement
 </th>
+<th style="text-align:left;">
+transfer_period
+</th>
 <th style="text-align:right;">
 fee_cleaned
 </th>
@@ -62,28 +65,31 @@ season
 <tbody>
 <tr>
 <td style="text-align:left;">
-Arsenal FC
+Middlesbrough FC
 </td>
 <td style="text-align:left;">
-Martin Keown
+Tommy Wright
 </td>
 <td style="text-align:right;">
 26
 </td>
 <td style="text-align:left;">
-Centre-Back
+Left Winger
 </td>
 <td style="text-align:left;">
-Everton
+Leicester
 </td>
 <td style="text-align:left;">
-£2.70m
+£819Th.
 </td>
 <td style="text-align:left;">
 in
 </td>
+<td style="text-align:left;">
+Summer
+</td>
 <td style="text-align:right;">
-2.70
+0.819
 </td>
 <td style="text-align:left;">
 Premier League
@@ -97,54 +103,95 @@ Premier League
 </tr>
 <tr>
 <td style="text-align:left;">
-Arsenal FC
+Middlesbrough FC
 </td>
 <td style="text-align:left;">
-John Jensen
+Jonathan Gittens
 </td>
 <td style="text-align:right;">
-27
-</td>
-<td style="text-align:left;">
-Central Midfield
-</td>
-<td style="text-align:left;">
-Bröndby IF
-</td>
-<td style="text-align:left;">
-£1.44m
-</td>
-<td style="text-align:left;">
-in
-</td>
-<td style="text-align:right;">
-1.44
-</td>
-<td style="text-align:left;">
-Premier League
-</td>
-<td style="text-align:right;">
-1992
-</td>
-<td style="text-align:left;">
-1992/1993
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Arsenal FC
-</td>
-<td style="text-align:left;">
-Gavin McGowan
-</td>
-<td style="text-align:right;">
-16
+28
 </td>
 <td style="text-align:left;">
 Defender
 </td>
 <td style="text-align:left;">
-Arsenal U18
+Southampton
+</td>
+<td style="text-align:left;">
+£225Th.
+</td>
+<td style="text-align:left;">
+in
+</td>
+<td style="text-align:left;">
+Summer
+</td>
+<td style="text-align:right;">
+0.225
+</td>
+<td style="text-align:left;">
+Premier League
+</td>
+<td style="text-align:right;">
+1992
+</td>
+<td style="text-align:left;">
+1992/1993
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Middlesbrough FC
+</td>
+<td style="text-align:left;">
+Chris Morris
+</td>
+<td style="text-align:right;">
+28
+</td>
+<td style="text-align:left;">
+Right-Back
+</td>
+<td style="text-align:left;">
+Celtic
+</td>
+<td style="text-align:left;">
+?
+</td>
+<td style="text-align:left;">
+in
+</td>
+<td style="text-align:left;">
+Summer
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:left;">
+Premier League
+</td>
+<td style="text-align:right;">
+1992
+</td>
+<td style="text-align:left;">
+1992/1993
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Middlesbrough FC
+</td>
+<td style="text-align:left;">
+Ben Roberts
+</td>
+<td style="text-align:right;">
+17
+</td>
+<td style="text-align:left;">
+Goalkeeper
+</td>
+<td style="text-align:left;">
+Boro U18
 </td>
 <td style="text-align:left;">
 <ul>
@@ -152,8 +199,11 @@ Arsenal U18
 <td style="text-align:left;">
 in
 </td>
+<td style="text-align:left;">
+Summer
+</td>
 <td style="text-align:right;">
-0.00
+0.000
 </td>
 <td style="text-align:left;">
 Premier League
@@ -167,28 +217,31 @@ Premier League
 </tr>
 <tr>
 <td style="text-align:left;">
-Arsenal FC
+Middlesbrough FC
 </td>
 <td style="text-align:left;">
-Alan Miller
+Andy Todd
 </td>
 <td style="text-align:right;">
-22
+17
 </td>
 <td style="text-align:left;">
-Goalkeeper
+Centre-Back
 </td>
 <td style="text-align:left;">
-Birmingham
+Boro U18
 </td>
 <td style="text-align:left;">
-NA
-</td>
+<ul>
+<li></td>
 <td style="text-align:left;">
 in
 </td>
+<td style="text-align:left;">
+Summer
+</td>
 <td style="text-align:right;">
-NA
+0.000
 </td>
 <td style="text-align:left;">
 Premier League
@@ -202,63 +255,31 @@ Premier League
 </tr>
 <tr>
 <td style="text-align:left;">
-Arsenal FC
+Middlesbrough FC
 </td>
 <td style="text-align:left;">
-Jim Will
+Stuart Ripley
 </td>
 <td style="text-align:right;">
-20
+24
 </td>
 <td style="text-align:left;">
-Goalkeeper
+Midfielder
 </td>
 <td style="text-align:left;">
-Sheffield Utd.
+Blackburn
 </td>
 <td style="text-align:left;">
-NA
+£1.80m
 </td>
 <td style="text-align:left;">
-in
+out
+</td>
+<td style="text-align:left;">
+Summer
 </td>
 <td style="text-align:right;">
-NA
-</td>
-<td style="text-align:left;">
-Premier League
-</td>
-<td style="text-align:right;">
-1992
-</td>
-<td style="text-align:left;">
-1992/1993
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Arsenal FC
-</td>
-<td style="text-align:left;">
-Steve Morrow
-</td>
-<td style="text-align:right;">
-21
-</td>
-<td style="text-align:left;">
-Right-Back
-</td>
-<td style="text-align:left;">
-Barnet
-</td>
-<td style="text-align:left;">
-End of loanJun 30, 1992
-</td>
-<td style="text-align:left;">
-in
-</td>
-<td style="text-align:right;">
-0.00
+1.800
 </td>
 <td style="text-align:left;">
 Premier League
@@ -273,6 +294,7 @@ Premier League
 </tbody>
 </table>
 </div></li>
+</ul></li>
 </ul>
 </div>
 <div id="sketching-some-visuals-on-top" class="section level2">

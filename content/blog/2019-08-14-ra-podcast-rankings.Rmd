@@ -3,7 +3,7 @@ title: Resident Advisor podcast appearance rankings
 description: "Who features the most in RA's longstanding mix series?"
 date: '2019-08-14'
 slug: ra-podcast-rankings
-tags: ['resident-advisor', 'open-data']
+tags: ['music', 'r']
 keywords: ["resident advisor", "ra", "podcast", "mix series", "open data"]
 image: "http://www.fazemag.de/wp-content/uploads/2015/12/Bildschirmfoto-2015-12-26-um-21.32.43.png"
 draft: no

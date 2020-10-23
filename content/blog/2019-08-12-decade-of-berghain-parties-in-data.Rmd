@@ -4,7 +4,7 @@ description: "Numbers behind the last ten years (almost) at the iconic Berlin cl
 date: '2019-08-12'
 slug: decade-of-berghain-parties-in-data
 tags: ['clubs', 'open-data']
-keywords: ["berghain", "open data", "club nights"]
+keywords: ["music", "open-data"]
 image: "/blog/2019-08-12-decade-of-berghain-parties-in-data_files/figure-html/year-avg-lineup-size-1.png"
 draft: no
 ---
