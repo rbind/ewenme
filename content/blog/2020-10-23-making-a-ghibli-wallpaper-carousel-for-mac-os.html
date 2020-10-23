@@ -1,0 +1,34 @@
+---
+title: making a ghibli wallpaper carousel (for MacOS)
+date: '2020-10-23'
+slug: ghibli-wallpaper-carousel-mac-os
+categories: []
+tags:
+  - mac-os
+description: ''
+keywords: []
+---
+
+
+
+<p>Studio Ghibli <a href="http://www.ghibli.jp/info/013344/">dropped ~400 movie stills into the public domain</a> a couple of months ago. I turned this into a rotating wallpaper for my Mac, and thought I’d share the (tiny) process.</p>
+<p>First, make a folder in which to store the images via a terminal session (then move to that directory with <code>cd</code>). N.B. edit the command below with a suitable file path for you.</p>
+<pre class="bash"><code>mkdir /Users/Ewen/Pictures/ghibli
+cd /Users/Ewen/Pictures/ghibli/</code></pre>
+<p>Before initiating the d/l, you will need <a href="https://www.gnu.org/software/wget/">wget</a>. Get <a href="https://brew.sh/">Homebrew</a> if you haven’t already, then install wget via <code>brew</code>.</p>
+<pre class="bash"><code>brew install wget</code></pre>
+<p>This next part is courtesy of a comment under the <a href="https://news.ycombinator.com/item?id=24564775">HN post</a>. I hadn’t seen the curly braces <code>{}</code> trick before, which is a neat way to expand a numeric series in the shell. Anyway, this step will grab the whole image drop and will take a little while.</p>
+<pre class="bash"><code>wget --random-wait --timestamping http://www.ghibli.jp/gallery/{ged,chihiro,karigurashi,ponyo,kokurikozaka,marnie,kaguyahime,kazetachinu}{001..050}.jpg</code></pre>
+<p>All that’s left to do is to work up the wallpaper carousel:</p>
+<ul>
+<li>open up System Preferences + click <em>Desktop and Screensaver</em></li>
+<li>click the plus button on the left pane and add the new folder</li>
+<li>tick <em>Change Picture</em> and decide on a “change time”</li>
+</ul>
+<div class="figure">
+<img src="/blog/2020-10-23-making-a-ghibli-wallpaper-carousel-for-mac-os_files/menu-screenshot.png" alt="" />
+<p class="caption">Screenshot of MacOS desktop &amp; screen saver selections</p>
+</div>
+<p>Then, breath it in:</p>
+<p><br>
+<img src="/blog/2020-10-23-making-a-ghibli-wallpaper-carousel-for-mac-os_files/desktop-screenshot.png" alt="Screenshot of new desktop wallpaper" /></p>
