@@ -1,12 +1,12 @@
 ---
-title: making a ghibli wallpaper carousel (for MacOS)
+title: making a Studio Ghibli wallpaper carousel (for MacOS)
 date: '2020-10-23'
 slug: ghibli-wallpaper-carousel-mac-os
-categories: []
-tags:
-  - mac-os
-description: ''
-keywords: []
+tags: ["macOS"]
+description: 'sprinkle some Ghibli over your desktop.'
+keywords: ["ghibli", "wallpaper", "macos"]
+image: "/blog/2020-10-23-making-a-ghibli-wallpaper-carousel-for-mac-os_files/desktop-screenshot.png"
+draft: no
 ---
 
 Studio Ghibli [dropped ~400 movie stills into the public domain](http://www.ghibli.jp/info/013344/) a couple of months ago. I turned this into a rotating wallpaper for my Mac, and thought I'd share the (tiny) process.
