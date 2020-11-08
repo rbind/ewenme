@@ -22,6 +22,7 @@ library(lubridate)
 library(ewenthemes)
 library(forcats)
 library(scales)
+library(ggtext)
 
 leagues <- c(
   "premier_league", "championship", "league_one", "league_two"
@@ -95,7 +96,8 @@ ggplot(data = eng_player_bdays, aes(x=month, y=prop)) +
   theme_ewen_rs(axis = FALSE, plot_title_size = 14, base_size = 11.5) + 
   # set custom theme elements
   theme(
-    plot.title = element_text(hjust = 0.5), plot.subtitle = element_text(hjust = 0.5),
+    plot.title = element_text(hjust = 0.5),
+    plot.subtitle = element_markdown(hjust = 0.5),
     plot.caption = element_text(hjust = 1),
     panel.grid.major = element_blank(),
     axis.text.y = element_blank(),
@@ -104,7 +106,7 @@ ggplot(data = eng_player_bdays, aes(x=month, y=prop)) +
   # add chart labels
   labs(
     title="Relative Age Effect in English Footballers (AKA how\nyour birthday affects your chances of making it)",
-    subtitle="Current (2020/21 season) participation of English-born players in the\ntop four English football divisions is skewed towards those born early\nafter the age group competition cut-off date (31st August)",
+    subtitle="Current (2020/21 season) participation of English-born players in the<br>top four English football divisions is skewed towards those born early<br>after the age group competition cut-off date (31<sup>st</sup> August)",
     caption="Source: Transfermarkt | made by @ewen_",
     x=NULL, y=NULL
   )
