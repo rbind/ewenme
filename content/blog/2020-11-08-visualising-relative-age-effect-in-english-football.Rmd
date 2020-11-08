@@ -7,7 +7,7 @@ tags:
   - data-viz
 description: 'Visualising relative age effect (RAE) in professional English football.'
 keywords: ["football", "relative age effect", "RAE", "data viz"]
-image: "/blog/2020-11-08-visualising-relative-age-effect-in-english-football_files/figure-html/rae-chart-1.png"
+image: "https://raw.githubusercontent.com/rbind/ewenme/master/static/blog/2020-11-08-visualising-relative-age-effect-in-english-football_files/figure-html/rae-chart-1.png"
 draft: no
 ---
 

@@ -5,7 +5,7 @@ slug: ghibli-wallpaper-carousel-mac-os
 tags: ["film", "macOS"]
 description: 'sprinkle some Ghibli over your desktop.'
 keywords: ["ghibli", "wallpaper", "macos"]
-image: "/blog/2020-10-23-making-a-ghibli-wallpaper-carousel-for-mac-os_files/desktop-screenshot.png"
+image: "https://raw.githubusercontent.com/rbind/ewenme/master/static/blog/2020-10-23-making-a-ghibli-wallpaper-carousel-for-mac-os_files/desktop-screenshot.png"
 draft: no
 ---
 
