@@ -2,7 +2,7 @@
 title: "vinylSpotting, a Discogs fairytale"
 description: "A web app for record diggers to explore and visualize their collections."
 date: "2017-03-01"
-tags: ["r", "shiny", "music"]
+tags: ["music", "shiny"]
 slug: vinylspotting-discogs-fairytale
 draft: no
 ---

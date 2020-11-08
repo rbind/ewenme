@@ -1,0 +1,113 @@
+---
+title: visualising relative age effect in English football
+date: '2020-11-08'
+slug: visualising-relative-age-effect-in-english-football
+tags:
+  - football
+  - data-viz
+description: 'Visualising relative age effect (RAE) in professional English football.'
+keywords: ["football", "relative age effect", "RAE", "data viz"]
+image: "/blog/2020-11-08-visualising-relative-age-effect-in-english-football_files/figure-html/rae-chart-1.png"
+draft: no
+---
+
+```{r setup, include=FALSE}
+
+knitr::opts_chunk$set(cache=FALSE, echo = FALSE, warning = FALSE, message = FALSE, out.width = '100%')
+
+# load packages
+library(tidyverse)
+library(glue)
+library(lubridate)
+library(ewenthemes)
+library(forcats)
+library(scales)
+
+leagues <- c(
+  "premier_league", "championship", "league_one", "league_two"
+  )
+file_names <- glue(
+  "https://raw.githubusercontent.com/ewenme/squads/master/data/2020/{leagues}.csv"
+)
+
+# load  ----------------------------------------------------
+
+# load raw squad data
+squads <- map_dfr(file_names, read_csv)
+
+# clean  ----------------------------------------------------
+
+# make month of birth col
+squads[['month']] <- month(squads[['date_of_birth']], label = TRUE)
+squads[['days_in_month']] <- days_in_month(squads[['date_of_birth']])
+
+# remove missing dobs
+squads <- dplyr::filter(squads, !is.na(month))
+
+# make english players bday summary
+eng_player_bdays <- squads %>% 
+  # filter for same nationalities as in leagues
+  dplyr::filter(
+    nationality %in% c("England"),
+    league_name %in% c("Premier League", "Championship", "League One", "League Two")
+    ) %>%
+  # get monthly bday props
+  group_by(nationality, month, days_in_month) %>%
+  summarise(count=n()) %>%
+  mutate(count_per_day=count/days_in_month) %>%
+  group_by(nationality, month) %>%
+  summarise(count_per_day=sum(count_per_day)) %>%
+  mutate(
+    prop=count_per_day/sum(count_per_day), 
+    label=percent(prop, accuracy = 1)
+    ) 
+
+# reorder months
+eng_player_bdays$month <- fct_relevel(
+  as_factor(eng_player_bdays$month),
+  "Sep", "Oct", "Nov", "Dec", "Jan", "Feb",
+  "Mar", "Apr", "May", "Jun", "Jul", "Aug"
+  )
+```
+
+Relative Age Effect (RAE) describes a phenomenon where a child who is born in the early part of a selection period gains a material advantage over a child born late in the selection period. The most common examples occur in academia and sport, where cohorts of children tend to be selected by establishing a somewhat arbitrary "cut-off" date (e.g. the UK school year starts in early September). Those born nearer to the cut-off date may demonstrate greater abilities than younger peers, simply because of this additional growth and development time. However, in practice this quirk can quickly entrench itself through all manner of biases – like greater attention from teachers, in academic settings – that only gets compounded over time as the performance gap is reinforced. 
+
+While we're on the subject, there are many more systemic biases at play in such academic (and other) settings which often affect marginalised groups most severely and reinforce historic inequalities. For example, [black students' predicted A-level grades are the least accurate](https://www.timeshighereducation.com/blog/does-ethnicity-influence-likelihood-admission-university#survey-answer). RAE plays a part in influencing outcomes, but isn't the only answer.
+
+Relative age effect in sport was (probably) popularised by Malcom Gladwell's *Outliers*, despite lots of pre-existing interest in the field itself. In the book, Gladwell stumbles across the case of elite Canadian hockey players, in which 40% of players were found to have been born in January, February, or March (with the cut-off for age competition in hockey at the start of the calendar year). I was curious about the incidence of this effect in English football a couple of years ago, and discovered something pretty similar:
+
+```{r echo=FALSE}
+blogdown::shortcode('tweet', '972426014738518016')
+```
+
+This post got quite a lot of attention, which I think speaks to the fact that its quite a relatable story – everyone has a birthday, and many dreamed of making it as a pro. However, the visualisation itself hasn't aged well (which I'll leave for a future post). So, I thought I'd give this one a "remaster" of sorts:
+
+```{r rae-chart, fig.height=8, fig.width=6}
+ggplot(data = eng_player_bdays, aes(x=month, y=prop)) +
+  geom_hline(yintercept = seq(from=0, to=0.12, by=0.03), colour="#D3D3D3", linetype="dashed") +
+  geom_col(aes(y=0.12), width = 1, fill="transparent", colour="#D3D3D3") +
+  geom_col(width = 1, colour = "black", alpha = 0.6) +
+  # set as radial chart
+  coord_polar() +
+  # add extra reference lines / labels
+  geom_label(aes(label = label), family="Recursive") +
+  # add personal chart theme
+  theme_ewen_rs(axis = FALSE, plot_title_size = 14, base_size = 11.5) + 
+  # set custom theme elements
+  theme(
+    plot.title = element_text(hjust = 0.5), plot.subtitle = element_text(hjust = 0.5),
+    plot.caption = element_text(hjust = 1),
+    panel.grid.major = element_blank(),
+    axis.text.y = element_blank(),
+    axis.title.y = element_text(hjust=0.8, size = 9)
+    ) +
+  # add chart labels
+  labs(
+    title="Relative Age Effect in English Footballers (AKA how\nyour birthday affects your chances of making it)",
+    subtitle="Current (2020/21 season) participation of English-born players in the\ntop four English football divisions is skewed towards those born early\nafter the age group competition cut-off date (31st August)",
+    caption="Source: Transfermarkt | made by @ewen_",
+    x=NULL, y=NULL
+  )
+```
+
+Shouting out Tom Worville, as ever, for [makeover inspiration](https://twitter.com/Worville/status/1320409463971549184) `r emo::ji("pizza")`
