@@ -60,7 +60,11 @@ eng_player_bdays <- squads %>%
   summarise(count_per_day=sum(count_per_day)) %>%
   mutate(
     prop=count_per_day/sum(count_per_day), 
-    label=percent(prop, accuracy = 1)
+    label=if_else(
+      month == "Sep",
+      paste(percent(prop, accuracy = 1), "of all\nbirthdays"),
+      percent(prop, accuracy = 1)
+      ) 
     ) 
 
 # reorder months
@@ -83,7 +87,7 @@ blogdown::shortcode('tweet', '972426014738518016')
 
 This post got quite a lot of attention, which I think speaks to the fact that its quite a relatable story – everyone has a birthday, and many dreamed of making it as a pro. However, the visualisation itself hasn't aged well (which I'll leave for a future post). So, I thought I'd give this one a "remaster" of sorts:
 
-```{r rae-chart, fig.height=8, fig.width=6}
+```{r rae-chart, fig.height=9, fig.width=7}
 ggplot(data = eng_player_bdays, aes(x=month, y=prop)) +
   geom_hline(yintercept = seq(from=0, to=0.12, by=0.03), colour="#D3D3D3", linetype="dashed") +
   geom_col(aes(y=0.12), width = 1, fill="transparent", colour="#D3D3D3") +
@@ -91,9 +95,9 @@ ggplot(data = eng_player_bdays, aes(x=month, y=prop)) +
   # set as radial chart
   coord_polar() +
   # add extra reference lines / labels
-  geom_label(aes(label = label), family="Recursive") +
+  geom_label(aes(label = label), family="Recursive", lineheight = 1) +
   # add personal chart theme
-  theme_ewen_rs(axis = FALSE, plot_title_size = 14, base_size = 11.5) + 
+  theme_ewen_rs(axis = FALSE, plot_title_size = 14, base_size = 11.5, plot_margin = c(1, 1, 1, 1)) + 
   # set custom theme elements
   theme(
     plot.title = element_text(hjust = 0.5),
