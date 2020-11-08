@@ -97,7 +97,7 @@ ggplot(data = eng_player_bdays, aes(x=month, y=prop)) +
   # add extra reference lines / labels
   geom_label(aes(label = label), family="Recursive", lineheight = 1) +
   # add personal chart theme
-  theme_ewen_rs(axis = FALSE, plot_title_size = 14, base_size = 11.5, plot_margin = c(1, 1, 1, 1)) + 
+  theme_ewen_rs(axis = FALSE, plot_title_size = 18, base_size = 13, plot_margin = c(1, 1, 1, 1)) + 
   # set custom theme elements
   theme(
     plot.title = element_text(hjust = 0.5),
@@ -110,7 +110,7 @@ ggplot(data = eng_player_bdays, aes(x=month, y=prop)) +
   # add chart labels
   labs(
     title="Relative Age Effect in English Footballers (AKA how\nyour birthday affects your chances of making it)",
-    subtitle="Current (2020/21 season) participation of English-born players in the<br>top four English football divisions is skewed towards those born early<br>after the age group competition cut-off date (31<sup>st</sup> August)",
+    subtitle="Current (2020/21 season) participation of English-born players in the<br>top four English football divisions is skewed towards those born<br>early after the age group competition cut-off date (31<sup>st</sup> August)",
     caption="Source: Transfermarkt | made by @ewen_",
     x=NULL, y=NULL
   )
