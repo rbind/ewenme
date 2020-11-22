@@ -11,13 +11,13 @@ draft: no
 
 
 
-<p>Studio Ghibli <a href="http://www.ghibli.jp/info/013344/">have dropped almost 1k movie stills into the public domain</a> (and counting) over the last few months. I turned this into a rotating wallpaper for my Mac, and thought I’d share the (tiny) process.</p>
+<p>Studio Ghibli <a href="http://www.ghibli.jp/info/013381/">have dropped almost 1k movie stills into the public domain</a> (and counting) over the last few months. I turned this into a rotating desktop wallpaper for my Mac, and thought I’d share the (tiny) process.</p>
 <p>First, make (AKA <code>mkdir</code>) a folder in which to store the images via <a href="https://www.youtube.com/watch?v=QROX039ckO8">a terminal session</a>, then navigate to that directory (with <code>cd</code>). You can edit the command below to do this, dropping in a suitable file path replacement for you.</p>
 <pre class="bash"><code>mkdir /Users/Ewen/Pictures/ghibli
 cd /Users/Ewen/Pictures/ghibli/</code></pre>
 <p>Before starting the d/l, you will need <a href="https://www.gnu.org/software/wget/">wget</a>. Get <a href="https://brew.sh/">Homebrew</a> if you haven’t already, then install wget via <code>brew</code>.</p>
 <pre class="bash"><code>brew install wget</code></pre>
-<p>This next part comes courtesy of a comment under a <a href="https://news.ycombinator.com/item?id=24564775">HN post following the news</a>. I hadn’t seen the curly braces <code>{}</code> trick before, which is a neat way to expand a numeric series in the shell. Anyway, this step will grab the whole image drop (as of 20th November, 2020) and will take a little while.</p>
+<p>This next part comes courtesy of a comment under a <a href="https://news.ycombinator.com/item?id=24564775">HN post following the news</a>. I hadn’t seen the curly braces <code>{}</code> trick before, which is a neat way to expand a numeric series in the shell. Anyway, this step will grab the whole image drop (as of 20th November, 2020) and will probably take an hour or so.</p>
 <pre class="bash"><code>wget --random-wait --timestamping http://www.ghibli.jp/gallery/{ged,chihiro,karigurashi,ponyo,kokurikozaka,marnie,kaguyahime,kazetachinu,howl,baron,ghiblies,yamada,mononoke,mimi,tanuki,umi,porco,majo,totoro}{001..050}.jpg</code></pre>
 <p>Once you have the pics, all that’s left to do is to start up the wallpaper carousel:</p>
 <ul>
