@@ -1,4 +1,3 @@
 ---
-heading: "Ewen"
-subheading: "other places to find me:"
+heading: "Ewen's blog"
 ---

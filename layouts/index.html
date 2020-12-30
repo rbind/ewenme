@@ -7,13 +7,13 @@
 <div class="splash-container">
   <div class="splash">
     
-    <h1>{{ .Params.heading }}<span class="fancy">_</span></h1>
+    <h1>{{ .Params.heading }}<span class="fancy">.</span></h1>
     {{ if isset .Params "handle" }}
     <span class="handle">@{{ .Params.handle }}</span>
     {{ end }}
-    <h2>
+    <h3>
       {{ .Params.subheading }}
-    </h2>
+    </h3>
     <!-- Replace MEEEEE -->
 
     {{ partial "social-icons.html" .}}
