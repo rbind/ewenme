@@ -1,16 +1,17 @@
-theme = "lines"
-baseURL = "https://ewen.io/"
-title = "ewen"
-languageCode = "en"
+baseURL = "https://lines-hugo-theme.netlify.app/"
+languageCode = "en-us"
+title = "Lines - Minimalist Hugo theme"
+disableKinds = ["section", "categories"]
+disqusShortname = ""
+pygmentsCodeFences = false
+pygmentsUseClasses = false
 paginate = 999
 minify = true
-enableEmoji = true
-enableRobotsTXT = true
-ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_cache$", "\\.knit\\.md$", "\\.utf8\\.md$"]
+
 
 [taxonomies]
   tag = "tags"
-  
+
 [privacy]
   [privacy.disqus]
     disable = true
@@ -26,15 +27,25 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_cache$", "\\.knit\\.md$", "\\.utf8\
     disable = true
 
 [Author]
-  name = "ewen"
-  email = "ewenhenderson@gmail.com"
+  name = ""
 
 [params]
-  description = "ewen's writing and projects."
-  author = "ewen"
+  description = ""
+  author = ""
+  copyright = ""
+  logo = ""
+
+[frontmatter]
+  date  = [":filename", ":default"]
+  author = ""
+  github = ""
+  facebook = ""
+  og_image = ""
+  sitename = ""
+  twitter = ""
 
 [permalinks]
-  posts = "/:year/:month/:day/:slug"
+  posts = "/:year/:month/:day/:filename"
   pages = "/:slug"
 
 [outputs]
@@ -60,6 +71,12 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_cache$", "\\.knit\\.md$", "\\.utf8\
     name       = "Index"
     url        = "/"
     weight     = -111
+
+  [[menu.main]]
+    identifier = "about"
+    name       = "About"
+    url        = "/about/"
+    weight     = -20
 
   [[menu.main]]
     identifier = "rss"

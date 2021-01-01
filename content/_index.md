@@ -1,3 +1,0 @@
----
-heading: "Ewen's blog"
----
