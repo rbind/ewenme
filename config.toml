@@ -57,9 +57,15 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_cache$", "\\.knit\\.md$", "\\.utf8\
 [menu]
   [[menu.main]]
     identifier = "index"
-    name       = "Index"
+    name       = "index"
     url        = "/"
     weight     = -111
+    
+  [[menu.main]]
+    identifier = "contact"
+    name       = "contact"
+    url        = "mailto:ewenhenderson@gmail.com"
+    weight     = -20
 
   [[menu.main]]
     identifier = "rss"
