@@ -1,0 +1,5 @@
+button, #pButton, .fa {
+  border: none;
+  background-color: transparent;
+  padding: .5rem;
+}
