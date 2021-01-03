@@ -38,16 +38,12 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_cache$", "\\.knit\\.md$", "\\.utf8\
   pages = "/:slug"
 
 [outputs]
-  home = ["HTML", "RSS", "JSON"]
+  home = ["HTML", "RSS"]
   section = ["HTML"]
 
 [outputFormats.RSS]
   mediatype = "application/rss"
   baseName = "index"
-
-[outputFormats.JSON]
-  mediatype = "application/json"
-  baseName = "feed"
 
 [sitemap]
   changefreq = "monthly"
@@ -70,5 +66,5 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_cache$", "\\.knit\\.md$", "\\.utf8\
   [[menu.main]]
     identifier = "rss"
     name       = "RSS"
-    url        = "/atom.xml"
+    url        = "/index.xml"
     weight     = -10
