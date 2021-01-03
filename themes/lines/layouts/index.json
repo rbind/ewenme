@@ -25,8 +25,8 @@
       "url": {{ .Permalink | jsonify }},
       "image": "{{ .Site.BaseURL }}photos/{{ .Params.photo }}",
       "banner_image": "{{ .Site.BaseURL }}photos/{{ .Params.photo }}",
-      "date_published": "{{ .Date.Format `2016-02-09T14:22:00-07:00` | safeHTML }}",
-      "date_modified": "{{ .Date.Format `2016-02-09T14:22:00-07:00` | safeHTML }}",
+      "date_published": {{ .Date.Format "2006-01-02T15:04:05Z07:00" | jsonify }},
+      "date_modified": {{ .Date.Format "2006-01-02T15:04:05Z07:00" | jsonify }},
       "author": {
         "name": "ewen",
         "url": "{{ .Site.BaseURL }}"
