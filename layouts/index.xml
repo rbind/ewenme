@@ -20,16 +20,14 @@
     <language>en</language>
     <copyright>Copyright {{ now.Format "2006"}}, Ewen Henderson</copyright>
     <lastBuildDate>{{ .Date.Format "Mon, 02 Jan 2006 15:04:05 -0700" | safeHTML }}</lastBuildDate>
-    {{- with .OutputFormats.Get "RSS" -}}
-    {{ printf "<atom:link href=%q rel=\"self\" type=%q />" .Permalink .MediaType | safeHTML }}
-    {{- end -}}
-    {{ range $pages }}
+    <atom:link href="{{.Permalink}}" rel="self" type="application/rss+xml" />
+    {{ range .Data.Pages }}
     <item>
       <title>{{ .Title }}</title>
       <link>{{ .Permalink }}</link>
       <pubDate>{{ .Date.Format "Mon, 02 Jan 2006 15:04:05 -0700" | safeHTML }}</pubDate>
       <guid>{{ .Permalink }}</guid>
-      <description>{{ .Summary | html }}</description>
+      <description>{{ .Description | html }}</description>
     </item>
     {{ end }}
   </channel>
