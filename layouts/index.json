@@ -1,0 +1,37 @@
+{
+  "version": "https://jsonfeed.org/version/1",
+  "title": "{{ .Site.Title }}",
+  "home_page_url": "{{ .Site.BaseURL }}",
+  "feed_url": "{{ .Site.BaseURL }}feed.json",
+  "description": "{{ .Site.Params.description }}",
+  "icon": "https://ronaldsvilcins.com/assets/apple-touch-icon.png",
+  "favicon": "https://ronaldsvilcins.com/assets/favicon.ico",
+  "expired": false,
+  "author": {
+    "name": "ewen",
+    "url": "{{ .Site.BaseURL }}"
+  },
+  "items": [
+    {{ $list := (where .Site.RegularPages "Section" "posts") }}
+    {{ $len := (len $list) }}
+
+    {{ range $index, $element := $list }}
+    {
+      "id": {{ sha1 .Title | jsonify }},
+      "title": {{ .Title | jsonify }},
+      "summary": {{ .Description | jsonify }},
+      "content_text": {{ .Content | plainify | jsonify }},
+      "content_html": {{ .Content | jsonify }},
+      "url": {{ .Permalink | jsonify }},
+      "image": "{{ .Site.BaseURL }}photos/{{ .Params.photo }}",
+      "banner_image": "{{ .Site.BaseURL }}photos/{{ .Params.photo }}",
+      "date_published": {{ .Date.Format "2006-01-02T15:04:05Z07:00" | jsonify }},
+      "date_modified": {{ .Date.Format "2006-01-02T15:04:05Z07:00" | jsonify }},
+      "author": {
+        "name": "ewen",
+        "url": "{{ .Site.BaseURL }}"
+      }
+    }{{ if ne (add $index 1) $len }},{{ end }}
+    {{ end }}
+  ]
+}
