@@ -17,7 +17,8 @@
    <link rel="stylesheet" href="{{"css/grayscale.css" | absURL}}" id="theme-stylesheet">
 <script src="{{ "js/highlight.pack.js" | absURL }}"></script>
 <script>hljs.initHighlightingOnLoad();</script>
-  <link rel="stylesheet" href="{{ .Site.BaseURL }}css/fonts.css">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,300;0,700;1,300;1,700&display=swap" rel="stylesheet">
   {{ $styles := resources.Get "scss/styles.scss" | toCSS (dict "outputStyle" "compressed") | minify }}
   <style>{{ $styles.Content | safeCSS }}</style>
 
