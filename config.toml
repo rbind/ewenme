@@ -27,7 +27,7 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_cache$", "\\.knit\\.md$", "\\.utf8\
 
 [Author]
   name = "ewen"
-  email = "ewenhenderson@gmail.com"
+  email = "ewenme@tutanota.com"
 
 [params]
   description = "ewen's writing and projects."
@@ -60,7 +60,7 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_cache$", "\\.knit\\.md$", "\\.utf8\
   [[menu.main]]
     identifier = "contact"
     name       = "contact"
-    url        = "mailto:ewenhenderson@gmail.com"
+    url        = "mailto:ewenme@tutanota.com"
     weight     = -20
 
   [[menu.main]]
