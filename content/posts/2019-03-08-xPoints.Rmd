@@ -6,7 +6,7 @@ slug: xPoints
 tags: ["fpl", "r"]
 keywords: ["fpl", "fplr", "understatr", "r"]
 image: "/blog/2019-03-08-xPoints_files/figure-html/simple-xGA-1.png"
-draft: no
+draft: true
 ---
 
 ```{r setup, include=FALSE}

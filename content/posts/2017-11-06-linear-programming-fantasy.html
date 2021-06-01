@@ -5,7 +5,7 @@ date: "2017-11-06"
 tags: ["r", "fpl"]
 keywords: ["r", "fpl", "fantasy premier league", "linear optimisation", "linear programming"]
 slug: my-linear-programming-fantasy
-draft: no
+draft: true
 ---
 
 <script src="/rmarkdown-libs/htmlwidgets/htmlwidgets.js"></script>
@@ -45,13 +45,13 @@ draft: no
 <p>The <strong>decision variables</strong> comprise the things that will decide the output and represent the solution. In our case, these are the points scored by the two goalkeepers we pick - let’s call them Goalkeeper A and Goalkeeper B. It’s also worth noting the <strong>non-negativity restriction</strong> on decision variables i.e. the values should be greater than or equal to zero.</p>
 <p><br></p>
 <div id="htmlwidget-1" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-1">{"x":{"filter":"none","data":[[2,94,240,260,375,1,74,95,96,135,189,213,214,241,261,306,328,376,559,29,30,54,75,115,136,137,163,190,287,305,329,350,396,397,421,438,439,469,473,479,530,536,565,3,31,53,116,162,262,286,351,420,506,529,540,545,547,549,554,555,557,566,569],["Cech","Courtois","Ederson","de Gea","Lloris","Ospina","Heaton","Eduardo","Caballero","Pickford","Schmeichel","Mignolet","Karius","Bravo","Romero","Forster","Butland","Vorm","Macey","Begovic","Boruc","Ryan","Robinson","Hennessey","Robles","Stekelenburg","Lössl","Hamer","Darlow","McCarthy","Grant","Fabianski","Pantilimon","Gomes","Foster","Adrián","Randolph","Pope","Jakupovic","Hart","Ward","Karnezis","Gazzaniga","Martinez","Federici","Mäenpää","Speroni","Coleman","Joel Pereira","Elliot","Nordfeldt","Myhill","Taylor","Woodman","Krul","Legzdins","Green","Ramsdale","Lindegaard","Henry","Palmer","Whiteman","Haugaard"],["Arsenal","Chelsea","Man City","Man Utd","Spurs","Arsenal","Burnley","Chelsea","Chelsea","Everton","Leicester","Liverpool","Liverpool","Man City","Man Utd","Southampton","Stoke","Spurs","Arsenal","Bournemouth","Bournemouth","Brighton","Burnley","Crystal Palace","Everton","Everton","Huddersfield","Leicester","Newcastle","Southampton","Stoke","Swansea","Watford","Watford","West Brom","West Ham","West Ham","Burnley","Leicester","West Ham","Liverpool","Watford","Spurs","Arsenal","Bournemouth","Brighton","Crystal Palace","Huddersfield","Man Utd","Newcastle","Swansea","West Brom","Southampton","Newcastle","Brighton","Burnley","Huddersfield","Bournemouth","Burnley","Crystal Palace","West Brom","Spurs","Stoke"],[5.5,5.5,5.5,5.5,5.5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>player_id<\/th>\n      <th>web_name<\/th>\n      <th>team_name<\/th>\n      <th>start_price<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[0,3]}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<script type="application/json" data-for="htmlwidget-1">{"x":{"filter":"none","data":[[2,94,240,260,375,1,74,95,96,135,189,213,214,241,261,306,328,376,559,29,30,54,75,115,136,137,163,190,287,305,329,350,396,397,421,438,439,469,473,479,530,536,3,31,53,116,162,262,286,351,420,506,529,540,545,547,549,554,555,557],["Cech","Courtois","Ederson","de Gea","Lloris","Ospina","Heaton","Eduardo","Caballero","Pickford","Schmeichel","Mignolet","Karius","Bravo","Romero","Forster","Butland","Vorm","Macey","Begovic","Boruc","Ryan","Robinson","Hennessey","Robles","Stekelenburg","Lössl","Hamer","Darlow","McCarthy","Grant","Fabianski","Pantilimon","Gomes","Foster","Adrián","Randolph","Pope","Jakupovic","Hart","Ward","Karnezis","Martinez","Federici","Mäenpää","Speroni","Coleman","Joel Pereira","Elliot","Nordfeldt","Myhill","Taylor","Woodman","Krul","Legzdins","Green","Ramsdale","Lindegaard","Henry","Palmer"],["Arsenal","Chelsea","Man City","Man Utd","Spurs","Arsenal","Burnley","Chelsea","Chelsea","Everton","Leicester","Liverpool","Liverpool","Man City","Man Utd","Southampton","Stoke","Spurs","Arsenal","Bournemouth","Bournemouth","Brighton","Burnley","Crystal Palace","Everton","Everton","Huddersfield","Leicester","Newcastle","Southampton","Stoke","Swansea","Watford","Watford","West Brom","West Ham","West Ham","Burnley","Leicester","West Ham","Liverpool","Watford","Arsenal","Bournemouth","Brighton","Crystal Palace","Huddersfield","Man Utd","Newcastle","Swansea","West Brom","Southampton","Newcastle","Brighton","Burnley","Huddersfield","Bournemouth","Burnley","Crystal Palace","West Brom"],[5.5,5.5,5.5,5.5,5.5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4.5,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>player_id<\/th>\n      <th>web_name<\/th>\n      <th>team_name<\/th>\n      <th>start_price<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[0,3]}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 <p>This list of goalies represents our options for goalkeeper A and goalkeeper B, with their respective teams and associated costs. Now, we specify the ultimate objective that guides this decision.</p>
 </div>
 <div id="objective-function" class="section level2">
 <h2>Objective Function</h2>
 <p>The <strong>objective function</strong> summarizes the objective of making decisions (i.e. picking goalkeepers). Ultimately, we want to score as many points as possible per unit cost (we’ll leave the value aspect of this function, for now). First, it’s necessary to identify point-scoring patterns at a weekly level, so lets examine an example goalkeeping pair’s points.</p>
-<p><img src="/blog/2017-11-06-linear-programming-fantasy_files/figure-html/goalies_plot-1.png" width="100%" /></p>
+<p><img src="/posts/2017-11-06-linear-programming-fantasy_files/figure-html/goalies_plot-1.png" width="100%" /></p>
 <p>There are a few things at play in the above plot, which shows the points scored by week for Chelsea’s Courtois and Arsenal’s Cech. Not only can we identify the level of points these players score individually, but how well the patterns of point-scoring complement each other (i.e. do they score well in alternate weeks).</p>
 </div>
 <div id="constraints" class="section level2">
@@ -180,13 +180,27 @@ Points per million
 Lössl (Huddersfield) &amp; Hart (West Ham)
 </td>
 <td style="text-align:right;">
-80
+70
 </td>
 <td style="text-align:left;">
-<span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffa500">9.0</span>
+<span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffd27f">9.0</span>
 </td>
 <td style="text-align:left;">
-<span style="display: inline-block; direction: rtl; border-radius: 4px; padding-right: 2px; background-color: lightgreen; width: 100.00%">8.9</span>
+<span style="display: inline-block; direction: rtl; border-radius: 4px; padding-right: 2px; background-color: lightgreen; width: 100.00%">7.8</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+de Gea (Man Utd) &amp; Elliot (Newcastle)
+</td>
+<td style="text-align:right;">
+73
+</td>
+<td style="text-align:left;">
+<span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffa500">9.5</span>
+</td>
+<td style="text-align:left;">
+<span style="display: inline-block; direction: rtl; border-radius: 4px; padding-right: 2px; background-color: lightgreen; width: 98.72%">7.7</span>
 </td>
 </tr>
 <tr>
@@ -194,55 +208,41 @@ Lössl (Huddersfield) &amp; Hart (West Ham)
 Lössl (Huddersfield) &amp; Fabianski (Swansea)
 </td>
 <td style="text-align:right;">
-79
+68
 </td>
 <td style="text-align:left;">
-<span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffa500">9.0</span>
+<span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffd27f">9.0</span>
 </td>
 <td style="text-align:left;">
-<span style="display: inline-block; direction: rtl; border-radius: 4px; padding-right: 2px; background-color: lightgreen; width: 98.88%">8.8</span>
+<span style="display: inline-block; direction: rtl; border-radius: 4px; padding-right: 2px; background-color: lightgreen; width: 97.44%">7.6</span>
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-Lössl (Huddersfield) &amp; Pope (Burnley)
+Lössl (Huddersfield) &amp; Elliot (Newcastle)
 </td>
 <td style="text-align:right;">
-79
-</td>
-<td style="text-align:left;">
-<span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffa500">9.0</span>
-</td>
-<td style="text-align:left;">
-<span style="display: inline-block; direction: rtl; border-radius: 4px; padding-right: 2px; background-color: lightgreen; width: 98.88%">8.8</span>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Elliot (Newcastle) &amp; Pope (Burnley)
-</td>
-<td style="text-align:right;">
-74
+60
 </td>
 <td style="text-align:left;">
 <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffffff">8.5</span>
 </td>
 <td style="text-align:left;">
-<span style="display: inline-block; direction: rtl; border-radius: 4px; padding-right: 2px; background-color: lightgreen; width: 97.75%">8.7</span>
+<span style="display: inline-block; direction: rtl; border-radius: 4px; padding-right: 2px; background-color: lightgreen; width: 91.03%">7.1</span>
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-Fabianski (Swansea) &amp; Pope (Burnley)
+Lössl (Huddersfield) &amp; Forster (Southampton)
 </td>
 <td style="text-align:right;">
-78
+67
 </td>
 <td style="text-align:left;">
-<span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffa500">9.0</span>
+<span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffa500">9.5</span>
 </td>
 <td style="text-align:left;">
-<span style="display: inline-block; direction: rtl; border-radius: 4px; padding-right: 2px; background-color: lightgreen; width: 97.75%">8.7</span>
+<span style="display: inline-block; direction: rtl; border-radius: 4px; padding-right: 2px; background-color: lightgreen; width: 91.03%">7.1</span>
 </td>
 </tr>
 </tbody>
@@ -276,13 +276,13 @@ Points per million
 Lössl (Huddersfield) &amp; Hart (West Ham)
 </td>
 <td style="text-align:right;">
-80
+70
 </td>
 <td style="text-align:right;">
 9.0
 </td>
 <td style="text-align:left;">
-<span style="display: inline-block; direction: rtl; border-radius: 4px; padding-right: 2px; background-color: lightgreen; width: 100.00%">8.9</span>
+<span style="display: inline-block; direction: rtl; border-radius: 4px; padding-right: 2px; background-color: lightgreen; width: 100.00%">7.8</span>
 </td>
 </tr>
 <tr>
@@ -290,13 +290,27 @@ Lössl (Huddersfield) &amp; Hart (West Ham)
 Lössl (Huddersfield) &amp; Fabianski (Swansea)
 </td>
 <td style="text-align:right;">
-79
+68
 </td>
 <td style="text-align:right;">
 9.0
 </td>
 <td style="text-align:left;">
-<span style="display: inline-block; direction: rtl; border-radius: 4px; padding-right: 2px; background-color: lightgreen; width: 98.88%">8.8</span>
+<span style="display: inline-block; direction: rtl; border-radius: 4px; padding-right: 2px; background-color: lightgreen; width: 97.44%">7.6</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Lössl (Huddersfield) &amp; Elliot (Newcastle)
+</td>
+<td style="text-align:right;">
+60
+</td>
+<td style="text-align:right;">
+8.5
+</td>
+<td style="text-align:left;">
+<span style="display: inline-block; direction: rtl; border-radius: 4px; padding-right: 2px; background-color: lightgreen; width: 91.03%">7.1</span>
 </td>
 </tr>
 <tr>
@@ -304,27 +318,13 @@ Lössl (Huddersfield) &amp; Fabianski (Swansea)
 Lössl (Huddersfield) &amp; Pope (Burnley)
 </td>
 <td style="text-align:right;">
-79
+63
 </td>
 <td style="text-align:right;">
 9.0
 </td>
 <td style="text-align:left;">
-<span style="display: inline-block; direction: rtl; border-radius: 4px; padding-right: 2px; background-color: lightgreen; width: 98.88%">8.8</span>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Elliot (Newcastle) &amp; Pope (Burnley)
-</td>
-<td style="text-align:right;">
-74
-</td>
-<td style="text-align:right;">
-8.5
-</td>
-<td style="text-align:left;">
-<span style="display: inline-block; direction: rtl; border-radius: 4px; padding-right: 2px; background-color: lightgreen; width: 97.75%">8.7</span>
+<span style="display: inline-block; direction: rtl; border-radius: 4px; padding-right: 2px; background-color: lightgreen; width: 89.74%">7.0</span>
 </td>
 </tr>
 <tr>
@@ -332,13 +332,13 @@ Elliot (Newcastle) &amp; Pope (Burnley)
 Fabianski (Swansea) &amp; Pope (Burnley)
 </td>
 <td style="text-align:right;">
-78
+62
 </td>
 <td style="text-align:right;">
 9.0
 </td>
 <td style="text-align:left;">
-<span style="display: inline-block; direction: rtl; border-radius: 4px; padding-right: 2px; background-color: lightgreen; width: 97.75%">8.7</span>
+<span style="display: inline-block; direction: rtl; border-radius: 4px; padding-right: 2px; background-color: lightgreen; width: 88.46%">6.9</span>
 </td>
 </tr>
 </tbody>

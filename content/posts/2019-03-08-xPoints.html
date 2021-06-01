@@ -6,7 +6,7 @@ slug: xPoints
 tags: ["fpl", "r"]
 keywords: ["fpl", "fplr", "understatr", "r"]
 image: "/blog/2019-03-08-xPoints_files/figure-html/simple-xGA-1.png"
-draft: no
+draft: true
 ---
 
 
@@ -64,20 +64,20 @@ epl_team_stats &lt;- get_league_teams_stats(league_name = &quot;EPL&quot;, year 
 epl_player_stats &lt;- purrr::map_dfr(unique(epl_team_stats$team_name), get_team_players_stats, year = 2019)
 
 epl_player_stats</code></pre>
-<pre><code>## # A tibble: 518 x 19
-##    player_id player_name games  time goals    xG assists    xA shots key_passes
-##        &lt;dbl&gt; &lt;chr&gt;       &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;      &lt;dbl&gt;
-##  1       675 Jack Greal…    35  3145     7 6.60        6 7.60     69         91
-##  2      7722 Trézéguet      33  1865     6 5.25        1 0.958    48         21
-##  3      7724 Wesley         21  1806     5 7.27        1 0.884    36         11
-##  4      5612 Anwar El G…    33  2081     4 6.38        4 2.88     53         30
-##  5      6122 Douglas Lu…    35  2512     3 2.28        2 1.98     38         16
-##  6      7721 Conor Hour…    26  1470     3 1.63        5 5.44     29         35
-##  7      7723 John McGinn    27  2233     3 3.67        2 2.42     52         34
-##  8      1024 Tyrone Min…    32  2812     2 0.917       2 0.571     8          7
-##  9       884 Matt Targe…    27  2215     1 0.394       2 3.30      7         29
-## 10      1685 Ahmed Elmo…    18  1007     1 0.196       1 2.22      5         22
-## # … with 508 more rows, and 9 more variables: yellow_cards &lt;dbl&gt;,
+<pre><code>## # A tibble: 522 x 19
+##    player_id player_name  games  time goals    xG assists    xA shots key_passes
+##        &lt;dbl&gt; &lt;chr&gt;        &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;      &lt;dbl&gt;
+##  1       675 Jack Greali…    36  3235     8 6.84        6 7.64     73         92
+##  2      7722 Trézéguet       34  1955     6 5.35        1 0.958    50         21
+##  3      7724 Wesley          21  1806     5 7.27        1 0.884    36         11
+##  4      5612 Anwar El Gh…    34  2082     4 6.38        4 2.88     53         30
+##  5      6122 Douglas Luiz    36  2602     3 2.28        2 2.00     38         17
+##  6      7721 Conor Houri…    27  1549     3 1.63        5 5.73     29         38
+##  7      7723 John McGinn     28  2323     3 3.98        3 2.62     55         37
+##  8      1024 Tyrone Mings    33  2902     2 0.917       2 0.571     8          7
+##  9       884 Matt Targett    28  2305     1 0.394       2 3.30      7         29
+## 10      1685 Ahmed Elmoh…    18  1007     1 0.196       1 2.22      5         22
+## # … with 512 more rows, and 9 more variables: yellow_cards &lt;dbl&gt;,
 ## #   red_cards &lt;dbl&gt;, position &lt;chr&gt;, team_name &lt;chr&gt;, npg &lt;dbl&gt;, npxG &lt;dbl&gt;,
 ## #   xGChain &lt;dbl&gt;, xGBuildup &lt;dbl&gt;, year &lt;dbl&gt;</code></pre>
 <p>There isn’t a common identifier for joining across datasets, so a bit of prep is required to help join the datasets (e.g. standardising team/player names). Names are annoying, so I missed off some recoding of non-descript (read: little minutes) attacking players.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> Sorry.</p>
@@ -98,35 +98,35 @@ player_stats &lt;- left_join(
   mutate(xGA_90 = xG_90 + xA_90)
 
 player_stats</code></pre>
-<pre><code>## # A tibble: 171 x 31
-##       id web_name status now_cost cost_change_sta… total_points minutes
-##    &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;     &lt;dbl&gt;            &lt;dbl&gt;        &lt;int&gt;   &lt;int&gt;
-##  1    11 Aubamey… a          10.9             -0.1          189    3046
-##  2    12 Lacazet… a           9.2             -0.3          114    1811
-##  3    15 Özil     a           6.9             -0.6           53    1439
-##  4    18 Xhaka    a           5.1             -0.4           72    2496
-##  5    19 Torreira a           4.7             -0.3           45    1483
-##  6    21 Guendou… a           4.1             -0.4           48    1744
-##  7   469 Ceballos a           5.2             -0.3           55    1616
-##  8   488 Pépé     a           8.9             -0.6          104    1933
-##  9   541 Saka     a           4.7              0.2           71    1746
-## 10    28 Houriha… a           5.7             -0.3           80    1451
-## # … with 161 more rows, and 24 more variables: team_name &lt;chr&gt;, position &lt;chr&gt;,
+<pre><code>## # A tibble: 185 x 31
+##       id web_name   status now_cost cost_change_start total_points minutes
+##    &lt;int&gt; &lt;chr&gt;      &lt;chr&gt;     &lt;dbl&gt;             &lt;dbl&gt;        &lt;int&gt;   &lt;int&gt;
+##  1     4 Aubameyang a          11.3              -0.7          131    2330
+##  2     6 Lacazette  a           8.4              -0.1          129    1916
+##  3     9 Xhaka      a           5.2              -0.3           70    2519
+##  4    18 Pépé       a           7.7              -0.3          114    1606
+##  5    23 Smith Rowe a           4.2              -0.3           74    1438
+##  6    24 Saka       a           5.1              -0.4          114    2554
+##  7   478 Willian    a           7.5              -0.5           78    1398
+##  8   501 Ceballos   a           4.7              -0.3           62    1609
+##  9   526 Elneny     a           4.2              -0.3           50    1538
+## 10   567 Partey     a           4.9              -0.1           47    1529
+## # … with 175 more rows, and 24 more variables: team_name &lt;chr&gt;, position &lt;chr&gt;,
 ## #   player_id &lt;dbl&gt;, player_name &lt;chr&gt;, games &lt;dbl&gt;, time &lt;dbl&gt;, goals &lt;dbl&gt;,
 ## #   xG &lt;dbl&gt;, assists &lt;dbl&gt;, xA &lt;dbl&gt;, shots &lt;dbl&gt;, key_passes &lt;dbl&gt;,
 ## #   npg &lt;dbl&gt;, npxG &lt;dbl&gt;, xGChain &lt;dbl&gt;, xGBuildup &lt;dbl&gt;, goals_90 &lt;dbl&gt;,
 ## #   xG_90 &lt;dbl&gt;, assists_90 &lt;dbl&gt;, xA_90 &lt;dbl&gt;, shots_90 &lt;dbl&gt;, npg_90 &lt;dbl&gt;,
 ## #   npxG_90 &lt;dbl&gt;, xGA_90 &lt;dbl&gt;</code></pre>
 <p>Let’s get some of these numbers on the board, already. I’ll start with a simple scatter plot of xG90 vs xA90, and also mark out players’ FPL positions (PS - the chart styles come courtesy of another personal pkg, <a href="https://github.com/ewenme/ewenthemes">ewenthemes</a>).</p>
-<p><img src="/blog/2019-03-08-xPoints_files/figure-html/simple-xGA-1.svg" width="100%" style="display: block; margin: auto;" /></p>
+<p><img src="/posts/2019-03-08-xPoints_files/figure-html/simple-xGA-1.svg" width="100%" style="display: block; margin: auto;" /></p>
 <p>This is <em>starting</em> to look useful for an FPL manager. It’s possible to spot players who are regularly creating and getting goalscoring opportunities. A bit more work is needed to actually identify who the best picks are, based on these metrics.</p>
 </div>
-<div id="speaking-the-same-language" class="section level2">
-<h2>Speaking the same language 💬</h2>
+<div id="speaking-the-same-language-️" class="section level2">
+<h2>Speaking the same language 🗨️</h2>
 <p>First, it’s probably more helpful to express these expected contributions in terms that are familiar to FPL managers, and take account of the different rewards based on player position. Remember, goals turn into different points for midfielders (5) and forwards (4). Expected assists can similarly be expressed as a rate of FPL points. How does the rate of attacking points scoring stack up?</p>
-<p><img src="/blog/2019-03-08-xPoints_files/figure-html/xPoints-calc-1.svg" width="100%" style="display: block; margin: auto;" /></p>
+<p><img src="/posts/2019-03-08-xPoints_files/figure-html/xPoints-calc-1.svg" width="100%" style="display: block; margin: auto;" /></p>
 <p>Now it’s easier to differentiate a Mo’ and a Kun, for example. Still, crucial information has been left out thus far - <strong>player price</strong>. Each FPL player is attributed a cost in £millions. By adjusting for this, players who represent the best value can be unearthed.</p>
-<p><img src="/blog/2019-03-08-xPoints_files/figure-html/value-calc-1.svg" width="100%" style="display: block; margin: auto;" /></p>
+<p><img src="/posts/2019-03-08-xPoints_files/figure-html/value-calc-1.svg" width="100%" style="display: block; margin: auto;" /></p>
 </div>
 <div id="reprise" class="section level2">
 <h2>Reprise 🔮</h2>
