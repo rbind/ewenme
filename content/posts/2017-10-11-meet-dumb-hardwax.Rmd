@@ -5,7 +5,7 @@ date: "2017-10-11"
 tags: ["r", "music", "text-gen"]
 keywords: ["r", "twitterbot", "tweetbot", "bot", "markov chain", "text gen"]
 slug: meet-dumb-hardwax
-draft: no
+draft: true
 ---
 
 ```{r setup, include=FALSE}

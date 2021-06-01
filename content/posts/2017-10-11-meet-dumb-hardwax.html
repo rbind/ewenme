@@ -2,16 +2,16 @@
 title: "Meet Dumb Hardwax"
 description: "The story of my first tweetbot, complete with forays into Azure and Markov Chains."
 date: "2017-10-11"
-tags: ["r", "bots", "text-gen"]
+tags: ["r", "music", "text-gen"]
 keywords: ["r", "twitterbot", "tweetbot", "bot", "markov chain", "text gen"]
 slug: meet-dumb-hardwax
-draft: no
+draft: true
 ---
 
 
 
 <p>Twitter bots have gotten a fairly bad rap, recently <a href="http://uk.businessinsider.com/twitter-russia-investigation-should-look-at-trump-interaction-with-bots-2017-10?r=US&amp;IR=T">(often with good reason)</a>. When they’re done right, a genuinely quirky robot can cut through a feed full of humans with beautiful tidbits. God bless <span class="citation">[@tinycarebot]</span>(<a href="https://twitter.com/tinycarebot" class="uri">https://twitter.com/tinycarebot</a>).</p>
-{{% tweet "916319972112175105" %}}
+<p>{{% tweet "916319972112175105" %}}</p>
 <p>Another thing that gives me life is reading <a href="https://hardwax.com/">Hardwax</a>, a hugely influential Berlin record store, get excited about their new stock. Their snappy, idiosyncratic descriptions of new music is steeped in electronic music folklore. Gems like this are peppered all over:</p>
 <blockquote>
 <p>“Dancehall from cyberspace - awesomely fresh &amp; fearless &amp; full of Grime affinities”</p>
@@ -41,12 +41,12 @@ hardwax_scrape &lt;- function(page, no) {
 <p>This simple URL structure meant the function could be easily applied for each section/genre on the site, like pulling the latest weeks new ish:</p>
 <pre class="r"><code># scrape news
 lapply(seq_along(1:2), hardwax_scrape, page=&quot;this-week&quot;) %&gt;% unlist() %&gt;% head()</code></pre>
-<pre><code>## [1] &quot;Classy, drum centered UK House takes&quot;                                        
-## [2] &quot;Classy, playfully atmospheric &amp; warm Deep House Album&quot;                       
-## [3] &quot;Subtle, minimalist Ambient pulses&quot;                                           
-## [4] &quot;Classy, warm Deep House smoothness&quot;                                          
-## [5] &quot;Proper reissue of late 80s Ambient leftfield project, comes w/ download card&quot;
-## [6] &quot;Reissue of rare 80s South African Boogie&quot;</code></pre>
+<pre><code>## [1] &quot;Hard distorted Techno dystopia&quot;                                                                   
+## [2] &quot;Delightful, 90s leaning lofi House / Chillout album&quot;                                              
+## [3] &quot;Superbly curated, comprehensive Ambient / Noise / Techno-Electro fields exploring compilation box&quot;
+## [4] &quot;Tripping, leftfield House Album&quot;                                                                  
+## [5] &quot;Fine, trippy, twisted Techno cuts&quot;                                                                
+## [6] &quot;Classy DJ Tool Deep House set&quot;</code></pre>
 <p>Once the various sections were scraped, some data cleaning procedures (remove releases with no reviews, reviews longer than 140 characters, or duplicate reviews) ensured the reviews were fit for purpose to head on to the next stage.<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a></p>
 </div>
 <div id="preppin-the-text" class="section level2">
@@ -167,7 +167,7 @@ dumb_hardwax &lt;- function(x) {
 }
 
 dumb_hardwax()</code></pre>
-<pre><code>## [1] &quot;Ebm works minimal techno tracks fine dj tool deep house - Highly Recommended!&quot;</code></pre>
+<pre><code>## [1] &quot;Long techno tracks confident take on ukg - Warmly Recommended!&quot;</code></pre>
 <p>Look at that - the bot made it’s first review. Lets share it with the world…</p>
 </div>
 <div id="twittering" class="section level2">
