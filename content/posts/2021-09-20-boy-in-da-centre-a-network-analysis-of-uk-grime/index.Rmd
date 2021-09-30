@@ -1,0 +1,53 @@
+---
+title: 'Boy In Da Centre: A Network analysis of UK Grime'
+author: ''
+date: '2021-09-20'
+slug: boy-in-da-centre-a-network-analysis-of-uk-grime
+categories: []
+tags:
+  - Lorem
+  - Ipsum
+description: Sed ut perspiciatis unde omnis iste natus error sit voluptatem
+---
+
+```{r setup}
+library(jsonlite)
+library(dplyr)
+library(tidyr)
+library(purrr)
+library(stringr)
+library(tidygraph)
+library(grimenet) # remotes::install_github("ewenme/grimenet")
+library(ggraph)
+library(shadowtext)
+```
+
+Grime isn't pre internet, but is pre social media. It's rooted to specific places and working-class, Black British beginnings. Technology of the time was subverted to, quite literally, signal boost the scene. FM transmitters were ran up tower blocks to broadcast pirate radio sets beyond the borough they came from. Bluetooth-enabled mobile phones sent 96kbps vinyl rips rippling through school playgrounds. Making these connections took effort and sacrifice, but ensured a more intimate bond between participants and punters.
+
+
+
+```{r origins}
+origins <- relations %>% 
+  igraph::as_data_frame() %>% 
+  dplyr::filter(year <= 2002, community_have >= 20) %>% 
+  as_tbl_graph () %>% 
+  activate(nodes) %>%
+  mutate(degree = centrality_degree()) %>%
+  activate(edges) %>%
+  mutate(centrality = centrality_edge_betweenness()) %>%
+  arrange(centrality)
+
+ggraph(origins, layout = 'graphopt') + 
+  geom_edge_link(
+    aes(start_cap = label_rect(node1.name),
+        end_cap = label_rect(node2.name))) + 
+  geom_shadowtext(
+    aes(label=name, x=x, y=y), 
+    family = "Recursive Regular", bg.r = 0.1, size = 4
+    ) +
+  theme_graph(base_family = "Recursive Regular") +
+  labs(title = "Grime, 2000-02",
+       subtitle = "Connections = collaborations listed on Discogs under Style: Grime",
+       caption = "@ewen_")
+```
+
