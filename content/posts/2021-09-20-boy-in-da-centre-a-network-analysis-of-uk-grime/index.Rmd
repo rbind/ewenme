@@ -20,34 +20,180 @@ library(tidygraph)
 library(grimenet) # remotes::install_github("ewenme/grimenet")
 library(ggraph)
 library(shadowtext)
+
+filter_graph <- function(x, min_year, max_year, min_have = 20, styles = NULL) {
+  
+  df <- igraph::as_data_frame(x)
+  
+  if (is.null(styles)) {
+    df_subset <- df %>% 
+      dplyr::filter(
+      between(year, min_year, max_year), 
+      community_have >= min_have
+      ) 
+  } else {
+    df_subset <- df %>% 
+      dplyr::filter(
+      between(year, min_year, max_year), 
+      community_have >= min_have,
+      style %in% styles
+      ) 
+  }
+    
+  as_tbl_graph (df_subset) %>% 
+    activate(nodes) %>%
+    mutate(degree = centrality_degree()) %>%
+    activate(edges) %>%
+    mutate(centrality = centrality_edge_betweenness()) %>%
+    arrange(centrality)
+}
 ```
 
-Grime isn't pre internet, but is pre social media. It's rooted to specific places and working-class, Black British beginnings. Technology of the time was subverted to, quite literally, signal boost the scene. FM transmitters were ran up tower blocks to broadcast pirate radio sets beyond the borough they came from. Bluetooth-enabled mobile phones sent 96kbps vinyl rips rippling through school playgrounds. Making these connections took effort and sacrifice, but ensured a more intimate bond between participants and punters.
+Grime isn't a pre internet genre of music, but it is pre social media. It is rooted in [specific postcodes and working-class, Black British beginnings](https://romanroadlondon.com/key-grime-figures-history-roman-road/). The scene's origins were characterised by a grass-roots interdependence, "Do It Together" ethos. Localised groups of like-minded MCs and DJs assembled together as "crews". Radio stations would be at least part-funded by "subs" paid by their roster. Producers would press up runs of white label 12"s, and shift them to record store buyers [directly from their car boot](https://www.theguardian.com/music/2004/may/23/urban1) the same day. 
 
+Technology of the time was subverted to, at times literally, signal boost the scene. FM transmitters were [ran up tower blocks](https://www.standard.co.uk/hp/front/asbo-bars-pirate-dj-from-the-rooftops-7173468.html) to broadcast pirate radio sets beyond the borough they came from. Bluetooth-enabled mobile phones sent 96kbps vinyl rips rippling through school playgrounds. Making these connections took effort and sacrifice, but built a more intimate bond between Grime's participants and punters.
 
+The activities described above paint a picture of a vibrant IRL social network, that is inseparable from the artistic practice itself. From claustrophobic radio sets to classic crew records, Grime is stacked with collaborative moments that made the product more than the sum of it's parts. Could inspecting this facet of Grime a little deeper give another angle to describe how the scene looked, and acted, at different points through time?
+
+This post investigates how the highly-networked Grime scene can be mapped out visually with data from Discogs alone. Discogs doesn't provide a complete archive of recorded Grime (Discogs is crowd-sourced and biased towards music made available on vinyl formats), but can act as a solid proxy for understanding ever-changing relationships between Grime artists and may provide a sense of scene "health" overall.
+
+## Understanding the data
+
+TBC
+
+## Origins, 2000-02
+
+Up until 2002, in terms of released music, the Grime scene was just a few small pockets of activity. One central figure was already emerging...Wiley.
 
 ```{r origins}
-origins <- relations %>% 
-  igraph::as_data_frame() %>% 
-  dplyr::filter(year <= 2002, community_have >= 20) %>% 
-  as_tbl_graph () %>% 
-  activate(nodes) %>%
-  mutate(degree = centrality_degree()) %>%
-  activate(edges) %>%
-  mutate(centrality = centrality_edge_betweenness()) %>%
-  arrange(centrality)
+origins <- filter_graph(relations, min_year = 2000, max_year = 2002, min_have = 0)
 
-ggraph(origins, layout = 'graphopt') + 
-  geom_edge_link(
-    aes(start_cap = label_rect(node1.name),
-        end_cap = label_rect(node2.name))) + 
+ggraph(origins, layout = 'fr') + 
+  geom_edge_fan(
+    aes(
+      start_cap = label_rect(node1.name), end_cap = label_rect(node2.name))
+    ) + 
   geom_shadowtext(
     aes(label=name, x=x, y=y), 
-    family = "Recursive Regular", bg.r = 0.1, size = 4
+    family = "Recursive Regular", bg.r = 0.1, size = 4.25
     ) +
-  theme_graph(base_family = "Recursive Regular") +
-  labs(title = "Grime, 2000-02",
-       subtitle = "Connections = collaborations listed on Discogs under Style: Grime",
+  theme_graph(title_family = "Recursive Bold", subtitle_family = "Recursive Light",
+              caption_family = "Recursive Light") +
+  labs(title = "Recorded Grime: origins, 2000-02",
+       subtitle = "Connections = collaborations on records listed on Discogs under Style: Grime",
        caption = "@ewen_")
 ```
 
+If you hadn't already guessed, Wiley was well-established with direct connections to a bunch of artists. He had an unmistakeable creative purple patch with Flow Dan, collaborating on four separate records in this time. Honourable mentions should also go to Geeneus and Terror Danjah, tied for the 2^nd most connected individual across this formative period.
+
+```{r echo=FALSE}
+blogdown::shortcode('youtube', 'rwJEVr9F6hg')
+```
+
+## Early development, 2003-04
+
+2003 was definitely a break-out year for the genre, as Dizzee Rascal won a Mercury Prize and Channel U landed on satellite TV. 2004 saw Lethal Bizzle crash the top ten UK single charts twice through "Oi!" with More Fire Crew and "Pow! (Forward)" alone.
+
+```{r development}
+development <- filter_graph(
+  relations, min_year = 2003, max_year = 2004, styles = "Grime"
+  )
+
+ggraph(development, layout = 'fr') + 
+  geom_edge_fan(
+    aes(
+      start_cap = label_rect(node1.name), end_cap = label_rect(node2.name))
+  ) +
+  geom_shadowtext(
+    aes(label=name, x=x, y=y, size=degree),
+    family = "Recursive Regular", bg.r = 0.2, show.legend = FALSE, check_overlap = TRUE
+  ) +
+  scale_size_continuous(range = c(2.5, 5)) +
+  theme_graph(title_family = "Recursive Bold", subtitle_family = "Recursive Light",
+              caption_family = "Recursive Light") +
+  labs(title = "Recorded Grime: Development, 2003-04",
+       subtitle = "Connections = collaborations on records listed on Discogs under Style: Grime",
+       caption = "@ewen_")
+```
+
+The scene's growth is immediately visible from this network graph. The two artists mentioned above are central figures, and most of the scene is directly or indirectly connected. Wiley remains a key link-up between camps.
+
+There are still some interesting outliers that suggest a healthy injection of new energy was occuring. Ruff Sqwad began a prolific run of white labels in this period, and it's members appear to have been almost entirely insulated from the rest of the scene (in recorded music, at least) during their formative years. To this day, the Ruff Sqwad catalogue is out on it's own.
+
+```{r echo=FALSE}
+blogdown::shortcode('youtube', 'pMDHjMagG0Y')
+```
+
+## Crossover, 2005-06
+
+...
+
+```{r crossover}
+crossover <- filter_graph(
+  relations, min_year = 2005, max_year = 2006, styles = "Grime", min_have = 50
+)
+
+ggraph(crossover, layout = 'fr') + 
+  geom_edge_fan(
+    aes(
+      start_cap = label_rect(node1.name), end_cap = label_rect(node2.name))
+  ) +
+  geom_shadowtext(
+    aes(label=name, x=x, y=y, size=degree),
+    family = "Recursive Regular", bg.r = 0.2, show.legend = FALSE, check_overlap = TRUE
+  ) +
+  scale_size_continuous(range = c(2, 5))  +
+  theme_graph(title_family = "Recursive Bold", subtitle_family = "Recursive Light",
+              caption_family = "Recursive Light") +
+  labs(title = "Recorded Grime: Cross-over, 2005-06",
+       subtitle = "Connections = collaborations on records listed on Discogs under Style: Grime",
+       caption = "@ewen_")
+```
+
+...
+
+## Splinters, 2007-08
+
+...
+
+```{r splinters}
+splinters <- filter_graph(
+  relations, min_year = 2007, max_year = 2008, styles = "Grime", min_have = 50
+)
+
+ggraph(splinters, layout = 'fr') + 
+  geom_edge_fan(
+    aes(
+      start_cap = label_rect(node1.name), end_cap = label_rect(node2.name))
+  ) +
+  geom_shadowtext(
+    aes(label=name, x=x, y=y, size=degree),
+    family = "Recursive Regular", bg.r = 0.2, show.legend = FALSE, check_overlap = TRUE
+  ) +
+  scale_size_continuous(range = c(2, 5))
+
+```
+
+...
+
+## Faithful, 2009-10
+
+...
+
+```{r faithful}
+faithful <- filter_graph(
+  relations, min_year = 2007, max_year = 2008, styles = "Grime", min_have = 50
+)
+
+ggraph(faithful, layout = 'fr') + 
+  geom_edge_fan(
+    aes(
+      start_cap = label_rect(node1.name), end_cap = label_rect(node2.name))
+  ) +
+  geom_shadowtext(
+    aes(label=name, x=x, y=y, size=degree),
+    family = "Recursive Regular", bg.r = 0.2, show.legend = FALSE, check_overlap = TRUE
+  ) +
+  scale_size_continuous(range = c(2, 5))
+
+```
