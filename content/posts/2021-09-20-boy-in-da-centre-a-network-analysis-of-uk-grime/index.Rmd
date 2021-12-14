@@ -1,5 +1,5 @@
 ---
-title: 'Boy In Da Centre: A Network analysis of UK Grime'
+title: 'Boy In Da Centre: A network analysis of UK Grime'
 author: ''
 date: '2021-09-20'
 slug: boy-in-da-centre-a-network-analysis-of-uk-grime
@@ -8,64 +8,90 @@ tags:
   - Lorem
   - Ipsum
 description: Sed ut perspiciatis unde omnis iste natus error sit voluptatem
+draft: true
 ---
 
-```{r setup}
+```{r setup, include=FALSE}
 library(jsonlite)
 library(dplyr)
 library(tidyr)
 library(purrr)
 library(stringr)
 library(tidygraph)
-library(grimenet) # remotes::install_github("ewenme/grimenet")
 library(ggraph)
 library(shadowtext)
+library(visNetwork)
+library(ggplot2)
 
-filter_graph <- function(x, min_year, max_year, min_have = 20, styles = NULL) {
-  
-  df <- igraph::as_data_frame(x)
-  
-  if (is.null(styles)) {
-    df_subset <- df %>% 
-      dplyr::filter(
-      between(year, min_year, max_year), 
-      community_have >= min_have
-      ) 
-  } else {
-    df_subset <- df %>% 
-      dplyr::filter(
-      between(year, min_year, max_year), 
-      community_have >= min_have,
-      style %in% styles
-      ) 
-  }
-    
-  as_tbl_graph (df_subset) %>% 
-    activate(nodes) %>%
-    mutate(degree = centrality_degree()) %>%
-    activate(edges) %>%
-    mutate(centrality = centrality_edge_betweenness()) %>%
-    arrange(centrality)
-}
+# get datasets
+releases <- jsonlite::read_json(
+  "https://raw.githubusercontent.com/club-cooking/grime-archives/master/data/releases.json", 
+  simplifyVector = TRUE
+  )
+
+# relations_df <- igraph::as_data_frame(relations)
+# 
+# filter_graph <- function(x, min_year, max_year, min_have = 20, styles = NULL) {
+# 
+#   df <- igraph::as_data_frame(x)
+# 
+#   if (is.null(styles)) {
+#     df_subset <- df %>%
+#       dplyr::filter(
+#       between(year, min_year, max_year),
+#       community_have >= min_have
+#       )
+#   } else {
+#     df_subset <- df %>%
+#       dplyr::filter(
+#       between(year, min_year, max_year),
+#       community_have >= min_have,
+#       style %in% styles
+#       )
+#   }
+# 
+#   as_tbl_graph (df_subset) %>%
+#     activate(nodes) %>%
+#     mutate(degree = centrality_degree()) %>%
+#     activate(edges) %>%
+#     mutate(centrality = centrality_edge_betweenness()) %>%
+#     arrange(centrality)
+# }
 ```
 
-Grime isn't a pre internet genre of music, but it is pre social media. It is rooted in [specific postcodes and working-class, Black British beginnings](https://romanroadlondon.com/key-grime-figures-history-roman-road/). The scene's origins were characterised by a grass-roots interdependence, "Do It Together" ethos. Localised groups of like-minded MCs and DJs assembled together as "crews". Radio stations would be at least part-funded by "subs" paid by their roster. Producers would press up runs of white label 12"s, and shift them to record store buyers [directly from their car boot](https://www.theguardian.com/music/2004/may/23/urban1) the same day. 
+Grime isn't a pre internet genre of music, but it is pre social media. It is rooted in specific postcodes and working-class, Black British beginnings:
 
-Technology of the time was subverted to, at times literally, signal boost the scene. FM transmitters were [ran up tower blocks](https://www.standard.co.uk/hp/front/asbo-bars-pirate-dj-from-the-rooftops-7173468.html) to broadcast pirate radio sets beyond the borough they came from. Bluetooth-enabled mobile phones sent 96kbps vinyl rips rippling through school playgrounds. Making these connections took effort and sacrifice, but built a more intimate bond between Grime's participants and punters.
+> Grime music, the genre which took the British charts by storm is deeply connected to Roman Road and the surrounding area. The sound which arguably defines urban Britain in the noughties was honed and crafted by the likes of Wiley and Dizzee Rascal on the street corners and in the tower blocks of Bow and the Roman. Rhythm Division, the now infamous record shop run by Risky Roadz, was a hub of activity for the artists and was the scene of countless freestyle battles and mic-offs.
 
-The activities described above paint a picture of a vibrant IRL social network, that is inseparable from the artistic practice itself. From claustrophobic radio sets to classic crew records, Grime is stacked with collaborative moments that made the product more than the sum of it's parts. Could inspecting this facet of Grime a little deeper give another angle to describe how the scene looked, and acted, at different points through time?
+Source: [Key grime figures and their roots with Roman Road — Roman Road LDN](https://romanroadlondon.com/key-grime-figures-history-roman-road/) by @romanroadldn
 
-This post investigates how the highly-networked Grime scene can be mapped out visually with data from Discogs alone. Discogs doesn't provide a complete archive of recorded Grime (Discogs is crowd-sourced and biased towards music made available on vinyl formats), but can act as a solid proxy for understanding ever-changing relationships between Grime artists and may provide a sense of scene "health" overall.
+The scene's origins were characterised by grass-roots interdependence, a "Do It Together" ethos. Localised groups of like-minded MCs and DJs collectivised as "crews". Radio stations would be at least part-funded by "subs" paid by the roster. Producers would press up runs of white label 12"s themselves, and shift them to record store buyers the same day:
+
+> Many producers bring white labels of their latest tunes fresh from the pressing plant and sell them exclusively at Rhythm Division before distributing them elsewhere. A hot tune will have been a staple on the pirates and at raves for months before its official release and may shift a few hundred copies in just a week. Wiley claims to have sold up to 50,000 last year out of the back of his car.
+
+Source: [A look at grime music](https://www.theguardian.com/music/2004/may/23/urban1) by @guardian
+
+Technology of the time was subverted to (literally, at times) signal boost the scene. FM transmitters were [ran up tower blocks](https://www.standard.co.uk/hp/front/asbo-bars-pirate-dj-from-the-rooftops-7173468.html) to broadcast pirate radio sets beyond the borough they started in. Bluetooth-enabled mobile phones helped 96kbps vinyl rips ripple through school playgrounds. Making these connections took effort and sacrifice, but led to intimate bonds between Grime's participants and punters.
+
+The activities described above paint a picture of a vibrant IRL social network, that is inseparable from the artistic practice itself. From claustrophobic radio sets to classic crew records, Grime is stacked with collaborative moments that made the product more than the sum of it's parts. This post investigates how the highly-networked Grime scene can be mapped out visually with data from [Discogs](https://www.discogs.com/) alone. Discogs doesn't provide a complete archive of recorded Grime (Discogs is crowd-sourced and biased towards music made available on vinyl formats), but can act as a solid proxy for understanding ever-changing relationships between Grime artists and give a sense of the scene's "health".
 
 ## Understanding the data
 
-TBC
+The dataset consists of 4,290 releases between 2000 and 2020 with Discogs entries.
+
+```{r}
+releases %>% 
+  dplyr::filter(!is.na(year)) %>% 
+  ggplot(aes(x = year)) +
+  geom_histogram(stat = "count")
+```
+
 
 ## Origins, 2000-02
 
 Up until 2002, in terms of released music, the Grime scene was just a few small pockets of activity. One central figure was already emerging...Wiley.
 
-```{r origins}
+```{r origins, eval=FALSE}
 origins <- filter_graph(relations, min_year = 2000, max_year = 2002, min_have = 0)
 
 ggraph(origins, layout = 'fr') + 
@@ -94,7 +120,7 @@ blogdown::shortcode('youtube', 'rwJEVr9F6hg')
 
 2003 was definitely a break-out year for the genre, as Dizzee Rascal won a Mercury Prize and Channel U landed on satellite TV. 2004 saw Lethal Bizzle crash the top ten UK single charts twice through "Oi!" with More Fire Crew and "Pow! (Forward)" alone.
 
-```{r development}
+```{r development, eval=FALSE}
 development <- filter_graph(
   relations, min_year = 2003, max_year = 2004, styles = "Grime"
   )
@@ -126,9 +152,15 @@ blogdown::shortcode('youtube', 'pMDHjMagG0Y')
 
 ## Crossover, 2005-06
 
-...
+If 2003 was the year Grime was getting looks from the mainstream, 2005 was the year of the cross-over. Roll Deep, a collective featuring early scene-builders Wiley and Riko Dan, released a full-length "In At The Deep End" that dabbled in more "commercial" sounds.
 
-```{r crossover}
+```{r echo=FALSE}
+blogdown::shortcode('youtube', 'wjREW-QULyQ')
+```
+
+Despite this new venture, the group was still collaborating within the wider scene. Conversely, a couple of high-profile artists that emerged during this period came from outside of the ecosystem entirely.
+
+```{r crossover, eval=FALSE}
 crossover <- filter_graph(
   relations, min_year = 2005, max_year = 2006, styles = "Grime", min_have = 50
 )
@@ -150,13 +182,13 @@ ggraph(crossover, layout = 'fr') +
        caption = "@ewen_")
 ```
 
-...
+In 2006, Lady Sovereign signed to Roc-A-Fella Records and gained access to household names like Missy Elliot in the process. At roughly the same time, Mike Skinner 
 
 ## Splinters, 2007-08
 
 ...
 
-```{r splinters}
+```{r splinters, eval=FALSE}
 splinters <- filter_graph(
   relations, min_year = 2007, max_year = 2008, styles = "Grime", min_have = 50
 )
@@ -180,7 +212,7 @@ ggraph(splinters, layout = 'fr') +
 
 ...
 
-```{r faithful}
+```{r faithful, eval=FALSE}
 faithful <- filter_graph(
   relations, min_year = 2007, max_year = 2008, styles = "Grime", min_have = 50
 )
